@@ -75,18 +75,20 @@ Applied to the KV cache across all layers, WikiText-2 sliding-window PPL (ctx=10
 
 Initial Phase 14 measurement on the canonical Mode 1 / Mode 2 pair:
 
-| Model | Method | bits/value | ΔPPL | vs sym INT3 |
+| Model | Method | bits/value | ΔPPL | vs nsep+pchan sym |
 |:------|:---|:-:|:-:|:-:|
 | **Qwen2-7B** (Mode 1) | FP16 baseline | 16 | 0 | — |
-|  | sym INT3 (v0.2 default) | 3.000 | **+0.4021** | — |
-|  | **asym INT3 (v0.3 default)** | **3.000** | **+0.1034** | **−74.3%** 🔥 |
-|  | sym INT4 | 4.000 | +0.0544 | −86.5% |
+|  | **nsep+pchan** sym INT3 *(v0.2 default)* | 3.000 | **+0.4021** | — |
+|  | **nsep+pchan asym INT3** *(v0.3 default)* | **3.000** | **+0.1034** | **−74.3%** 🔥 |
+|  | nsep+pchan sym INT4 | 4.000 | +0.0544 | −86.5% |
 | **Llama-3.1-8B** (Mode 2) | FP16 baseline | 16 | 0 | — |
-|  | sym INT3 (v0.2 default) | 3.000 | **+0.2541** | — |
-|  | **asym INT3 (v0.3 default)** | **3.000** | **+0.1059** | **−58.3%** 🔥 |
-|  | sym INT4 | 4.000 | +0.0133 | −94.8% |
+|  | **nsep+pchan** sym INT3 *(v0.2 default)* | 3.000 | **+0.2541** | — |
+|  | **nsep+pchan asym INT3** *(v0.3 default)* | **3.000** | **+0.1059** | **−58.3%** 🔥 |
+|  | nsep+pchan sym INT4 | 4.000 | +0.0133 | −94.8% |
 
 The asym ↔ sym difference at **identical 3.0 bits/value** is the v0.3 headline. INT4 still wins on quality in absolute terms, but it costs 33% more bits; asym INT3 sits on the Pareto front for the INT3 tier.
+
+> **What "sym INT3" and "asym INT3" mean in this table.** Both are modeq's **`nsep+pchan` pipeline** — they differ only in how the per-channel quantization window is computed (symmetric `[−absmax, +absmax]` vs asymmetric `[min, max]`). Neither is the industry-standard naive per-row absmax INT3 that a practitioner might first reach for. For the comparison against that baseline, see the [bit-width sweep at the top of this README](#the-benchmark-that-motivates-this-library) — naive INT3 on Qwen2-7B is **+12 ΔPPL** (116× worse than v0.3's +0.10), and naive INT3 on Pythia-6.9B is **+22 ΔPPL** (220× worse than v0.3's +0.10). Phase 18 (planned) will run an explicit four-method ablation — naive per-row vs asymmetric per-channel (no nsep) vs v0.2 sym nsep+pchan vs v0.3 asym nsep+pchan — on a canonical three-model set so the contribution of each component (per-channel, nsep, asymmetric) can be read off a single table.
 
 **Where does the gain come from?** Post-RoPE K channels have strongly biased distributions. Symmetric absmax quantizes them on `[-|max|, +|max|]`, wasting roughly half the quantization levels on the empty side. Asymmetric fits `[min, max]` tightly and uses all 2^bits levels. At INT3 this is the difference between 7 symmetric levels (−3..3) and 8 asymmetric levels (0..7), plus the range-fit advantage.
 
