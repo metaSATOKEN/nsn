@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "modeq"
+version = "0.1.0"
+description = "Mode-aware KV cache quantization for Pre-LN Transformers. INT3 with 5.33x compression, production quality."
+readme = "README.md"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "Kentaro Sato", email = "info@metaclan.jp"},
+]
+keywords = ["quantization", "kv-cache", "llm", "int3", "int4", "transformers", "inference"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.9"
+dependencies = [
+    "torch>=2.0",
+    "numpy",
+]
+
+[project.optional-dependencies]
+eval = ["transformers>=4.40", "datasets", "accelerate", "hf_transfer"]
+test = ["pytest>=7.0"]
+
+[project.urls]
+Homepage = "https://github.com/metaSATOKEN/modeq"
+Repository = "https://github.com/metaSATOKEN/modeq"
+Issues = "https://github.com/metaSATOKEN/modeq/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+modeq = ["py.typed"]
