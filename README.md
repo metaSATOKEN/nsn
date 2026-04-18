@@ -9,13 +9,13 @@
 
 ## TL;DR
 
-Low-bit KV cache quantization can fail dramatically on some model families — naive INT4 produces **ΔPPL +1382 on Qwen2-7B** and naive INT3 produces **+12 on Qwen2-7B, +22 on Pythia-6.9B** — while working acceptably on others. modeq identifies two empirically separable failure modes (Mode 1: Layer-0 outlier-driven; Mode 2: distributed norm-variation) and ships a simple, calibration-free recipe that handles both.
+Low-bit KV cache quantization can fail dramatically on some models — for example, naive INT4 produces **+1382 ΔPPL on Qwen2-7B**. modeq investigates why this happens and provides a simple, calibration-free INT3 recipe that handles a range of recent models reliably.
 
-> **v0.3 default**: `nsep+pchan` **asymmetric** INT3.
->
-> At **identical 3.0 bits/value**, this default reduces WikiText-2 ΔPPL by an average of **66 %** (range 50.5 % – 95.8 %) compared to the v0.2 symmetric `nsep+pchan` baseline, on the 8 models we were able to benchmark end-to-end: Qwen2-7B, Llama-3.1-8B, Pythia-6.9B, Qwen2.5-14B, Mistral-7B-v0.1, GPT-J-6B, Qwen3.5-9B, and Gemma 4-E4B (2021–2026). All 8 land in the **< 5 % of baseline PPL** production tier on this benchmark, including v0.2's "research only" Pythia-6.9B (+22.1 % → +0.9 %).
->
-> Achieves **5.09× real-packed memory reduction** vs FP16 with ~10 lines of integration code. No training, no calibration, no rotation, no codebook.
+> **v0.3 default**: `nsep+pchan` asymmetric INT3.
+
+At the same **3.0 bits/value**, this default reduces WikiText-2 ΔPPL by an average of **66 %** (range 50.5 % – 95.8 %) compared to the v0.2 symmetric `nsep+pchan` baseline, across 8 models we evaluated end-to-end: Qwen2-7B, Llama-3.1-8B, Pythia-6.9B, Qwen2.5-14B, Mistral-7B-v0.1, GPT-J-6B, Qwen3.5-9B, and Gemma 4-E4B (2021–2026). All 8 models stay below our conservative **< 5 % of baseline PPL** threshold on WikiText-2, including v0.2's "research only" Pythia-6.9B (+22.1 % → +0.9 %).
+
+It also achieves **5.09× real-packed memory reduction** vs FP16 with minimal code changes. No training, no calibration, no rotation, no codebook.
 
 ```python
 from modeq import Int3AsymNsepPchanCache
@@ -79,9 +79,11 @@ Both are handled by the same preprocessing: **norm separation + per-channel scal
 
 ---
 
-## v0.3 headline: asymmetric INT3 reduces symmetric INT3 ΔPPL by ~66 %
+## v0.3: switching to asymmetric per-channel improves on symmetric INT3
 
-At identical 3.0 bits/value, v0.3's asymmetric `nsep+pchan` is a drop-in upgrade over v0.2's symmetric variant. Measured on the KV cache across all layers, WikiText-2 sliding-window PPL (ctx=1024, 10 windows):
+At identical 3.0 bits/value, v0.3's asymmetric `nsep+pchan` INT3 reduces ΔPPL by an average of **~66 %** compared to v0.2's symmetric version, on the 8 models we evaluated. The gain comes primarily from fitting the quantization range to each channel's actual `[min, max]` instead of using a symmetric `[-absmax, +absmax]` window, which can waste levels on biased post-RoPE direction vectors.
+
+Measured on the KV cache across all layers, WikiText-2 sliding-window PPL (ctx = 1024, 10 windows):
 
 Initial Phase 14 measurement on the canonical Mode 1 / Mode 2 pair. The first row under each model shows the **industry-standard naive per-row absmax INT3** for context, so the internal v0.2 → v0.3 improvement can be read alongside the total distance from the naive baseline a practitioner might reach for.
 
@@ -119,7 +121,7 @@ Phase 16 extended Phase 14 to four additional models from the v0.2 sweep. Phase 
 | **Qwen3.5-9B** (2026, hybrid attn) | — | 10.32 | +0.2750 | **+0.0942** | **−65.7%** | 0.91% ✅ |
 | **Gemma 4-E4B** (2026, multimodal) | — | 20.60 | +1.8786 | **+0.9302** | **−50.5%** | 4.51% ✅ |
 
-**Aggregate (8 runnable models): asym beats sym on 8 of 8, mean reduction −66.0 %, range −50.5 % to −95.8 %. All 8 land in the < 5 % of baseline production tier on WikiText-2 PPL.** (Phi-3-medium-4k-instruct is counted as "attempted but blocked", not as a failure — see the [Phi-3 note](#phi-3-medium-compatibility-note) below.)
+**Aggregate (8 runnable models): asym beats sym on 8 of 8, mean reduction −66.0 %, range −50.5 % to −95.8 %. All 8 models stay below our conservative production threshold of < 5 % of baseline PPL on WikiText-2.** (Phi-3-medium-4k-instruct is counted as "attempted but blocked", not as a failure — see the [Phi-3 note](#phi-3-medium-compatibility-note) below.)
 
 Three specific callouts:
 
@@ -206,7 +208,7 @@ Applying `qa_nsep_pchan_asym` at INT3 — 3 bits per value, 5.09× compression v
 | **Gemma 4-E4B** (multimodal) | **2026-04** | **+0.9302** | **4.51%** | 5.09× (extrap.) | ✅ production |
 | Phi-3-medium-4k-instruct | 2024 | — | — | — | ⚠ HF-compat (pending, see note) |
 
-**8 of 8 runnable models cross our production threshold (< 5% baseline) under v0.3's asymmetric INT3 default, spanning GPT-J (2021) through Gemma 4 / Qwen3.5 (2026).** By the same threshold, v0.2's symmetric INT3 had 4 of 7 in production and 1 in "research only" (Pythia-6.9B at +22.1% baseline drift); v0.3 moves Pythia and two 2026 flagships (Qwen3.5, Gemma 4) fully into production at identical 3.0 bits/value.
+All 8 runnable models stay below our conservative production threshold (< 5 % of baseline PPL) under v0.3's asymmetric INT3 default, spanning GPT-J (2021) through Gemma 4 / Qwen3.5 (2026). By the same threshold, v0.2's symmetric INT3 had 4 of 7 below threshold and 1 in "research only" (Pythia-6.9B at +22.1 % baseline drift); v0.3 moves Pythia and two 2026 flagships (Qwen3.5, Gemma 4) below threshold at identical 3.0 bits/value.
 
 ### Phi-3-medium compatibility note
 
