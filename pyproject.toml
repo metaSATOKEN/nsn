@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "modeq"
-version = "0.1.0"
-description = "Mode-aware KV cache quantization for Pre-LN Transformers. INT3 with 5.33x compression, production quality."
+version = "0.2.0"
+description = "Mode-aware KV cache quantization for Pre-LN Transformers. INT3 with 5.33x compression, production quality. v0.2: per-channel RMS residual correction + mode-aware dispatcher."
 readme = "README.md"
 license = {text = "Apache-2.0"}
 authors = [

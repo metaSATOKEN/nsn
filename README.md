@@ -11,6 +11,8 @@
 
 Naive INT4 quantization of KV caches can fail catastrophically on certain models — **ΔPPL +1382 on Qwen2-7B** — while working fine on others. We identify **two empirically separable failure modes** (Mode 1: Layer-0 outlier-driven; Mode 2: distributed norm-variation-driven) and provide a simple, data-independent baseline that handles both: **INT3 with 5.08× real memory reduction at production quality** on 5 of 7 models tested.
 
+> **v0.2 (this release):** adds per-channel RMS residual correction (`qa_nsep_pchan_resid_rms`) and a mode-aware dispatcher (`select_quantizer`). On Mode 1 at 4-bit budget, INT3 + RMS residual surpasses native INT4 by 2.2× precision.
+
 ```python
 from modeq import Int3NsepPchanCache
 
@@ -162,6 +164,55 @@ stats = measure_kv_outlier_ratio(model, tokenizer)
 verdict = classify_mode(stats)
 print(verdict["mode"], "-", verdict["recommendation"])
 ```
+
+### Mode-aware dispatch (v0.2)
+
+Rather than manually choosing between `qa_nsep_pchan(x, 3)` and `qa_nsep_pchan_resid_rms(x, 3)` for your model, let modeq pick based on a measured outlier profile.
+
+```python
+from modeq import measure_kv_outlier_ratio, select_quantizer, describe_selection
+
+stats = measure_kv_outlier_ratio(model, tokenizer)
+quantize = select_quantizer(outlier_stats=stats, target_bits=4)
+# On Mode 1 models (K @ L0 >= 15x): returns INT3 + per-channel RMS residual.
+# On Mode 2 models: returns plain INT4 nsep+pchan (strictly better on Mode 2).
+
+x_q = quantize(k)   # drop-in per-tensor compression
+
+# Human-readable rationale
+print(describe_selection(outlier_stats=stats, target_bits=4))
+# {
+#   "method": "nsep+pchan INT3 + per-channel RMS residual",
+#   "mode": "Mode 1",
+#   "method_rationale": "Mode 1, 4-bit budget. INT3 + RMS residual avoids
+#                        the INT4 valley entirely and surpasses native
+#                        INT4 (+0.025 vs +0.054 ΔPPL on Qwen2-7B, 2.2x
+#                        precision).",
+#   ...
+# }
+```
+
+---
+
+## v0.2: Per-channel RMS residual correction (+mode-aware dispatch)
+
+The Phase 7 & 8 studies in `experiments/` validated a 1-bit residual correction step over `nsep+pchan`. Two findings shaped this v0.2 release:
+
+1. **Per-channel RMS magnitude is essential.** A fixed constant magnitude (e.g., 0.25, the E[|residual|] under uniform assumption) *BACKFIRES* on Mode 1 models — it worsens INT2 ΔPPL from +326 to +463 on Qwen2-7B. The per-channel RMS adapts to the (highly non-uniform on Mode 1) residual distribution.
+
+2. **INT3 + RMS residual surpasses INT4 on Mode 1 only.** On Qwen2-7B (Mode 1): ΔPPL +0.025 vs native INT4 +0.054 (2.2× precision). On Mode 2 (6 of 7 models): INT3+RMS improves over INT3 alone (16–72% reduction) but does not close the gap to native INT4. This is internally consistent with the two-mode theory: INT4 has a valley of death on Mode 1, so INT3+RMS can win there; no valley on Mode 2, so native INT4's cleaner levels win.
+
+Together these imply a **mode-aware deployment rule**:
+
+| Target bits | Mode 1 | Mode 2 / Unknown |
+|:---|:---|:---|
+| 3 | `qa_nsep_pchan(x, 3)` | `qa_nsep_pchan(x, 3)` |
+| 4 | `qa_nsep_pchan_resid_rms(x, 3)` | `qa_nsep_pchan(x, 4)` |
+| 5+ | `qa_nsep_pchan(x, bits)` | `qa_nsep_pchan(x, bits)` |
+
+`modeq.select_quantizer()` (above) encapsulates this rule.
+
+See `results/phase7_residual_correction.json` and `results/phase8_rms_residual_validation.json` for the full 7-model data.
 
 ---
 

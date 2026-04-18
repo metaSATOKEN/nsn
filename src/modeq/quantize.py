@@ -110,6 +110,106 @@ def qa_nsep_pchan(x, bits):
     return (n * d_q).to(dtype)
 
 
+def qa_nsep_pchan_resid_rms(x, bits_base):
+    """
+    nsep+pchan with 1-bit per-channel RMS residual correction (v0.2).
+
+    After the base quantization, the per-value residual is sign-stored
+    with a magnitude set per-channel to the RMS of residuals in that
+    channel. Adds 1 bit/value of storage plus D FP16 scalars per head
+    for the RMS magnitudes. Total: approximately (bits_base + 1)
+    bits/value at typical head dimensions.
+
+    On Mode 1 models (Qwen2-7B in our sample), INT3 + RMS residual
+    surpasses INT4 alone by 2.2x precision at roughly 4+epsilon
+    bits/value, escaping the INT4 "valley of death".
+
+    On Mode 2 models, INT3 + RMS residual improves over INT3 alone
+    by 16-72% but does not surpass INT4 alone.
+
+    IMPORTANT: the per-channel RMS is essential. A fixed constant
+    magnitude (e.g., 0.25, the E[|residual|] under uniform assumption)
+    BACKFIRES on Mode 1 due to outlier-driven non-uniform residual
+    distribution. See `qa_nsep_pchan_resid_fixed` for the fixed-
+    magnitude variant, retained only for ablation studies.
+
+    Parameters
+    ----------
+    x : torch.Tensor, shape [..., T, D]
+    bits_base : int
+        Base quantization bit width. 3 is the recommended default.
+
+    Returns
+    -------
+    torch.Tensor, same shape and dtype as x.
+    """
+    dtype = x.dtype
+    x = x.float()
+    n = x.norm(dim=-1, keepdim=True).clamp(min=1e-12)
+    d = x / n
+
+    qm = 2 ** (bits_base - 1) - 1
+    s = d.abs().amax(dim=0, keepdim=True).clamp(min=1e-12) / qm
+    d_scaled = d / s
+    d_q = d_scaled.round().clamp(-qm, qm)
+
+    # Per-channel RMS residual correction
+    residual = d_scaled - d_q
+    r_rms = (residual ** 2).mean(dim=0, keepdim=True).sqrt().clamp(min=1e-12)
+    r_1bit = r_rms * residual.sign()
+
+    d_corrected = (d_q + r_1bit) * s
+    d_corrected = d_corrected / d_corrected.norm(dim=-1, keepdim=True).clamp(min=1e-8)
+    return (n * d_corrected).to(dtype)
+
+
+def qa_nsep_pchan_resid_fixed(x, bits_base, magnitude=0.25):
+    """
+    nsep+pchan with 1-bit fixed-magnitude residual correction (ablation).
+
+    Uses a constant magnitude for the residual correction instead of the
+    adaptive per-channel RMS. The default 0.25 is the optimal choice for
+    uniform-distributed residuals on [-0.5, 0.5].
+
+    Known failure: on Mode 1 models, this variant BACKFIRES: the residual
+    distribution is non-uniform (heavy-tailed due to outliers), so a
+    fixed constant over-corrects small residuals and under-corrects large
+    ones. Empirically, fixed-0.25 worsens INT2 ΔPPL from +326 to +463 on
+    Qwen2-7B. Use `qa_nsep_pchan_resid_rms` instead for any model where
+    Mode 1 behavior is possible.
+
+    Retained here for ablation studies and for the special case of
+    deliberately-clean Mode 2 models where the simpler constant works
+    nearly as well as RMS.
+
+    Parameters
+    ----------
+    x : torch.Tensor, shape [..., T, D]
+    bits_base : int
+    magnitude : float, default 0.25
+
+    Returns
+    -------
+    torch.Tensor, same shape and dtype as x.
+    """
+    dtype = x.dtype
+    x = x.float()
+    n = x.norm(dim=-1, keepdim=True).clamp(min=1e-12)
+    d = x / n
+
+    qm = 2 ** (bits_base - 1) - 1
+    s = d.abs().amax(dim=0, keepdim=True).clamp(min=1e-12) / qm
+    d_scaled = d / s
+    d_q = d_scaled.round().clamp(-qm, qm)
+
+    residual = d_scaled - d_q
+    r_1bit = magnitude * residual.sign()
+
+    d_corrected = (d_q + r_1bit) * s
+    d_corrected = d_corrected / d_corrected.norm(dim=-1, keepdim=True).clamp(min=1e-8)
+    return (n * d_corrected).to(dtype)
+
+
 def apply_method(x, method, bits):
     """
     Dispatch quantization by method name.
@@ -118,7 +218,8 @@ def apply_method(x, method, bits):
     ----------
     x : torch.Tensor
     method : str
-        One of {"baseline", "fp16", "naive", "nsep+pchan"}.
+        One of {"baseline", "fp16", "naive", "nsep+pchan",
+        "nsep+pchan+resid-rms", "nsep+pchan+resid-fixed"}.
         "baseline"/"fp16" return x unchanged.
     bits : int
         Target bit width (ignored for baseline).
@@ -129,4 +230,8 @@ def apply_method(x, method, bits):
         return qa_perrow(x, bits)
     if method == "nsep+pchan":
         return qa_nsep_pchan(x, bits)
+    if method == "nsep+pchan+resid-rms":
+        return qa_nsep_pchan_resid_rms(x, bits)
+    if method == "nsep+pchan+resid-fixed":
+        return qa_nsep_pchan_resid_fixed(x, bits)
     raise ValueError(f"Unknown method: {method}")
