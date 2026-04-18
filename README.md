@@ -1,6 +1,6 @@
 # modeq
 
-**Mode-aware KV cache quantization for Pre-LN Transformers.** A practical INT3 default that cuts WikiText-2 ΔPPL by 58–74% vs the symmetric baseline at the same 3.0 bits/value, with 5.09× real-packed memory reduction and 10 lines of code.
+**Mode-aware KV cache quantization for Pre-LN Transformers.** A practical INT3 default with a reproducible, calibration-free path from industry-naive to a simple recipe that reaches WikiText-2 production tier on 8 of 8 models we were able to run.
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.9+-green.svg)](#installation)
@@ -9,9 +9,13 @@
 
 ## TL;DR
 
-Naive INT4 KV quantization can fail catastrophically on certain models — **ΔPPL +1382 on Qwen2-7B** — while working fine on others. modeq identifies two empirically separable failure modes (Mode 1: Layer-0 outlier-driven; Mode 2: distributed) and ships a simple fix that beats the symmetric INT3 baseline by a large margin on both.
+Low-bit KV cache quantization can fail dramatically on some model families — naive INT4 produces **ΔPPL +1382 on Qwen2-7B** and naive INT3 produces **+12 on Qwen2-7B, +22 on Pythia-6.9B** — while working acceptably on others. modeq identifies two empirically separable failure modes (Mode 1: Layer-0 outlier-driven; Mode 2: distributed norm-variation) and ships a simple, calibration-free recipe that handles both.
 
-> **v0.3 (this release):** Switches the default INT3 quantizer to **asymmetric per-channel nsep+pchan** (`qa_nsep_pchan_asym`). At identical 3.0 bits/value, the v0.3 default cuts WikiText-2 ΔPPL by an average of **66.0% (range 50.5%–95.8%) across 8 models spanning 2021–2026** — including Qwen2-7B (−74.3%), Llama-3.1-8B (−58.3%), Pythia-6.9B (−95.8%), **Qwen3.5-9B hybrid attention (−65.7%)**, and **Gemma 4-E4B (−50.5%)**. **All 8 land in the `< 5% of baseline PPL` production tier**, including v0.2's "research only" Pythia-6.9B. No calibration, no codebook, no rotation — just using the full per-channel `[min, max]` range instead of the symmetric `[-absmax, +absmax]` window that wastes roughly half the quantization levels on biased post-RoPE K distributions.
+> **v0.3 default**: `nsep+pchan` **asymmetric** INT3.
+>
+> At **identical 3.0 bits/value**, this default reduces WikiText-2 ΔPPL by an average of **66 %** (range 50.5 % – 95.8 %) compared to the v0.2 symmetric `nsep+pchan` baseline, on the 8 models we were able to benchmark end-to-end: Qwen2-7B, Llama-3.1-8B, Pythia-6.9B, Qwen2.5-14B, Mistral-7B-v0.1, GPT-J-6B, Qwen3.5-9B, and Gemma 4-E4B (2021–2026). All 8 land in the **< 5 % of baseline PPL** production tier on this benchmark, including v0.2's "research only" Pythia-6.9B (+22.1 % → +0.9 %).
+>
+> Achieves **5.09× real-packed memory reduction** vs FP16 with ~10 lines of integration code. No training, no calibration, no rotation, no codebook.
 
 ```python
 from modeq import Int3AsymNsepPchanCache
@@ -26,9 +30,15 @@ k_recon = cached.to_fp16()
 cached.size_bytes()
 ```
 
-Four lines. No training. No calibration. Rescues Qwen2-7B's pathological INT4 case (+1382 → +0.10 ΔPPL) and cuts Llama-3.1-8B INT3 drift by more than half (+0.25 → +0.11) at the same bit budget.
+**Rough magnitude of the improvement**: on Qwen2-7B (Mode 1), v0.3 brings naive INT3's +12 ΔPPL and v0.2's +0.40 ΔPPL both down to +0.10 — a 116× improvement over the naive industry baseline at the same 3 bits. On Llama-3.1-8B (Mode 2), v0.3 reaches +0.11 vs naive's +0.45 and v0.2's +0.25.
 
-> **Note on prior art.** Asymmetric per-channel quantization is standard in weight quantization (GPTQ, AWQ, etc.); the norm–direction split itself is prior art as of [PolarQuant (2025)](https://arxiv.org/abs/2502.02617) / [TurboQuant (ICLR 2026)](https://arxiv.org/abs/2504.19874). modeq's contribution is the **empirical demonstration that composing these two pieces on the KV cache, with no calibration or codebook, captures 58–74% of the available INT3-tier PPL headroom** — plus the failure-mode diagnosis that motivated looking there in the first place. See [Related work](#related-work-and-how-modeq-differs).
+### Scope and caveats
+
+- **Sample**: 8 runnable models (2021–2026). One additional model (Phi-3-medium-4k-instruct) was attempted but blocked by a transformers / custom-code incompatibility unrelated to modeq; see the [Phi-3 note](#phi-3-medium-compatibility-note).
+- **Quality metric**: WikiText-2 sliding-window perplexity (ctx = 1024, 10 windows). Downstream task accuracy (MMLU, GSM-8K, HumanEval, retrieval) was *not* measured; the "production tier" wording is a ΔPPL proxy, not a deployment certification.
+- **Throughput**: not measured. The current Python implementation adds roughly +21 % decode latency on 7B-class models; a fused kernel (unimplemented) would remove most of that. The `< 5 %` claim is about quality only.
+
+> **Note on prior art.** Asymmetric per-channel quantization is a standard building block of *weight* quantization (GPTQ, AWQ, RTN variants, LLM.int8()); the norm–direction split is prior art as of [PolarQuant (2025)](https://arxiv.org/abs/2502.02617) / [TurboQuant (ICLR 2026)](https://arxiv.org/abs/2504.19874). modeq's contribution is the empirical demonstration that composing these two specific ingredients on the KV cache, without calibration or codebook, lands in the < 5 % baseline production tier on 8 of 8 runnable models — plus the failure-mode diagnosis that motivated looking there in the first place. See [Related work](#related-work-and-how-modeq-differs).
 
 ---
 
@@ -69,22 +79,24 @@ Both are handled by the same preprocessing: **norm separation + per-channel scal
 
 ---
 
-## v0.3 headline: asymmetric INT3 crushes symmetric INT3
+## v0.3 headline: asymmetric INT3 reduces symmetric INT3 ΔPPL by ~66 %
 
-Applied to the KV cache across all layers, WikiText-2 sliding-window PPL (ctx=1024, 10 windows):
+At identical 3.0 bits/value, v0.3's asymmetric `nsep+pchan` is a drop-in upgrade over v0.2's symmetric variant. Measured on the KV cache across all layers, WikiText-2 sliding-window PPL (ctx=1024, 10 windows):
 
-Initial Phase 14 measurement on the canonical Mode 1 / Mode 2 pair:
+Initial Phase 14 measurement on the canonical Mode 1 / Mode 2 pair. The first row under each model shows the **industry-standard naive per-row absmax INT3** for context, so the internal v0.2 → v0.3 improvement can be read alongside the total distance from the naive baseline a practitioner might reach for.
 
-| Model | Method | bits/value | ΔPPL | vs nsep+pchan sym |
-|:------|:---|:-:|:-:|:-:|
-| **Qwen2-7B** (Mode 1) | FP16 baseline | 16 | 0 | — |
-|  | **nsep+pchan** sym INT3 *(v0.2 default)* | 3.000 | **+0.4021** | — |
-|  | **nsep+pchan asym INT3** *(v0.3 default)* | **3.000** | **+0.1034** | **−74.3%** 🔥 |
-|  | nsep+pchan sym INT4 | 4.000 | +0.0544 | −86.5% |
-| **Llama-3.1-8B** (Mode 2) | FP16 baseline | 16 | 0 | — |
-|  | **nsep+pchan** sym INT3 *(v0.2 default)* | 3.000 | **+0.2541** | — |
-|  | **nsep+pchan asym INT3** *(v0.3 default)* | **3.000** | **+0.1059** | **−58.3%** 🔥 |
-|  | nsep+pchan sym INT4 | 4.000 | +0.0133 | −94.8% |
+| Model | Method | bits/value | ΔPPL | vs naive INT3 | vs v0.2 sym INT3 |
+|:------|:---|:-:|:-:|:-:|:-:|
+| **Qwen2-7B** (Mode 1) | FP16 baseline | 16 | 0 | — | — |
+|  | naive per-row sym INT3 *(industry)* | 3.000 | +11.92 | — | — |
+|  | **nsep+pchan** sym INT3 *(v0.2 default)* | 3.000 | +0.4021 | −96.6 % | — |
+|  | **nsep+pchan asym INT3** *(v0.3 default)* | **3.000** | **+0.1034** | **−99.1 %** | **−74.3 %** |
+|  | nsep+pchan sym INT4 | 4.000 | +0.0544 | −99.5 % | −86.5 % |
+| **Llama-3.1-8B** (Mode 2) | FP16 baseline | 16 | 0 | — | — |
+|  | naive per-row sym INT3 *(industry)* | 3.000 | +0.4453 | — | — |
+|  | **nsep+pchan** sym INT3 *(v0.2 default)* | 3.000 | +0.2541 | −42.9 % | — |
+|  | **nsep+pchan asym INT3** *(v0.3 default)* | **3.000** | **+0.1059** | **−76.2 %** | **−58.3 %** |
+|  | nsep+pchan sym INT4 | 4.000 | +0.0133 | −97.0 % | −94.8 % |
 
 The asym ↔ sym difference at **identical 3.0 bits/value** is the v0.3 headline. INT4 still wins on quality in absolute terms, but it costs 33% more bits; asym INT3 sits on the Pareto front for the INT3 tier.
 
@@ -100,14 +112,14 @@ Phase 16 extended Phase 14 to four additional models from the v0.2 sweep. Phase 
 |:------|:-:|:-:|:-:|:-:|:-:|:-:|
 | Qwen2-7B | Mode 1 | 8.37 | +0.4021 | **+0.1034** | **−74.3%** | 1.24% ✅ |
 | Llama-3.1-8B | Mode 2 | 7.38 | +0.2541 | **+0.1059** | **−58.3%** | 1.43% ✅ |
-| **Pythia-6.9B** | Mode 2 | 10.76 | +2.3781 | **+0.0994** | **−95.8%** 🚀 | 0.92% ✅ |
+| **Pythia-6.9B** | Mode 2 | 10.76 | +2.3781 | **+0.0994** | **−95.8%** | 0.92% ✅ |
 | Qwen2.5-14B | Mode 2 | 1.96 | +0.2608 | **+0.0909** | **−65.1%** | 4.64% ✅ |
 | Mistral-7B-v0.1 | Mode 2 | 6.30 | +0.1243 | **+0.0547** | **−56.0%** | 0.87% ✅ |
 | GPT-J-6B (head_dim=256) | Mode 2 | 10.29 | +0.1873 | **+0.0703** | **−62.5%** | 0.68% ✅ |
 | **Qwen3.5-9B** (2026, hybrid attn) | — | 10.32 | +0.2750 | **+0.0942** | **−65.7%** | 0.91% ✅ |
-| **Gemma 4-E4B** (2026, multimodal) | — | 20.60 | +1.8786 | **+0.9302** | **−50.5%** 🚀 | 4.51% ✅ |
+| **Gemma 4-E4B** (2026, multimodal) | — | 20.60 | +1.8786 | **+0.9302** | **−50.5%** | 4.51% ✅ |
 
-**Aggregate (8 models): asym beats sym on 8/8 (100%), mean reduction −66.0%, range −50.5% to −95.8%, all 8 land in the < 5% of baseline production tier.**
+**Aggregate (8 runnable models): asym beats sym on 8 of 8, mean reduction −66.0 %, range −50.5 % to −95.8 %. All 8 land in the < 5 % of baseline production tier on WikiText-2 PPL.** (Phi-3-medium-4k-instruct is counted as "attempted but blocked", not as a failure — see the [Phi-3 note](#phi-3-medium-compatibility-note) below.)
 
 Three specific callouts:
 
@@ -149,7 +161,7 @@ Phase 18 + 19 decomposed the v0.3 recipe into four INT3 variants and measured ea
 | (A) naive per-row sym INT3 | 3 / 8 (fails on Qwen2, Pythia, Gemma 4; borderline on Qwen2.5) |
 | (B) asym per-channel, no nsep | 3 / 8 (fails on Llama, Mistral, Qwen2.5) |
 | (C) nsep+pchan sym INT3 (v0.2) | 5 / 8 (fails on Pythia, Qwen2.5, Gemma 4) |
-| **(D) nsep+pchan asym INT3 (v0.3)** | **8 / 8** 🏆 |
+| **(D) nsep+pchan asym INT3 (v0.3)** | **8 / 8** |
 
 The critical finding is that method (B) — asymmetric per-channel INT3 *without* norm separation, a drop-in recipe common in weight quantization — **catastrophically regresses on 4 of 8 models** (up to 24× worse than naive on Llama-3.1-8B). The failure correlates with modern Llama-family architectures that have high token-wise L2-norm variance: without `nsep`, per-channel min/max is dominated by high-norm tokens, which mis-scales the low-norm tokens. `nsep` removes this contamination by normalizing each token to unit length before computing per-channel statistics.
 
@@ -178,7 +190,7 @@ Extrapolating the Llama ratio:
 
 ---
 
-## INT3 at production quality (8 of 8 models, 2021–2026)
+## INT3 at production quality (8 of 8 runnable models, 2021–2026)
 
 Applying `qa_nsep_pchan_asym` at INT3 — 3 bits per value, 5.09× compression vs FP16. Phase 14 + Phase 16 + Phase 17 summary:
 
@@ -353,7 +365,7 @@ v0.3 went through twelve numbered experimental phases (see `experiments/phase9_*
 
 6. **Phase 16 — 6-model generalization** added Mistral-7B-v0.1, Qwen2.5-14B, GPT-J-6B, Pythia-6.9B, plus an attempted Phi-3-medium-4k-instruct run that was blocked by an unrelated HF custom-code incompatibility. 6 of 6 runnable models beat the symmetric baseline by 56–96 %; Pythia jumped from v0.2's "research only" tier into production.
 
-7. **Phase 17 — 2026 flagships** added Qwen3.5-9B (hybrid attention) and Gemma 4-E4B (multimodal). Asym INT3 remains universal: 8 / 8 runnable models land in the < 5 % baseline production tier.
+7. **Phase 17 — 2026 flagships** added Qwen3.5-9B (hybrid attention) and Gemma 4-E4B (multimodal). All 8 runnable models — the 6 above plus the 2 flagships — land in the < 5 % baseline production tier on WikiText-2. We say "runnable" because Phi-3-medium-4k-instruct was attempted earlier but blocked by an HF custom-code incompatibility unrelated to modeq; see the [Phi-3 note](#phi-3-medium-compatibility-note).
 
 ### Why we know every component of v0.3 is necessary
 
