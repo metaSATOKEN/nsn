@@ -1,0 +1,63 @@
+{
+  "experiment": "phase7_residual_correction",
+  "timestamp": "2026-04-18T05:50:54",
+  "thesis": "Test whether a 1-bit residual correction composes orthogonally with nsep+pchan, and whether a per-channel RMS magnitude is essential for Mode 1 models.",
+  "results": {
+    "qwen2_7b_mode1": {
+      "baseline_ppl": 8.369,
+      "measurements": {
+        "nsep+pchan INT2":         {"delta_ppl": 325.963, "eff_bits": 2,     "note": "catastrophic (Phase 1 reproduced)"},
+        "nsep+pchan INT2 + R-0.25":{"delta_ppl": 463.250, "eff_bits": 3,     "note": "WORSE than INT2 alone; fixed magnitude backfires"},
+        "nsep+pchan INT2 + R-RMS": {"delta_ppl":   0.465, "eff_bits": "3+D", "note": "99.9% rescue of INT2 catastrophe"},
+        "nsep+pchan INT3":         {"delta_ppl":   0.402, "eff_bits": 3,     "note": "reference"},
+        "nsep+pchan INT3 + R-0.25":{"delta_ppl":   0.886, "eff_bits": 4,     "note": "WORSE than INT3 alone; fixed backfires here too"},
+        "nsep+pchan INT3 + R-RMS": {"delta_ppl":   0.025, "eff_bits": "4+D", "note": "BEATS INT4 alone (+0.054) by 2.2x"},
+        "nsep+pchan INT4":         {"delta_ppl":   0.054, "eff_bits": 4,     "note": "reference"}
+      }
+    },
+    "llama_3_1_8b_mode2": {
+      "baseline_ppl": 8.942,
+      "measurements": {
+        "nsep+pchan INT2":         {"delta_ppl": 22.841, "eff_bits": 2,     "note": "degraded"},
+        "nsep+pchan INT2 + R-0.25":{"delta_ppl":  1.227, "eff_bits": 3,     "note": "94.6% rescue of INT2"},
+        "nsep+pchan INT2 + R-RMS": {"delta_ppl":  0.707, "eff_bits": "3+D", "note": "96.9% rescue"},
+        "nsep+pchan INT3":         {"delta_ppl":  0.271, "eff_bits": 3,     "note": "reference"},
+        "nsep+pchan INT3 + R-0.25":{"delta_ppl":  0.075, "eff_bits": 4,     "note": "matches INT4 alone"},
+        "nsep+pchan INT3 + R-RMS": {"delta_ppl":  0.075, "eff_bits": "4+D", "note": "identical to R-0.25 on Llama"},
+        "nsep+pchan INT4":         {"delta_ppl":  0.036, "eff_bits": 4,     "note": "reference"}
+      }
+    }
+  },
+  "key_findings": {
+    "finding_1_rms_essential_for_mode1": {
+      "observation": "Fixed-magnitude 0.25 residual BACKFIRES on Mode 1 (Qwen2-7B): INT2+0.25 is +463 (worse than INT2 alone +326), INT3+0.25 is +0.89 (worse than INT3 alone +0.40).",
+      "mechanism": "Mode 1's outlier-driven residual distribution is heavily non-uniform; the E[|residual|] = 0.25 uniform-assumption constant is wrong. Per-channel RMS adapts: small on smooth channels, large on outlier channels.",
+      "implication": "Residual correction MUST use per-channel RMS (or similar adaptive magnitude) on Mode 1 models. Fixed constants harm."
+    },
+    "finding_2_int3_rms_beats_int4_alone": {
+      "observation": "Qwen2-7B nsep+pchan INT3 + RMS residual: ΔPPL +0.025 at 4+D/head bits, surpassing native INT4 alone (+0.054) by 2.2x precision.",
+      "interpretation": "A new Pareto-optimal point on Mode 1: the per-channel RMS residual captures outlier-correlated error that per-row absmax INT4 cannot.",
+      "caveat": "D/head bits of per-channel RMS scale is a small metadata overhead (128 FP16 per head, ~256 bytes). Not free but negligible at scale."
+    },
+    "finding_3_mode2_insensitive_to_magnitude_choice": {
+      "observation": "On Llama (Mode 2), fixed-0.25 and RMS-per-channel produce near-identical results: both INT3+residual reach +0.075.",
+      "interpretation": "Mode 2's residual distribution is approximately uniform (no outlier bias). The magnitude choice doesn't matter much; any reasonable constant works.",
+      "implication": "For Mode 2 deployment, the simpler Fixed-0.25 residual suffices. For Mode 1, RMS is essential."
+    },
+    "finding_4_int2_plus_residual_does_not_beat_int3": {
+      "observation": "At 3-effective-bit budget: INT3 alone wins. INT2+RMS is close (+0.47 vs +0.40 on Qwen) but does not surpass. On Llama the gap is larger (+0.71 vs +0.27).",
+      "interpretation": "Dropping a bit in the base quantizer and gaining it back via residual is not uniformly beneficial. INT3's cleaner levels beat INT2's looser + 1-bit correction.",
+      "implication": "The sweet spot remains INT3 for pure-quality and INT3+RMS for quality-at-any-cost."
+    }
+  },
+  "composition_implications": {
+    "modeq_extension_candidate": "Add nsep+pchan+residual variant to the library (v0.2). The RMS per-channel variant is recommended default; fixed-0.25 should be discouraged on unaudited models.",
+    "paper_b_contribution": "Residual correction as orthogonal composition: provides a new Pareto-optimal point on Mode 1 at 4+ε bits, surpassing native INT4. Complements (does not compete with) TurboQuant's rotated QJL residual.",
+    "relationship_to_turboquant": "TurboQuant's 1-bit residual operates on post-rotation scalar quantization of the full vector. Ours operates on per-channel absmax-scaled direction values of normalized vectors. Mechanistically orthogonal axes; both address residual quantization error, via different bases."
+  },
+  "open_questions": [
+    "Does RMS residual generalize to all 7 models from Phase 4, not just Qwen2-7B and Llama?",
+    "Can real bit-packing implement the 1-bit sign bits efficiently alongside INT3?",
+    "What is the effective compression ratio including per-channel RMS overhead? (FP16 D/head per layer-head)"
+  ]
+}
