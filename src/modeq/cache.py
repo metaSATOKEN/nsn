@@ -2,16 +2,29 @@
 # Licensed under the Apache License, Version 2.0
 
 """
-High-level KV cache wrapper that uses INT3 nsep+pchan with real
-bit-packing.
+High-level KV cache wrappers with real bit-packing.
+
+v0.3 exports two cache classes:
+
+* :class:`Int3AsymNsepPchanCache` -- the v0.3 default. Asymmetric
+  per-channel INT3 on the norm-separated direction. Phase 15
+  measured 5.09x real compression vs FP16, and Phase 14 measured
+  ΔPPL +0.10 on Qwen2-7B and +0.11 on Llama-3.1-8B at WikiText-2
+  sliding-window PPL (ctx=1024). Metadata overhead vs the symmetric
+  v0.2 cache is +0.008 bits/value (one extra FP16 per channel for
+  d_min).
+
+* :class:`Int3NsepPchanCache` -- the v0.2 symmetric cache, retained
+  for backwards compatibility and for benchmarks that need the
+  original per-channel absmax quantizer.
 
 Typical usage (illustrative; see `modeq.integrations.*` for
 drop-in HF Transformers hooks when they land):
 
-    from modeq import Int3NsepPchanCache
+    from modeq import Int3AsymNsepPchanCache
 
     # Compress a Key or Value tensor [B, H, T, D] from an FP16 cache
-    cached = Int3NsepPchanCache.from_fp16(k)
+    cached = Int3AsymNsepPchanCache.from_fp16(k)
 
     # Reconstruct for attention (returns FP16 [B, H, T, D])
     k_recon = cached.to_fp16()
@@ -19,12 +32,13 @@ drop-in HF Transformers hooks when they land):
     # Check actual storage size
     bytes_used = cached.size_bytes()
 
-Empirical memory savings vs FP16, measured 2026-04-18:
-    Llama-3.1-8B (2048 ctx, 32 layers): 92 MB -> 18 MB (5.08x)
-    Qwen2-7B     (2048 ctx, 28 layers): 40 MB -> 8  MB (5.08x)
+Phase 15 real-packed memory measurements (2026-04-18, asymmetric):
+    Qwen2-7B     (2048 ctx, 28 layers, 4 KV heads): 112 MB -> 22 MB (5.09x)
+    Llama-3.1-8B (2048 ctx, 32 layers, 8 KV heads): 256 MB -> 50 MB (5.09x)
 
-Quality preserved to within 0.02 PPL vs simulated nsep+pchan INT3
-on both models (< 0.5% of baseline PPL on either).
+Quality at WikiText-2 (Phase 14, asym vs symmetric at 3.0 bits/value):
+    Qwen2-7B  (Mode 1): symmetric +0.4021 -> asymmetric +0.1034 (-74.3%)
+    Llama-3.1-8B (Mode 2): symmetric +0.2541 -> asymmetric +0.1059 (-58.3%)
 """
 
 import torch

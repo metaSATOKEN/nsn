@@ -48,13 +48,18 @@ def test_select_mode2_4bit_uses_plain_int4():
     assert desc["mode"] == "Mode 2"
 
 
-def test_select_mode1_3bit_uses_plain_int3():
-    """At 3-bit budget, Mode 1 still gets plain INT3 (residual would
-    cost extra bits; the value is at 4-bit budget)."""
+def test_select_mode1_3bit_uses_asym_int3():
+    """At 3-bit budget, Mode 1 gets asymmetric INT3 (v0.3 default).
+    Residual correction is reserved for the 4-bit Mode-1 path; 3-bit
+    Mode 1 uses asym alone because asym already dominates sym INT3
+    by 74.3% ΔPPL on Qwen2-7B per Phase 14."""
     stats = _fake_outlier_stats(layer_0_k=17.0)
     desc = describe_selection(outlier_stats=stats, target_bits=3)
+    # v0.3: INT3 path is asymmetric on every mode, no RMS residual at INT3.
     assert "residual" not in desc["method"].lower()
     assert "INT3" in desc["method"]
+    assert ("asym" in desc["method"].lower()
+            or "asymmetric" in desc["method"].lower())
 
 
 def test_explicit_mode_overrides_stats():
