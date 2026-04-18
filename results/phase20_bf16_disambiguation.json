@@ -1,0 +1,118 @@
+{
+  "date": "2026-04-18T11:32:44",
+  "phase": "Phase 20",
+  "description": "bf16 baseline disambiguation for the two 2026 flagship models that produced negative ΔPPL under method (B) asymmetric per-channel INT3 without norm separation in Phase 19. Tests whether the anomaly is an FP16 inference artifact (H1) or a real regularization effect (H2).",
+  "ctx_len": 1024,
+  "stride": 512,
+  "max_windows": 10,
+
+  "hypotheses": {
+    "H1": {
+      "label": "FP16 eval artifact",
+      "statement": "Both models are bf16-trained. FP16 inference adds numerical instability that quantization noise partially masks, producing an apparent improvement vs inflated FP16 baseline. A bf16 baseline should eliminate the negative ΔPPL.",
+      "decision_rule": "supported if bf16 baseline drops by > 0.1 AND asym-only ΔPPL shrinks toward zero / flips positive under bf16"
+    },
+    "H2": {
+      "label": "Real regularization effect",
+      "statement": "Quantization noise is genuinely acting as beneficial regularization on well-trained 2026 models. A bf16 baseline should preserve the negative ΔPPL.",
+      "decision_rule": "supported if bf16 baseline is stable (within 0.05) AND asym-only ΔPPL stays negative under bf16"
+    }
+  },
+
+  "runs": {
+    "Qwen3.5-9B/fp16": {
+      "label": "Qwen3.5-9B",
+      "model": "Qwen/Qwen3.5-9B",
+      "requested_dtype": "fp16",
+      "actual_param_dtype": "torch.bfloat16",
+      "dtype_was_silently_forced": true,
+      "silent_force_note": "Qwen3.5-9B is trained natively in bf16 and the transformers library silently upcasts the requested torch_dtype=float16 back to bf16 on load. The 'fp16' run therefore never actually evaluated in FP16. The fp16-vs-bf16 comparison for Qwen3.5 is degenerate; both rows below are genuine bf16 measurements.",
+      "baseline_ppl": 10.3181,
+      "results": {
+        "A_naive_perrow_sym":     {"ppl": 10.5596, "delta":  0.2415},
+        "B_asym_pchan_no_nsep":   {"ppl": 10.3143, "delta": -0.0038},
+        "C_nsep_pchan_sym_v02":   {"ppl": 10.5931, "delta":  0.2750},
+        "D_nsep_pchan_asym_v03":  {"ppl": 10.4123, "delta":  0.0942}
+      }
+    },
+    "Qwen3.5-9B/bf16": {
+      "label": "Qwen3.5-9B",
+      "model": "Qwen/Qwen3.5-9B",
+      "requested_dtype": "bf16",
+      "actual_param_dtype": "torch.bfloat16",
+      "baseline_ppl": 10.3181,
+      "results": {
+        "A_naive_perrow_sym":     {"ppl": 10.5596, "delta":  0.2415},
+        "B_asym_pchan_no_nsep":   {"ppl": 10.3143, "delta": -0.0038},
+        "C_nsep_pchan_sym_v02":   {"ppl": 10.5931, "delta":  0.2750},
+        "D_nsep_pchan_asym_v03":  {"ppl": 10.4123, "delta":  0.0942}
+      },
+      "identical_to_fp16_run": true,
+      "interpretation": "All numbers match the 'fp16' row bit-for-bit because transformers silently forced bf16 there too. The -0.0038 B-delta persists at native bf16 -- it is not an FP16 artifact. It is also within the plausible measurement-noise floor (~0.05 PPL at 5120 prediction tokens), so Qwen3.5 is best read as 'no detectable anomaly on this metric'."
+    },
+
+    "gemma-4-E4B/fp16": {
+      "label": "gemma-4-E4B",
+      "model": "google/gemma-4-E4B",
+      "requested_dtype": "fp16",
+      "actual_param_dtype": "torch.float16",
+      "dtype_was_silently_forced": false,
+      "baseline_ppl": 20.6035,
+      "results": {
+        "A_naive_perrow_sym":     {"ppl": 26.0533, "delta":  5.4497},
+        "B_asym_pchan_no_nsep":   {"ppl": 20.1643, "delta": -0.4393},
+        "C_nsep_pchan_sym_v02":   {"ppl": 22.4821, "delta":  1.8786},
+        "D_nsep_pchan_asym_v03":  {"ppl": 21.5337, "delta":  0.9302}
+      }
+    },
+    "gemma-4-E4B/bf16": {
+      "label": "gemma-4-E4B",
+      "model": "google/gemma-4-E4B",
+      "requested_dtype": "bf16",
+      "actual_param_dtype": "torch.bfloat16",
+      "dtype_was_silently_forced": false,
+      "baseline_ppl": 20.5845,
+      "results": {
+        "A_naive_perrow_sym":     {"ppl": 26.2758, "delta":  5.6913},
+        "B_asym_pchan_no_nsep":   {"ppl": 20.2645, "delta": -0.3200},
+        "C_nsep_pchan_sym_v02":   {"ppl": 22.4538, "delta":  1.8693},
+        "D_nsep_pchan_asym_v03":  {"ppl": 21.7438, "delta":  1.1593}
+      }
+    }
+  },
+
+  "summaries": {
+    "Qwen3.5-9B": {
+      "comparison_is_valid":   false,
+      "comparison_valid_note": "Both 'fp16' and 'bf16' runs executed in bf16 due to library-forced upcast. Cannot disambiguate H1 vs H2 for this model on dtype alone.",
+      "baseline_shift":        0.0,
+      "delta_B_fp16":          -0.0038,
+      "delta_B_bf16":          -0.0038,
+      "delta_D_fp16":          0.0942,
+      "delta_D_bf16":          0.0942,
+      "verdict_under_script_rule": "H2_supported (by the decision rule: stable baseline + B stays negative)",
+      "verdict_honest":        "inconclusive; the -0.0038 B-delta is within measurement noise on 5120 prediction tokens"
+    },
+    "gemma-4-E4B": {
+      "comparison_is_valid":   true,
+      "baseline_shift":        0.019,
+      "baseline_shift_vs_h1_threshold": "0.019 vs 0.1 threshold -> nowhere near H1",
+      "delta_B_fp16":          -0.4393,
+      "delta_B_bf16":          -0.3200,
+      "delta_B_shrinkage_pct": 27.2,
+      "delta_D_fp16":          0.9302,
+      "delta_D_bf16":          1.1593,
+      "verdict_under_script_rule": "H2_supported",
+      "verdict_honest":        "H1 ruled out with high confidence. Baseline shift (0.019) is well inside measurement noise; B-delta remains strongly negative at -0.32 even under native bf16. The 27% shrinkage hints some FP16-specific effect contributes at the margin but cannot be the primary driver. H2 is the best-fitting explanation among the two pre-registered hypotheses."
+    }
+  },
+
+  "findings": {
+    "F1_H1_ruled_out":       "FP16 eval artifact (H1) is not the explanation for the negative B-ΔPPL on gemma-4-E4B. Baseline shift under native bf16 is only 0.019 (well below the 0.1 H1 threshold), and B-delta remains strongly negative at -0.32.",
+    "F2_Qwen35_inconclusive": "Qwen3.5-9B cannot be cleanly disambiguated by dtype alone because the library forces bf16 on load. Its -0.004 B-delta is within measurement noise in either reading.",
+    "F3_real_mechanism_open": "The genuine negative ΔPPL on gemma-4-E4B under (B) asym-only is mechanistically unexplained by our pre-registered hypotheses. Three post-hoc candidates: (H3) the raw-x per-channel min/max window acts as a token-level clipping filter that incidentally cleans up some Gemma 4 attention state; (H4) gemma-4-E4B is multimodal-trained, and feeding text-only leaves the model over-confident, so quantization noise raises entropy back toward the trained distribution; (H5) partial contamination of WikiText-2 in pre-training. None of these is tested here; flagged as open for future work.",
+    "F4_D_is_robust":         "The v0.3 recommended recipe (D) = nsep+pchan asym produces ordinary small-positive ΔPPL on both models (+0.09 Qwen3.5, +0.93-1.16 Gemma 4). The negative-ΔPPL anomaly is confined to the (B) ablation variant, not to the method we ship."
+  },
+
+  "verdict_overall": "H2 supported for gemma-4-E4B; Qwen3.5-9B inconclusive due to forced-bf16 library behavior. The core v0.3 claim in Phase 17 (8-model generalization, all in production tier under D) is UNAFFECTED -- D does not exhibit negative ΔPPL, only the B ablation does, and only on gemma-4-E4B."
+}
