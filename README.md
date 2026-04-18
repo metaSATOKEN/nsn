@@ -11,7 +11,7 @@
 
 Naive INT4 KV quantization can fail catastrophically on certain models — **ΔPPL +1382 on Qwen2-7B** — while working fine on others. modeq identifies two empirically separable failure modes (Mode 1: Layer-0 outlier-driven; Mode 2: distributed) and ships a simple fix that beats the symmetric INT3 baseline by a large margin on both.
 
-> **v0.3 (this release):** Switches the default INT3 quantizer to **asymmetric per-channel nsep+pchan** (`qa_nsep_pchan_asym`). At identical 3.0 bits/value, the v0.3 default cuts WikiText-2 ΔPPL by **74.3% on Qwen2-7B (Mode 1)** and **58.3% on Llama-3.1-8B (Mode 2)** compared to the symmetric v0.2 baseline. No calibration, no codebook, no rotation — just using the full per-channel `[min, max]` range instead of the symmetric `[-absmax, +absmax]` window that wastes roughly half the quantization levels on biased post-RoPE K distributions.
+> **v0.3 (this release):** Switches the default INT3 quantizer to **asymmetric per-channel nsep+pchan** (`qa_nsep_pchan_asym`). At identical 3.0 bits/value, the v0.3 default cuts WikiText-2 ΔPPL by an average of **68.7% (range 56.0%–95.8%) across 6 models we could benchmark** — including 74.3% on Qwen2-7B (Mode 1), 58.3% on Llama-3.1-8B (Mode 2), and 95.8% on Pythia-6.9B. **All 6 land in the `< 5% of baseline PPL` production tier**, including the v0.2 "research only" model Pythia-6.9B. No calibration, no codebook, no rotation — just using the full per-channel `[min, max]` range instead of the symmetric `[-absmax, +absmax]` window that wastes roughly half the quantization levels on biased post-RoPE K distributions.
 
 ```python
 from modeq import Int3AsymNsepPchanCache
@@ -73,6 +73,8 @@ Both are handled by the same preprocessing: **norm separation + per-channel scal
 
 Applied to the KV cache across all layers, WikiText-2 sliding-window PPL (ctx=1024, 10 windows):
 
+Initial Phase 14 measurement on the canonical Mode 1 / Mode 2 pair:
+
 | Model | Method | bits/value | ΔPPL | vs sym INT3 |
 |:------|:---|:-:|:-:|:-:|
 | **Qwen2-7B** (Mode 1) | FP16 baseline | 16 | 0 | — |
@@ -87,6 +89,26 @@ Applied to the KV cache across all layers, WikiText-2 sliding-window PPL (ctx=10
 The asym ↔ sym difference at **identical 3.0 bits/value** is the v0.3 headline. INT4 still wins on quality in absolute terms, but it costs 33% more bits; asym INT3 sits on the Pareto front for the INT3 tier.
 
 **Where does the gain come from?** Post-RoPE K channels have strongly biased distributions. Symmetric absmax quantizes them on `[-|max|, +|max|]`, wasting roughly half the quantization levels on the empty side. Asymmetric fits `[min, max]` tightly and uses all 2^bits levels. At INT3 this is the difference between 7 symmetric levels (−3..3) and 8 asymmetric levels (0..7), plus the range-fit advantage.
+
+### Generalization: 6-model sweep (Phase 14 + Phase 16)
+
+Phase 16 extended the comparison to four additional models from the v0.2 sweep. Combined with Phase 14 this gives a 6-model validation of the asym INT3 claim (Phi-3-medium-4k-instruct was the intended 7th but failed to load under current `transformers` due to custom-code compat issues unrelated to modeq — see [Phi-3 note](#phi-3-medium-compatibility-note) below).
+
+| Model | Mode | base PPL | sym INT3 Δ | **asym INT3 Δ** | reduction | asym % of base |
+|:------|:-:|:-:|:-:|:-:|:-:|:-:|
+| Qwen2-7B | Mode 1 | 8.37 | +0.4021 | **+0.1034** | **−74.3%** | 1.24% ✅ |
+| Llama-3.1-8B | Mode 2 | 7.38 | +0.2541 | **+0.1059** | **−58.3%** | 1.43% ✅ |
+| **Pythia-6.9B** | Mode 2 | 10.76 | +2.3781 | **+0.0994** | **−95.8%** 🚀 | 0.92% ✅ |
+| Qwen2.5-14B | Mode 2 | 1.96 | +0.2608 | **+0.0909** | **−65.1%** | 4.64% ✅ |
+| Mistral-7B-v0.1 | Mode 2 | 6.30 | +0.1243 | **+0.0547** | **−56.0%** | 0.87% ✅ |
+| GPT-J-6B (head_dim=256) | Mode 2 | 10.29 | +0.1873 | **+0.0703** | **−62.5%** | 0.68% ✅ |
+
+**Aggregate (6 models): asym beats sym on 6/6, mean reduction −68.7%, range −56.0% to −95.8%, all 6 land in the < 5% of baseline production tier.**
+
+Two specific callouts from this sweep:
+
+- **Pythia-6.9B jumps from "research only" to production.** Under v0.2's symmetric INT3 it drifted +22.1% of baseline (our "✗ research only" tier). Under v0.3's asymmetric INT3 at identical 3.0 bits/value it drifts +0.92% of baseline — the largest relative improvement in the 6-model sample and a clean move into the production tier.
+- **GPT-J-6B has head_dim=256, not 128.** Its −62.5% reduction confirms that the asym recipe is head-dim agnostic at the per-channel level.
 
 ### Real-packed compression
 
@@ -109,16 +131,31 @@ Extrapolating the Llama ratio:
 
 ---
 
-## INT3 at production quality (updated for v0.3)
+## INT3 at production quality (6 of 6 models)
 
-Applying `qa_nsep_pchan_asym` at INT3 — 3 bits per value, 5.09× compression vs FP16.
+Applying `qa_nsep_pchan_asym` at INT3 — 3 bits per value, 5.09× compression vs FP16. Phase 14 + Phase 16 summary:
 
 | Model | Δ PPL (v0.3 asym) | % of baseline | Compression | Verdict |
 |:------|:--|:--|:--|:--|
-| Qwen2-7B (Mode 1, rescued) | +0.10 | 1.2% | 5.09× | ✅ production |
-| Llama-3.1-8B (Mode 2) | +0.11 | 1.2% | 5.09× | ✅ production |
+| Qwen2-7B (Mode 1, rescued) | +0.1034 | 1.24% | 5.09× (measured) | ✅ production |
+| Llama-3.1-8B (Mode 2) | +0.1059 | 1.43% | 5.09× (measured) | ✅ production |
+| Pythia-6.9B (Mode 2) | +0.0994 | 0.92% | 5.09× (extrap.) | ✅ production |
+| Qwen2.5-14B (Mode 2) | +0.0909 | 4.64% | 5.09× (extrap.) | ✅ production |
+| Mistral-7B-v0.1 (Mode 2) | +0.0547 | 0.87% | 5.09× (extrap.) | ✅ production |
+| GPT-J-6B (Mode 2, head_dim=256) | +0.0703 | 0.68% | 5.09× (extrap.) | ✅ production |
+| Phi-3-medium-4k-instruct | — | — | — | ⚠ HF-compat (pending, see note) |
 
-The v0.2 → v0.3 transition moves Qwen2-7B from 4.6% → 1.2% of baseline and Llama-3.1-8B from 3.0% → 1.2%, both firmly in the production tier. Per-model numbers on the remaining 5 models (Mistral-7B, GPT-J-6B, Phi-3-medium, Qwen2.5-14B, Pythia-6.9B) were measured with v0.2's symmetric INT3 and are listed in the v0.2 section below; an updated sweep with the v0.3 asym default is planned for v0.3.1.
+**6 of 6 runnable models cross our production threshold (< 5% baseline) under v0.3's asymmetric INT3 default.** By the same threshold, v0.2's symmetric INT3 had 4 of 7 in production and 1 in "research only" (Pythia-6.9B at +22.1% baseline drift); v0.3 moves Pythia and the two previously-acceptable/borderline cases fully into production.
+
+### Phi-3-medium compatibility note
+
+Phi-3-medium-4k-instruct uses a bundled `modeling_phi3.py` in its HF repo (commit `48d87cd5`) that is incompatible with current `transformers`. Loading it produces three successive errors as each patch exposes the next:
+
+1. `KeyError: config.rope_scaling["type"]` — recent `transformers` renamed the key to `rope_type`.
+2. After backfilling `type`: `ValueError: Unknown RoPE scaling type default` — Phi-3's custom code only handles `"su"` and `"yarn"`, not `transformers`' default fallback.
+3. After disabling `rope_scaling`: `AttributeError: type object 'DynamicCache' has no attribute 'from_legacy_cache'` — Phi-3's code uses a cache API that was removed in recent `transformers`.
+
+This is unrelated to modeq — the same bundled code breaks on any quantization project using current `transformers`. A clean fix would require either (a) pinning `transformers` to a version contemporaneous with the Phi-3 commit, (b) a bundled-code update from Microsoft, or (c) re-running against a maintained Phi-3 sibling (Phi-3.5-mini, Phi-3-small). We defer to v0.3.3+.
 
 ### What we mean by "production quality"
 
@@ -341,8 +378,8 @@ This is a **v0.3 research prototype** (April 2026). It works, the numbers are re
 
 - **Python overhead**: current implementation adds ~+21% decode latency on 7B-class models because quantize/dequantize happens in Python. A fused CUDA kernel (Triton or native) would remove this; contributions welcome.
 - **Not yet a drop-in for HuggingFace Transformers**: you wire `Int3AsymNsepPchanCache` against the model's `DynamicCache` manually for now. Proper integration is on the roadmap.
-- **v0.3 PPL measured on 2 models**: Phase 14's 74.3% / 58.3% numbers are on Qwen2-7B (Mode 1) and Llama-3.1-8B (Mode 2). A wider sweep mirroring v0.2's 7-model set is planned for v0.3.1.
-- **Real bit-packing measured on 2 models**: `Int3AsymNsepPchanCache.size_bytes()` empirically validated on Qwen2-7B and Llama-3.1-8B (5.09× measured).
+- **v0.3 PPL measured on 6 models** (Phase 14 + Phase 16): Qwen2-7B, Llama-3.1-8B, Pythia-6.9B, Qwen2.5-14B, Mistral-7B-v0.1, GPT-J-6B. 6 of 6 land in the production tier, all beating the symmetric baseline. Phi-3-medium-4k-instruct was the intended 7th but is blocked by an HF custom-code / transformers version incompatibility unrelated to modeq.
+- **Real bit-packing measured on 2 models**: `Int3AsymNsepPchanCache.size_bytes()` empirically validated on Qwen2-7B and Llama-3.1-8B (5.09× measured). The other 4 models were validated in simulation (quantize → dequantize → WikiText-2 PPL); their real-packed ratios would be essentially identical (within 0.01 bits/value for head_dim=128, slightly higher for GPT-J-6B's head_dim=256 due to per-channel metadata overhead).
 - **Sample size for Mode 1**: only one catastrophic case (Qwen2-7B) in our 27-model sample. The Layer-0 mechanism is causally isolated, but how often the pattern occurs in the open-model population is unknown. Safe default: always use `qa_nsep_pchan_asym`, which handles both modes.
 - **Pre-LN only**: Post-LN models (GPT-1 style) are not evaluated.
 - **Long-context validation pending**: all PPL numbers are at ctx=1024 sliding window. 32K+ is a roadmap item.

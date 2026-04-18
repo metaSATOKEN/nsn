@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "modeq"
-version = "0.3.1"
-description = "Mode-aware KV cache quantization for Pre-LN Transformers. v0.3: asymmetric per-channel INT3 cuts WikiText-2 ΔPPL by 58-74% vs symmetric at identical 3.0 bits/value, with 5.09x real-packed memory reduction. Data-independent, no calibration, 10-line implementation."
+version = "0.3.2"
+description = "Mode-aware KV cache quantization for Pre-LN Transformers. v0.3: asymmetric per-channel INT3 at 3.0 bits/value cuts WikiText-2 ΔPPL by an average 68.7% (range 56-96%) across 6 benchmarked models, all landing in the <5% baseline production tier with 5.09x real-packed compression. Data-independent, no calibration, 10-line implementation."
 readme = "README.md"
 license = {text = "Apache-2.0"}
 authors = [
