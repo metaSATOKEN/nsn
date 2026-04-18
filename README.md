@@ -9,7 +9,7 @@
 
 ## TL;DR
 
-Naive INT4 quantization of KV caches can fail catastrophically on certain models — **ΔPPL +1382 on Qwen2-7B** — while working fine on others. We found two empirically separable failure modes and built a universal fix that delivers **INT3 compression with 5.08× real memory reduction at production quality** on both.
+Naive INT4 quantization of KV caches can fail catastrophically on certain models — **ΔPPL +1382 on Qwen2-7B** — while working fine on others. We identify **two empirically separable failure modes** (Mode 1: Layer-0 outlier-driven; Mode 2: distributed norm-variation-driven) and provide a simple, data-independent baseline that handles both: **INT3 with 5.08× real memory reduction at production quality** on 5 of 7 models tested.
 
 ```python
 from modeq import Int3NsepPchanCache
@@ -24,7 +24,9 @@ k_recon = cached.to_fp16()
 cached.size_bytes()   # 5.08x smaller than k.nbytes
 ```
 
-4 lines of code. No training. No calibration. Works on Qwen2-7B's pathological case AND on everything else.
+4 lines of code. No training. No calibration. No rotation. Rescues Qwen2-7B's pathological INT4 case (+1382 → +0.39 ΔPPL).
+
+> **Note on prior art.** The norm-vs-direction split itself is not new: [PolarQuant (2025)](https://arxiv.org/abs/2502.02617) and [TurboQuant (ICLR 2026)](https://hackaday.com/2026/04/09/turboquant-reducing-llm-memory-usage-with-vector-quantization/) also store the L2 magnitude exactly and quantize the direction. modeq is deliberately simpler (per-channel absmax, no codebook, no rotation), and our main contribution is the **failure-mode diagnosis + causal mechanism** rather than the quantizer itself. See [Related work](#related-work-and-how-modeq-differs).
 
 ---
 
@@ -179,6 +181,53 @@ The full story, including the 11-model K/V outlier asymmetry study and the causa
 > [Zenodo DOI / paper PDF](https://github.com/metaSATOKEN/norm-separated-quantization)
 
 ---
+
+## Related work and how modeq differs
+
+KV cache quantization is an active area. Here's where modeq sits relative to recent work, and what's genuinely new versus what overlaps.
+
+### Norm–direction decomposition is not new
+
+**PolarQuant** ([arXiv:2502.02617](https://arxiv.org/abs/2502.02617), 2025) pioneered separating the KV vector's L2 magnitude from its direction for quantization: the scalar radius $r = \|x\|_2$ is stored in full precision, and the direction is represented as a hierarchy of polar angles that are then quantized via k-means codebooks after a random orthogonal rotation. PolarQuant reports 4.2× compression on Llama-3.1-8B. **TurboQuant** ([ICLR 2026](https://hackaday.com/2026/04/09/turboquant-reducing-llm-memory-usage-with-vector-quantization/), Google) extends PolarQuant with a 1-bit QJL residual correction, reaching 6× compression at 3 bits/coord.
+
+modeq's `nsep+pchan` shares the broad structure of *storing the L2 norm exactly + quantizing the direction*. That idea itself is **prior art as of PolarQuant (Feb 2025)**. What differs is the direction representation and the study's focus.
+
+### Differences
+
+| | PolarQuant / TurboQuant | modeq |
+|:---|:---|:---|
+| Direction representation | Hierarchical polar angles over log₂(d) levels | Unit vector, per-channel absmax |
+| Quantization | k-means codebook (data-dependent centroids) | Absmax rounding (data-independent) |
+| Rotation / preconditioning | Required (random orthogonal matrices) | Not used |
+| Calibration data | Required | Not required |
+| Implementation | Recursive transforms + codebook lookup | ~4 lines of Python |
+| Primary evaluation | Llama-3.1-8B (1 model) | 7 models × 6 bit widths |
+| Primary contribution | Compression engineering | **Failure-mode diagnosis + mechanism** |
+
+### What modeq contributes that isn't in prior work
+
+The bulk of `modeq`'s research value is not in the quantizer itself (PolarQuant covers the norm–direction split) but in the empirical and mechanistic framework around it:
+
+1. **Two empirically separable failure modes.** Naive INT KV quantization doesn't fail one way — there are two: Mode 1 (Layer-0 outlier-driven, catastrophic INT4 valley, 1/27 models in our sample) and Mode 2 (distributed norm-variation-driven, monotonic, the common case). See [docs/THEORY.md](docs/THEORY.md). PolarQuant and TurboQuant do not separate or diagnose these modes.
+
+2. **The INT4 valley of death.** Naive INT shows a non-monotonic ΔPPL vs bit-width curve on Mode 1 models: INT4 is catastrophically worse than both INT3 and INT5 (by 295× on Qwen2-7B). This grid-alignment interaction between outlier magnitude and quantization step size is not, to our knowledge, previously characterized.
+
+3. **Layer-0 causal isolation.** On Qwen2-7B, applying `nsep+pchan` to Layer 0 alone — while leaving the other 27 layers under naive INT4 — rescues 99.97% of the catastrophic ΔPPL. The inverse (naive on Layer 0, `nsep+pchan` elsewhere) reproduces the catastrophe. No prior KV quantization work performs this kind of selective-layer intervention to isolate the site of failure.
+
+4. **A simple universal baseline.** `nsep+pchan` is data-independent, requires no codebook, no rotation, no calibration. On the 7 models we evaluated, INT3 `nsep+pchan` reaches production quality on 5 of 7 (and rescues the one Mode 1 pathology). This complements, rather than competes with, the more sophisticated compression machinery of PolarQuant/TurboQuant.
+
+### Other related methods
+
+- **KIVI** ([ICML 2024](https://arxiv.org/abs/2402.02750)): asymmetric 2-bit Key (per-channel) + Value (per-token) quantization. No norm separation.
+- **KVQuant** ([NeurIPS 2024](https://www.stat.berkeley.edu/~mmahoney/pubs/neurips-2024-kvquant.pdf)): per-channel Key pre-RoPE quantization with calibration. Concurrent with and similar in spirit to KIVI.
+- **SQuat** ([arXiv:2503.24358](https://arxiv.org/abs/2503.24358), 2025): constrains quantization error to be orthogonal to the query subspace. A different angle from norm decomposition; complementary.
+- **MiniKV** (ACL 2025): pushes to 2-bit via selective precision. Orthogonal technique.
+
+### Honest summary
+
+**Compression engineering**: PolarQuant and TurboQuant are ahead (more bits squeezed out via codebooks + residuals).
+
+**Diagnosis and mechanism**: modeq is uniquely positioned — we show *when and why* naive INT quantization breaks, with causal experiments, and provide the simplest baseline that works across both failure modes. That's the gap in the literature modeq tries to fill.
 
 ## Status and limitations
 
