@@ -1,0 +1,116 @@
+{
+  "Qwen2-7B": {
+    "model_id": "Qwen/Qwen2-7B",
+    "expected_mode": "Mode 1",
+    "meta": {
+      "head_dim": 128,
+      "n_kv_heads": 4,
+      "T": 177
+    },
+    "channel_stats": {
+      "D": 128,
+      "per_chan_max_mean": 19.581863403320312,
+      "per_chan_max_max": 166.75,
+      "per_chan_max_std": 36.79777145385742,
+      "per_chan_max_top5": [
+        166.75,
+        160.5,
+        159.0,
+        156.625,
+        128.125
+      ],
+      "per_chan_ratio_mean": 3.613785743713379,
+      "per_chan_ratio_max": 9.751253128051758
+    },
+    "kurtosis": {
+      "kurt_mean_over_channels": -0.2398070991039276,
+      "kurt_max_over_channels": 8.592613220214844,
+      "kurt_min_over_channels": -1.881434679031372,
+      "kurt_median_over_channels": -0.6719939708709717,
+      "kurt_frac_channels_heavy_tailed": 0.0234375
+    },
+    "hill_tail_index_top1pct": 4.717905521392822,
+    "int3_comparison": {
+      "bits": 3,
+      "n_heads": 4,
+      "mse_plain_per_head": [
+        0.32794010639190674,
+        0.4486233592033386,
+        0.246592178940773,
+        0.2144717127084732
+      ],
+      "mse_rot_per_head": [
+        0.755465567111969,
+        1.9588568210601807,
+        1.054309606552124,
+        0.7883478999137878
+      ],
+      "mse_plain_mean": 0.3094068467617035,
+      "mse_rot_mean": 1.1392449140548706,
+      "mse_ratio_rot_over_plain": 3.6820287704467773,
+      "n_heads_rotation_helps": 0
+    },
+    "verdict": "ROTATION HURTS on real Layer 0 K"
+  },
+  "Llama-3.1-8B": {
+    "model_id": "meta-llama/Llama-3.1-8B",
+    "expected_mode": "Mode 2",
+    "meta": {
+      "head_dim": 128,
+      "n_kv_heads": 8,
+      "T": 168
+    },
+    "channel_stats": {
+      "D": 128,
+      "per_chan_max_mean": 4.4514007568359375,
+      "per_chan_max_max": 10.421875,
+      "per_chan_max_std": 1.1618590354919434,
+      "per_chan_max_top5": [
+        10.421875,
+        9.6171875,
+        7.8125,
+        6.8671875,
+        6.73828125
+      ],
+      "per_chan_ratio_mean": 3.9442224502563477,
+      "per_chan_ratio_max": 7.892477512359619
+    },
+    "kurtosis": {
+      "kurt_mean_over_channels": -0.16584435105323792,
+      "kurt_max_over_channels": 3.3701815605163574,
+      "kurt_min_over_channels": -1.1630737781524658,
+      "kurt_median_over_channels": -0.33151936531066895,
+      "kurt_frac_channels_heavy_tailed": 0.0078125
+    },
+    "hill_tail_index_top1pct": 4.595831394195557,
+    "int3_comparison": {
+      "bits": 3,
+      "n_heads": 8,
+      "mse_plain_per_head": [
+        0.08199033886194229,
+        0.0781479999423027,
+        0.07830008119344711,
+        0.045192331075668335,
+        0.04240009933710098,
+        0.050014834851026535,
+        0.11102661490440369,
+        0.05114484578371048
+      ],
+      "mse_rot_per_head": [
+        0.08658880740404129,
+        0.07654653489589691,
+        0.08532436937093735,
+        0.04528532549738884,
+        0.04164920374751091,
+        0.05072519928216934,
+        0.1094573587179184,
+        0.04808039218187332
+      ],
+      "mse_plain_mean": 0.06727714091539383,
+      "mse_rot_mean": 0.06795714795589447,
+      "mse_ratio_rot_over_plain": 1.0101075172424316,
+      "n_heads_rotation_helps": 4
+    },
+    "verdict": "ROTATION ~ TIES on real Layer 0 K"
+  }
+}

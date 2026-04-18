@@ -19,14 +19,23 @@ from .quantize import (
     qa_nsep_pchan,
     qa_nsep_pchan_resid_rms,
     qa_nsep_pchan_resid_fixed,
+    qa_nsep_pchan_rotated,
+    qa_nsep_pchan_2tier,
+    qa_nsep_pchan_asym,
     apply_method,
 )
-from .pack import pack_int3_signed, unpack_int3_signed
-from .cache import Int3NsepPchanCache
+from .pack import (
+    pack_int3_signed,
+    unpack_int3_signed,
+    pack_int3_unsigned,
+    unpack_int3_unsigned,
+)
+from .cache import Int3NsepPchanCache, Int3AsymNsepPchanCache
 from .detect import measure_kv_outlier_ratio, classify_mode
 from .mode_aware import select_quantizer, describe_selection
+from .rotate import hadamard_matrix, rotate, unrotate, should_rotate
 
-__version__ = "0.2.2"
+__version__ = "0.3.0"
 
 __all__ = [
     # quantization primitives
@@ -35,16 +44,27 @@ __all__ = [
     "qa_nsep_pchan",
     "qa_nsep_pchan_resid_rms",
     "qa_nsep_pchan_resid_fixed",
+    "qa_nsep_pchan_rotated",
+    "qa_nsep_pchan_2tier",
+    "qa_nsep_pchan_asym",
     "apply_method",
     # INT3 packing
     "pack_int3_signed",
     "unpack_int3_signed",
+    "pack_int3_unsigned",
+    "unpack_int3_unsigned",
     # high-level cache wrapper
     "Int3NsepPchanCache",
+    "Int3AsymNsepPchanCache",
     # mode detection
     "measure_kv_outlier_ratio",
     "classify_mode",
     # v0.2: mode-aware dispatch
     "select_quantizer",
     "describe_selection",
+    # v0.3: Walsh-Hadamard rotation
+    "hadamard_matrix",
+    "rotate",
+    "unrotate",
+    "should_rotate",
 ]

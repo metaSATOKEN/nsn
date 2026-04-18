@@ -1,0 +1,79 @@
+{
+  "date": "2026-04-18T09:10:23",
+  "qwen": {
+    "label": "Qwen2-7B (Mode 1)",
+    "model": "Qwen/Qwen2-7B",
+    "baseline_ppl": 8.369283550767774,
+    "results": {
+      "baseline (FP16)": {
+        "ppl": 8.369283550767774,
+        "bits": "16",
+        "delta": 0.0,
+        "tokens": 5120
+      },
+      "nsep+pchan INT3 symmetric": {
+        "ppl": 8.771355336662616,
+        "bits": "3",
+        "delta": 0.40207178589484194,
+        "tokens": 5120
+      },
+      "nsep+pchan INT3 asymmetric": {
+        "ppl": 8.47271682136514,
+        "bits": "3",
+        "delta": 0.10343327059736573,
+        "tokens": 5120
+      },
+      "nsep+pchan INT4 symmetric": {
+        "ppl": 8.423695736328716,
+        "bits": "4",
+        "delta": 0.05441218556094185,
+        "tokens": 5120
+      },
+      "nsep+pchan INT4 asymmetric": {
+        "ppl": 8.396092495032104,
+        "bits": "4",
+        "delta": 0.02680894426432978,
+        "tokens": 5120
+      }
+    },
+    "verdict": "ASYM_HELPS_NOT_INT4"
+  },
+  "llama": {
+    "label": "Llama-3.1-8B (Mode 2)",
+    "model": "meta-llama/Llama-3.1-8B",
+    "baseline_ppl": 7.384042802442341,
+    "results": {
+      "baseline (FP16)": {
+        "ppl": 7.384042802442341,
+        "bits": "16",
+        "delta": 0.0,
+        "tokens": 5120
+      },
+      "nsep+pchan INT3 symmetric": {
+        "ppl": 7.638114049886331,
+        "bits": "3",
+        "delta": 0.25407124744399034,
+        "tokens": 5120
+      },
+      "nsep+pchan INT3 asymmetric": {
+        "ppl": 7.48997006767542,
+        "bits": "3",
+        "delta": 0.10592726523307938,
+        "tokens": 5120
+      },
+      "nsep+pchan INT4 symmetric": {
+        "ppl": 7.397365277725452,
+        "bits": "4",
+        "delta": 0.013322475283111146,
+        "tokens": 5120
+      },
+      "nsep+pchan INT4 asymmetric": {
+        "ppl": 7.410900403537217,
+        "bits": "4",
+        "delta": 0.026857601094875783,
+        "tokens": 5120
+      }
+    },
+    "verdict": "ASYM_HELPS_NOT_INT4"
+  }
+}

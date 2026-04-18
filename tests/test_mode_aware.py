@@ -112,25 +112,24 @@ def test_describe_matches_select_for_borderline_low_bits():
 
 
 def test_describe_matches_select_for_mode1_low_bits():
-    """Mode 1 + <=2 bits: silently upgraded to INT3 (pure INT2 broken
-    on outlier channels). Description must make the upgrade explicit
-    so the caller sees the true bit cost."""
+    """Mode 1 + <=2 bits: v0.3 dispatches to INT2 + RMS residual (not the
+    v0.2 silent-upgrade-to-INT3 behavior). Description must say so and
+    the callable must return the RMS-residual-corrected quantizer."""
     desc = describe_selection(mode="Mode 1", target_bits=2)
     method_lower = desc["method"].lower()
-    rationale_lower = desc["method_rationale"].lower()
-
-    # Method string must say INT3 (actual cost), not INT2
-    assert "int3" in method_lower, (
-        f"Mode 1 + 2-bit should advertise INT3, got: {desc['method']}"
+    assert "residual" in method_lower, (
+        f"Mode 1 + 2-bit should advertise RMS residual, got: {desc['method']}"
     )
-    # Method or rationale must explicitly flag the upgrade so the user
-    # cannot miss that they were not actually given 2-bit storage.
-    assert ("upgrad" in method_lower) or ("upgrad" in rationale_lower), (
-        f"Mode 1 + 2-bit description must flag the INT2->INT3 upgrade; "
-        f"got method='{desc['method']}' rationale='{desc['method_rationale']}'"
+    assert "int2" in method_lower, (
+        f"Mode 1 + 2-bit should identify the INT2 base, got: {desc['method']}"
     )
-    # target_bits preserved as reported-input
     assert desc["target_bits"] == 2
+
+    # Callable must actually quantize (not be an identity).
+    qfn = select_quantizer(mode="Mode 1", target_bits=2)
+    x = torch.randn(16, 128, dtype=torch.float32)
+    y = qfn(x)
+    assert (x - y).abs().mean().item() > 1e-4
 
 
 def test_describe_matches_select_for_unknown_low_bits():

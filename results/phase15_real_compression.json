@@ -1,0 +1,99 @@
+{
+  "date": "2026-04-18T18:18:01",
+  "results": {
+    "Qwen2-7B": {
+      "config": {
+        "label": "Qwen2-7B",
+        "n_layers": 28,
+        "n_kv_heads": 4,
+        "head_dim": 128,
+        "ctx": 2048
+      },
+      "fp16_bytes": 117440512,
+      "rows": [
+        {
+          "method": "FP16 baseline",
+          "total_bytes": 117440512,
+          "bits_per_value": 16.0,
+          "ratio_vs_fp16": 1.0,
+          "slice_mse": null
+        },
+        {
+          "method": "INT3 sym  (v0.2, packed)",
+          "total_bytes": 22994944,
+          "bits_per_value": 3.1328125,
+          "ratio_vs_fp16": 5.107231920199501,
+          "slice_mse": 0.10472862422466278
+        },
+        {
+          "method": "INT3 asym (v0.3, packed)",
+          "total_bytes": 23052288,
+          "bits_per_value": 3.140625,
+          "ratio_vs_fp16": 5.0945273631840795,
+          "slice_mse": 0.07189823687076569
+        },
+        {
+          "method": "INT4 sym  (theoretical)",
+          "total_bytes": 30334976,
+          "bits_per_value": 4.1328125,
+          "ratio_vs_fp16": 3.8714555765595464,
+          "slice_mse": null
+        },
+        {
+          "method": "INT4 asym (theoretical)",
+          "total_bytes": 30392320,
+          "bits_per_value": 4.140625,
+          "ratio_vs_fp16": 3.8641509433962264,
+          "slice_mse": null
+        }
+      ]
+    },
+    "Llama-3.1-8B": {
+      "config": {
+        "label": "Llama-3.1-8B",
+        "n_layers": 32,
+        "n_kv_heads": 8,
+        "head_dim": 128,
+        "ctx": 2048
+      },
+      "fp16_bytes": 268435456,
+      "rows": [
+        {
+          "method": "FP16 baseline",
+          "total_bytes": 268435456,
+          "bits_per_value": 16.0,
+          "ratio_vs_fp16": 1.0,
+          "slice_mse": null
+        },
+        {
+          "method": "INT3 sym  (v0.2, packed)",
+          "total_bytes": 52559872,
+          "bits_per_value": 3.1328125,
+          "ratio_vs_fp16": 5.107231920199501,
+          "slice_mse": 0.10472862422466278
+        },
+        {
+          "method": "INT3 asym (v0.3, packed)",
+          "total_bytes": 52690944,
+          "bits_per_value": 3.140625,
+          "ratio_vs_fp16": 5.0945273631840795,
+          "slice_mse": 0.07189823687076569
+        },
+        {
+          "method": "INT4 sym  (theoretical)",
+          "total_bytes": 69337088,
+          "bits_per_value": 4.1328125,
+          "ratio_vs_fp16": 3.8714555765595464,
+          "slice_mse": null
+        },
+        {
+          "method": "INT4 asym (theoretical)",
+          "total_bytes": 69468160,
+          "bits_per_value": 4.140625,
+          "ratio_vs_fp16": 3.8641509433962264,
+          "slice_mse": null
+        }
+      ]
+    }
+  }
+}

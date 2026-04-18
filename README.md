@@ -1,6 +1,6 @@
 # modeq
 
-**Mode-aware KV cache quantization for Pre-LN Transformers.** Reach our "production" quality threshold (WikiText-2 ΔPPL < 5% of baseline) at INT3 on most model families we tested.
+**Mode-aware KV cache quantization for Pre-LN Transformers.** A practical INT3 default that cuts WikiText-2 ΔPPL by 58–74% vs the symmetric baseline at the same 3.0 bits/value, with 5.09× real-packed memory reduction and 10 lines of code.
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.9+-green.svg)](#installation)
@@ -9,32 +9,32 @@
 
 ## TL;DR
 
-Naive INT4 quantization of KV caches can fail catastrophically on certain models — **ΔPPL +1382 on Qwen2-7B** — while working fine on others. We identify **two empirically separable failure modes** (Mode 1: Layer-0 outlier-driven; Mode 2: distributed norm-variation-driven) and provide a simple, data-independent baseline that handles both: **INT3 with 5.08× real memory reduction** (measured on 2 models, extrapolated on the rest), landing within our "production" threshold (WikiText-2 ΔPPL < 5% of baseline) on **4 of 7 models tested** (a 5th is borderline at 5.2%) — see [What we mean by "production quality"](#what-we-mean-by-production-quality) for the precise criterion and caveats.
+Naive INT4 KV quantization can fail catastrophically on certain models — **ΔPPL +1382 on Qwen2-7B** — while working fine on others. modeq identifies two empirically separable failure modes (Mode 1: Layer-0 outlier-driven; Mode 2: distributed) and ships a simple fix that beats the symmetric INT3 baseline by a large margin on both.
 
-> **v0.2 (this release):** adds per-channel RMS residual correction (`qa_nsep_pchan_resid_rms`) and a mode-aware dispatcher (`select_quantizer`). On Mode 1 at roughly 4 bits/value + a small per-channel metadata (the RMS magnitudes), INT3 + RMS residual surpasses native INT4 by 2.2× precision on WikiText-2 ΔPPL.
+> **v0.3 (this release):** Switches the default INT3 quantizer to **asymmetric per-channel nsep+pchan** (`qa_nsep_pchan_asym`). At identical 3.0 bits/value, the v0.3 default cuts WikiText-2 ΔPPL by **74.3% on Qwen2-7B (Mode 1)** and **58.3% on Llama-3.1-8B (Mode 2)** compared to the symmetric v0.2 baseline. No calibration, no codebook, no rotation — just using the full per-channel `[min, max]` range instead of the symmetric `[-absmax, +absmax]` window that wastes roughly half the quantization levels on biased post-RoPE K distributions.
 
 ```python
-from modeq import Int3NsepPchanCache
+from modeq import Int3AsymNsepPchanCache
 
-# Encode a key/value tensor [B, H, T, D] with INT3 packing
-cached = Int3NsepPchanCache.from_fp16(k)
+# Encode a key/value tensor [B, H, T, D]  (v0.3 default)
+cached = Int3AsymNsepPchanCache.from_fp16(k)
 
 # Reconstruct for attention
 k_recon = cached.to_fp16()
 
-# Actual bytes on disk / VRAM
-cached.size_bytes()   # 5.08x smaller than k.nbytes
+# Actual bytes on disk / VRAM — 5.09× smaller than FP16
+cached.size_bytes()
 ```
 
-4 lines of code. No training. No calibration. No rotation. Rescues Qwen2-7B's pathological INT4 case (+1382 → +0.39 ΔPPL).
+Four lines. No training. No calibration. Rescues Qwen2-7B's pathological INT4 case (+1382 → +0.10 ΔPPL) and cuts Llama-3.1-8B INT3 drift by more than half (+0.25 → +0.11) at the same bit budget.
 
-> **Note on prior art.** The norm-vs-direction split itself is not new: [PolarQuant (2025)](https://arxiv.org/abs/2502.02617) and [TurboQuant (ICLR 2026)](https://arxiv.org/abs/2504.19874) also store the L2 magnitude exactly and quantize the direction. modeq is deliberately simpler (per-channel absmax, no codebook, no rotation), and our main contribution is the **failure-mode diagnosis + causal mechanism** rather than the quantizer itself. See [Related work](#related-work-and-how-modeq-differs).
+> **Note on prior art.** Asymmetric per-channel quantization is standard in weight quantization (GPTQ, AWQ, etc.); the norm–direction split itself is prior art as of [PolarQuant (2025)](https://arxiv.org/abs/2502.02617) / [TurboQuant (ICLR 2026)](https://arxiv.org/abs/2504.19874). modeq's contribution is the **empirical demonstration that composing these two pieces on the KV cache, with no calibration or codebook, captures 58–74% of the available INT3-tier PPL headroom** — plus the failure-mode diagnosis that motivated looking there in the first place. See [Related work](#related-work-and-how-modeq-differs).
 
 ---
 
 ## The benchmark that motivates this library
 
-WikiText-2 perplexity increase (ΔPPL) vs bit width on 7 models, naive absmax:
+WikiText-2 perplexity increase (ΔPPL) vs bit width on 7 models, naive absmax (no modeq):
 
 | Model | base PPL | INT2 | INT3 | **INT4** | INT5 | INT6 | INT8 |
 |:------|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
@@ -55,73 +55,106 @@ We ran a selective-compression experiment: compress only Layer 0, leave every ot
 | Regime (Qwen2-7B) | ΔPPL |
 |:------|:--|
 | Naive INT4 on all 28 layers | +1382.07 |
-| **Naive INT4 on layers 1-27, nsep+pchan on Layer 0 only** | **+0.38** (99.97% rescue) |
-| Naive INT4 on Layer 0 only, nsep+pchan on layers 1-27 | +1368.18 (catastrophe preserved) |
+| **Naive INT4 on layers 1–27, nsep+pchan on Layer 0 only** | **+0.38** (99.97% rescue) |
+| Naive INT4 on Layer 0 only, nsep+pchan on layers 1–27 | +1368.18 (catastrophe preserved) |
 
-Layer 0 is the single point of failure. Fixing it alone rescues essentially all the damage. On three other failing models (Pythia-6.9B, Pythia-12B, Qwen2.5-14B) the opposite holds: Layer 0 contributes < 5% of the damage, and the rest is distributed across layers.
+Layer 0 is the single point of failure. Fixing it alone rescues essentially all the damage. On three other failing models (Pythia-6.9B, Pythia-12B, Qwen2.5-14B) the opposite holds: Layer 0 contributes < 5% of the damage.
 
 This is what we mean by two modes:
 
 - **Mode 1** — Layer-0-localized, outlier-driven. Naive INT4 breaks catastrophically. Rare (1/27 models we've tested).
 - **Mode 2** — Distributed, norm-variation-driven. Naive INT scales monotonically with bit width. Common (26/27 models).
 
-Both are handled by the same preprocessing: **norm separation + per-channel scaling** (`nsep+pchan`).
+Both are handled by the same preprocessing: **norm separation + per-channel scaling** (`nsep+pchan`). v0.3 adds **asymmetric per-channel scaling** on top, which cuts ΔPPL by another large factor at the same bit budget.
 
 ---
 
-## INT3 at production quality
+## v0.3 headline: asymmetric INT3 crushes symmetric INT3
 
-Applying `nsep+pchan` at INT3 — 3 bits per value, 5.33× compression vs FP16 in theory. The ΔPPL column is WikiText-2 teacher-forced PPL with the KV cache compressed per method. The Compression column is **measured** real-packed bytes for the 2 models where we ran the full `Int3NsepPchanCache` path; for the other 5 models we list "—" because those PPL runs used simulated (fake) quantization, and the real-packing ratio would be the same 5.08× subject only to head-dim variation.
+Applied to the KV cache across all layers, WikiText-2 sliding-window PPL (ctx=1024, 10 windows):
 
-| Model | Δ PPL | % of baseline | Compression (measured) | Verdict |
+| Model | Method | bits/value | ΔPPL | vs sym INT3 |
+|:------|:---|:-:|:-:|:-:|
+| **Qwen2-7B** (Mode 1) | FP16 baseline | 16 | 0 | — |
+|  | sym INT3 (v0.2 default) | 3.000 | **+0.4021** | — |
+|  | **asym INT3 (v0.3 default)** | **3.000** | **+0.1034** | **−74.3%** 🔥 |
+|  | sym INT4 | 4.000 | +0.0544 | −86.5% |
+| **Llama-3.1-8B** (Mode 2) | FP16 baseline | 16 | 0 | — |
+|  | sym INT3 (v0.2 default) | 3.000 | **+0.2541** | — |
+|  | **asym INT3 (v0.3 default)** | **3.000** | **+0.1059** | **−58.3%** 🔥 |
+|  | sym INT4 | 4.000 | +0.0133 | −94.8% |
+
+The asym ↔ sym difference at **identical 3.0 bits/value** is the v0.3 headline. INT4 still wins on quality in absolute terms, but it costs 33% more bits; asym INT3 sits on the Pareto front for the INT3 tier.
+
+**Where does the gain come from?** Post-RoPE K channels have strongly biased distributions. Symmetric absmax quantizes them on `[-|max|, +|max|]`, wasting roughly half the quantization levels on the empty side. Asymmetric fits `[min, max]` tightly and uses all 2^bits levels. At INT3 this is the difference between 7 symmetric levels (−3..3) and 8 asymmetric levels (0..7), plus the range-fit advantage.
+
+### Real-packed compression
+
+Phase 15 measured bytes via `Int3AsymNsepPchanCache` on realistic config dimensions:
+
+| Model config | FP16 | v0.2 sym INT3 | **v0.3 asym INT3** | v0.3 ratio |
+|:------|:-:|:-:|:-:|:-:|
+| Qwen2-7B (28 layers × 4 KV heads × 2048 ctx) | 112 MB | 21.93 MB | **21.98 MB** | **5.09×** |
+| Llama-3.1-8B (32 layers × 8 KV heads × 2048 ctx) | 256 MB | 50.12 MB | **50.25 MB** | **5.09×** |
+
+The asymmetric variant costs only **0.008 bits/value more** than symmetric (one extra FP16 per channel for `d_min`) — essentially identical compression, but with 58–74% less PPL drift. A practical free lunch.
+
+Extrapolating the Llama ratio:
+
+| Context | FP16 | v0.3 asym INT3 | Saves |
+|:-:|:-:|:-:|:-:|
+| 8K | 1.02 GB | 200 MB | 822 MB |
+| 32K | 4.10 GB | 803 MB | 3.31 GB |
+| 128K | 16.4 GB | 3.21 GB | 13.2 GB |
+
+---
+
+## INT3 at production quality (updated for v0.3)
+
+Applying `qa_nsep_pchan_asym` at INT3 — 3 bits per value, 5.09× compression vs FP16.
+
+| Model | Δ PPL (v0.3 asym) | % of baseline | Compression | Verdict |
 |:------|:--|:--|:--|:--|
-| Qwen2-7B (Mode 1, rescued) | +0.39 | 4.6% | 5.08× | ✅ production |
-| Llama-3.1-8B (Mode 2) | +0.27 | 3.0% | 5.08× | ✅ production |
-| Mistral-7B-v0.1 | +0.12 | 2.0% | (extrap.) | ✅ production |
-| GPT-J-6B | +0.19 | 1.8% | (extrap.) | ✅ production |
-| Phi-3-medium-4k | +0.11 | 5.2% | (extrap.) | 🟡 borderline |
-| Qwen2.5-14B | +0.26 | 13.3% | (extrap.) | △ acceptable |
-| Pythia-6.9B (base) | +2.38 | 22.1% | (extrap.) | ✗ research only |
+| Qwen2-7B (Mode 1, rescued) | +0.10 | 1.2% | 5.09× | ✅ production |
+| Llama-3.1-8B (Mode 2) | +0.11 | 1.2% | 5.09× | ✅ production |
 
-**4 of 7 models cross our production threshold (< 5% baseline)**; a 5th (Phi-3-medium at 5.2%) sits just above it and is marked borderline. 1 is acceptable, and 1 (Pythia-6.9B, a base model without instruction tuning) is research-only. If a less strict absolute threshold is used (e.g., ΔPPL < 0.5 irrespective of baseline), 6 of 7 qualify; see the caveat on baseline dependence below.
+The v0.2 → v0.3 transition moves Qwen2-7B from 4.6% → 1.2% of baseline and Llama-3.1-8B from 3.0% → 1.2%, both firmly in the production tier. Per-model numbers on the remaining 5 models (Mistral-7B, GPT-J-6B, Phi-3-medium, Qwen2.5-14B, Pythia-6.9B) were measured with v0.2's symmetric INT3 and are listed in the v0.2 section below; an updated sweep with the v0.3 asym default is planned for v0.3.1.
 
 ### What we mean by "production quality"
 
-The "Verdict" column above classifies by a specific, reproducible threshold on WikiText-2 ΔPPL. Here's what each tier means in this repository:
+The "Verdict" column classifies by a specific, reproducible threshold on WikiText-2 ΔPPL.
 
 | Tier | WikiText-2 ΔPPL criterion | Interpretation |
 |:---|:---|:---|
-| ✅ **production** | < 5% of baseline PPL | We use this as a conservative proxy for "acceptable for typical KV-compressed deployment", in rough analogy to the PPL-drift budgets that INT4 KIVI/KVQuant methods report. In our sample this corresponds to < 0.5 absolute ΔPPL. Downstream-task drift is not measured. |
-| 🟡 **borderline** | 5–10% of baseline PPL | Usable in memory-constrained settings, but we would recommend monitoring downstream task quality before deployment. |
+| ✅ **production** | < 5% of baseline PPL | Conservative proxy for "acceptable for typical KV-compressed deployment". Downstream-task drift is not measured. |
+| 🟡 **borderline** | 5–10% of baseline PPL | Usable in memory-constrained settings; monitor downstream task quality before deployment. |
 | △ **acceptable** | 10–20% of baseline PPL | Quality drop measurable; acceptable trade-off if memory is the dominant constraint. |
-| ✗ **research only** | > 20% of baseline PPL | Compression too aggressive for this model at this bit width; treat results as an ablation, not a deployment recommendation. |
+| ✗ **research only** | > 20% of baseline PPL | Compression too aggressive for this model at this bit width; treat as an ablation, not a deployment recommendation. |
 
-**What this verdict does NOT cover** (important caveats):
+**Caveats that apply to any "production" verdict here:**
 
-1. **Downstream task accuracy** was not measured. WikiText-2 ΔPPL is a proxy; on tasks like MMLU, GSM-8K, HumanEval, or RAG accuracy, the actual quality drop may be larger or smaller than what ΔPPL suggests. KVQuant and KIVI report downstream-task accuracy; we do not, in v0.2.
-2. **Inference throughput / latency** was not measured. Our implementation is Python-only and adds roughly +21% decode latency on 7B-class models. A fused CUDA kernel (not yet implemented) should remove this; until then, the "production" label applies to quality, not speed.
-3. **Sample size**: one catastrophic model (Qwen2-7B) and seven total in the bit-width sweep. Claims about Mode 1 rescue rest on n=1 causally demonstrated; see the companion paper's Appendix H for the full diagnosis.
-4. **Baseline dependence**: the "% of baseline PPL" metric penalizes very-low-baseline (high-capability) models. Qwen2.5-14B's ΔPPL +0.26 is tiny in absolute terms; it reads as 13% only because the baseline PPL is 1.96. An absolute-ΔPPL threshold (e.g., < 0.5) would classify most of our Mode 2 models as production-ready.
+1. **Downstream task accuracy** (MMLU, GSM-8K, HumanEval, RAG) was not measured. WikiText-2 ΔPPL is a proxy.
+2. **Inference throughput / latency** was not measured. Our implementation is Python-only and adds roughly +21% decode latency on 7B-class models. A fused CUDA kernel would remove this.
+3. **Sample size for the INT3 asym claim** is two models (Qwen2-7B and Llama-3.1-8B) in Phase 14. The empirical generalisation to the wider 7-model set used in v0.2 is in progress.
 
-A model marked ✅ here means "our measurements suggest this should be acceptable at INT3 for many deployment use cases." It does not mean "we certified this model in your application." Evaluate on your own downstream task before shipping.
+---
 
-**Real memory, not simulated.** On Llama-3.1-8B with a 2048-token context:
+## How `nsep+pchan` works
 
-```
-FP16 KV cache:        92.01 MB
-INT3-packed KV cache: 18.10 MB
-Compression ratio:    5.08x (theoretical limit is 5.33x; our 4.7% overhead is FP16 norm/scale storage)
-```
+Three ideas combined:
 
-Extrapolating:
+**Norm separation** — decompose each vector into its L2 length (stored exactly) and its unit direction (quantized). Removes token-wise dynamic-range variation before quantization. Addresses Mode 2.
 
-| Context | FP16 | INT3-packed | Saves |
-|:-:|:-:|:-:|:-:|
-| 8K | 368 MB | 72 MB | 296 MB |
-| 32K | 1472 MB | 288 MB | 1.18 GB |
-| 128K | 5888 MB | 1152 MB | 4.74 GB |
+**Per-channel scaling** — quantize each channel with its own scale instead of a per-row scale. Prevents an outlier channel from dominating the quantizer. Addresses Mode 1.
 
-Simulated vs real packing: the bit-packing itself (pack → unpack on INT3 values) is bit-exact lossless; the end-to-end PPL difference between simulated and packed pipelines is **+0.000213 on Llama-3.1-8B (Mode 2)** and **+0.015 on Qwen2-7B (Mode 1)**. The small Mode 1 drift comes from storing the per-channel scales in FP16 after packing — the packed pipeline's effective precision is slightly different from the simulated path, but the effect is <0.02 ΔPPL on both tested models.
+**Asymmetric per-channel (v0.3)** — store `d_min` and `d_step = (d_max − d_min) / (2^bits − 1)` per channel, quantize to unsigned indices `[0, 2^bits − 1]`. Fits biased post-RoPE distributions instead of wasting the empty side of a symmetric window. Costs one extra FP16 per channel and ~0.008 bits/value.
+
+Neither `nsep` nor `pchan` alone is sufficient; their conjunction rescues Qwen2-7B's 1382 ΔPPL catastrophe down to +0.40 at symmetric INT3. Adding asymmetry drops it further, to +0.10 at the same bit rate.
+
+The full diagnosis, including the 11-model K/V outlier asymmetry study and the causal-isolation experiment, is in the companion paper:
+
+> **Sato, K.** "Norm-Separated Quantization: A Training-Free Fix for KV Cache INT4 Failures." 2026.
+> [Zenodo DOI / paper PDF](https://github.com/metaSATOKEN/norm-separated-quantization)
 
 ---
 
@@ -133,7 +166,7 @@ git clone https://github.com/metaSATOKEN/modeq
 cd modeq
 pip install -e .
 
-# For running the benchmark scripts in experiments/
+# For running benchmark scripts in experiments/
 pip install -e ".[eval]"
 ```
 
@@ -143,33 +176,35 @@ Requires Python 3.9+ and PyTorch 2.0+.
 
 ## Usage
 
-### Quantize a single tensor (simulated)
+### Quantize a single tensor (simulated, v0.3 default)
 
 ```python
 import torch
-from modeq import qa_nsep_pchan
+from modeq import qa_nsep_pchan_asym
 
 k = torch.randn(1, 8, 2048, 128, dtype=torch.float16, device="cuda")  # [B, H, T, D]
-k_q = qa_nsep_pchan(k, bits=3)   # ΔPPL-equivalent reconstruction, same shape
+k_q = qa_nsep_pchan_asym(k, bits=3)   # v0.3 default; same shape/dtype
 ```
 
-### Real INT3 bit-packing (5.08× memory)
+### Real INT3 bit-packing (5.09× memory, v0.3 default)
 
 ```python
-from modeq import Int3NsepPchanCache
+from modeq import Int3AsymNsepPchanCache
 
 k = torch.randn(1, 8, 2048, 128, dtype=torch.float16, device="cuda")
 
 # Encode
-cached = Int3NsepPchanCache.from_fp16(k)
+cached = Int3AsymNsepPchanCache.from_fp16(k)
 
 # Reconstruct when reading from cache
 k_recon = cached.to_fp16()
 
 # Storage footprint
 print(f"FP16: {k.element_size() * k.numel() / 1024:.1f} KB")
-print(f"INT3: {cached.size_bytes() / 1024:.1f} KB")
+print(f"INT3: {cached.size_bytes() / 1024:.1f} KB")  # ~5.09× smaller
 ```
+
+The v0.2 symmetric class (`Int3NsepPchanCache`) is still exported for backwards compatibility.
 
 ### Classify a new model
 
@@ -185,131 +220,132 @@ verdict = classify_mode(stats)
 print(verdict["mode"], "-", verdict["recommendation"])
 ```
 
-### Mode-aware dispatch (v0.2)
-
-Rather than manually choosing between `qa_nsep_pchan(x, 3)` and `qa_nsep_pchan_resid_rms(x, 3)` for your model, let modeq pick based on a measured outlier profile.
+### Mode-aware dispatch
 
 ```python
 from modeq import measure_kv_outlier_ratio, select_quantizer, describe_selection
 
 stats = measure_kv_outlier_ratio(model, tokenizer)
-quantize = select_quantizer(outlier_stats=stats, target_bits=4)
-# On Mode 1 models (K @ L0 >= 15x): returns INT3 + per-channel RMS residual.
-# On Mode 2 models: returns plain INT4 nsep+pchan (strictly better on Mode 2).
+quantize = select_quantizer(outlier_stats=stats, target_bits=3)
+# v0.3: every mode at INT3 -> asym nsep+pchan.
+# v0.2 residual mechanism still dispatched on Mode 1 + 4-bit budget.
 
-x_q = quantize(k)   # drop-in per-tensor compression
+x_q = quantize(k)
 
-# Human-readable rationale
-print(describe_selection(outlier_stats=stats, target_bits=4))
+print(describe_selection(outlier_stats=stats, target_bits=3))
 # {
-#   "method": "nsep+pchan INT3 + per-channel RMS residual",
+#   "method": "nsep+pchan INT3 asymmetric (v0.3 default)",
 #   "mode": "Mode 1",
-#   "method_rationale": "Mode 1, 4-bit budget. INT3 + RMS residual avoids
-#                        the INT4 valley entirely and surpasses native
-#                        INT4 (+0.025 vs +0.054 ΔPPL on Qwen2-7B, 2.2x
-#                        precision).",
+#   "method_rationale": "INT3 tier: asymmetric per-channel (min + range) ...
+#                        reduces WikiText-2 ΔPPL by 74.3% on Qwen2-7B (Mode 1)
+#                        and 58.3% on Llama-3.1-8B (Mode 2) vs the symmetric
+#                        baseline.",
+#   "estimated_quality": "~ +0.10 ΔPPL on Qwen2-7B (Phase 14 measurement)",
 #   ...
 # }
 ```
 
 ---
 
-## v0.2: Per-channel RMS residual correction (+mode-aware dispatch)
+## v0.3 release notes
 
-The Phase 7 & 8 studies in `experiments/` validated a 1-bit residual correction step over `nsep+pchan`. Two findings shaped this v0.2 release:
+Three empirical phases drove v0.3 (see `experiments/phase10` through `phase15`):
 
-1. **Per-channel RMS magnitude is essential.** A fixed constant magnitude (e.g., 0.25, the E[|residual|] under uniform assumption) *BACKFIRES* on Mode 1 models — it worsens INT2 ΔPPL from +326 to +463 on Qwen2-7B. The per-channel RMS adapts to the (highly non-uniform on Mode 1) residual distribution.
+1. **Phase 10**: we evaluated Walsh–Hadamard rotation (à la QuaRot/KVLinC) as a way to spread Mode 1 outliers across channels. On real Qwen2-7B Layer 0 K, rotation **regressed MSE by 3.68×** (0/4 heads improved) because the distribution is a discrete multi-channel plateau rather than heavy-tailed — per-channel absmax already handles plateaus optimally. Rotation is now NOT dispatched in v0.3 (the quantizer function `qa_nsep_pchan_rotated` remains in the package as a documented negative result).
 
-2. **INT3 + RMS residual surpasses INT4 on Mode 1 only.** On Qwen2-7B (Mode 1): ΔPPL +0.025 vs native INT4 +0.054 (2.2× precision). On Mode 2 (6 of 7 models): INT3+RMS improves over INT3 alone (16–72% reduction) but does not close the gap to native INT4. This is internally consistent with the two-mode theory: INT4 has a valley of death on Mode 1, so INT3+RMS can win there; no valley on Mode 2, so native INT4's cleaner levels win.
+2. **Phase 13**: a full sweep of candidate variants (2-tier bit allocation, max- vs energy-based top-K selection, asymmetric, combinations) on real Qwen2-7B and Llama-3.1-8B Layer 0 K identified **asymmetric per-channel** as the single contribution responsible for essentially all of the available INT3-tier MSE headroom. 2-tier adds < 1% on top of asym.
 
-Together these imply a **mode-aware deployment rule**:
+3. **Phase 14**: WikiText-2 PPL confirmed the MSE → PPL transfer at **80–85% efficiency** (MSE −91% → PPL −74% on Qwen2-7B; MSE −68% → PPL −58% on Llama). This is in the normal range for quantization methods.
 
-| Target bits | Mode 1 | Mode 2 / Unknown |
-|:---|:---|:---|
-| 3 | `qa_nsep_pchan(x, 3)` | `qa_nsep_pchan(x, 3)` |
-| 4 | `qa_nsep_pchan_resid_rms(x, 3)` | `qa_nsep_pchan(x, 4)` |
-| 5+ | `qa_nsep_pchan(x, bits)` | `qa_nsep_pchan(x, bits)` |
+4. **Phase 15**: real-packed compression measurement via `Int3AsymNsepPchanCache` confirmed **5.09× compression ratio** for both target models; the asym metadata overhead is 0.008 bits/value.
 
-`modeq.select_quantizer()` (above) encapsulates this rule.
+### Honesty note on Mode 2 at INT4
 
-See `results/phase7_residual_correction.json` and `results/phase8_rms_residual_validation.json` for the full 7-model data.
+Phase 14 also found that **asymmetric INT4 is *worse* than symmetric INT4 on Llama-3.1-8B** (+0.027 vs +0.013 ΔPPL) while tying on Qwen2-7B. Above INT3, the zero-centering of symmetric quantization appears to carry value that asym's extra level cannot make up for. Accordingly the v0.3 dispatcher uses asym at INT3 only and returns to symmetric for INT4+.
 
 ---
 
-## How `nsep+pchan` works
+## v0.2: Per-channel RMS residual correction (+mode-aware dispatch)
 
-Two ideas combined:
+Kept available in v0.3 for the 4-bit Mode 1 path. Phase 7 & 8 studies in `experiments/` validated a 1-bit residual correction step over `nsep+pchan`.
 
-**Norm separation** — decompose each vector into its L2 length (stored exactly) and its unit direction (quantized). Removes token-wise dynamic-range variation from the direction before quantization. Addresses Mode 2.
+1. **Per-channel RMS magnitude is essential.** A fixed constant magnitude (e.g., 0.25, the E[|residual|] under uniform assumption) *backfires* on Mode 1 — it worsens INT2 ΔPPL from +326 to +463 on Qwen2-7B. The per-channel RMS adapts to the non-uniform Mode 1 residual distribution.
 
-**Per-channel scaling** — quantize each channel with its own absmax-based scale instead of a per-row scale. Prevents an outlier channel from dominating the scale and crushing normal channels. Addresses Mode 1.
+2. **INT3 + RMS residual surpasses INT4 on Mode 1 only.** On Qwen2-7B: ΔPPL +0.025 vs native INT4 +0.054 (2.2× precision). On Mode 2 (6 of 7 models): INT3+RMS improves over INT3 alone but doesn't close the gap to native INT4.
 
-Neither component alone is sufficient: `nsep` alone rescues Qwen2-7B by 4.1×; `pchan` alone by 2.4×; together, **744×**. The conjunction is mechanistically necessary because a failing model may be dominated by either mode.
+v0.3 dispatcher keeps this Mode-1-at-4-bit rule:
 
-The full story, including the 11-model K/V outlier asymmetry study and the causal-isolation experiment, is in the companion paper:
+| Target bits | Mode 1 | Mode 2 / Unknown |
+|:---|:---|:---|
+| 2 | `qa_nsep_pchan_resid_rms(x, 2)` | `qa_nsep_pchan_resid_rms(x, 2)` |
+| **3** | **`qa_nsep_pchan_asym(x, 3)` (v0.3)** | **`qa_nsep_pchan_asym(x, 3)` (v0.3)** |
+| 4 | `qa_nsep_pchan_resid_rms(x, 3)` | `qa_nsep_pchan(x, 4)` |
+| 5+ | `qa_nsep_pchan(x, bits)` | `qa_nsep_pchan(x, bits)` |
 
-> **Sato, K.** "Norm-Separated Quantization: A Training-Free Fix for KV Cache INT4 Failures." 2026.  
-> [Zenodo DOI / paper PDF](https://github.com/metaSATOKEN/norm-separated-quantization)
+See `results/phase7_residual_correction.json`, `results/phase8_rms_residual_validation.json`, `results/phase14_asym_wikitext2_ppl.json`, `results/phase15_real_compression.json` for the full data behind this table.
 
 ---
 
 ## Related work and how modeq differs
 
-KV cache quantization is an active area. Here's where modeq sits relative to recent work, and what's genuinely new versus what overlaps.
+### Asymmetric quantization is standard; norm–direction split is prior art
 
-### Norm–direction decomposition is not new
+**Asymmetric per-channel quantization** (store min and range, map to unsigned indices) is standard in weight quantization: GPTQ, AWQ, RTN variants, LLM.int8(). Applied to KV cache it is less universally emphasized — KIVI uses asymmetric per-channel for K and per-token for V at INT2; KVQuant uses calibrated non-uniform quantization. modeq's v0.3 combines this standard technique with the `nsep+pchan` norm-decomposition pipeline from our v0.2 release and shows that the combination, with no calibration, captures 58–74% of the INT3-tier PPL headroom on real target models.
 
-**PolarQuant** ([arXiv:2502.02617](https://arxiv.org/abs/2502.02617), 2025) pioneered separating the KV vector's L2 magnitude from its direction for quantization: the scalar radius $r = \|x\|_2$ is stored in full precision, and the direction is represented as a hierarchy of polar angles that are then quantized via k-means codebooks after a random orthogonal rotation. PolarQuant reports 4.2× compression on Llama-3.1-8B. **TurboQuant** ([ICLR 2026](https://hackaday.com/2026/04/09/turboquant-reducing-llm-memory-usage-with-vector-quantization/), Google) extends PolarQuant with a 1-bit QJL residual correction, reaching 6× compression at 3 bits/coord.
+**Norm–direction decomposition** originates with **PolarQuant** ([arXiv:2502.02617](https://arxiv.org/abs/2502.02617), 2025): the scalar radius $r = \|x\|_2$ is stored in full precision, and the direction is represented as a hierarchy of polar angles quantized via k-means codebooks after a random orthogonal rotation. PolarQuant reports 4.2× compression on Llama-3.1-8B. **TurboQuant** ([ICLR 2026](https://arxiv.org/abs/2504.19874)) extends PolarQuant with a 1-bit QJL residual, reaching 6× compression at 3 bits/coord with a data-oblivious recipe.
 
-modeq's `nsep+pchan` shares the broad structure of *storing the L2 norm exactly + quantizing the direction*. That idea itself is **prior art as of PolarQuant (Feb 2025)**. What differs is the direction representation and the study's focus.
+**KVLinC** ([arXiv:2510.05373](https://arxiv.org/abs/2510.05373), Oct 2025): Hadamard rotation + lightweight linear correction adapters for KV quantization on Llama/Qwen2.5/Qwen3. Uses learned adapters on top of rotation.
 
 ### Differences
 
-| | PolarQuant | TurboQuant | modeq |
-|:---|:---|:---|:---|
-| Direction representation | Hierarchical polar angles over log₂(d) levels | Scalar coordinates after random rotation | Unit vector, per-channel absmax |
-| Quantization | k-means codebook on angles | Lloyd-Max scalar quantizer + 1-bit QJL residual | Absmax rounding (per-channel) |
-| Data-dependence | Requires codebook fit from data | **Data-oblivious** (Gaussian after rotation, Lloyd-Max analytical) | **Data-independent** (absmax only) |
-| Rotation / preconditioning | Random orthogonal | Random orthogonal | Not used |
-| Primary evaluation | Llama-3.1-8B | Various sizes, ICLR 2026 benchmarks | 7 models × 6 bit widths |
-| Primary contribution | Compression engineering | Compression engineering + theoretical optimality | **Failure-mode diagnosis + mechanism** |
-
-Correction to an earlier draft: TurboQuant is data-oblivious, relying on the analytic Gaussian distribution induced by random rotation. Only PolarQuant's angle codebook is data-dependent. We thank GPT-5 for catching this mischaracterization.
+| | PolarQuant | TurboQuant | KVLinC | modeq v0.3 |
+|:---|:---|:---|:---|:---|
+| Norm stored exact | ✓ | ✓ | — | ✓ |
+| Rotation | Random orthogonal | Random orthogonal | Hadamard | **Not used** (Phase 10 showed it regresses on real KV) |
+| Direction quantization | k-means on polar angles | Lloyd-Max scalar + QJL residual | Rotated scalar + adapter | **Asymmetric per-channel absmax** |
+| Data dependence | Requires codebook fit | **Data-oblivious** | Requires adapter training | **Data-independent** (per-tensor min/max only) |
+| Calibration required | Yes | No | Yes (adapter) | **No** |
+| Primary contribution | Polar codebook compression | Theoretical optimality | Adapter-based correction | **Failure-mode diagnosis + minimalist recipe** |
 
 ### What modeq contributes that isn't in prior work
 
-The bulk of `modeq`'s research value is not in the quantizer itself (PolarQuant covers the norm–direction split) but in the empirical and mechanistic framework around it:
-
-1. **Two empirically separable failure modes.** Naive INT KV quantization doesn't fail one way — there are two: Mode 1 (Layer-0 outlier-driven, catastrophic INT4 valley, 1/27 models in our sample) and Mode 2 (distributed norm-variation-driven, monotonic, the common case). See [docs/THEORY.md](docs/THEORY.md). PolarQuant and TurboQuant do not separate or diagnose these modes.
+1. **Two empirically separable failure modes.** Naive INT KV quantization fails in two distinct ways: Mode 1 (Layer-0 outlier-driven, catastrophic INT4 valley) and Mode 2 (distributed norm-variation). See [docs/THEORY.md](docs/THEORY.md). PolarQuant, TurboQuant, KVLinC do not separate or diagnose these modes.
 
 2. **The INT4 valley of death.** Naive INT shows a non-monotonic ΔPPL vs bit-width curve on Mode 1 models: INT4 is catastrophically worse than both INT3 and INT5 (by 295× on Qwen2-7B). This grid-alignment interaction between outlier magnitude and quantization step size is not, to our knowledge, previously characterized.
 
-3. **Layer-0 causal isolation.** On Qwen2-7B, applying `nsep+pchan` to Layer 0 alone — while leaving the other 27 layers under naive INT4 — rescues 99.97% of the catastrophic ΔPPL. The inverse (naive on Layer 0, `nsep+pchan` elsewhere) reproduces the catastrophe. No prior KV quantization work performs this kind of selective-layer intervention to isolate the site of failure.
+3. **Layer-0 causal isolation.** On Qwen2-7B, applying `nsep+pchan` to Layer 0 alone rescues 99.97% of the catastrophic ΔPPL. No prior KV quantization work performs this kind of selective-layer intervention to isolate the site of failure.
 
-4. **A simple universal baseline.** `nsep+pchan` is data-independent, requires no codebook, no rotation. On the 7 models we evaluated, INT3 `nsep+pchan` meets our "production" threshold (ΔPPL < 5% of WikiText-2 baseline PPL) on 4 of 7 (a 5th is borderline at 5.2%), and rescues the one Mode 1 pathology. This complements, rather than competes with, the more sophisticated compression machinery of PolarQuant/TurboQuant.
+4. **A practical INT3-tier default.** `qa_nsep_pchan_asym` is data-independent, requires no codebook, no rotation, no training. On the two models we evaluated end-to-end (Qwen2-7B Mode 1 + Llama-3.1-8B Mode 2), it cuts WikiText-2 ΔPPL by 58–74% vs the symmetric baseline at identical 3.0 bits/value — complementary rather than competitive with the more sophisticated compression machinery of PolarQuant/TurboQuant/KVLinC.
+
+5. **A documented negative result on rotation.** Phase 10 measured Walsh-Hadamard rotation on real Qwen2-7B Layer 0 K and found a 3.68× MSE regression. The distribution is a discrete multi-channel plateau, and per-channel absmax is already optimal on plateaus. This is a concrete data point against universal rotation-based recipes on per-channel-scaled pipelines.
 
 ### Other related methods
 
 - **KIVI** ([ICML 2024](https://arxiv.org/abs/2402.02750)): asymmetric 2-bit Key (per-channel) + Value (per-token) quantization. No norm separation.
-- **KVQuant** ([NeurIPS 2024](https://www.stat.berkeley.edu/~mmahoney/pubs/neurips-2024-kvquant.pdf)): per-channel Key pre-RoPE quantization with calibration. Concurrent with and similar in spirit to KIVI.
-- **SQuat** ([arXiv:2503.24358](https://arxiv.org/abs/2503.24358), 2025): constrains quantization error to be orthogonal to the query subspace. A different angle from norm decomposition; complementary.
-- **MiniKV** (ACL 2025): pushes to 2-bit via selective precision. Orthogonal technique.
+- **KVQuant** ([NeurIPS 2024](https://www.stat.berkeley.edu/~mmahoney/pubs/neurips-2024-kvquant.pdf)): per-channel Key pre-RoPE quantization with calibration. Concurrent with KIVI.
+- **SQuat** ([arXiv:2503.24358](https://arxiv.org/abs/2503.24358), 2025): constrains quantization error to be orthogonal to the query subspace. Complementary.
 
 ### Honest summary
 
-**Compression engineering**: PolarQuant and TurboQuant are ahead (more bits squeezed out via codebooks + residuals).
+**Compression engineering**: PolarQuant, TurboQuant, and KVLinC squeeze out more bits via codebooks / residuals / adapters. modeq does not compete with them at the 1–2 bit frontier.
 
-**Diagnosis and mechanism**: modeq is uniquely positioned — we show *when and why* naive INT quantization breaks, with causal experiments, and provide the simplest baseline that works across both failure modes. That's the gap in the literature modeq tries to fill.
+**INT3-tier practical SOTA**: modeq v0.3 is a competitive, calibration-free, 10-line-of-code recipe that delivers 58–74% ΔPPL reduction over the symmetric nsep+pchan baseline at identical bit rate. That is the niche modeq serves.
+
+**Diagnosis and mechanism**: modeq is uniquely positioned — we show *when and why* naive INT quantization breaks, with causal experiments. That's the gap in the literature modeq tries to fill.
+
+---
 
 ## Status and limitations
 
-This is a **v0.2 research prototype** (released April 2026). It works, the numbers are real, and we use it ourselves — but:
+This is a **v0.3 research prototype** (April 2026). It works, the numbers are reproducible, and we use it — but:
 
-- **Python overhead**: current implementation adds ~+21% decode latency on 7B-class models because quantize/dequantize happens in Python. A fused CUDA kernel (Triton or native) would remove this; we welcome contributions.
-- **Not a drop-in for HuggingFace Transformers yet**: you have to wire up `Int3NsepPchanCache` (or the v0.2 `qa_nsep_pchan_resid_rms`) against the model's `DynamicCache` manually for now. A proper integration is on the roadmap.
-- **Real bit-packing measured on 2 models**: `Int3NsepPchanCache.size_bytes()` was empirically validated on Qwen2-7B and Llama-3.1-8B (5.08× measured). For the other 5 models in the INT3 verdict table, the PPL numbers come from simulated quantization; the 5.33× compression ratio is inferred from head_dim rather than measured.
-- **Sample size for Mode 1**: only one catastrophic case (Qwen2-7B) in our 27-model sample. The Layer-0 mechanism is causally isolated, but how often this pattern occurs in the open-model population is unknown. Safe default: always use `nsep+pchan`, which handles both modes.
-- **Pre-LN only**: Post-LN models (GPT-1 style) are not evaluated here. Our companion paper discusses distributional differences.
+- **Python overhead**: current implementation adds ~+21% decode latency on 7B-class models because quantize/dequantize happens in Python. A fused CUDA kernel (Triton or native) would remove this; contributions welcome.
+- **Not yet a drop-in for HuggingFace Transformers**: you wire `Int3AsymNsepPchanCache` against the model's `DynamicCache` manually for now. Proper integration is on the roadmap.
+- **v0.3 PPL measured on 2 models**: Phase 14's 74.3% / 58.3% numbers are on Qwen2-7B (Mode 1) and Llama-3.1-8B (Mode 2). A wider sweep mirroring v0.2's 7-model set is planned for v0.3.1.
+- **Real bit-packing measured on 2 models**: `Int3AsymNsepPchanCache.size_bytes()` empirically validated on Qwen2-7B and Llama-3.1-8B (5.09× measured).
+- **Sample size for Mode 1**: only one catastrophic case (Qwen2-7B) in our 27-model sample. The Layer-0 mechanism is causally isolated, but how often the pattern occurs in the open-model population is unknown. Safe default: always use `qa_nsep_pchan_asym`, which handles both modes.
+- **Pre-LN only**: Post-LN models (GPT-1 style) are not evaluated.
+- **Long-context validation pending**: all PPL numbers are at ctx=1024 sliding window. 32K+ is a roadmap item.
 
 ---
 
