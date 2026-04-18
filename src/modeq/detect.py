@@ -174,9 +174,13 @@ def classify_mode(outlier_stats):
                 "of death). INT3 naive is typically much better than INT4."
             ),
             "recommendation": (
-                "Apply nsep+pchan4, or nsep+pchan3 for 5.33x compression. "
-                "Layer-0-selective compression is also effective (nsep+pchan4 "
-                "on Layer 0 only, naive INT4 on others)."
+                "Use qa_nsep_pchan_asym(x, 3) (or Int3AsymNsepPchanCache) "
+                "for 5.09x compression; Phase 14 measured +0.10 ΔPPL on "
+                "Qwen2-7B at 3.0 bits/value. For 4-bit budget, Mode 1 "
+                "still benefits from qa_nsep_pchan_resid_rms(x, 3) "
+                "(+0.025 ΔPPL, beats plain INT4 due to the INT4 valley). "
+                "Layer-0-selective compression with the v0.2 symmetric "
+                "pipeline also rescues this signature (99.97% on Qwen2-7B)."
             ),
         }
     elif l0_k >= 10.0:
@@ -188,8 +192,11 @@ def classify_mode(outlier_stats):
                 "the 7-model study fell in this range; behavior is unknown."
             ),
             "recommendation": (
-                "Run WikiText-2 PPL with naive INT4 to determine behavior. "
-                "Use nsep+pchan3 or nsep+pchan4 as the safe default."
+                "Use qa_nsep_pchan_asym(x, 3) (Int3AsymNsepPchanCache) as "
+                "the safe default -- it hedges cleanly across Mode 1 and "
+                "Mode 2 at 3.0 bits/value with a 66% average ΔPPL "
+                "reduction vs symmetric. Consider running WikiText-2 PPL "
+                "with naive INT4 if you need a definitive mode call."
             ),
         }
     else:
@@ -203,8 +210,13 @@ def classify_mode(outlier_stats):
                 "quantization scales monotonically with bit width."
             ),
             "recommendation": (
-                "nsep+pchan3 delivers 5.33x compression with < 5% baseline "
-                "PPL on instruction-tuned models. naive INT4 also works on "
-                "this family with ΔPPL < 1.0 on tested cases."
+                "Use qa_nsep_pchan_asym(x, 3) (Int3AsymNsepPchanCache) "
+                "for 5.09x compression. Phase 14-17 validated on 7 Mode-2 "
+                "models (Llama-3.1-8B, Pythia-6.9B, Qwen2.5-14B, "
+                "Mistral-7B, GPT-J-6B, Qwen3.5-9B, Gemma 4-E4B); all 7 "
+                "landed in the < 5% baseline production tier under asym. "
+                "Plain symmetric INT4 (qa_nsep_pchan(x, 4)) is also fine "
+                "on Mode 2 with ΔPPL < 0.1 typical -- use when you have "
+                "the 4-bit budget to spare."
             ),
         }

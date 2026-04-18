@@ -84,11 +84,33 @@ Going below INT4 with `nsep+pchan`:
   nsep+pchan INT2: +325.96 ← breaks; direction needs more than 3 levels
 ```
 
-INT3 works because per-channel scaling with 7 levels (−3 to +3) is enough to preserve direction up to acceptable quantization error, while the norm is stored exactly. INT2 (3 levels: −1, 0, +1) cannot represent arbitrary directions with enough resolution, and the method collapses. The "bit floor" for direction quantization is INT3.
+INT3 works because per-channel scaling with 7 levels (symmetric: −3 to +3, total 7; or asymmetric: 0 to 7, total 8) is enough to preserve direction up to acceptable quantization error, while the norm is stored exactly. INT2 (symmetric: 3 levels −1, 0, +1) cannot represent arbitrary directions with enough resolution, and the method collapses. The "bit floor" for direction quantization is INT3.
 
-Empirically, **4 of 7 models achieve our production threshold (ΔPPL < 5% of WikiText-2 baseline) at INT3 nsep+pchan**; a 5th (Phi-3-medium at 5.2%) sits just above the threshold and is borderline; 1 is acceptable (10–20%); 1 (a base model without instruction tuning, Pythia-6.9B at 22%) is research-only. This is the main pragmatic contribution of `modeq`: 5.33× KV cache compression with a drop-in preprocessing step that handles both catastrophic and common failure modes on a majority of the models we evaluated.
+Empirically, **4 of 7 models achieved our production threshold (ΔPPL < 5% of WikiText-2 baseline) at INT3 symmetric `nsep+pchan`** (the v0.2 default). One (Phi-3-medium at 5.2%) sat at the borderline; one was acceptable; one (Pythia-6.9B, a base model without instruction tuning, at 22%) was research-only. This was the main pragmatic contribution of `modeq` v0.2: 5.33× theoretical / 5.08× measured KV cache compression with a drop-in preprocessing step handling both catastrophic and common failure modes on a majority of tested models.
+
+## v0.3 update: asymmetric per-channel is the new default (2026-04)
+
+Phases 10, 13, and 14 (see `results/`) found that **asymmetric per-channel quantization** — storing per-channel `[min, max]` rather than a symmetric `[-absmax, +absmax]` window — reduces INT3 ΔPPL by an average **66.0% across 8 benchmarked models, 100% win rate**:
+
+- Qwen2-7B (Mode 1): +0.402 → +0.103 (−74.3%)
+- Llama-3.1-8B (Mode 2): +0.254 → +0.106 (−58.3%)
+- Pythia-6.9B: +2.378 → +0.099 (−95.8%) — moves from "research only" into the production tier
+- Qwen2.5-14B: +0.261 → +0.091 (−65.1%)
+- Mistral-7B-v0.1: +0.124 → +0.055 (−56.0%)
+- GPT-J-6B (head_dim=256): +0.187 → +0.070 (−62.5%)
+- Qwen3.5-9B (hybrid attention, 2026): +0.275 → +0.094 (−65.7%)
+- Gemma 4-E4B (multimodal, 2026): +1.879 → +0.930 (−50.5%)
+
+**All 8 land in the < 5% baseline production tier under asym INT3 at identical 3.0 bits/value.**
+
+Mechanism: post-RoPE K channels have strongly biased distributions. The symmetric absmax window wastes roughly half of its quantization levels on the empty side of zero. Asymmetric fits `[min, max]` tightly and uses all `2**bits` levels (8 instead of 7 at INT3 — a 14% base gain just from level count, on top of the much larger range-fit advantage). The storage cost is one additional FP16 per channel (+0.008 bits/value in real packing), so the v0.3 `Int3AsymNsepPchanCache` measures 5.09× compression vs FP16 — essentially identical to v0.2's 5.08× but with 58–96% less ΔPPL drift.
+
+Above INT3, symmetric is still the v0.3 default. Phase 14 measured asymmetric INT4 as *worse* than symmetric INT4 on Llama-3.1-8B (+0.027 vs +0.013 ΔPPL). Above the INT3 bit floor, the zero-centering of symmetric quantization carries value that asym's extra level cannot compensate for. The v0.3 dispatcher applies asymmetric only at INT3 and returns to symmetric for INT4+.
+
+Rotation (Walsh–Hadamard, similar to KVLinC / QuaRot style) was also tested in v0.3 development but *regressed* MSE by 3.68× on real Qwen2-7B Layer 0 K (Phase 10). The distribution is a discrete multi-channel plateau rather than heavy-tailed, which per-channel absmax already handles optimally. Rotation is retained in the package as a documented negative result (`qa_nsep_pchan_rotated`) but is not dispatched.
 
 ## References
 
 - Companion paper: [Norm-Separated Quantization](https://github.com/metaSATOKEN/norm-separated-quantization) (V5, 23 pages)
 - [Appendix H](https://github.com/metaSATOKEN/norm-separated-quantization/blob/main/paper/arc_compression.pdf) of the paper contains the full 11-model K/V outlier asymmetry study and the selective-compression causal experiments.
+- v0.3 empirical data: `results/phase10_real_kv_distribution.json`, `phase13_full_sweep.json`, `phase14_asym_wikitext2_ppl.json`, `phase15_real_compression.json`, `phase16_asym_seven_model_sweep.json`, `phase17_2026_flagships.json`.

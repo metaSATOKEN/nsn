@@ -30,7 +30,7 @@
       "label": "gemma-4-E4B",
       "model": "google/gemma-4-E4B",
       "release_date": "2026-04-02",
-      "arch_note": "Efficient dense variant of Gemma 4 family. 24 standard-attention layers, 0 non-KV layers. Multimodal-capable but fed text-only. Baseline WikiText-2 PPL on text-only (20.60) is higher than text-specialized LLMs in the sample, consistent with a multimodal-trained model applied to a text-only benchmark without image / audio context.",
+      "arch_note": "Efficient dense variant of Gemma 4 family. Per the HF model card, the full architecture uses 42 layers of hybrid sliding-window + global attention. Our compress_cache enumerated 24 layers exposing a K/V cache in the DynamicCache under the current transformers integration, with 0 layers flagged as non-KV by our hasattr-based detector; this almost certainly reflects how Gemma4's hybrid attention shares / packs cache entries rather than a 24-layer model. We report the metric as 'compression applied to the 24 KV-cache slots we could see'. Multimodal-capable but fed text-only. Baseline WikiText-2 PPL on text-only (20.60) is higher than text-specialized LLMs in the sample, consistent with a multimodal-trained model applied to a text-only benchmark without image / audio context.",
       "baseline_ppl": 20.6035,
       "sym_int3_delta": 1.8786,
       "asym_int3_delta": 0.9302,

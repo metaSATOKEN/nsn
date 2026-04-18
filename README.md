@@ -11,7 +11,7 @@
 
 Naive INT4 KV quantization can fail catastrophically on certain models — **ΔPPL +1382 on Qwen2-7B** — while working fine on others. modeq identifies two empirically separable failure modes (Mode 1: Layer-0 outlier-driven; Mode 2: distributed) and ships a simple fix that beats the symmetric INT3 baseline by a large margin on both.
 
-> **v0.3 (this release):** Switches the default INT3 quantizer to **asymmetric per-channel nsep+pchan** (`qa_nsep_pchan_asym`). At identical 3.0 bits/value, the v0.3 default cuts WikiText-2 ΔPPL by an average of **66.0% (range 50.5%–95.8%) across 8 models spanning 2023–2026** — including Qwen2-7B (−74.3%), Llama-3.1-8B (−58.3%), Pythia-6.9B (−95.8%), **Qwen3.5-9B hybrid attention (−65.7%)**, and **Gemma 4-E4B (−50.5%)**. **All 8 land in the `< 5% of baseline PPL` production tier**, including v0.2's "research only" Pythia-6.9B. No calibration, no codebook, no rotation — just using the full per-channel `[min, max]` range instead of the symmetric `[-absmax, +absmax]` window that wastes roughly half the quantization levels on biased post-RoPE K distributions.
+> **v0.3 (this release):** Switches the default INT3 quantizer to **asymmetric per-channel nsep+pchan** (`qa_nsep_pchan_asym`). At identical 3.0 bits/value, the v0.3 default cuts WikiText-2 ΔPPL by an average of **66.0% (range 50.5%–95.8%) across 8 models spanning 2021–2026** — including Qwen2-7B (−74.3%), Llama-3.1-8B (−58.3%), Pythia-6.9B (−95.8%), **Qwen3.5-9B hybrid attention (−65.7%)**, and **Gemma 4-E4B (−50.5%)**. **All 8 land in the `< 5% of baseline PPL` production tier**, including v0.2's "research only" Pythia-6.9B. No calibration, no codebook, no rotation — just using the full per-channel `[min, max]` range instead of the symmetric `[-absmax, +absmax]` window that wastes roughly half the quantization levels on biased post-RoPE K distributions.
 
 ```python
 from modeq import Int3AsymNsepPchanCache
@@ -90,9 +90,9 @@ The asym ↔ sym difference at **identical 3.0 bits/value** is the v0.3 headline
 
 **Where does the gain come from?** Post-RoPE K channels have strongly biased distributions. Symmetric absmax quantizes them on `[-|max|, +|max|]`, wasting roughly half the quantization levels on the empty side. Asymmetric fits `[min, max]` tightly and uses all 2^bits levels. At INT3 this is the difference between 7 symmetric levels (−3..3) and 8 asymmetric levels (0..7), plus the range-fit advantage.
 
-### Generalization: 8-model sweep (2023–2026 coverage)
+### Generalization: 8-model sweep (2021–2026 coverage)
 
-Phase 16 extended Phase 14 to four additional models from the v0.2 sweep. Phase 17 then added two 2026 flagships (Qwen3.5-9B, Gemma 4-E4B). Combined, this gives an **8-model, 2023–2026 validation** of the asym INT3 claim (Phi-3-medium-4k-instruct was the intended 7th Phase-16 model but failed to load under current `transformers` due to custom-code compat issues unrelated to modeq — see [Phi-3 note](#phi-3-medium-compatibility-note) below).
+Phase 16 extended Phase 14 to four additional models from the v0.2 sweep. Phase 17 then added two 2026 flagships (Qwen3.5-9B, Gemma 4-E4B). Combined, this gives an **8-model, 2021–2026 validation** of the asym INT3 claim (Phi-3-medium-4k-instruct was the intended 7th Phase-16 model but failed to load under current `transformers` due to custom-code compat issues unrelated to modeq — see [Phi-3 note](#phi-3-medium-compatibility-note) below).
 
 | Model | Mode | base PPL | sym INT3 Δ | **asym INT3 Δ** | reduction | asym % of base |
 |:------|:-:|:-:|:-:|:-:|:-:|:-:|
@@ -135,7 +135,7 @@ Extrapolating the Llama ratio:
 
 ---
 
-## INT3 at production quality (8 of 8 models, 2023–2026)
+## INT3 at production quality (8 of 8 models, 2021–2026)
 
 Applying `qa_nsep_pchan_asym` at INT3 — 3 bits per value, 5.09× compression vs FP16. Phase 14 + Phase 16 + Phase 17 summary:
 
@@ -178,7 +178,7 @@ The "Verdict" column classifies by a specific, reproducible threshold on WikiTex
 
 1. **Downstream task accuracy** (MMLU, GSM-8K, HumanEval, RAG) was not measured. WikiText-2 ΔPPL is a proxy.
 2. **Inference throughput / latency** was not measured. Our implementation is Python-only and adds roughly +21% decode latency on 7B-class models. A fused CUDA kernel would remove this.
-3. **Sample size for the INT3 asym claim** is two models (Qwen2-7B and Llama-3.1-8B) in Phase 14. The empirical generalisation to the wider 7-model set used in v0.2 is in progress.
+3. **Sample size for the INT3 asym claim** is 8 runnable models (Qwen2-7B, Llama-3.1-8B from Phase 14; Pythia-6.9B, Qwen2.5-14B, Mistral-7B-v0.1, GPT-J-6B from Phase 16; Qwen3.5-9B, Gemma 4-E4B from Phase 17). Phi-3-medium-4k-instruct was the intended 7th Phase-16 model and is pending an HF custom-code / transformers compatibility fix.
 
 ---
 

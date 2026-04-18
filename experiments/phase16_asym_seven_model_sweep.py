@@ -269,11 +269,26 @@ gptj_res = run_model("EleutherAI/gpt-j-6b", "GPT-J-6B")
 
 
 # =============================================================
-# === CELL V8 === Phi-3-medium-4k-instruct (Mode 2)
+# === CELL V8 === Phi-3-medium-4k-instruct (known-broken; try anyway)
 # =============================================================
+# Phi-3-medium-4k-instruct ships a custom modeling_phi3.py that is
+# incompatible with current transformers in three separate places
+# (rope_scaling['type'] rename, unknown rope_type='default', removed
+# DynamicCache.from_legacy_cache). Each patch surfaces the next
+# break. We attempt the run anyway so that any reader re-executing
+# this notebook sees the real failure mode and the synthesis cell
+# below continues even if this load raises. If the load succeeds on
+# a future transformers / Microsoft update, the synthesis will
+# automatically include a 7th row.
 
-phi3_res = run_model("microsoft/Phi-3-medium-4k-instruct",
-                     "Phi-3-medium-4k-instruct")
+try:
+    phi3_res = run_model("microsoft/Phi-3-medium-4k-instruct",
+                         "Phi-3-medium-4k-instruct")
+except Exception as e:
+    print(f"\n  ✗ Phi-3-medium-4k-instruct FAILED: "
+          f"{type(e).__name__}: {e}")
+    print(f"  -> Skipping; synthesis below will show 6 Phase-16 models.")
+    phi3_res = None
 
 
 # =============================================================
@@ -294,8 +309,14 @@ PRIOR = [
      "asym_reduction_pct": 58.3},
 ]
 
+# phi3_res may be None if the bundled modeling_phi3.py was
+# incompatible with current transformers. Filter None out of the
+# synthesis so the rest of the table still renders cleanly.
+phase16_runs = [pythia_res, qwen25_res, mistral_res, gptj_res, phi3_res]
+phase16_runs = [r for r in phase16_runs if r is not None]
+
 all_results = list(PRIOR)
-for res in [pythia_res, qwen25_res, mistral_res, gptj_res, phi3_res]:
+for res in phase16_runs:
     all_results.append({
         "label":              res["label"],
         "mode":               "Mode 2",
@@ -336,7 +357,16 @@ print(f"\n  asym beats sym: {asym_wins}/{len(all_results)} models")
 print(f"  reduction: mean {mean_red:+.1f}%  min {min_red:+.1f}%  max {max_red:+.1f}%")
 print(f"  asym INT3 under 5% of baseline: {asym_prod}/{len(all_results)} models")
 
-# Save
+# Save. Record Phi-3 as a "status object" when its load failed so
+# readers can see the failure without having to re-run.
+phi3_entry = phi3_res if phi3_res is not None else {
+    "label":  "Phi-3-medium-4k-instruct",
+    "status": "abandoned",
+    "reason": "HF custom-code / transformers version incompatibility "
+              "(see results/phase16_asym_seven_model_sweep.json for "
+              "the full error chain).",
+}
+
 out_path = "/content/phase16_asym_seven_model_sweep.json"
 combined = {
     "date":          datetime.now().isoformat(timespec='seconds'),
@@ -346,7 +376,7 @@ combined = {
         "Qwen2.5-14B":              qwen25_res,
         "Mistral-7B-v0.1":          mistral_res,
         "GPT-J-6B":                 gptj_res,
-        "Phi-3-medium-4k-instruct": phi3_res,
+        "Phi-3-medium-4k-instruct": phi3_entry,
     },
     "seven_model_summary": all_results,
 }

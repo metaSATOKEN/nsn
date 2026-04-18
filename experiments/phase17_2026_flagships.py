@@ -117,10 +117,41 @@ def set_kv(past, li, k, v):
 def n_cache_layers(past):
     return len(past.layers) if hasattr(past, 'layers') else len(past)
 
+
+def _layer_has_kv(past, li):
+    """Return True if layer ``li`` exposes a K/V cache.
+
+    Hybrid architectures (e.g., Qwen3.5-9B, which mixes standard
+    attention with linear attention) expose a LinearAttentionLayer
+    object at some indices; those layers carry a recurrent state
+    rather than Key/Value tensors and must be skipped by the KV
+    compression pipeline.
+    """
+    if hasattr(past, 'layers'):
+        layer = past.layers[li]
+        return (hasattr(layer, 'keys') and hasattr(layer, 'values')
+                and layer.keys is not None and layer.values is not None)
+    # Legacy tuple-of-tuples cache: every layer is standard attention
+    # by design.
+    return past[li] is not None and past[li][0] is not None
+
+
 def compress_cache(past, method_fn):
+    """Apply ``method_fn`` to each standard-attention layer's (K, V)
+    slice. Non-KV layers (linear attention in Qwen3.5's hybrid arch,
+    any future variant that uses a recurrent state) are silently
+    skipped. A one-shot message reports the standard/non-KV split for
+    each model load so the user sees what fraction of the cache we
+    are actually compressing.
+    """
     if method_fn is None:
         return
+    n_std = 0
+    n_skipped = 0
     for li in range(n_cache_layers(past)):
+        if not _layer_has_kv(past, li):
+            n_skipped += 1
+            continue
         ok, ov = get_kv(past, li)
         ok = ok.clone(); ov = ov.clone()
         nk = torch.zeros_like(ok); nv = torch.zeros_like(ov)
@@ -128,6 +159,11 @@ def compress_cache(past, method_fn):
             nk[0, h] = method_fn(ok[0, h]).to(ok.dtype)
             nv[0, h] = method_fn(ov[0, h]).to(ov.dtype)
         set_kv(past, li, nk, nv)
+        n_std += 1
+    if not hasattr(compress_cache, "_reported"):
+        print(f"    (cache has {n_std} standard-attn layers + "
+              f"{n_skipped} non-KV layers)")
+        compress_cache._reported = True
 
 
 ds = load_dataset("wikitext", "wikitext-2-raw-v1", split="test")
@@ -183,6 +219,11 @@ def run_model(model_id, label, extra_kwargs=None):
     except NameError:
         pass
     gc.collect(); torch.cuda.empty_cache()
+
+    # Reset the compress_cache one-shot reporter so each model load
+    # prints its own standard/non-KV split on first compression.
+    if hasattr(compress_cache, "_reported"):
+        del compress_cache._reported
 
     kwargs = dict(torch_dtype=torch.float16, device_map="auto",
                   trust_remote_code=True)
