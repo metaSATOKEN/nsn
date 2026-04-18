@@ -86,7 +86,7 @@ Going below INT4 with `nsep+pchan`:
 
 INT3 works because per-channel scaling with 7 levels (−3 to +3) is enough to preserve direction up to acceptable quantization error, while the norm is stored exactly. INT2 (3 levels: −1, 0, +1) cannot represent arbitrary directions with enough resolution, and the method collapses. The "bit floor" for direction quantization is INT3.
 
-Empirically, **5 of 7 models achieve production quality (< 5% ΔPPL) at INT3 nsep+pchan**; 1 is borderline; 1 (a base model without instruction tuning) is research-only. This is the main pragmatic contribution of `modeq`: 5.33× KV cache compression with a drop-in preprocessing step that handles both catastrophic and common failure modes.
+Empirically, **4 of 7 models achieve our production threshold (ΔPPL < 5% of WikiText-2 baseline) at INT3 nsep+pchan**; a 5th (Phi-3-medium at 5.2%) sits just above the threshold and is borderline; 1 is acceptable (10–20%); 1 (a base model without instruction tuning, Pythia-6.9B at 22%) is research-only. This is the main pragmatic contribution of `modeq`: 5.33× KV cache compression with a drop-in preprocessing step that handles both catastrophic and common failure modes on a majority of the models we evaluated.
 
 ## References
 

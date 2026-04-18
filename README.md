@@ -9,9 +9,9 @@
 
 ## TL;DR
 
-Naive INT4 quantization of KV caches can fail catastrophically on certain models — **ΔPPL +1382 on Qwen2-7B** — while working fine on others. We identify **two empirically separable failure modes** (Mode 1: Layer-0 outlier-driven; Mode 2: distributed norm-variation-driven) and provide a simple, data-independent baseline that handles both: **INT3 with 5.08× real memory reduction**, landing within our "production" threshold (WikiText-2 ΔPPL < 5% of baseline) on **5 of 7 models tested** — see [What we mean by "production quality"](#what-we-mean-by-production-quality) for the precise criterion and caveats.
+Naive INT4 quantization of KV caches can fail catastrophically on certain models — **ΔPPL +1382 on Qwen2-7B** — while working fine on others. We identify **two empirically separable failure modes** (Mode 1: Layer-0 outlier-driven; Mode 2: distributed norm-variation-driven) and provide a simple, data-independent baseline that handles both: **INT3 with 5.08× real memory reduction** (measured on 2 models, extrapolated on the rest), landing within our "production" threshold (WikiText-2 ΔPPL < 5% of baseline) on **4 of 7 models tested** (a 5th is borderline at 5.2%) — see [What we mean by "production quality"](#what-we-mean-by-production-quality) for the precise criterion and caveats.
 
-> **v0.2 (this release):** adds per-channel RMS residual correction (`qa_nsep_pchan_resid_rms`) and a mode-aware dispatcher (`select_quantizer`). On Mode 1 at 4-bit budget, INT3 + RMS residual surpasses native INT4 by 2.2× precision on WikiText-2 ΔPPL.
+> **v0.2 (this release):** adds per-channel RMS residual correction (`qa_nsep_pchan_resid_rms`) and a mode-aware dispatcher (`select_quantizer`). On Mode 1 at roughly 4 bits/value + a small per-channel metadata (the RMS magnitudes), INT3 + RMS residual surpasses native INT4 by 2.2× precision on WikiText-2 ΔPPL.
 
 ```python
 from modeq import Int3NsepPchanCache
@@ -28,7 +28,7 @@ cached.size_bytes()   # 5.08x smaller than k.nbytes
 
 4 lines of code. No training. No calibration. No rotation. Rescues Qwen2-7B's pathological INT4 case (+1382 → +0.39 ΔPPL).
 
-> **Note on prior art.** The norm-vs-direction split itself is not new: [PolarQuant (2025)](https://arxiv.org/abs/2502.02617) and [TurboQuant (ICLR 2026)](https://hackaday.com/2026/04/09/turboquant-reducing-llm-memory-usage-with-vector-quantization/) also store the L2 magnitude exactly and quantize the direction. modeq is deliberately simpler (per-channel absmax, no codebook, no rotation), and our main contribution is the **failure-mode diagnosis + causal mechanism** rather than the quantizer itself. See [Related work](#related-work-and-how-modeq-differs).
+> **Note on prior art.** The norm-vs-direction split itself is not new: [PolarQuant (2025)](https://arxiv.org/abs/2502.02617) and [TurboQuant (ICLR 2026)](https://arxiv.org/abs/2504.19874) also store the L2 magnitude exactly and quantize the direction. modeq is deliberately simpler (per-channel absmax, no codebook, no rotation), and our main contribution is the **failure-mode diagnosis + causal mechanism** rather than the quantizer itself. See [Related work](#related-work-and-how-modeq-differs).
 
 ---
 
@@ -71,19 +71,19 @@ Both are handled by the same preprocessing: **norm separation + per-channel scal
 
 ## INT3 at production quality
 
-Applying `nsep+pchan` at INT3 — 3 bits per value, 5.33× compression vs FP16 — with our real bit-packing implementation:
+Applying `nsep+pchan` at INT3 — 3 bits per value, 5.33× compression vs FP16 in theory. The ΔPPL column is WikiText-2 teacher-forced PPL with the KV cache compressed per method. The Compression column is **measured** real-packed bytes for the 2 models where we ran the full `Int3NsepPchanCache` path; for the other 5 models we list "—" because those PPL runs used simulated (fake) quantization, and the real-packing ratio would be the same 5.08× subject only to head-dim variation.
 
-| Model | Δ PPL | % of baseline | Compression | Verdict |
+| Model | Δ PPL | % of baseline | Compression (measured) | Verdict |
 |:------|:--|:--|:--|:--|
 | Qwen2-7B (Mode 1, rescued) | +0.39 | 4.6% | 5.08× | ✅ production |
 | Llama-3.1-8B (Mode 2) | +0.27 | 3.0% | 5.08× | ✅ production |
-| Mistral-7B-v0.1 | +0.12 | 2.0% | — | ✅ production |
-| GPT-J-6B | +0.19 | 1.8% | — | ✅ production |
-| Phi-3-medium-4k | +0.11 | 5.2% | — | 🟡 borderline |
-| Qwen2.5-14B | +0.26 | 13.3% | — | △ acceptable |
-| Pythia-6.9B (base) | +2.38 | 22.1% | — | ✗ research only |
+| Mistral-7B-v0.1 | +0.12 | 2.0% | (extrap.) | ✅ production |
+| GPT-J-6B | +0.19 | 1.8% | (extrap.) | ✅ production |
+| Phi-3-medium-4k | +0.11 | 5.2% | (extrap.) | 🟡 borderline |
+| Qwen2.5-14B | +0.26 | 13.3% | (extrap.) | △ acceptable |
+| Pythia-6.9B (base) | +2.38 | 22.1% | (extrap.) | ✗ research only |
 
-5 of 7 models land in production quality. 1 is borderline. 1 (Pythia, a base model without instruction tuning) is research-only.
+**4 of 7 models cross our production threshold (< 5% baseline)**; a 5th (Phi-3-medium at 5.2%) sits just above it and is marked borderline. 1 is acceptable, and 1 (Pythia-6.9B, a base model without instruction tuning) is research-only. If a less strict absolute threshold is used (e.g., ΔPPL < 0.5 irrespective of baseline), 6 of 7 qualify; see the caveat on baseline dependence below.
 
 ### What we mean by "production quality"
 
@@ -91,7 +91,7 @@ The "Verdict" column above classifies by a specific, reproducible threshold on W
 
 | Tier | WikiText-2 ΔPPL criterion | Interpretation |
 |:---|:---|:---|
-| ✅ **production** | < 5% of baseline PPL | Perplexity drift below the level at which end-users typically notice; within the range where INT4 KIVI-class methods are commonly deployed. In our sample this corresponds to < 0.5 absolute ΔPPL. |
+| ✅ **production** | < 5% of baseline PPL | We use this as a conservative proxy for "acceptable for typical KV-compressed deployment", in rough analogy to the PPL-drift budgets that INT4 KIVI/KVQuant methods report. In our sample this corresponds to < 0.5 absolute ΔPPL. Downstream-task drift is not measured. |
 | 🟡 **borderline** | 5–10% of baseline PPL | Usable in memory-constrained settings, but we would recommend monitoring downstream task quality before deployment. |
 | △ **acceptable** | 10–20% of baseline PPL | Quality drop measurable; acceptable trade-off if memory is the dominant constraint. |
 | ✗ **research only** | > 20% of baseline PPL | Compression too aggressive for this model at this bit width; treat results as an ablation, not a deployment recommendation. |
@@ -121,7 +121,7 @@ Extrapolating:
 | 32K | 1472 MB | 288 MB | 1.18 GB |
 | 128K | 5888 MB | 1152 MB | 4.74 GB |
 
-Simulated vs real packing: **PPL difference < 0.02** on both Mode 1 and Mode 2 (within numerical noise). Packing is lossless.
+Simulated vs real packing: the bit-packing itself (pack → unpack on INT3 values) is bit-exact lossless; the end-to-end PPL difference between simulated and packed pipelines is **+0.000213 on Llama-3.1-8B (Mode 2)** and **+0.015 on Qwen2-7B (Mode 1)**. The small Mode 1 drift comes from storing the per-channel scales in FP16 after packing — the packed pipeline's effective precision is slightly different from the simulated path, but the effect is <0.02 ΔPPL on both tested models.
 
 ---
 
@@ -265,15 +265,16 @@ modeq's `nsep+pchan` shares the broad structure of *storing the L2 norm exactly 
 
 ### Differences
 
-| | PolarQuant / TurboQuant | modeq |
-|:---|:---|:---|
-| Direction representation | Hierarchical polar angles over log₂(d) levels | Unit vector, per-channel absmax |
-| Quantization | k-means codebook (data-dependent centroids) | Absmax rounding (data-independent) |
-| Rotation / preconditioning | Required (random orthogonal matrices) | Not used |
-| Calibration data | Required | Not required |
-| Implementation | Recursive transforms + codebook lookup | ~4 lines of Python |
-| Primary evaluation | Llama-3.1-8B (1 model) | 7 models × 6 bit widths |
-| Primary contribution | Compression engineering | **Failure-mode diagnosis + mechanism** |
+| | PolarQuant | TurboQuant | modeq |
+|:---|:---|:---|:---|
+| Direction representation | Hierarchical polar angles over log₂(d) levels | Scalar coordinates after random rotation | Unit vector, per-channel absmax |
+| Quantization | k-means codebook on angles | Lloyd-Max scalar quantizer + 1-bit QJL residual | Absmax rounding (per-channel) |
+| Data-dependence | Requires codebook fit from data | **Data-oblivious** (Gaussian after rotation, Lloyd-Max analytical) | **Data-independent** (absmax only) |
+| Rotation / preconditioning | Random orthogonal | Random orthogonal | Not used |
+| Primary evaluation | Llama-3.1-8B | Various sizes, ICLR 2026 benchmarks | 7 models × 6 bit widths |
+| Primary contribution | Compression engineering | Compression engineering + theoretical optimality | **Failure-mode diagnosis + mechanism** |
+
+Correction to an earlier draft: TurboQuant is data-oblivious, relying on the analytic Gaussian distribution induced by random rotation. Only PolarQuant's angle codebook is data-dependent. We thank GPT-5 for catching this mischaracterization.
 
 ### What modeq contributes that isn't in prior work
 
@@ -285,7 +286,7 @@ The bulk of `modeq`'s research value is not in the quantizer itself (PolarQuant 
 
 3. **Layer-0 causal isolation.** On Qwen2-7B, applying `nsep+pchan` to Layer 0 alone — while leaving the other 27 layers under naive INT4 — rescues 99.97% of the catastrophic ΔPPL. The inverse (naive on Layer 0, `nsep+pchan` elsewhere) reproduces the catastrophe. No prior KV quantization work performs this kind of selective-layer intervention to isolate the site of failure.
 
-4. **A simple universal baseline.** `nsep+pchan` is data-independent, requires no codebook, no rotation, no calibration. On the 7 models we evaluated, INT3 `nsep+pchan` meets our "production" threshold (ΔPPL < 5% of WikiText-2 baseline PPL) on 5 of 7 (and rescues the one Mode 1 pathology). This complements, rather than competes with, the more sophisticated compression machinery of PolarQuant/TurboQuant.
+4. **A simple universal baseline.** `nsep+pchan` is data-independent, requires no codebook, no rotation. On the 7 models we evaluated, INT3 `nsep+pchan` meets our "production" threshold (ΔPPL < 5% of WikiText-2 baseline PPL) on 4 of 7 (a 5th is borderline at 5.2%), and rescues the one Mode 1 pathology. This complements, rather than competes with, the more sophisticated compression machinery of PolarQuant/TurboQuant.
 
 ### Other related methods
 
@@ -302,10 +303,11 @@ The bulk of `modeq`'s research value is not in the quantizer itself (PolarQuant 
 
 ## Status and limitations
 
-This is a v0.1 research prototype. It works, the numbers are real, and we use it ourselves — but:
+This is a **v0.2 research prototype** (released April 2026). It works, the numbers are real, and we use it ourselves — but:
 
 - **Python overhead**: current implementation adds ~+21% decode latency on 7B-class models because quantize/dequantize happens in Python. A fused CUDA kernel (Triton or native) would remove this; we welcome contributions.
-- **Not a drop-in for HuggingFace Transformers yet**: you have to wire up `Int3NsepPchanCache` against the model's `DynamicCache` manually for now. A proper integration is on the roadmap.
+- **Not a drop-in for HuggingFace Transformers yet**: you have to wire up `Int3NsepPchanCache` (or the v0.2 `qa_nsep_pchan_resid_rms`) against the model's `DynamicCache` manually for now. A proper integration is on the roadmap.
+- **Real bit-packing measured on 2 models**: `Int3NsepPchanCache.size_bytes()` was empirically validated on Qwen2-7B and Llama-3.1-8B (5.08× measured). For the other 5 models in the INT3 verdict table, the PPL numbers come from simulated quantization; the 5.33× compression ratio is inferred from head_dim rather than measured.
 - **Sample size for Mode 1**: only one catastrophic case (Qwen2-7B) in our 27-model sample. The Layer-0 mechanism is causally isolated, but how often this pattern occurs in the open-model population is unknown. Safe default: always use `nsep+pchan`, which handles both modes.
 - **Pre-LN only**: Post-LN models (GPT-1 style) are not evaluated here. Our companion paper discusses distributional differences.
 
