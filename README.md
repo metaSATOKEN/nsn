@@ -1,6 +1,6 @@
 # modeq
 
-**Mode-aware KV cache quantization for Pre-LN Transformers.** Get INT3 compression with production quality, across every model family we tested.
+**Mode-aware KV cache quantization for Pre-LN Transformers.** Reach our "production" quality threshold (WikiText-2 ΔPPL < 5% of baseline) at INT3 on most model families we tested.
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.9+-green.svg)](#installation)
@@ -9,9 +9,9 @@
 
 ## TL;DR
 
-Naive INT4 quantization of KV caches can fail catastrophically on certain models — **ΔPPL +1382 on Qwen2-7B** — while working fine on others. We identify **two empirically separable failure modes** (Mode 1: Layer-0 outlier-driven; Mode 2: distributed norm-variation-driven) and provide a simple, data-independent baseline that handles both: **INT3 with 5.08× real memory reduction at production quality** on 5 of 7 models tested.
+Naive INT4 quantization of KV caches can fail catastrophically on certain models — **ΔPPL +1382 on Qwen2-7B** — while working fine on others. We identify **two empirically separable failure modes** (Mode 1: Layer-0 outlier-driven; Mode 2: distributed norm-variation-driven) and provide a simple, data-independent baseline that handles both: **INT3 with 5.08× real memory reduction**, landing within our "production" threshold (WikiText-2 ΔPPL < 5% of baseline) on **5 of 7 models tested** — see [What we mean by "production quality"](#what-we-mean-by-production-quality) for the precise criterion and caveats.
 
-> **v0.2 (this release):** adds per-channel RMS residual correction (`qa_nsep_pchan_resid_rms`) and a mode-aware dispatcher (`select_quantizer`). On Mode 1 at 4-bit budget, INT3 + RMS residual surpasses native INT4 by 2.2× precision.
+> **v0.2 (this release):** adds per-channel RMS residual correction (`qa_nsep_pchan_resid_rms`) and a mode-aware dispatcher (`select_quantizer`). On Mode 1 at 4-bit budget, INT3 + RMS residual surpasses native INT4 by 2.2× precision on WikiText-2 ΔPPL.
 
 ```python
 from modeq import Int3NsepPchanCache
@@ -84,6 +84,26 @@ Applying `nsep+pchan` at INT3 — 3 bits per value, 5.33× compression vs FP16 �
 | Pythia-6.9B (base) | +2.38 | 22.1% | — | ✗ research only |
 
 5 of 7 models land in production quality. 1 is borderline. 1 (Pythia, a base model without instruction tuning) is research-only.
+
+### What we mean by "production quality"
+
+The "Verdict" column above classifies by a specific, reproducible threshold on WikiText-2 ΔPPL. Here's what each tier means in this repository:
+
+| Tier | WikiText-2 ΔPPL criterion | Interpretation |
+|:---|:---|:---|
+| ✅ **production** | < 5% of baseline PPL | Perplexity drift below the level at which end-users typically notice; within the range where INT4 KIVI-class methods are commonly deployed. In our sample this corresponds to < 0.5 absolute ΔPPL. |
+| 🟡 **borderline** | 5–10% of baseline PPL | Usable in memory-constrained settings, but we would recommend monitoring downstream task quality before deployment. |
+| △ **acceptable** | 10–20% of baseline PPL | Quality drop measurable; acceptable trade-off if memory is the dominant constraint. |
+| ✗ **research only** | > 20% of baseline PPL | Compression too aggressive for this model at this bit width; treat results as an ablation, not a deployment recommendation. |
+
+**What this verdict does NOT cover** (important caveats):
+
+1. **Downstream task accuracy** was not measured. WikiText-2 ΔPPL is a proxy; on tasks like MMLU, GSM-8K, HumanEval, or RAG accuracy, the actual quality drop may be larger or smaller than what ΔPPL suggests. KVQuant and KIVI report downstream-task accuracy; we do not, in v0.2.
+2. **Inference throughput / latency** was not measured. Our implementation is Python-only and adds roughly +21% decode latency on 7B-class models. A fused CUDA kernel (not yet implemented) should remove this; until then, the "production" label applies to quality, not speed.
+3. **Sample size**: one catastrophic model (Qwen2-7B) and seven total in the bit-width sweep. Claims about Mode 1 rescue rest on n=1 causally demonstrated; see the companion paper's Appendix H for the full diagnosis.
+4. **Baseline dependence**: the "% of baseline PPL" metric penalizes very-low-baseline (high-capability) models. Qwen2.5-14B's ΔPPL +0.26 is tiny in absolute terms; it reads as 13% only because the baseline PPL is 1.96. An absolute-ΔPPL threshold (e.g., < 0.5) would classify most of our Mode 2 models as production-ready.
+
+A model marked ✅ here means "our measurements suggest this should be acceptable at INT3 for many deployment use cases." It does not mean "we certified this model in your application." Evaluate on your own downstream task before shipping.
 
 **Real memory, not simulated.** On Llama-3.1-8B with a 2048-token context:
 
@@ -265,7 +285,7 @@ The bulk of `modeq`'s research value is not in the quantizer itself (PolarQuant 
 
 3. **Layer-0 causal isolation.** On Qwen2-7B, applying `nsep+pchan` to Layer 0 alone — while leaving the other 27 layers under naive INT4 — rescues 99.97% of the catastrophic ΔPPL. The inverse (naive on Layer 0, `nsep+pchan` elsewhere) reproduces the catastrophe. No prior KV quantization work performs this kind of selective-layer intervention to isolate the site of failure.
 
-4. **A simple universal baseline.** `nsep+pchan` is data-independent, requires no codebook, no rotation, no calibration. On the 7 models we evaluated, INT3 `nsep+pchan` reaches production quality on 5 of 7 (and rescues the one Mode 1 pathology). This complements, rather than competes with, the more sophisticated compression machinery of PolarQuant/TurboQuant.
+4. **A simple universal baseline.** `nsep+pchan` is data-independent, requires no codebook, no rotation, no calibration. On the 7 models we evaluated, INT3 `nsep+pchan` meets our "production" threshold (ΔPPL < 5% of WikiText-2 baseline PPL) on 5 of 7 (and rescues the one Mode 1 pathology). This complements, rather than competes with, the more sophisticated compression machinery of PolarQuant/TurboQuant.
 
 ### Other related methods
 
