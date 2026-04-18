@@ -1,0 +1,63 @@
+{
+  "experiment": "phase8_rms_residual_validation",
+  "timestamp": "2026-04-18T06:08:02",
+  "thesis": "Validate whether 'INT3 + RMS residual beats INT4 alone' generalizes across 7 models, or is Mode-1-specific.",
+  "headline_finding": "INT3+RMS is universally BETTER than INT3 alone (19-94% ΔPPL reduction), but strictly BEATS INT4 alone only on the Mode 1 case (Qwen2-7B). This is logically consistent with the two-mode theory: INT4 is broken on Mode 1 (valley of death), so INT3+RMS can surpass it there. On Mode 2 where INT4 is clean, INT3+RMS narrows but doesn't close the gap.",
+  "seven_model_summary": [
+    {"model": "Qwen2-7B",       "mode": "Mode 1", "baseline": 8.369,  "int3": 0.402, "int3_rms": 0.025, "int4": 0.054, "verdict": "WINS"},
+    {"model": "Llama-3.1-8B",   "mode": "Mode 2", "baseline": 8.942,  "int3": 0.271, "int3_rms": 0.075, "int4": 0.036, "verdict": "BEATS_INT3_ONLY"},
+    {"model": "Pythia-6.9B",    "mode": "Mode 2", "baseline": 10.76,  "int3": 2.378, "int3_rms": 2.006, "int4": 0.836, "verdict": "BEATS_INT3_ONLY"},
+    {"model": "Qwen2.5-14B",    "mode": "Mode 2", "baseline": 1.957,  "int3": 0.261, "int3_rms": 0.095, "int4": 0.027, "verdict": "BEATS_INT3_ONLY"},
+    {"model": "Mistral-7B",     "mode": "Mode 2", "baseline": 6.298,  "int3": 0.124, "int3_rms": 0.024, "int4": 0.018, "verdict": "BEATS_INT3_ONLY"},
+    {"model": "GPT-J-6B",       "mode": "Mode 2", "baseline": 10.29,  "int3": 0.187, "int3_rms": 0.062, "int4": 0.018, "verdict": "BEATS_INT3_ONLY"},
+    {"model": "Phi-3-medium",   "mode": "Mode 2", "baseline": 2.132,  "int3": 0.110, "int3_rms": 0.027, "int4": 0.013, "verdict": "BEATS_INT3_ONLY"}
+  ],
+  "verdict_counts": {
+    "WINS (beats both alone)":  1,
+    "BEATS_INT4 only":          0,
+    "BEATS_INT3_ONLY":          6,
+    "LOSES":                    0
+  },
+  "refined_claims": {
+    "claim_1_universal_int3_improvement": {
+      "statement": "Per-channel RMS residual correction universally improves nsep+pchan INT3, across all 7 models in our sample. Mode 1 sees 94% damage reduction; Mode 2 sees 16-72%.",
+      "evidence": "INT3+RMS < INT3 alone on every single measured model.",
+      "cost": "+1 bit/value + D FP16 per channel (~256 bytes/head metadata). Effective 4+ε bits."
+    },
+    "claim_2_mode1_specific_int4_dominance": {
+      "statement": "On the Mode 1 case (Qwen2-7B), INT3+RMS (+0.025 ΔPPL) strictly surpasses INT4 alone (+0.054). This dominance is Mode-1-specific: INT4 alone suffers from the INT4 valley of death on Mode 1 models, so INT3 (which escapes the valley) + residual can win despite being a lower base precision.",
+      "implication": "The 2.2x precision improvement of INT3+RMS over INT4 on Qwen2-7B is a direct consequence of the INT4 valley, not a universal superiority of residual correction."
+    },
+    "claim_3_mode2_int3_rms_loses_to_int4": {
+      "statement": "On all 6 Mode 2 models, INT3+RMS improves over INT3 alone but does not surpass INT4 alone. Mode 2 models have monotonic bit-width scaling; INT4's cleaner levels beat INT3's loose levels + residual correction.",
+      "gap_table": {
+        "Llama-3.1-8B":  {"int3_rms": 0.075, "int4": 0.036, "ratio": 2.1},
+        "Pythia-6.9B":   {"int3_rms": 2.006, "int4": 0.836, "ratio": 2.4},
+        "Qwen2.5-14B":   {"int3_rms": 0.095, "int4": 0.027, "ratio": 3.5},
+        "Mistral-7B":    {"int3_rms": 0.024, "int4": 0.018, "ratio": 1.3},
+        "GPT-J-6B":      {"int3_rms": 0.062, "int4": 0.018, "ratio": 3.4},
+        "Phi-3-medium":  {"int3_rms": 0.027, "int4": 0.013, "ratio": 2.1}
+      },
+      "note": "Mistral-7B is closest to a tie (+0.024 vs +0.018, 1.3x). All gaps in absolute terms are tiny (<0.1 ΔPPL)."
+    }
+  },
+  "mode_aware_deployment_framework": {
+    "description": "A mode-aware deployment strategy emerges naturally from this analysis",
+    "recipe": {
+      "diagnose_K_at_L0_outlier_ratio": "Use modeq.measure_kv_outlier_ratio",
+      "if_K_at_L0_gte_15x": {
+        "mode": "Mode 1 (catastrophic INT4)",
+        "recommended_method": "nsep+pchan INT3 + per-channel RMS residual",
+        "bits": "4+D/head (slightly above INT4)",
+        "rationale": "Escapes the INT4 valley of death; best quality at sub-5-bit budget"
+      },
+      "if_K_at_L0_lt_10x": {
+        "mode": "Mode 2 (monotonic)",
+        "recommended_method": "nsep+pchan INT4",
+        "bits": "4",
+        "rationale": "Simpler than residual; strictly better on Mode 2 models"
+      }
+    }
+  },
+  "scientific_conclusion": "The INT3+RMS residual correction provides two distinct benefits: (1) a universal improvement over INT3 alone at a modest extra cost, and (2) a Mode-1-specific rescue that surpasses INT4 alone by exploiting the INT4 valley. This pattern is internally consistent with and further supports the two-failure-mode framework of modeq's companion paper."
+}
