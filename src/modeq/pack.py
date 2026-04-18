@@ -20,7 +20,7 @@ which a kernel could remove entirely (low arithmetic intensity).
 import torch
 
 
-def pack_int3_signed(x_int8):
+def pack_int3_signed(x_int8, strict=True):
     """
     Pack signed INT3 values (range [-3, 3]) into compact uint8 bytes.
 
@@ -29,6 +29,13 @@ def pack_int3_signed(x_int8):
     x_int8 : torch.Tensor, dtype int8
         Input tensor with last dim N, where N is divisible by 8.
         Values must be in [-3, 3] (INT3 symmetric range).
+    strict : bool, default True
+        If True (default), raise a ValueError when ``x_int8`` contains
+        values outside [-3, 3]. If False, silently clamp them to the
+        range -- useful for numerical-edge cases but dangerous in
+        general because unpacking can surface an out-of-range value
+        (shifted [0, 7] -> [-3, 4]) that wasn't in the advertised
+        symmetric set.
 
     Returns
     -------
@@ -43,6 +50,16 @@ def pack_int3_signed(x_int8):
     """
     *prefix, N = x_int8.shape
     assert N % 8 == 0, f"Last dim must be divisible by 8, got {N}"
+
+    if strict:
+        xmin = int(x_int8.min().item())
+        xmax = int(x_int8.max().item())
+        if xmin < -3 or xmax > 3:
+            raise ValueError(
+                f"pack_int3_signed requires values in [-3, 3] (INT3 "
+                f"symmetric range); got [{xmin}, {xmax}]. Pass "
+                f"strict=False to silently clamp."
+            )
 
     # Shift [-3, 3] to [0, 6] (unsigned 3-bit, value 7 unused)
     u = (x_int8.to(torch.int64) + 3).clamp(0, 7)

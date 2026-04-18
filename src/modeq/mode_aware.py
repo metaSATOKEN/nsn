@@ -102,15 +102,27 @@ def select_quantizer(
             return lambda x: qa_nsep_pchan(x, target_bits)
 
     if mode_normalized == "mode2":
+        if target_bits <= 2:
+            # INT2 alone is too lossy on Mode 2 (e.g., Llama-3.1-8B
+            # DeltaPPL +22.8 per Phase 7). RMS residual on an INT2
+            # base is less lossy (+0.71 on Llama) at roughly 3 eff.
+            # bits. Caller asked for 2 bits; we give a related
+            # scheme at 3 eff. bits rather than return an
+            # empirically broken quantizer.
+            return lambda x: qa_nsep_pchan_resid_rms(x, 2)
         return lambda x: qa_nsep_pchan(x, target_bits)
 
     if mode_normalized == "borderline":
         # Conservative default: assume Mode 1 behavior.
         if target_bits == 4:
             return lambda x: qa_nsep_pchan_resid_rms(x, 3)
+        if target_bits <= 2:
+            return lambda x: qa_nsep_pchan_resid_rms(x, 2)
         return lambda x: qa_nsep_pchan(x, target_bits)
 
     # Fallback for "unknown" or unrecognized strings
+    if target_bits <= 2:
+        return lambda x: qa_nsep_pchan_resid_rms(x, 2)
     return lambda x: qa_nsep_pchan(x, target_bits)
 
 
@@ -159,16 +171,28 @@ def describe_selection(
             )
             est_quality = "~ <0.01 DeltaPPL"
     elif mode_n == "mode2":
-        method = f"nsep+pchan INT{target_bits}"
-        rationale = (
-            f"Mode 2, {target_bits}-bit budget. Mode 2 scales monotonically "
-            f"with bit width; INT4 alone beats INT3+residual by a small but "
-            f"consistent margin (no valley to escape). Simplest choice is best."
-        )
-        est_quality = {
-            3: "~ +0.1 to +0.3 DeltaPPL typical",
-            4: "~ +0.02 to +0.08 DeltaPPL typical",
-        }.get(target_bits, "very small")
+        if target_bits <= 2:
+            method = f"nsep+pchan INT{target_bits} + per-channel RMS residual"
+            rationale = (
+                f"Mode 2, {target_bits}-bit budget. INT{target_bits} alone is "
+                f"empirically too lossy on Mode 2 (e.g., INT2 alone gives "
+                f"DeltaPPL +22.8 on Llama-3.1-8B). We upgrade to RMS "
+                f"residual, which costs roughly 1 extra bit/value + small "
+                f"metadata but reduces the damage to ~+0.7 DeltaPPL on the "
+                f"same model."
+            )
+            est_quality = "~ +0.5 to +2 DeltaPPL (uncertain at very low bits)"
+        else:
+            method = f"nsep+pchan INT{target_bits}"
+            rationale = (
+                f"Mode 2, {target_bits}-bit budget. Mode 2 scales monotonically "
+                f"with bit width; INT4 alone beats INT3+residual by a small but "
+                f"consistent margin (no valley to escape). Simplest choice is best."
+            )
+            est_quality = {
+                3: "~ +0.1 to +0.3 DeltaPPL typical",
+                4: "~ +0.02 to +0.08 DeltaPPL typical",
+            }.get(target_bits, "very small")
     elif mode_n == "borderline":
         method = ("nsep+pchan INT3 + RMS residual" if target_bits == 4
                   else f"nsep+pchan INT{target_bits}")

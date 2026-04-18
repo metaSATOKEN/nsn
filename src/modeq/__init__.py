@@ -26,7 +26,7 @@ from .cache import Int3NsepPchanCache
 from .detect import measure_kv_outlier_ratio, classify_mode
 from .mode_aware import select_quantizer, describe_selection
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 __all__ = [
     # quantization primitives

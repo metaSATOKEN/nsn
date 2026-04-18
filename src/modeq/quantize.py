@@ -46,17 +46,20 @@ def qa_perchan(x, bits):
     """
     Per-channel absmax quantization at arbitrary bit width.
 
-    Each column (second-to-last dim reduction) uses its own scale.
-    This isolates outlier channels and prevents them from dominating
-    the scale for normal channels -- the core of LLM.int8 and
-    SmoothQuant ideas applied per-channel to the KV cache.
+    The scale is computed over the token axis (``dim=-2``),
+    independently for each of the D channels. This isolates outlier
+    channels and prevents them from dominating the scale for normal
+    channels -- the core of LLM.int8 and SmoothQuant ideas applied
+    per-channel to the KV cache.
+
+    Supports 2D ``[T, D]``, 3D ``[H, T, D]``, and 4D ``[B, H, T, D]``
+    inputs via the ``dim=-2`` convention.
 
     Parameters
     ----------
     x : torch.Tensor, shape [..., T, D]
-        Tensor to quantize. The scale is computed over the T dim
-        (typically the token dim), separately for each of the D
-        channels.
+        Tensor to quantize. ``T`` is the token axis; ``D`` is the
+        (head) channel axis.
     bits : int
         Target bit width.
 
@@ -64,11 +67,22 @@ def qa_perchan(x, bits):
     -------
     torch.Tensor
         Quantized-and-dequantized tensor with same shape and dtype.
+
+    Notes
+    -----
+    In v0.2, this function incorrectly used ``dim=0`` (which
+    coincides with the token axis only for 2D input). On 4D
+    ``[B, H, T, D]`` inputs with ``B=1`` -- the common README
+    example shape -- the reduction became element-wise, making the
+    quantizer an identity. The experimental PPL numbers were
+    unaffected because the experiment scripts slice to 2D per head
+    before calling the quantizer, but the public API was broken.
+    Thanks to GPT-5 for surfacing this in a cross-review.
     """
     dtype = x.dtype
     x = x.float()
     qm = 2 ** (bits - 1) - 1
-    s = x.abs().amax(dim=0, keepdim=True).clamp(min=1e-12) / qm
+    s = x.abs().amax(dim=-2, keepdim=True).clamp(min=1e-12) / qm
     return (((x / s).round().clamp(-qm, qm)) * s).to(dtype)
 
 
@@ -149,13 +163,13 @@ def qa_nsep_pchan_resid_rms(x, bits_base):
     d = x / n
 
     qm = 2 ** (bits_base - 1) - 1
-    s = d.abs().amax(dim=0, keepdim=True).clamp(min=1e-12) / qm
+    s = d.abs().amax(dim=-2, keepdim=True).clamp(min=1e-12) / qm
     d_scaled = d / s
     d_q = d_scaled.round().clamp(-qm, qm)
 
-    # Per-channel RMS residual correction
+    # Per-channel RMS residual correction (reduce over token axis dim=-2)
     residual = d_scaled - d_q
-    r_rms = (residual ** 2).mean(dim=0, keepdim=True).sqrt().clamp(min=1e-12)
+    r_rms = (residual ** 2).mean(dim=-2, keepdim=True).sqrt().clamp(min=1e-12)
     r_1bit = r_rms * residual.sign()
 
     d_corrected = (d_q + r_1bit) * s
@@ -198,7 +212,7 @@ def qa_nsep_pchan_resid_fixed(x, bits_base, magnitude=0.25):
     d = x / n
 
     qm = 2 ** (bits_base - 1) - 1
-    s = d.abs().amax(dim=0, keepdim=True).clamp(min=1e-12) / qm
+    s = d.abs().amax(dim=-2, keepdim=True).clamp(min=1e-12) / qm
     d_scaled = d / s
     d_q = d_scaled.round().clamp(-qm, qm)
 

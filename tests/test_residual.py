@@ -82,6 +82,21 @@ def test_fixed_0_25_residual_on_uniform_data_approximately_works():
     )
 
 
+def test_residual_variants_quantize_4d_input():
+    """Regression for the v0.2 dim=0 -> dim=-2 fix: residual variants
+    must produce non-trivial quantization on 4D [B, H, T, D]."""
+    torch.manual_seed(0)
+    x = torch.randn(1, 4, 16, 64, dtype=torch.float32)
+
+    y_rms   = qa_nsep_pchan_resid_rms(x, bits_base=3)
+    y_fixed = qa_nsep_pchan_resid_fixed(x, bits_base=3, magnitude=0.25)
+
+    diff_rms   = (x - y_rms).abs().mean().item()
+    diff_fixed = (x - y_fixed).abs().mean().item()
+    assert diff_rms   > 1e-3, f"RMS variant identity on 4D: {diff_rms:.3e}"
+    assert diff_fixed > 1e-3, f"Fixed variant identity on 4D: {diff_fixed:.3e}"
+
+
 def test_fixed_residual_backfires_on_synthetic_outlier():
     """Synthetic outlier case to verify the Mode-1-like failure mode of
     fixed-magnitude residual. This replicates the empirical finding

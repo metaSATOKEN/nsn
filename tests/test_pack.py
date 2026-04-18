@@ -46,6 +46,26 @@ def test_dim_requirement():
         pack_int3_signed(x)
 
 
+def test_strict_range_check():
+    """pack_int3_signed with strict=True should reject OOR values."""
+    x = torch.tensor([[-5, 0, 0, 0, 0, 0, 0, 0]], dtype=torch.int8)  # -5 < -3
+    with pytest.raises(ValueError):
+        pack_int3_signed(x)
+
+    x_over = torch.tensor([[0, 0, 0, 0, 0, 0, 0, 7]], dtype=torch.int8)  # 7 > 3
+    with pytest.raises(ValueError):
+        pack_int3_signed(x_over)
+
+
+def test_strict_false_silently_clamps():
+    """pack_int3_signed with strict=False silently clamps OOR values."""
+    x = torch.tensor([[-5, 0, 0, 0, 0, 0, 0, 0]], dtype=torch.int8)
+    packed = pack_int3_signed(x, strict=False)
+    unpacked = unpack_int3_signed(packed, N=8)
+    # -5 shifted +3 = -2 clamped to [0, 7] = 0, then unpack -> -3
+    assert unpacked[0, 0].item() == -3
+
+
 def test_multi_batch():
     """Batched tensors round-trip correctly."""
     torch.manual_seed(42)
