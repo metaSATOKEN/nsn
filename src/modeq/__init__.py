@@ -46,7 +46,7 @@ from .detect import measure_kv_outlier_ratio, classify_mode
 from .mode_aware import select_quantizer, describe_selection
 from .rotate import hadamard_matrix, rotate, unrotate, should_rotate
 
-__version__ = "0.3.4"
+__version__ = "0.3.5"
 
 __all__ = [
     # quantization primitives

@@ -1,0 +1,148 @@
+{
+  "date": "2026-04-18T11:01:02",
+  "runs": {
+    "Qwen2-7B (Mode 1)": {
+      "label": "Qwen2-7B (Mode 1)",
+      "model": "Qwen/Qwen2-7B",
+      "baseline_ppl": 8.369283550767774,
+      "results": {
+        "baseline (FP16)": {
+          "ppl": 8.369283550767774,
+          "bits": "16",
+          "delta": 0.0,
+          "tokens": 5120
+        },
+        "(A) naive per-row sym INT3": {
+          "ppl": 20.293043719786777,
+          "bits": "3",
+          "delta": 11.923760169019003,
+          "tokens": 5120
+        },
+        "(B) asym per-channel, no nsep": {
+          "ppl": 8.728680375460778,
+          "bits": "3",
+          "delta": 0.35939682469300394,
+          "tokens": 5120
+        },
+        "(C) nsep+pchan sym INT3 (v0.2)": {
+          "ppl": 8.771355336662616,
+          "bits": "3",
+          "delta": 0.40207178589484194,
+          "tokens": 5120
+        },
+        "(D) nsep+pchan asym INT3 (v0.3)": {
+          "ppl": 8.47271682136514,
+          "bits": "3",
+          "delta": 0.10343327059736573,
+          "tokens": 5120
+        }
+      },
+      "delta_naive": 11.923760169019003,
+      "delta_asym_only": 0.35939682469300394,
+      "delta_sym_full": 0.40207178589484194,
+      "delta_asym_full": 0.10343327059736573,
+      "v03_vs_naive_pct": 99.13254485891026,
+      "v03_vs_asym_only_pct": 71.22031595974221,
+      "v03_vs_v02_pct": 74.27492447221408
+    },
+    "Llama-3.1-8B (Mode 2)": {
+      "label": "Llama-3.1-8B (Mode 2)",
+      "model": "meta-llama/Llama-3.1-8B",
+      "baseline_ppl": 7.384042802442341,
+      "results": {
+        "baseline (FP16)": {
+          "ppl": 7.384042802442341,
+          "bits": "16",
+          "delta": 0.0,
+          "tokens": 5120
+        },
+        "(A) naive per-row sym INT3": {
+          "ppl": 7.8293267844543655,
+          "bits": "3",
+          "delta": 0.44528398201202446,
+          "tokens": 5120
+        },
+        "(B) asym per-channel, no nsep": {
+          "ppl": 18.30591358690969,
+          "bits": "3",
+          "delta": 10.921870784467348,
+          "tokens": 5120
+        },
+        "(C) nsep+pchan sym INT3 (v0.2)": {
+          "ppl": 7.638114049886331,
+          "bits": "3",
+          "delta": 0.25407124744399034,
+          "tokens": 5120
+        },
+        "(D) nsep+pchan asym INT3 (v0.3)": {
+          "ppl": 7.48997006767542,
+          "bits": "3",
+          "delta": 0.10592726523307938,
+          "tokens": 5120
+        }
+      },
+      "delta_naive": 0.44528398201202446,
+      "delta_asym_only": 10.921870784467348,
+      "delta_sym_full": 0.25407124744399034,
+      "delta_asym_full": 0.10592726523307938,
+      "v03_vs_naive_pct": 76.21130121176941,
+      "v03_vs_asym_only_pct": 99.03013625299684,
+      "v03_vs_v02_pct": 58.308046936152856
+    },
+    "Pythia-6.9B (Mode 2)": {
+      "label": "Pythia-6.9B (Mode 2)",
+      "model": "EleutherAI/pythia-6.9b",
+      "baseline_ppl": 10.759376577022339,
+      "results": {
+        "baseline (FP16)": {
+          "ppl": 10.759376577022339,
+          "bits": "16",
+          "delta": 0.0,
+          "tokens": 5120
+        },
+        "(A) naive per-row sym INT3": {
+          "ppl": 33.2225188729459,
+          "bits": "3",
+          "delta": 22.46314229592356,
+          "tokens": 5120
+        },
+        "(B) asym per-channel, no nsep": {
+          "ppl": 11.391954298134815,
+          "bits": "3",
+          "delta": 0.6325777211124759,
+          "tokens": 5120
+        },
+        "(C) nsep+pchan sym INT3 (v0.2)": {
+          "ppl": 13.13752502417804,
+          "bits": "3",
+          "delta": 2.3781484471557004,
+          "tokens": 5120
+        },
+        "(D) nsep+pchan asym INT3 (v0.3)": {
+          "ppl": 10.85881233717438,
+          "bits": "3",
+          "delta": 0.09943576015204059,
+          "tokens": 5120
+        }
+      },
+      "delta_naive": 22.46314229592356,
+      "delta_asym_only": 0.6325777211124759,
+      "delta_sym_full": 2.3781484471557004,
+      "delta_asym_full": 0.09943576015204059,
+      "v03_vs_naive_pct": 99.55733815491128,
+      "v03_vs_asym_only_pct": 84.28086275672672,
+      "v03_vs_v02_pct": 95.8187740436907
+    }
+  },
+  "method_legend": {
+    "A": "naive per-row symmetric INT3 (industry baseline)",
+    "B": "asymmetric per-channel INT3, no norm separation",
+    "C": "nsep+pchan symmetric INT3 (modeq v0.2 default)",
+    "D": "nsep+pchan asymmetric INT3 (modeq v0.3 default)"
+  },
+  "ablation_questions": {
+    "Q1_pchan_gain": "does per-channel absmax help over naive? (A -> C)",
+    "Q2_nsep_necessity": "does norm-sep help on top of asym pchan? (B -> D)",
+    "Q3_asym_necessity": "does asym help on top of nsep+pchan? (C -> D)"
+  }
+}

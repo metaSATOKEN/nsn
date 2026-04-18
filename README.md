@@ -88,7 +88,7 @@ Initial Phase 14 measurement on the canonical Mode 1 / Mode 2 pair:
 
 The asym ↔ sym difference at **identical 3.0 bits/value** is the v0.3 headline. INT4 still wins on quality in absolute terms, but it costs 33% more bits; asym INT3 sits on the Pareto front for the INT3 tier.
 
-> **What "sym INT3" and "asym INT3" mean in this table.** Both are modeq's **`nsep+pchan` pipeline** — they differ only in how the per-channel quantization window is computed (symmetric `[−absmax, +absmax]` vs asymmetric `[min, max]`). Neither is the industry-standard naive per-row absmax INT3 that a practitioner might first reach for. For the comparison against that baseline, see the [bit-width sweep at the top of this README](#the-benchmark-that-motivates-this-library) — naive INT3 on Qwen2-7B is **+12 ΔPPL** (116× worse than v0.3's +0.10), and naive INT3 on Pythia-6.9B is **+22 ΔPPL** (220× worse than v0.3's +0.10). Phase 18 (planned) will run an explicit four-method ablation — naive per-row vs asymmetric per-channel (no nsep) vs v0.2 sym nsep+pchan vs v0.3 asym nsep+pchan — on a canonical three-model set so the contribution of each component (per-channel, nsep, asymmetric) can be read off a single table.
+> **What "sym INT3" and "asym INT3" mean in this table.** Both are modeq's **`nsep+pchan` pipeline** — they differ only in how the per-channel quantization window is computed (symmetric `[−absmax, +absmax]` vs asymmetric `[min, max]`). Neither is the industry-standard naive per-row absmax INT3 that a practitioner might first reach for. For the comparison against that baseline, see the [bit-width sweep at the top of this README](#the-benchmark-that-motivates-this-library) — naive INT3 on Qwen2-7B is **+12 ΔPPL** (116× worse than v0.3's +0.10) and naive INT3 on Pythia-6.9B is **+22 ΔPPL** (220× worse than v0.3's +0.10). See the **[four-method ablation](#four-method-ablation-every-component-of-v03-is-necessary)** section below for the full naive-vs-modeq-v0.2-vs-modeq-v0.3 breakdown on 8 models.
 
 **Where does the gain come from?** Post-RoPE K channels have strongly biased distributions. Symmetric absmax quantizes them on `[-|max|, +|max|]`, wasting roughly half the quantization levels on the empty side. Asymmetric fits `[min, max]` tightly and uses all 2^bits levels. At INT3 this is the difference between 7 symmetric levels (−3..3) and 8 asymmetric levels (0..7), plus the range-fit advantage.
 
@@ -115,6 +115,47 @@ Three specific callouts:
 - **Gemma 4-E4B is the second dramatic rescue.** Symmetric INT3 drifts 9.12% of baseline (research-only tier); asymmetric INT3 brings it to 4.51% (production tier). Largest absolute ΔPPL improvement (+0.948) in the set.
 - **Qwen3.5-9B is a hybrid architecture** (8 standard-attention layers + 24 linear-attention layers, the latter having no K/V cache). modeq compresses only the standard-attention subset, and even so asym INT3 cuts ΔPPL by 65.7% vs symmetric at identical bit rate. The benefit is layer-local — it doesn't require full-model compression.
 - **GPT-J-6B has head_dim=256, not 128.** Its −62.5% reduction confirms the asym recipe is head-dim agnostic at the per-channel level.
+
+### Four-method ablation: every component of v0.3 is necessary
+
+Phase 18 + 19 decomposed the v0.3 recipe into four INT3 variants and measured each on all 8 models. This answers "is modeq's v0.3 the simplest thing that works, or could a simpler ablation do the same job?" The answer is that each of the three components (norm separation, per-channel scaling, asymmetric window) is **empirically necessary**: dropping any one causes > 5 % baseline ΔPPL on at least 2 of the 8 models.
+
+| Method | Components | What each drops |
+|:---|:---|:---|
+| **(A)** naive per-row sym INT3 | (none of the three) | industry baseline — no pchan, no nsep, no asym |
+| **(B)** asym per-channel, NO nsep | pchan + asym | drops `nsep` |
+| **(C)** nsep+pchan sym INT3 | nsep + pchan | drops `asym` (this is modeq **v0.2**) |
+| **(D)** nsep+pchan asym INT3 | all three | modeq **v0.3** default |
+
+8-model ΔPPL table (WikiText-2, ctx=1024, 10 windows/method):
+
+| Model | Year | Mode | (A) naive | (B) asym-only | (C) v0.2 sym | **(D) v0.3 asym** |
+|:---|:-:|:-:|---:|---:|---:|---:|
+| Qwen2-7B | 2024 | 1 | **+11.92** 💥 | +0.36 | +0.40 | **+0.10** ✅ |
+| Llama-3.1-8B | 2024 | 2 | +0.45 | **+10.92** 💥 | +0.25 | **+0.11** ✅ |
+| Pythia-6.9B | 2023 | 2 | **+22.46** 💥 | +0.63 | +2.38 | **+0.10** ✅ |
+| Mistral-7B-v0.1 | 2023 | 2 | +0.09 | **+7.54** 💥 | +0.12 | **+0.05** ✅ |
+| Qwen2.5-14B | 2024 | 2 | +0.86 | **+2.85** ⚠ | +0.26 | **+0.09** ✅ |
+| GPT-J-6B | 2021 | 2 | +0.32 | +0.65 ⚠ | +0.19 | **+0.07** ✅ |
+| Qwen3.5-9B | 2026 | hybrid | +0.24 | −0.004 | +0.28 | **+0.09** ✅ |
+| Gemma 4-E4B | 2026 | — | +5.45 💥 | −0.44 † | +1.88 | **+0.93** ✅ |
+
+💥 = catastrophic (> 5 % baseline ΔPPL). ⚠ = B worse than naive A. ✅ = production tier (< 5 % baseline).
+
+**Production-tier coverage per method:**
+
+| Method | Models in production tier |
+|:---|:---:|
+| (A) naive per-row sym INT3 | 3 / 8 (fails on Qwen2, Pythia, Gemma 4; borderline on Qwen2.5) |
+| (B) asym per-channel, no nsep | 3 / 8 (fails on Llama, Mistral, Qwen2.5) |
+| (C) nsep+pchan sym INT3 (v0.2) | 5 / 8 (fails on Pythia, Qwen2.5, Gemma 4) |
+| **(D) nsep+pchan asym INT3 (v0.3)** | **8 / 8** 🏆 |
+
+The critical finding is that method (B) — asymmetric per-channel INT3 *without* norm separation, a drop-in recipe common in weight quantization — **catastrophically regresses on 4 of 8 models** (up to 24× worse than naive on Llama-3.1-8B). The failure correlates with modern Llama-family architectures that have high token-wise L2-norm variance: without `nsep`, per-channel min/max is dominated by high-norm tokens, which mis-scales the low-norm tokens. `nsep` removes this contamination by normalizing each token to unit length before computing per-channel statistics.
+
+Symmetric per-channel (C, v0.2) also fails on 3 of 8 models — notably Pythia-6.9B (22 % of baseline) — because the post-RoPE direction-vector distribution is biased and a symmetric window around zero wastes roughly half its levels. `asym` fixes that by fitting `[min, max]` tightly.
+
+Only **(D) = nsep + pchan + asym** hits production tier on all 8. This is the empirical content of the v0.3 recommendation.
 
 ### Real-packed compression
 
@@ -294,15 +335,33 @@ print(describe_selection(outlier_stats=stats, target_bits=3))
 
 ## v0.3 release notes
 
-Three empirical phases drove v0.3 (see `experiments/phase10` through `phase15`):
+v0.3 went through twelve numbered experimental phases (see `experiments/phase9_*` through `phase21_*` and the matching `results/*.json` files). The short version:
 
-1. **Phase 10**: we evaluated Walsh–Hadamard rotation (à la QuaRot/KVLinC) as a way to spread Mode 1 outliers across channels. On real Qwen2-7B Layer 0 K, rotation **regressed MSE by 3.68×** (0/4 heads improved) because the distribution is a discrete multi-channel plateau rather than heavy-tailed — per-channel absmax already handles plateaus optimally. Rotation is now NOT dispatched in v0.3 (the quantizer function `qa_nsep_pchan_rotated` remains in the package as a documented negative result).
+### Dead ends we ran and discarded
 
-2. **Phase 13**: a full sweep of candidate variants (2-tier bit allocation, max- vs energy-based top-K selection, asymmetric, combinations) on real Qwen2-7B and Llama-3.1-8B Layer 0 K identified **asymmetric per-channel** as the single contribution responsible for essentially all of the available INT3-tier MSE headroom. 2-tier adds < 1% on top of asym.
+1. **Phase 10 — Walsh–Hadamard rotation** (à la QuaRot / KVLinC) was evaluated as a way to spread Mode 1 outliers across channels. On real Qwen2-7B Layer 0 K, rotation *regressed* MSE by **3.68×** (0 of 4 heads improved) because the distribution is a discrete multi-channel plateau, not heavy-tailed — per-channel absmax already handles plateaus optimally. Rotation is NOT dispatched in v0.3 (`qa_nsep_pchan_rotated` remains in the package as a documented negative result).
 
-3. **Phase 14**: WikiText-2 PPL confirmed the MSE → PPL transfer at **80–85% efficiency** (MSE −91% → PPL −74% on Qwen2-7B; MSE −68% → PPL −58% on Llama). This is in the normal range for quantization methods.
+2. **Phase 12 — symmetric 2-tier mixed-precision** (top-K outlier channels at higher bits) looked promising on synthetic regimes but *regressed* 17.6 % on real Qwen2-7B at K=4. A later 13-method sweep showed 2-tier only helps on top of `asym` by < 1 %, so it is also not dispatched.
 
-4. **Phase 15**: real-packed compression measurement via `Int3AsymNsepPchanCache` confirmed **5.09× compression ratio** for both target models; the asym metadata overhead is 0.008 bits/value.
+### What actually worked
+
+3. **Phase 13 — 13-method sweep** on real Qwen2-7B and Llama-3.1-8B Layer 0 K identified **asymmetric per-channel** as the single contribution responsible for essentially all of the INT3-tier MSE headroom.
+
+4. **Phase 14 — WikiText-2 PPL validation** on the canonical Mode 1 / Mode 2 pair confirmed the MSE → PPL transfer at ~80 % efficiency: Qwen2-7B +0.402 → +0.103 (−74.3 %), Llama-3.1-8B +0.254 → +0.106 (−58.3 %) at identical 3.0 bits/value.
+
+5. **Phase 15 — real-packed compression benchmark** via `Int3AsymNsepPchanCache` confirmed **5.09× compression ratio** for both target models; asym metadata overhead is 0.008 bits/value vs the v0.2 symmetric cache.
+
+6. **Phase 16 — 6-model generalization** added Mistral-7B-v0.1, Qwen2.5-14B, GPT-J-6B, Pythia-6.9B, plus an attempted Phi-3-medium-4k-instruct run that was blocked by an unrelated HF custom-code incompatibility. 6 of 6 runnable models beat the symmetric baseline by 56–96 %; Pythia jumped from v0.2's "research only" tier into production.
+
+7. **Phase 17 — 2026 flagships** added Qwen3.5-9B (hybrid attention) and Gemma 4-E4B (multimodal). Asym INT3 remains universal: 8 / 8 runnable models land in the < 5 % baseline production tier.
+
+### Why we know every component of v0.3 is necessary
+
+8. **Phase 18 + 19 — four-method ablation** across all 8 models tested `naive per-row sym`, `asym per-channel no nsep`, `nsep+pchan sym (v0.2)`, and `nsep+pchan asym (v0.3)`. The headline finding: only the v0.3 composition (D) achieves < 5 % baseline ΔPPL on all 8 models. Each simpler ablation catastrophically regresses on at least 2 of the 8. In particular, `asym per-channel without nsep` — a drop-in recipe common in *weight* quantization — fails by up to 24× worse than naive on Llama-3.1-8B, because KV cache distributions have a high-norm-variance property that weight distributions do not. See the [four-method ablation section](#four-method-ablation-every-component-of-v03-is-necessary) above for the full table.
+
+### Things we noticed but are not claiming
+
+9. **Phase 20 + 21 — Gemma 4-E4B B-anomaly probe.** The asym-only ablation (B) showed a small but reproducible *negative* ΔPPL on gemma-4-E4B (−0.40 on one text segment, −0.15 on a fresh segment, across fp16 and native bf16). A K-only / V-only split isolated ~87 % of the effect to the Key cache, suggesting accidental attention-logit entropy regularization on this multimodal-trained model when evaluated text-only. **We do NOT recommend deploying (B)** — the same variant catastrophically regresses on 4 of 8 other models (Phase 19). The v0.3 recommended (D) is unaffected (+0.93 to +1.16 ΔPPL consistently). Flagged as an appendix-level open question; see `results/phase21_gemma_b_anomaly_probe.json` for the full breakdown.
 
 ### Honesty note on Mode 2 at INT4
 

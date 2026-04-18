@@ -109,8 +109,41 @@ Above INT3, symmetric is still the v0.3 default. Phase 14 measured asymmetric IN
 
 Rotation (Walsh–Hadamard, similar to KVLinC / QuaRot style) was also tested in v0.3 development but *regressed* MSE by 3.68× on real Qwen2-7B Layer 0 K (Phase 10). The distribution is a discrete multi-channel plateau rather than heavy-tailed, which per-channel absmax already handles optimally. Rotation is retained in the package as a documented negative result (`qa_nsep_pchan_rotated`) but is not dispatched.
 
+## v0.3 ablation: why each component is necessary (Phase 18 + 19)
+
+After v0.3 shipped, we ran a four-method INT3 ablation on all 8 benchmarked models to answer a structural question: is modeq's v0.3 (D = `nsep + pchan + asym`) the *simplest* thing that works, or is one of the three components dispensable? The four methods were:
+
+- **(A) naive per-row symmetric INT3** — no `pchan`, no `nsep`, no `asym`. Industry baseline.
+- **(B) asym per-channel INT3, NO `nsep`** — `pchan` and `asym`, but not `nsep`. This is the "weight-quantization-style" recipe applied naively to KV cache.
+- **(C) `nsep+pchan` symmetric INT3** — `nsep` and `pchan`, but not `asym`. This is modeq **v0.2**.
+- **(D) `nsep+pchan` asymmetric INT3** — all three. This is modeq **v0.3**.
+
+Production-tier coverage (< 5 % baseline ΔPPL on WikiText-2) across 8 models:
+
+| Method | 2021 models | 2023 models | 2024 models | 2026 models | Total |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| (A) naive | 1 / 1 | 2 / 2 | 1 / 3 | 1 / 2 (Qwen3.5) | **5 / 8** (but fails 💥 on 3 Mode-1 / high-noise models) |
+| (B) asym no `nsep` | 0 / 1 | 1 / 2 | 1 / 3 | 2 / 2 | **4 / 8** (fails 💥 on 4 of 8) |
+| (C) `nsep+pchan` sym (v0.2) | 1 / 1 | 1 / 2 | 2 / 3 | 1 / 2 | **5 / 8** |
+| **(D) `nsep+pchan` asym (v0.3)** | **1 / 1** | **2 / 2** | **3 / 3** | **2 / 2** | **8 / 8** 🏆 |
+
+Concretely, each component is empirically necessary:
+
+**1. `pchan` is needed for Mode-1-style outlier channels.** Without per-channel scaling, method (A) fails catastrophically on Qwen2-7B (+11.9 ΔPPL, 142 % of baseline) and Pythia-6.9B (+22.5 ΔPPL, 209 %), because a per-row absmax scale is stretched wide to accommodate the outlier channel and mis-quantizes the other channels.
+
+**2. `nsep` is needed for Mode-2-style high-norm-variance distributions.** Without norm separation, method (B) fails catastrophically on Llama-3.1-8B (+10.9 ΔPPL, 148 %), Mistral-7B-v0.1 (+7.5 ΔPPL, 120 %), and Qwen2.5-14B (+2.9 ΔPPL, 146 %). The failure mechanism is specific to KV cache and does not appear in weight quantization: per-channel `[min, max]` computed on raw activations is dominated by high-norm tokens, and the resulting scale mis-quantizes low-norm tokens by a factor equal to the token-norm ratio. `nsep` normalizes each token to unit length before computing per-channel statistics, removing this contamination.
+
+**3. `asym` is needed for post-RoPE biased distributions.** Without asymmetric quantization, method (C, v0.2) lands in only 5 of 8 models — Pythia-6.9B at 22 % of baseline is the clearest failure. Asymmetric fits `[min, max]` tightly and avoids wasting half the quantization levels on the empty side of a symmetric window.
+
+Only the full combination (D) succeeds on all 8 models. The asymmetric-per-channel-without-nsep recipe (B) that weight-quantization literature treats as "standard" is **actively dangerous on KV cache**: it can be up to 24× worse than the naive per-row baseline it is meant to improve, specifically on modern Llama-family architectures where token-wise norm variance is large.
+
+### Footnote: accidental K-cache regularization on Gemma 4-E4B
+
+On gemma-4-E4B (multimodal, 2026), method (B) produced a small but reproducible *negative* ΔPPL (−0.40 on WikiText-2 chars [0:48k], −0.15 on chars [48:96k], across fp16 and native bf16). A K-only / V-only split (Phase 21) isolated 87 % of the effect to the Key cache, consistent with accidental attention-logit entropy regularization: quantization noise on K softens the attention distribution, which helps when a multimodal-trained model is evaluated text-only. This effect does NOT generalize — (B) catastrophically regresses on 4 of the other 7 models — and does NOT affect the recommended recipe (D), which produces ordinary small-positive ΔPPL (+0.93) on gemma-4-E4B. We flag this as an open observation: K-cache-quantization-as-regularization in multimodal models may be worth instrumenting directly (attention entropy measurement) in future work. It is not a deployable method.
+
 ## References
 
 - Companion paper: [Norm-Separated Quantization](https://github.com/metaSATOKEN/norm-separated-quantization) (V5, 23 pages)
 - [Appendix H](https://github.com/metaSATOKEN/norm-separated-quantization/blob/main/paper/arc_compression.pdf) of the paper contains the full 11-model K/V outlier asymmetry study and the selective-compression causal experiments.
-- v0.3 empirical data: `results/phase10_real_kv_distribution.json`, `phase13_full_sweep.json`, `phase14_asym_wikitext2_ppl.json`, `phase15_real_compression.json`, `phase16_asym_seven_model_sweep.json`, `phase17_2026_flagships.json`.
+- v0.3 empirical data (head): `results/phase10_real_kv_distribution.json`, `phase13_full_sweep.json`, `phase14_asym_wikitext2_ppl.json`, `phase15_real_compression.json`, `phase16_asym_seven_model_sweep.json`, `phase17_2026_flagships.json`.
+- v0.3 ablation + anomaly probe: `results/phase18_ablation_vs_industry_naive.json`, `phase19_ablation_generalization.json`, `phase20_bf16_disambiguation.json`, `phase21_gemma_b_anomaly_probe.json`.

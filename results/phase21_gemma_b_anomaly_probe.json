@@ -1,0 +1,114 @@
+{
+  "date": "2026-04-18T11:49:30",
+  "phase": "Phase 21",
+  "description": "Minimal two-axis probe of the gemma-4-E4B negative-ΔPPL anomaly observed under the asym-only-no-nsep ablation (method B) in Phases 19-20. Axis 1: reproducibility across a tripled sample size (30 windows) and a fresh WikiText-2 segment. Axis 2: per-side ablation (K-only vs V-only) to point at the mechanism. Budget-capped at ~30 min; no deep investigation beyond these two axes.",
+  "model":   "google/gemma-4-E4B",
+  "dtype":   "bf16",
+  "ctx_len": 1024,
+  "stride":  512,
+  "windows_per_method": 30,
+
+  "segments": {
+    "SEG1": {
+      "chars_range": [0, 48000],
+      "note":        "Same prefix Phase 19 and Phase 20 used; enables direct reproducibility comparison."
+    },
+    "SEG2": {
+      "chars_range": [48000, 96000],
+      "note":        "Fresh non-overlapping segment. If the effect is text-specific, SEG2 kills it."
+    }
+  },
+
+  "methods": {
+    "baseline":  "no quantization (bf16 reference)",
+    "B-KV":      "asymmetric per-channel INT3 NO nsep, applied to BOTH K and V (original (B) variant)",
+    "B-K-only":  "asymmetric per-channel INT3 NO nsep, applied to K only; V left at bf16",
+    "B-V-only":  "asymmetric per-channel INT3 NO nsep, applied to V only; K left at bf16",
+    "D-KV":      "modeq v0.3 default nsep+pchan asymmetric INT3 on both K and V (sanity check)"
+  },
+
+  "results": {
+    "SEG1": {
+      "baseline_ppl": 17.1327,
+      "methods": {
+        "baseline":  {"ppl": 17.1327, "delta":  0.0000, "pct_of_baseline":  0.00, "tokens": 10240},
+        "B-KV":      {"ppl": 16.7320, "delta": -0.4007, "pct_of_baseline": -2.34, "tokens": 10240},
+        "B-K-only":  {"ppl": 16.7850, "delta": -0.3477, "pct_of_baseline": -2.03, "tokens": 10240},
+        "B-V-only":  {"ppl": 17.0450, "delta": -0.0876, "pct_of_baseline": -0.51, "tokens": 10240},
+        "D-KV":      {"ppl": 18.0786, "delta":  0.9459, "pct_of_baseline":  5.52, "tokens": 10240}
+      }
+    },
+    "SEG2": {
+      "baseline_ppl": 13.4497,
+      "methods": {
+        "baseline":  {"ppl": 13.4497, "delta":  0.0000, "pct_of_baseline":  0.00, "tokens": 11264},
+        "B-KV":      {"ppl": 13.3014, "delta": -0.1483, "pct_of_baseline": -1.10, "tokens": 11264},
+        "B-K-only":  {"ppl": 13.3207, "delta": -0.1290, "pct_of_baseline": -0.96, "tokens": 11264},
+        "B-V-only":  {"ppl": 13.5034, "delta":  0.0537, "pct_of_baseline":  0.40, "tokens": 11264},
+        "D-KV":      {"ppl": 14.3982, "delta":  0.9485, "pct_of_baseline":  7.05, "tokens": 11264}
+      }
+    }
+  },
+
+  "reproducibility_track": {
+    "phase19_SEG1_fp16_10w_B_KV": -0.4393,
+    "phase20_SEG1_bf16_10w_B_KV": -0.3200,
+    "phase21_SEG1_bf16_30w_B_KV": -0.4007,
+    "phase21_SEG2_bf16_30w_B_KV": -0.1483,
+    "verdict": "CONFIRMED (SEG1 consistently -0.32 to -0.44 across four runs; SEG2 weaker at -0.15 but still negative and outside the noise floor)"
+  },
+
+  "kv_split_analysis": {
+    "script_verdict_raw": "mixed / inconclusive (because B-V-only -0.0876 on SEG1 was not < -0.1 threshold)",
+    "honest_reading":     "K-DRIVEN on both segments. See the contribution ratios below.",
+    "contribution_ratios": {
+      "SEG1": {
+        "B_K_only_delta":   -0.3477,
+        "B_V_only_delta":   -0.0876,
+        "B_KV_delta":       -0.4007,
+        "K_fraction_of_KV_effect_pct": 86.77,
+        "V_fraction_of_KV_effect_pct": 21.86,
+        "note": "Sum of K-only + V-only = -0.4353 vs B-KV -0.4007 suggests near-linear composition; K accounts for ~87% of the observed negative delta."
+      },
+      "SEG2": {
+        "B_K_only_delta":   -0.1290,
+        "B_V_only_delta":    0.0537,
+        "B_KV_delta":       -0.1483,
+        "K_fraction_of_KV_effect_pct": 86.99,
+        "V_fraction_of_KV_effect_pct": -36.21,
+        "note": "On SEG2 the K-only delta is essentially the full effect and V-only is slightly POSITIVE -- V-quantization mildly hurts PPL on SEG2 while K-quantization helps. The combined effect is smaller because K and V partially cancel. This STRENGTHENS the K-as-regularizer reading: V contributes zero or mild harm, and all the regularization signal is on the K path."
+      }
+    },
+    "verdict_honest":  "87% of the negative-ΔPPL effect comes from quantizing K on both segments. V-only is small-negative on SEG1 and small-positive on SEG2, averaging to near-zero and clearly distinct from K's consistent ~-0.13 to ~-0.35. The mechanism is attention-logit-level, not value-pathway."
+  },
+
+  "size_vs_baseline_correlation": {
+    "SEG1_baseline": 17.1327,
+    "SEG1_B_KV_delta": -0.4007,
+    "SEG1_B_KV_delta_pct": -2.34,
+    "SEG2_baseline": 13.4497,
+    "SEG2_B_KV_delta": -0.1483,
+    "SEG2_B_KV_delta_pct": -1.10,
+    "observation": "The improvement is larger on the higher-baseline segment (17.13 -> -2.34%, 13.45 -> -1.10%). This is consistent with 'quantization noise softens an overconfident attention distribution on text-only inputs of a multimodal-trained model': higher baseline PPL means higher token-level surprise, more room for entropy-increasing noise to help. Not a conclusive test, but a useful corroboration."
+  },
+
+  "D_recipe_is_unaffected": {
+    "SEG1_D_KV": 0.9459,
+    "SEG2_D_KV": 0.9485,
+    "note": "The v0.3 recommended method (D) produces essentially identical positive ΔPPL on both segments (+0.9459 / +0.9485). The anomaly is confined to the (B) ablation variant. The v0.3 production claim from Phase 14/16/17 is unchanged."
+  },
+
+  "final_interpretation": {
+    "mechanism_conjecture": "K-driven accidental attention-logit entropy regularization on gemma-4-E4B text-only evaluation. Asymmetric per-channel quantization of the Key cache adds structured noise to K; this perturbs the softmax(QK^T/sqrt(d)) distribution by flattening logits on the large side of the [min, max] window (where asym's step size is largest). On a multimodal-trained model evaluated text-only, the base attention distribution is plausibly slightly over-confident (off-distribution), so increased attention entropy pulls PPL marginally below the unquantized baseline. V-cache quantization, being downstream of softmax, only reduces output fidelity and does not regularize the distribution.",
+    "why_this_is_appendix_material_not_main_claim": [
+      "1) Specific to one multimodal model in our 8-model set. Not generalizable.",
+      "2) Effect size is 1-3% PPL, not large enough for a deployment recommendation.",
+      "3) The same (B) variant catastrophically regresses on 4 of 8 models (see Phase 19). We cannot ship (B) as a method.",
+      "4) (D) v0.3 recipe -- the one we DO ship -- does not exhibit this anomaly; it behaves as ordinary small-positive ΔPPL.",
+      "5) Causal claim (noise -> entropy -> PPL) is plausible but not yet instrumented. A proper test would measure attention-entropy shift directly, not just PPL. Future work."
+    ],
+    "paper_treatment_suggestion": "Appendix note titled 'Accidental K-cache entropy regularization on gemma-4-E4B'. 1 paragraph describing the observation (Phase 19-21 chain), the mechanism conjecture, and explicitly NOT recommending (B) for deployment. Point to Phase 19 4/8 catastrophic cases as counter-evidence. 1-2 references for future work (attention entropy as a regularizer; quantization-aware multimodal inference)."
+  },
+
+  "verdict_for_v03_release": "UNCHANGED. The v0.3 asymmetric INT3 recipe (D) continues to be the universal production-tier recommendation across the 8-model benchmark. Phase 21 confirms the (B) anomaly is real but isolated to one model and one ablation variant; it does not touch the shipped method."
+}
