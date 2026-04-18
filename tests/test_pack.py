@@ -58,12 +58,26 @@ def test_strict_range_check():
 
 
 def test_strict_false_silently_clamps():
-    """pack_int3_signed with strict=False silently clamps OOR values."""
+    """pack_int3_signed with strict=False silently clamps OOR values
+    to the advertised symmetric range [-3, 3] after round-trip."""
+    # Lower OOR: -5 should clamp to -3
     x = torch.tensor([[-5, 0, 0, 0, 0, 0, 0, 0]], dtype=torch.int8)
     packed = pack_int3_signed(x, strict=False)
     unpacked = unpack_int3_signed(packed, N=8)
-    # -5 shifted +3 = -2 clamped to [0, 7] = 0, then unpack -> -3
     assert unpacked[0, 0].item() == -3
+
+    # Upper OOR: +7 must clamp to +3 (NOT +4, which was the pre-fix bug
+    # where clamping the shifted value to [0, 7] allowed 10 -> 7 -> +4).
+    x_over = torch.tensor([[0, 0, 0, 0, 0, 0, 0, 7]], dtype=torch.int8)
+    packed_over = pack_int3_signed(x_over, strict=False)
+    unpacked_over = unpack_int3_signed(packed_over, N=8)
+    assert unpacked_over[0, -1].item() == 3, (
+        f"Expected +7 to clamp to +3 under strict=False, "
+        f"got {unpacked_over[0, -1].item()}"
+    )
+    # All unpacked values must live inside [-3, 3]
+    assert unpacked_over.min().item() >= -3
+    assert unpacked_over.max().item() <= 3
 
 
 def test_multi_batch():

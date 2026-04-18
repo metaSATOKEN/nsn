@@ -12,6 +12,8 @@ The empirical basis for the dispatch rules (7-model validation,
 April 2026):
 
 * **Mode 1** (Layer-0 K outlier >= 15x; observed only in Qwen2-7B):
+  * 2-bit budget -> ``qa_nsep_pchan(x, 3)`` (UPGRADED to INT3; pure INT2
+    is broken on Mode 1 outlier channels. Caller pays 3 bits, not 2.)
   * 3-bit budget -> ``qa_nsep_pchan(x, 3)``  (escapes INT4 valley)
   * 4-bit budget -> ``qa_nsep_pchan_resid_rms(x, 3)``
     * DeltaPPL = +0.025 on Qwen2-7B, vs INT4 alone +0.054.
@@ -148,7 +150,19 @@ def describe_selection(
     mode_n = (mode or "unknown").lower().replace(" ", "").replace("-", "")
 
     if mode_n == "mode1":
-        if target_bits <= 3:
+        if target_bits <= 2:
+            method = "nsep+pchan INT3 (upgraded from INT2)"
+            rationale = (
+                f"Mode 1, {target_bits}-bit budget REQUESTED, upgraded to "
+                f"INT3. Pure INT{target_bits} on Mode 1 is broken by the "
+                f"outlier-driven layer-0 channels; INT3 is the lowest bit "
+                f"width empirically validated as Mode-1-safe (escapes the "
+                f"INT4 valley and stays above the INT2 cliff). Residual "
+                f"correction at 3 bits would cost extra bits beyond the "
+                f"already-upgraded budget."
+            )
+            est_quality = "~ +0.40 DeltaPPL on Qwen2-7B (Phase 1 reference)"
+        elif target_bits == 3:
             method = "nsep+pchan INT3"
             rationale = (
                 "Mode 1, 3-bit budget. INT3 escapes the INT4 valley of death. "
@@ -194,24 +208,43 @@ def describe_selection(
                 4: "~ +0.02 to +0.08 DeltaPPL typical",
             }.get(target_bits, "very small")
     elif mode_n == "borderline":
-        method = ("nsep+pchan INT3 + RMS residual" if target_bits == 4
-                  else f"nsep+pchan INT{target_bits}")
+        if target_bits == 4:
+            method = "nsep+pchan INT3 + per-channel RMS residual"
+        elif target_bits <= 2:
+            method = f"nsep+pchan INT{target_bits} + per-channel RMS residual"
+        else:
+            method = f"nsep+pchan INT{target_bits}"
         rationale = (
             "Borderline (10-15x Layer 0 K). No model in our 7-model sample "
             "fell in this range. Conservative default: treat as Mode 1 to "
             "hedge against INT4 valley. If Mode-2-like, INT3+RMS loses at "
-            "most 0.05 DeltaPPL to INT4 alone."
+            "most 0.05 DeltaPPL to INT4 alone. At <=2-bit budget we further "
+            "upgrade to RMS residual (roughly +1 bit/value + small metadata) "
+            "since pure INT2 is empirically too lossy."
         )
         est_quality = "uncertain; hedged via Mode 1 defaults"
     else:
-        method = f"nsep+pchan INT{target_bits}"
-        rationale = (
-            f"Unknown / unmeasured profile. Default to the safe choice: "
-            f"nsep+pchan INT{target_bits} without residual. In the 27-model "
-            f"sample across all experiments, this choice never produced "
-            f"catastrophic DeltaPPL (worst case +0.24)."
-        )
-        est_quality = "varies; generally safe"
+        if target_bits <= 2:
+            method = f"nsep+pchan INT{target_bits} + per-channel RMS residual"
+            rationale = (
+                f"Unknown / unmeasured profile, {target_bits}-bit budget. "
+                f"Pure INT{target_bits} is empirically too lossy on Mode 2 "
+                f"(e.g., DeltaPPL +22.8 on Llama-3.1-8B) and Mode 1 alike, "
+                f"so we upgrade to RMS residual (roughly +1 bit/value + "
+                f"small metadata) rather than return a known-broken "
+                f"quantizer at the advertised bit budget."
+            )
+            est_quality = "~ +0.5 to +2 DeltaPPL (uncertain at very low bits)"
+        else:
+            method = f"nsep+pchan INT{target_bits}"
+            rationale = (
+                f"Unknown / unmeasured profile. Default to the safe choice: "
+                f"nsep+pchan INT{target_bits} without residual. In the "
+                f"27-model sample across all experiments at INT3+, this "
+                f"choice never produced catastrophic DeltaPPL (worst case "
+                f"+0.24)."
+            )
+            est_quality = "varies; generally safe"
 
     return {
         "method": method,

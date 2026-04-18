@@ -31,11 +31,12 @@ def pack_int3_signed(x_int8, strict=True):
         Values must be in [-3, 3] (INT3 symmetric range).
     strict : bool, default True
         If True (default), raise a ValueError when ``x_int8`` contains
-        values outside [-3, 3]. If False, silently clamp them to the
-        range -- useful for numerical-edge cases but dangerous in
-        general because unpacking can surface an out-of-range value
-        (shifted [0, 7] -> [-3, 4]) that wasn't in the advertised
-        symmetric set.
+        values outside [-3, 3]. If False, silently clamp the *original*
+        values to [-3, 3] before packing, guaranteeing that unpacked
+        values stay in the advertised symmetric range. Useful for
+        numerical-edge rounding cases (e.g., +/-4 after clamp drift);
+        still dangerous for general use because it masks upstream
+        scale bugs.
 
     Returns
     -------
@@ -61,8 +62,12 @@ def pack_int3_signed(x_int8, strict=True):
                 f"strict=False to silently clamp."
             )
 
-    # Shift [-3, 3] to [0, 6] (unsigned 3-bit, value 7 unused)
-    u = (x_int8.to(torch.int64) + 3).clamp(0, 7)
+    # Shift [-3, 3] to [0, 6] (unsigned 3-bit, value 7 unused).
+    # Clamp the *original* values to [-3, 3] so that strict=False still
+    # produces unpacked outputs inside the advertised symmetric range
+    # (clamping the shifted value to [0, 7] would let +7 round-trip to
+    # +4, which is outside [-3, 3]).
+    u = x_int8.to(torch.int64).clamp(-3, 3) + 3
     u = u.view(*prefix, N // 8, 8)
 
     # Pack 8 values into a single int64 (24 bits used)

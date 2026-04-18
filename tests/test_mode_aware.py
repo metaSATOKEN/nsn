@@ -93,3 +93,62 @@ def test_borderline_hedges_toward_mode1():
     """Borderline at 4 bits -> use residual (conservative)."""
     desc = describe_selection(mode="borderline", target_bits=4)
     assert "residual" in desc["method"].lower()
+
+
+def test_describe_matches_select_for_borderline_low_bits():
+    """At <=2 bits the borderline callable is INT2+RMS; description
+    must say so (regression: previously said plain INT2 without
+    residual)."""
+    desc = describe_selection(mode="borderline", target_bits=2)
+    assert "residual" in desc["method"].lower(), (
+        f"borderline + 2-bit should advertise residual, got: {desc['method']}"
+    )
+
+    qfn = select_quantizer(mode="borderline", target_bits=2)
+    x = torch.randn(16, 128, dtype=torch.float32)
+    y = qfn(x)
+    # residual-corrected quantizer is NOT the identity
+    assert (x - y).abs().mean().item() > 1e-4
+
+
+def test_describe_matches_select_for_mode1_low_bits():
+    """Mode 1 + <=2 bits: silently upgraded to INT3 (pure INT2 broken
+    on outlier channels). Description must make the upgrade explicit
+    so the caller sees the true bit cost."""
+    desc = describe_selection(mode="Mode 1", target_bits=2)
+    method_lower = desc["method"].lower()
+    rationale_lower = desc["method_rationale"].lower()
+
+    # Method string must say INT3 (actual cost), not INT2
+    assert "int3" in method_lower, (
+        f"Mode 1 + 2-bit should advertise INT3, got: {desc['method']}"
+    )
+    # Method or rationale must explicitly flag the upgrade so the user
+    # cannot miss that they were not actually given 2-bit storage.
+    assert ("upgrad" in method_lower) or ("upgrad" in rationale_lower), (
+        f"Mode 1 + 2-bit description must flag the INT2->INT3 upgrade; "
+        f"got method='{desc['method']}' rationale='{desc['method_rationale']}'"
+    )
+    # target_bits preserved as reported-input
+    assert desc["target_bits"] == 2
+
+
+def test_describe_matches_select_for_unknown_low_bits():
+    """At <=2 bits the unknown callable is INT2+RMS; description must
+    say so and must NOT claim 'never produced catastrophic DeltaPPL'
+    at that budget (that claim applies to INT3+ only)."""
+    desc = describe_selection(mode="unknown", target_bits=2)
+    assert "residual" in desc["method"].lower(), (
+        f"unknown + 2-bit should advertise residual, got: {desc['method']}"
+    )
+    # The "never catastrophic" claim must be scoped to INT3+ budgets,
+    # not blanket-applied to the low-bit fallback.
+    assert "never produced catastrophic" not in desc["method_rationale"], (
+        f"Rationale at <=2 bits should not carry the INT3+ safety claim; "
+        f"got: {desc['method_rationale']}"
+    )
+
+    qfn = select_quantizer(mode="unknown", target_bits=2)
+    x = torch.randn(16, 128, dtype=torch.float32)
+    y = qfn(x)
+    assert (x - y).abs().mean().item() > 1e-4
