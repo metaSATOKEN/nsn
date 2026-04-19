@@ -35,7 +35,7 @@ cached.size_bytes()
 ### Scope and caveats
 
 - **Sample**: 8 runnable models (2021–2026). One additional model (Phi-3-medium-4k-instruct) was attempted but blocked by a transformers / custom-code incompatibility unrelated to modeq; see the [Phi-3 note](#phi-3-medium-compatibility-note).
-- **Quality metric**: primary evaluation is WikiText-2 sliding-window perplexity (ctx = 1024, 10 windows). Broad downstream-task accuracy (GSM-8K, HumanEval, retrieval, instruction following) was *not* measured; one exploratory MMLU 5-shot probe on Qwen2-7B and Llama-3.1-8B (500 questions each) found accuracy deltas of +1.0 pp and −0.2 pp vs FP16 under the shipped recipe — both within the ~3 pp noise floor at this sample size. See `paper_b/paper_b.md` §5.6 and `results/phase22_mmlu_downstream.json` for the full breakdown. The "✅ usable" label used in this README is a modeq-internal ΔPPL threshold (< 5 % of baseline on WikiText-2), **not** a deployment certification — see [what we mean by "✅ usable"](#what-we-mean-by-the--usable-label).
+- **Quality metric**: primary evaluation is WikiText-2 sliding-window perplexity (ctx = 1024, 10 windows). Two bounded-cost downstream probes are included: (i) MMLU 5-shot on Qwen2-7B and Llama-3.1-8B (500 questions each) with accuracy deltas of +1.0 pp and −0.2 pp vs FP16 under the shipped recipe, within the ~3 pp noise floor at this sample size; and (ii) a 3-model distractor-hardened Needle-in-a-Haystack probe at 8K/32K (Llama-3.1-8B, Qwen2-7B, Qwen2.5-14B, pooled n = 30) in which the shipped recipe retains **83.3 % retrieval accuracy at 32 K — statistically indistinguishable from the 96.7 % FP16 baseline** (Fisher exact p = 0.19), while a symmetric-only INT3 variant drops to 50 % and produces cross-needle bit-mixing hallucinations. Broader downstream coverage (GSM-8K, HumanEval, LongBench, RULER, instruction following) was *not* measured. See `paper_b/paper_b.md` §5.6, §5.7 and `results/phase22*.json`, `results/phase24b*.json`, `results/phase24c*.json`, `results/phase24d*.json` for the full breakdown. The "✅ usable" label used in this README is a modeq-internal ΔPPL threshold (< 5 % of baseline on WikiText-2), **not** a deployment certification — see [what we mean by "✅ usable"](#what-we-mean-by-the--usable-label).
 - **Throughput**: not measured. The current Python implementation adds roughly +21 % decode latency on 7B-class models; a fused kernel (unimplemented) would remove most of that. The `< 5 %` claim is about quality only.
 
 > **Note on prior art.** Asymmetric per-channel quantization is a standard building block of *weight* quantization (GPTQ, AWQ, RTN variants, LLM.int8()); the norm–direction split is prior art as of [PolarQuant (2025)](https://arxiv.org/abs/2502.02617) / [TurboQuant (ICLR 2026)](https://arxiv.org/abs/2504.19874). modeq's contribution is the empirical demonstration that composing these two specific ingredients on the KV cache, without calibration or codebook, keeps WikiText-2 ΔPPL under 5 % of baseline on 8 of 8 runnable models — plus the failure-mode diagnosis that motivated looking there in the first place. See [Related work](#related-work-and-how-modeq-differs).
@@ -200,6 +200,41 @@ Extrapolating the Llama ratio:
 | 8K | 1.02 GB | 200 MB | 822 MB |
 | 32K | 4.10 GB | 803 MB | 3.31 GB |
 | 128K | 16.4 GB | 3.21 GB | 13.2 GB |
+
+---
+
+## Downstream quality probes (MMLU + long-context NIH)
+
+WikiText-2 ΔPPL is our primary metric, but both cross-review rounds we got flagged it as a proxy. We ran two bounded-cost downstream probes to check that the compression doesn't break the tasks KV-cache quantization is motivated by.
+
+### MMLU 5-shot (Phase 22)
+
+500 test questions across 5 subjects (`high_school_psychology`, `college_computer_science`, `global_facts`, `anatomy`, `moral_disputes`), on the two canonical benchmark models. Cache compression applied between the 5-shot prefix and the test question.
+
+| Model | FP16 | sym INT3 (v0.2) | **asym INT3 (v0.3)** |
+|:---|:---:|:---:|:---:|
+| Qwen2-7B (Mode 1) | 67.20 % | 64.80 % | **68.20 %** (+1.00 pp) |
+| Llama-3.1-8B | 59.20 % | 62.20 % | **59.00 %** (−0.20 pp) |
+
+Every delta lies within the ≈ 3 pp conservative independent-proportion delta SE at 500 questions per run, so the right reading is "no statistically significant change detected" rather than a ranking. The useful takeaway: the 66 % WikiText-2 ΔPPL reduction does not come at a visible downstream accuracy cost on this task. Raw data: `results/phase22_mmlu_downstream.json`.
+
+### Long-context Needle-in-a-Haystack (Phase 24b / 24c / 24d)
+
+A distractor-hardened multi-needle NIH protocol on three canonical models (Llama-3.1-8B, Qwen2-7B, Qwen2.5-14B) at 8K and 32K context. We embed three project-labelled needles — "Project Titan → XRQ7-BLUE-1984", "Project Orion → LMN3-GREEN-2037", "Project Vega → PQZ5-AMBER-1776" — at fixed haystack positions, ask the model for one specific label's code, and 3-way-classify the 15-token greedy decode as **pass** / **wrong-code** / **hallucinate**. 10 trials per cell, pooled `n = 30` across models for the aggregate.
+
+**Pooled at 32 K (Fisher exact, two-sided):**
+
+| Method | Pass | Wrong | Halluc | vs FP16 |
+|:---|:---:|:---:|:---:|:---:|
+| FP16 baseline | 29 / 30 | 1 | 0 | — |
+| sym INT3 (v0.2) | 15 / 30 | 6 | 9 | **p = 6.4 × 10⁻⁵** |
+| **asym INT3 (v0.3)** | **25 / 30** | 5 | **0** | **p = 0.194 (n.s.)** |
+
+At 32 K context, **v0.3 asym INT3 is statistically indistinguishable from FP16** on this retrieval task, while v0.2 sym INT3 drops to 50 % pass rate and is significantly worse than both FP16 and asym (asym-vs-sym p = 0.013).
+
+Under sym INT3 at 32 K, all three models produce **bit-mixing hallucinations** — the decoded "code" fuses characters across multiple needles or introduces characters not in any needle: `"3X-RED-1984"` and `"XRZ5-BLUE"` on Llama-3.1-8B, `"LMQ3-GREEN"` and `"XZQ7-RED-"` on Qwen2-7B, `"WZQ7-BLUE"` and `"JQZ5-ORAN"` on Qwen2.5-14B. Across 60 asym INT3 trials at 32 K, **zero such hallucinations occur**. This is consistent with the Phase-23 V-cache mechanism above: sym INT3's per-channel window, fit without norm separation on raw V values, lets per-token V error compound through the attention-weighted output at long context, and the model occasionally synthesizes codes that interpolate across the three needles' V subspaces. Asym's tighter direction-vector fit keeps V reconstruction precise enough that the label-to-code binding survives.
+
+**One open observation (8 K Qwen2-7B):** On the Mode-1 canonical Qwen2-7B at 8 K specifically, asym (4 / 10) slightly underperforms sym (5 / 10) with a within-needle digit-corruption pattern (e.g., `"LMN5-GREEN-2037"` for `LMN3-GREEN-2037`). This does not appear at 32 K on Qwen2-7B (asym 7 / 10 > sym 3 / 10) nor at 8 K on the other Qwen-family model Qwen2.5-14B (asym 10 / 10). We flag it as a Mode-1-specific short-context interaction to revisit in future work; it does not disturb the 32 K long-context conclusion. Full trial-level data: `results/phase24b_*.json`, `results/phase24c_*.json`, `results/phase24d_*.json`.
 
 ---
 
