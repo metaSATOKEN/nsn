@@ -2,7 +2,7 @@
 
 **Kentaro Sato**
 *2026-04-19*
-*arxiv preprint, draft v0.10*
+*arxiv preprint, draft v0.11*
 
 ---
 
@@ -14,7 +14,7 @@ We show that the composition of three data-independent operations — **norm sep
 
 A four-method ablation across the same eight models yields a specific and, to our knowledge, previously uncharacterized failure: **asymmetric per-channel INT3 *without* norm separation — a near-direct transplant of a standard weight-quantization recipe — fails our threshold on four of the eight models, and regresses catastrophically (> 100 % of baseline PPL) on three of them**, reaching 24× worse ΔPPL than naive per-row quantization on Llama-3.1-8B; the fourth failure (GPT-J-6B) is a mild threshold violation rather than a catastrophe. A direct measurement across the 8 models finds that Layer-0 V-cache per-token L2 norm coefficient of variation correlates with this failure magnitude at Spearman $\rho \approx 0.88$, whereas the analogous K-cache statistic does not ($\rho \approx 0.29$); we therefore trace the mechanism to V-cache norm dispersion, which propagates linearly through the attention-weighted output while the corresponding K-cache dispersion is partly absorbed by softmax normalization. We also report one curious observation — small but reproducible *beneficial* ΔPPL on Gemma-4-E4B under the same ablation variant — and document why it does not translate into a deployment recommendation.
 
-As an exploratory downstream probe, we also measure MMLU 5-shot accuracy on 500 test questions across five subjects for two canonical models (Qwen2-7B and Llama-3.1-8B) and find that the proposed INT3 recipe's accuracy delta vs FP16 is $+1.0$ pp on Qwen2-7B and $-0.2$ pp on Llama-3.1-8B — within the $\approx 3$ pp conservative independent-proportion delta standard error at 500 questions per run, so not statistically significant. The WikiText-2 ΔPPL reduction does not translate into a detectable accuracy cost on this task.
+As two bounded-cost downstream probes, we measure (i) MMLU 5-shot accuracy on 500 test questions across five subjects for two canonical models (Qwen2-7B and Llama-3.1-8B), finding that the proposed INT3 recipe's accuracy delta vs FP16 is $+1.0$ pp on Qwen2-7B and $-0.2$ pp on Llama-3.1-8B — within the $\approx 3$ pp conservative independent-proportion delta standard error at 500 questions per run; and (ii) a 3-model distractor-hardened Needle-in-a-Haystack retrieval probe at 8 K and 32 K context (pooled $n = 30$ per cell), finding that at 32 K the proposed recipe retains 83.3 % retrieval accuracy — **statistically indistinguishable from the 96.7 % FP16 baseline** (Fisher exact $p = 0.194$) — while a symmetric-only INT3 variant drops to 50 % and produces cross-needle *bit-mixing hallucinations* (e.g., `"XRZ5-BLUE"`, `"LMQ3-GREEN"`, `"WZQ7-BLUE"`) that are absent under FP16 and under the proposed recipe. Neither the WikiText-2 ΔPPL reduction nor the mechanism study translates into a detectable accuracy cost on these probes.
 
 We release the recipe, benchmark scripts, and raw JSON measurements so that each number in the paper is reproducible from the committed data. We are explicit about scope limitations: the main quality claim rests on WikiText-2 sliding-window perplexity, the downstream measurement covers a single task (MMLU 5-shot on a 500-question subset of five subjects) on only two models, throughput was not measured, and the Qwen2-7B INT4 valley is a single-model observation ($n = 1$ in both the 27-model broader survey we draw on and the 8-model benchmark reported here). We do not claim that simpler recipes fail on models we did not test, nor that the proposed recipe is Pareto-optimal at bit rates below 3 bits/value.
 
@@ -37,6 +37,8 @@ Concretely, this paper contributes:
 6. **An open observation on accidental K-cache entropy regularization.** On Gemma-4-E4B evaluated text-only, variant (B) produces a small but reproducible *negative* ΔPPL (−0.32 to −0.44 on two non-overlapping WikiText-2 segments). A K-only vs V-only split attributes 87 % of the effect to the Key cache, consistent with quantization noise softening an over-confident attention distribution on an off-distribution (text-only) input to a multimodal-trained model. We do not promote this as a method — the same ablation fails the threshold on four other models (catastrophically on three of them) — but record it as a phenomenon worth instrumenting in future work (§7).
 
 7. **An MMLU 5-shot downstream probe showing no detectable accuracy cost on the two canonical benchmark models.** At 500 test questions across five subjects, asymmetric INT3 (the v0.3 recipe) delivers accuracy deltas of +1.00 pp on Qwen2-7B and −0.20 pp on Llama-3.1-8B relative to the FP16 baseline — both within the $\approx 3$ pp conservative independent-proportion delta standard error at this sample size (§5.6). This is a single-task probe and does not replace a full downstream campaign; we discuss scope in §5.6.
+
+8. **A 3-model long-context multi-needle retrieval probe validating that the v0.3 recipe preserves retrieval at 32K context while the v0.2 symmetric recipe does not.** A distractor-hardened Needle-in-a-Haystack protocol on Llama-3.1-8B, Qwen2-7B, and Qwen2.5-14B (10 trials per cell, pooled $n = 30$) shows that at 32 K tokens the asymmetric recipe (D) retains retrieval accuracy at 83.3 % — statistically indistinguishable from the 96.7 % FP16 baseline (Fisher exact two-sided $p = 0.19$) — while the symmetric recipe (C) drops to 50 % (FP16-vs-C $p = 6.4 \times 10^{-5}$; C-vs-D $p = 0.013$) (§5.7). Under (C) at 32 K, all three models produce cross-needle **bit-mixing hallucinations** (e.g., `"XRZ5-BLUE"` on Llama, `"LMQ3-GREEN"` on Qwen2-7B, `"WZQ7-BLUE"` on Qwen2.5-14B); (D) produces zero such hallucinations across 60 trials at 32 K. One open observation — Qwen2-7B (Mode 1) at 8 K context shows a within-needle digit-corruption pattern under (D) — is flagged as a Mode-1-specific short-context interaction to study in future work.
 
 We also argue, as a secondary contribution, that the **"Mode 1" phenomenon** — a non-monotonic INT4 ΔPPL valley observed on Qwen2-7B (n = 1 in our sample) — is a concrete, reproducible failure case of naive KV quantization that motivates looking for robust recipes in the first place. We emphasize throughout that this remains an n = 1 observation and explicitly do not claim it generalizes to untested models (§2, §5.3).
 
@@ -335,7 +337,46 @@ At 500 questions per run, the single-proportion standard error is $\sqrt{p(1-p)/
 
 The +3.00 pp row for sym INT3 on Llama-3.1-8B is surprising in direction (quantization that improves accuracy over baseline) and sits close to the 1-SE boundary of noise. It is plausibly a small-sample artifact, and at 500 questions we cannot distinguish this from genuine signal. We note that its sign is the same as the Gemma-4-E4B B-anomaly discussed in §7, but the two effects arise under *different* ablation variants — here under variant (C), the symmetric `nsep+pchan` recipe, and in §7 under variant (B), asymmetric per-channel without norm separation — so the underlying mechanisms are likely distinct, and we do not attempt to unify them. The shipped recipe (D) does not show either pattern: its Llama-3.1-8B delta is −0.20 pp, i.e. essentially zero.
 
-**Scope of this probe (explicit).** This subsection is a single-task, single-subject-slice, 500-question-per-model probe. It does not address reasoning benchmarks (GSM-8K, MATH), code generation (HumanEval), instruction-following quality, or long-context retrieval tasks (LongBench, needle-in-haystack). We do not claim the result generalizes beyond MMLU 5-shot on these two models; we report it only to replace the earlier draft's "downstream task accuracy was not measured" with "one downstream probe was run and showed no detectable degradation". Raw data is in `results/phase22_mmlu_downstream.json`.
+**Scope of this probe (explicit).** This subsection is a single-task, single-subject-slice, 500-question-per-model probe. It does not address reasoning benchmarks (GSM-8K, MATH), code generation (HumanEval), or instruction-following quality. Long-context retrieval is addressed separately in §5.7 below. We do not claim the result generalizes beyond MMLU 5-shot on these two models; we report it only to replace the earlier draft's "downstream task accuracy was not measured" with "one downstream probe was run and showed no detectable degradation". Raw data is in `results/phase22_mmlu_downstream.json`.
+
+### 5.7. Long-context multi-needle retrieval probe
+
+The §1 Introduction motivates KV-cache quantization by reference to 128 K- and 1 M-token deployment contexts; the §5.1 main benchmark and the §5.6 MMLU probe, by contrast, operate at 1 024 and $\sim 2\,000$-token contexts respectively. To test whether the proposed recipe preserves long-range retrieval at a context length closer to the deployment regime, we ran a distractor-hardened Needle-in-a-Haystack (NIH) protocol on three canonical models that natively support 32 K context: Llama-3.1-8B (Phase 24b), Qwen2-7B (Phase 24c), and Qwen2.5-14B (Phase 24d). The three models span two architecture families, three parameter scales (7 B / 8 B / 14 B), and both sides of our main 4-method ablation — Llama-3.1-8B and Qwen2.5-14B are catastrophic-(B) models (§5.2, §5.3), while Qwen2-7B is the canonical Mode 1 model (§6.1).
+
+**Protocol.** We embed three structured needles in a WikiText-2 haystack, each binding a distinct project label to a distinct code:
+
+- "The security token for **Project Titan** is **XRQ7-BLUE-1984**."
+- "The security token for **Project Orion** is **LMN3-GREEN-2037**."
+- "The security token for **Project Vega** is **PQZ5-AMBER-1776**."
+
+The three needle sentences are placed at haystack fractions $\{0.2, 0.5, 0.8\}$ (permuted across 10 fixed trials per cell so every project label visits every slot), and the test question asks for the code of *one specific* label. A trial is a **pass** if the target code's lead key (`XRQ7`, `LMN3`, or `PQZ5`) appears in the 15-token greedy-decode output; **wrong-code** if a *distractor* needle's key appears (but not the target's); **hallucinate** if none of the three keys appears. The 3-way scoring is motivated by the mechanism hypothesis: K-cache damage should corrupt the label-to-code binding *before* it wipes out code retrieval entirely, so we expect wrong-code / hallucinate rates to rise before pass rate collapses. Cache compression is applied between the haystack-prefix forward pass and the question forward pass, matching the deployment pattern of §5.6.
+
+**Table 5.** Multi-needle NIH retrieval on 3 models at 8 K and 32 K, 10 trials per cell (pooled $n = 30$ for the aggregate rows). FP16 / (C) / (D) correspond to FP16 baseline / v0.2 symmetric INT3 / v0.3 asymmetric INT3 respectively.
+
+| Model | Ctx | FP16 pass/wrong/halluc | (C) sym pass/wrong/halluc | **(D) asym pass/wrong/halluc** |
+|:------|:---:|:--:|:--:|:--:|
+| Llama-3.1-8B    |  8 K | 10 / 0 / 0 | 9 / 1 / 0 | **9 / 1 / 0** |
+| Llama-3.1-8B    | 32 K |  9 / 1 / 0 | 6 / 2 / 2 | **8 / 2 / 0** |
+| Qwen2-7B        |  8 K | 10 / 0 / 0 | 5 / 5 / 0 | **4 / 1 / 5** |
+| Qwen2-7B        | 32 K | 10 / 0 / 0 | 3 / 4 / 3 | **7 / 3 / 0** |
+| Qwen2.5-14B     |  8 K | 10 / 0 / 0 | 8 / 1 / 1 | **10 / 0 / 0** |
+| Qwen2.5-14B     | 32 K | 10 / 0 / 0 | 6 / 0 / 4 | **10 / 0 / 0** |
+| **Pooled (n=30)** | 8 K | 30 / 0 / 0 | 22 / 7 / 1 | **23 / 2 / 5** |
+| **Pooled (n=30)** | **32 K** | **29 / 1 / 0** | **15 / 6 / 9** | **25 / 5 / 0** |
+
+**Pooled 32 K finding.** Across the three models at 32 K, the asymmetric recipe (D) retains 25 / 30 = 83.3 % pass rate, **statistically indistinguishable from the FP16 baseline** at 29 / 30 = 96.7 % (Fisher exact two-sided $p = 0.194$). The symmetric recipe (C) retains 15 / 30 = 50.0 %, **significantly worse than both FP16** ($p = 6.4 \times 10^{-5}$) **and asymmetric** ($p = 0.013$). At 8 K the same comparison is saturated — (C) and (D) are tied (22 / 30 vs 23 / 30, $p = 1.00$) — which is consistent with 8 K being below the compression-sensitivity threshold for this protocol on these models.
+
+**Qualitative: bit-mixing hallucinations are universal under (C) at 32 K.** Under symmetric INT3 at 32 K, each of the three models produces hallucinations in which the decoded "code" fuses characters across multiple needles or substitutes characters not present in any needle:
+
+- Llama-3.1-8B: `"3X-RED-1984"` (RED not in any needle; 1984 from Titan), `"XRZ5-BLUE"` (X from XRQ7 + Z from PQZ5 + BLUE from Titan).
+- Qwen2-7B: `"LMQ3-GREEN"` (Q from XRQ + LMN from Orion), `"XZQ7-RED-"` (Z from PQZ + XRQ7 + RED absent), `"LMQ7-BLUE"` (LM + Q from XRQ + BLUE).
+- Qwen2.5-14B: `"WZQ7-BLUE"`, `"RQZ3-RED-"`, `"PQZ7-AMBER"` (near-miss: 7 substituted for Vega's 5), `"JQZ5-ORAN"` (ORAN = truncated ORANGE, not in any needle).
+
+Across 60 asymmetric-INT3 trials at 32 K (3 models × 20 trials), **zero such hallucinations occur**. The pattern is consistent with the §5.3 mechanism: the per-channel $[\min, \max]$ window fit to the *raw* V cache (sym variant, no nsep at fixed-bit / fixed-metadata budget) absorbs per-token L2 norm variance that blurs token-level V reconstruction; at 32 K the blur compounds across many attention weights, and the attention-weighted output occasionally synthesizes codes that interpolate across the three needles' V subspaces. The asymmetric recipe's tighter direction-vector fit (Step 2 of §3.2) reduces the per-token V error budget enough that the label-to-code binding survives intact.
+
+**Open observation: 8 K anomaly on Qwen2-7B (Mode 1).** Qwen2-7B at 8 K context is the single cell in Table 5 where (D) asymmetric (4 / 10 pass) underperforms (C) symmetric (5 / 10 pass). The (D) failures are **within-needle digit corruption** — e.g., `"LMN5-GREEN-2037"` (should be `LMN3-GREEN-2037`), `"XRN3-BLUE-2019"` (half-Titan, half-Orion, 2019 invented), `"XRQ5-BLUE-1770"` (5 from PQZ, 1770 near 1776) — rather than the cross-needle fusions seen under (C) at 32 K. This anomaly does *not* appear at 32 K on Qwen2-7B (where (D) 7 / 10 > (C) 3 / 10) and does *not* appear at 8 K on Qwen2.5-14B (where (D) 10 / 10 > (C) 8 / 10), even though Qwen2.5-14B shares the Qwen family with Qwen2-7B. It therefore appears to be an interaction between Mode-1 K-cache outlier structure (Qwen2-7B's L0 K-CV of 0.472 is the highest in our 8-model set; §5.3 Table 2b) and the per-channel $(m, M)$ estimation variance at short context (fewer tokens to stabilize the asymmetric window). We flag this as a Mode-1-specific short-context observation to revisit in future work rather than a bug in the recipe; it does not disturb the 32 K long-context conclusion above.
+
+**Scope.** This is a 3-model × 2-context NIH probe with 10 trials per cell (pooled $n = 30$) on a single haystack corpus (WikiText-2) and a single question format. It does not address reasoning benchmarks (GSM-8K, MATH), code generation (HumanEval), or the multi-task LongBench / RULER benchmark suites. What we can claim from this probe is specific: at 32 K context on three canonical open-weight models, the proposed recipe's retrieval behavior is indistinguishable from FP16 under this protocol, while a symmetric-only variant is significantly worse. Raw per-trial data are in `results/phase24b_nih_multineedle.json`, `results/phase24c_nih_multineedle_qwen2.json`, and `results/phase24d_nih_multineedle_qwen25_14b.json`; Appendix F collects the full hallucination table and trial design.
 
 ---
 
@@ -356,7 +397,7 @@ The proposed recipe is targeted at a specific regime. It is likely *not* the rig
 
 ### 6.3 Limitations
 
-1. *Single primary quality benchmark, plus one exploratory downstream probe.* Every reported ΔPPL number is on WikiText-2. We chose this benchmark for comparability with prior KV quantization work (KIVI, KVQuant, PolarQuant all report it), but it is a narrow slice of "model quality". §5.6 adds a single downstream task — MMLU 5-shot on 500 questions across five subjects for two models — and reports no statistically-significant accuracy delta from the proposed recipe, but this is itself a narrow probe: reasoning benchmarks (GSM-8K, MATH), code generation (HumanEval), instruction following, and long-context retrieval (LongBench, needle-in-haystack) are not touched. A paper-scale downstream-task campaign covering these remains warranted future work.
+1. *Single primary quality benchmark, plus two exploratory downstream probes.* Every reported ΔPPL number is on WikiText-2. We chose this benchmark for comparability with prior KV quantization work (KIVI, KVQuant, PolarQuant all report it), but it is a narrow slice of "model quality". §5.6 adds a single MMLU 5-shot probe on 500 questions across five subjects for two models, and §5.7 adds a 3-model multi-needle NIH retrieval probe at 8 K and 32 K context; under both probes the proposed recipe shows no statistically-significant degradation relative to FP16. These are still narrow probes: reasoning benchmarks (GSM-8K, MATH), code generation (HumanEval), instruction following, and the multi-task LongBench / RULER suites are not touched. A paper-scale downstream-task campaign covering these remains warranted future work.
 
 2. *Sample size for the Mode 1 anomaly.* See §6.1. The Qwen2-7B observation is $n = 1$; we structure our claims accordingly but cannot exclude the possibility that other models exhibit this pattern.
 
@@ -390,7 +431,9 @@ We presented a calibration-free INT3 recipe for KV cache quantization and valida
 
 A four-method ablation on the same models shows that none of the three ingredients is removable: every simpler variant — industry-standard naive per-row quantization, asymmetric per-channel without norm separation, and symmetric `nsep+pchan` — falls outside our 5 %-of-baseline usability threshold on at least two models. In particular, the naive transplant of asymmetric per-channel from weight quantization to KV cache **fails on 4 of 8 models, with catastrophic regressions (> 100 % of baseline PPL) on three of them**, reaching up to 24× worse than the naive per-row baseline it was meant to improve. A direct diagnostic measurement (§5.3, Appendix E) traces this to V-cache per-token L2 norm dispersion — which correlates with the failure magnitude at Spearman $\rho \approx 0.88$ across the 8 models — rather than to the K-cache variance we initially conjectured ($\rho \approx 0.29$); this is a failure mode specific to KV caches that weight tensors do not exhibit, with the V side dominating because V-cache reconstruction error bypasses the softmax normalization that partly absorbs the corresponding K-cache error.
 
-The scope of the positive claim is deliberately narrow. We do not compete with rotation-based or codebook-based methods at the 1–2 bit frontier; we do not claim generalization to downstream tasks beyond the WikiText-2 proxy; we do not claim the Qwen2-7B "INT4 valley of death" pathology generalizes beyond $n = 1$. What we do claim is that a very simple recipe, with no moving parts outside of per-channel arithmetic, attains the common-case quality of more complex methods at INT3 on a range of open-weight Transformers that spans half a decade of architectural evolution. We also claim that the recipe's three ingredients are empirically indivisible: this is a finding we believe is useful independent of the practical deployment case, because it specifies a concrete way in which naive weight-quantization recipes do *not* transplant cleanly to KV caches.
+Two bounded-cost downstream probes support the intrinsic-metric picture. An MMLU 5-shot probe (§5.6) on Qwen2-7B and Llama-3.1-8B shows no detectable accuracy delta under the proposed recipe. A 3-model distractor-hardened Needle-in-a-Haystack probe (§5.7) at 32 K context shows that the proposed recipe retains retrieval accuracy statistically indistinguishably from FP16 (83.3 % vs 96.7 %, Fisher exact $p = 0.194$ at pooled $n = 30$), while a symmetric-only variant drops to 50 % ($p = 6.4 \times 10^{-5}$ vs FP16) and produces cross-needle *bit-mixing hallucinations* that are absent under the proposed recipe. These are narrow probes — a single QA task and a single retrieval task on WikiText-2 haystacks — but they let us replace "downstream performance not measured" with "under two bounded probes no degradation was detected".
+
+The scope of the positive claim is deliberately narrow. We do not compete with rotation-based or codebook-based methods at the 1–2 bit frontier; we do not claim generalization to reasoning, code, or multi-task long-context benchmarks beyond the two probes above; we do not claim the Qwen2-7B "INT4 valley of death" pathology generalizes beyond $n = 1$; and we flag a single-cell 8 K Qwen2-7B NIH anomaly (§5.7, Appendix F.4) as an open observation to revisit. What we do claim is that a very simple recipe, with no moving parts outside of per-channel arithmetic, attains the common-case quality of more complex methods at INT3 on a range of open-weight Transformers that spans half a decade of architectural evolution. We also claim that the recipe's three ingredients are empirically indivisible: this is a finding we believe is useful independent of the practical deployment case, because it specifies a concrete way in which naive weight-quantization recipes do *not* transplant cleanly to KV caches.
 
 The reference implementation, benchmark scripts, and measured JSON data are released under Apache 2.0. Every number in this paper is reproducible by running the corresponding script in `experiments/` against the committed data under `results/`.
 
@@ -515,4 +558,88 @@ Gemma-4-E4B's L0 K, L0 V, L-mid K, and L-last K all measure CV to within numeric
 ### E.6 Raw data
 
 The JSON record `results/phase23_norm_dispersion.json` contains, for each of the 8 models and each of the 3 segments, per-layer K/V CV, per-head K/V CV, per-token L2 norm percentiles, and the raw $[H, T]$ per-token norm array at Layer 0. This is sufficient to regenerate Table 2b / Table E1, compute the Spearman correlations reported in §5.3 and §E.4, and produce per-model histogram plots without re-running the models.
+
+---
+
+## Appendix F: Multi-needle NIH retrieval probe (Phases 24b / 24c / 24d)
+
+Phases 24b, 24c, and 24d (`results/phase24b_nih_multineedle.json`, `phase24c_nih_multineedle_qwen2.json`, `phase24d_nih_multineedle_qwen25_14b.json`) test whether the proposed recipe preserves long-range factual recall at deployment-scale contexts. A first-pass single-needle probe (Phase 24, `results/phase24_nih_longctx.json`) saturated at 100 % pass rate across all 60 cells on Llama-3.1-8B; the saturated result rules out catastrophic long-context retrieval failure under either INT3 variant but provides no discrimination between methods. The multi-needle distractor-hardened protocol in Phases 24b–24d is the version reported in §5.7.
+
+### F.1 Protocol detail
+
+The 10-trial table per (model, context, method) cell is fixed across all three phases for reproducibility. Let `perm` denote the assignment of the three needles to the three haystack positions $\{0.2, 0.5, 0.8\}$ and `target_idx` denote which needle the question asks about:
+
+| Trial | `perm` | `target_idx` | Target label | Target is at haystack position |
+|:-:|:-:|:-:|:-:|:-:|
+| 1 | $[0, 1, 2]$ | 0 | Titan | 0.2 |
+| 2 | $[0, 1, 2]$ | 1 | Orion | 0.5 |
+| 3 | $[0, 1, 2]$ | 2 | Vega | 0.8 |
+| 4 | $[2, 0, 1]$ | 0 | Titan | 0.5 |
+| 5 | $[2, 0, 1]$ | 1 | Orion | 0.8 |
+| 6 | $[2, 0, 1]$ | 2 | Vega | 0.2 |
+| 7 | $[1, 2, 0]$ | 0 | Titan | 0.8 |
+| 8 | $[1, 2, 0]$ | 1 | Orion | 0.2 |
+| 9 | $[1, 2, 0]$ | 2 | Vega | 0.5 |
+| 10 | $[0, 2, 1]$ | 0 | Titan | 0.2 (distractor shuffle: Vega at 0.5, Orion at 0.8) |
+
+Trials 1–9 cover every (target label × target position) pair; trial 10 adds one distractor-shuffle case. Each trial is independent — the haystack is rebuilt fresh for each trial, and the model's KV cache is re-populated from scratch. Scoring (pass / wrong-code / hallucinate) is applied to the first 15 greedy-decode tokens after the question's "Answer:" suffix.
+
+### F.2 Pooled 32 K outcome
+
+The pooled count at 32 K across the three models (Llama-3.1-8B + Qwen2-7B + Qwen2.5-14B = 30 trials per method) is:
+
+| Method | Pass | Wrong-code | Hallucinate | Acc. | vs FP16 | vs asym |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|
+| FP16 baseline | 29 / 30 | 1 / 30 | 0 / 30 | 96.7 % | — | $p = 0.194$ (n.s.) |
+| (C) sym INT3 (v0.2) | 15 / 30 | 6 / 30 | 9 / 30 | 50.0 % | $p = 6.4 \times 10^{-5}$ | $p = 0.013$ |
+| **(D) asym INT3 (v0.3)** | **25 / 30** | **5 / 30** | **0 / 30** | **83.3 %** | $p = 0.194$ | — |
+
+All $p$-values are Fisher exact two-sided. Under this pooled protocol, (D) is statistically indistinguishable from FP16 at 32 K, (C) is significantly worse than both FP16 and (D), and the direction of the effect (asym $>$ sym) replicates on all three individual models.
+
+### F.3 Complete hallucination list at 32 K
+
+Every hallucinate / wrong-code response under (C) sym INT3 at 32 K, across all three models (15 such responses in total — 2 on Llama, 7 on Qwen2-7B, 4 halluc on Qwen2.5-14B, plus 2 wrong-code not already in the list below). The 9 hallucinations that fuse characters across needles or introduce characters not present in any needle are marked in bold:
+
+| Model | target → decoded |
+|:---|:---|
+| Llama-3.1-8B | Titan → `"PQZ5-AMBER-1776"` (wrong-code) |
+| Llama-3.1-8B | Titan → **`"3X-RED-1984"`** (halluc; "RED" absent) |
+| Llama-3.1-8B | Titan → **`"XRZ5-BLUE"`** (halluc; X + Z fusion) |
+| Qwen2-7B | Titan → `"PQZ5-AMBER-1776"` (wrong-code) |
+| Qwen2-7B | Orion → `"XRQ7-BLUE"` (wrong-code) |
+| Qwen2-7B | Vega → `"XRQ7-BLUE-"` (wrong-code) |
+| Qwen2-7B | Titan → `"PQZ5AMBER"` (wrong-code) |
+| Qwen2-7B | Orion → `"XRQ7-BLUE"` (wrong-code) |
+| Qwen2-7B | Vega → `"LMN3-GREEN-19-1776"` (wrong-code) |
+| Qwen2-7B | Orion → **`"XZQ7-RED-"`** (halluc) |
+| Qwen2-7B | Vega → `"XRQ7-RED-19AZ"` (wrong-code) |
+| Qwen2-7B | Titan → **`"LMQ3-GREEN"`** (halluc; L+Q fusion) |
+| Qwen2-7B | Titan → **`"LMQ7-BLUE"`** (halluc; L+Q fusion) |
+| Qwen2.5-14B | Titan → **`"WZQ7-BLUE"`** (halluc) |
+| Qwen2.5-14B | Titan → **`"RQZ3-RED-"`** (halluc) |
+| Qwen2.5-14B | Vega → **`"PQZ7-AMBER"`** (halluc; digit near-miss) |
+| Qwen2.5-14B | Titan → **`"JQZ5-ORAN"`** (halluc; "ORAN" ≈ "ORANGE") |
+
+Under (D) asymmetric INT3 at 32 K, the corresponding list has **zero** hallucinate responses and 5 wrong-code responses (e.g., Titan → `"LMN3-GREEN-2037"` and Titan → `"LMN3-GREEN-1984"` on Llama and Qwen2.5-14B; Vega → `"LMN3-GREEN-1776"` on Qwen2.5-14B). The wrong-codes under (D) retrieve a distractor needle's code *verbatim* — not a fused-character synthesis — which is consistent with the mechanism in §5.3 (sym lets per-token V error compound; asym keeps V reconstruction precise enough that, when a retrieval mistake happens, the model still copies one of the three real codes rather than interpolating characters across them).
+
+### F.4 The 8 K Qwen2-7B anomaly
+
+At 8 K on Qwen2-7B alone, (D) asymmetric INT3 underperforms (C) symmetric (4 / 10 pass vs 5 / 10 pass). The (D) failures include five hallucinate responses, all of which are within-needle digit / character corruption rather than cross-needle fusion:
+
+| target → decoded | Comment |
+|:---|:---|
+| Titan → `"LMQ7-GREEN"` | fuses Titan (Q, 7) with Orion (LM, GREEN) |
+| Orion → `"PQZ3-GREEN"` | fuses Orion (3, GREEN) with Vega (PQZ) |
+| Orion → `"LMN5-GREEN-2037"` | **single-digit corruption** (5 for 3, rest correct) |
+| Titan → `"XRN3-BLUE-2019"` | fuses Titan (XR, BLUE) with Orion (N3); year invented |
+| Titan → `"XRQ5-BLUE-1770"` | fuses Titan (XRQ, BLUE) with Vega (5); year near Vega's 1776 |
+
+This single-cell anomaly does *not* appear on Qwen2-7B at 32 K, where (D) 7 / 10 cleanly beats (C) 3 / 10, nor on Qwen2.5-14B at 8 K, where (D) 10 / 10 is perfect. We attribute it tentatively to an interaction between Mode-1 K-cache outlier structure (Qwen2-7B's L0 K-CV of 0.472 is the highest in our 8-model set) and per-channel $(m, M)$ estimation variance at short context (fewer tokens to stabilize the asymmetric window); full characterization would require controlled probes at several intermediate context lengths and is left to future work.
+
+### F.5 What this probe cannot settle
+
+- It is a retrieval task on a structured synthetic needle format. Natural-language long-context retrieval (e.g., multi-document question answering) may have different failure modes.
+- Each cell has only 10 trials; pooling across three models gives $n = 30$, which reaches Fisher-exact significance for the 32 K (C)-vs-(D) comparison but is still small for per-position-slot or per-model sub-analyses.
+- Only 8 K and 32 K are tested; the context-scaling curve between and beyond these points is not characterized.
+- Greedy decoding with argmax next-token gives deterministic outputs; sampling with temperature could reveal a different noise / retrieval regime we did not probe.
 

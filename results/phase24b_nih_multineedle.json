@@ -1,0 +1,1132 @@
+{
+  "date": "2026-04-19T10:41:34",
+  "protocol": {
+    "task": "Multi-needle distractor NIH retrieval",
+    "model": "meta-llama/Llama-3.1-8B",
+    "haystack_source": "WikiText-2 test split (repeated as needed)",
+    "n_needles": 3,
+    "needles": [
+      {
+        "label": "Project Titan",
+        "code": "XRQ7-BLUE-1984",
+        "key": "XRQ7"
+      },
+      {
+        "label": "Project Orion",
+        "code": "LMN3-GREEN-2037",
+        "key": "LMN3"
+      },
+      {
+        "label": "Project Vega",
+        "code": "PQZ5-AMBER-1776",
+        "key": "PQZ5"
+      }
+    ],
+    "needle_format": "The security token for {label} is {code}. Keep this confidential.",
+    "question_format": "Question: What is the security token for {label}?\nAnswer:",
+    "pos_fracs": [
+      0.2,
+      0.5,
+      0.8
+    ],
+    "trials_per_cell": 10,
+    "contexts": [
+      8192,
+      32768
+    ],
+    "methods": [
+      "FP16 baseline",
+      "sym INT3 (v0.2)",
+      "asym INT3 (v0.3)"
+    ],
+    "scoring": "3-way per trial on 15-token greedy decode: 'pass' if target key present; 'wrong-code' if a distractor key present but not target; 'hallucinate' if none of the three keys present"
+  },
+  "results": {
+    "ctx8192__FP16 baseline": {
+      "ctx": 8192,
+      "method": "FP16 baseline",
+      "n_pass": 10,
+      "n_wrong": 0,
+      "n_halluc": 0,
+      "n_total": 10,
+      "accuracy": 1.0,
+      "trials": [
+        {
+          "perm": [
+            0,
+            1,
+            2
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Orion",
+            "Project Vega"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "pass",
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            0,
+            1,
+            2
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Orion",
+            "Project Vega"
+          ],
+          "target_idx": 1,
+          "target_label": "Project Orion",
+          "target_key": "LMN3",
+          "outcome": "pass",
+          "decoded_15tk": " LMN3-GREEN-2037\n\nQuestion: What is the security"
+        },
+        {
+          "perm": [
+            0,
+            1,
+            2
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Orion",
+            "Project Vega"
+          ],
+          "target_idx": 2,
+          "target_label": "Project Vega",
+          "target_key": "PQZ5",
+          "outcome": "pass",
+          "decoded_15tk": " PQZ5-AMBER-1776. Keep this confidential.\n\nQuestion"
+        },
+        {
+          "perm": [
+            2,
+            0,
+            1
+          ],
+          "slot_labels": [
+            "Project Vega",
+            "Project Titan",
+            "Project Orion"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "pass",
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            2,
+            0,
+            1
+          ],
+          "slot_labels": [
+            "Project Vega",
+            "Project Titan",
+            "Project Orion"
+          ],
+          "target_idx": 1,
+          "target_label": "Project Orion",
+          "target_key": "LMN3",
+          "outcome": "pass",
+          "decoded_15tk": " LMN3-GREEN-2037. Keep this confidential.\n\nQuestion:"
+        },
+        {
+          "perm": [
+            2,
+            0,
+            1
+          ],
+          "slot_labels": [
+            "Project Vega",
+            "Project Titan",
+            "Project Orion"
+          ],
+          "target_idx": 2,
+          "target_label": "Project Vega",
+          "target_key": "PQZ5",
+          "outcome": "pass",
+          "decoded_15tk": " PQZ5-AMBER-1776\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            1,
+            2,
+            0
+          ],
+          "slot_labels": [
+            "Project Orion",
+            "Project Vega",
+            "Project Titan"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "pass",
+          "decoded_15tk": " XRQ7-BLUE-1984. Keep this confidential.\n\nQuestion"
+        },
+        {
+          "perm": [
+            1,
+            2,
+            0
+          ],
+          "slot_labels": [
+            "Project Orion",
+            "Project Vega",
+            "Project Titan"
+          ],
+          "target_idx": 1,
+          "target_label": "Project Orion",
+          "target_key": "LMN3",
+          "outcome": "pass",
+          "decoded_15tk": " LMN3-GREEN-2037\n\nQuestion: What is the security"
+        },
+        {
+          "perm": [
+            1,
+            2,
+            0
+          ],
+          "slot_labels": [
+            "Project Orion",
+            "Project Vega",
+            "Project Titan"
+          ],
+          "target_idx": 2,
+          "target_label": "Project Vega",
+          "target_key": "PQZ5",
+          "outcome": "pass",
+          "decoded_15tk": " PQZ5-AMBER-1776\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            0,
+            2,
+            1
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Vega",
+            "Project Orion"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "pass",
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        }
+      ]
+    },
+    "ctx8192__sym INT3 (v0.2)": {
+      "ctx": 8192,
+      "method": "sym INT3 (v0.2)",
+      "n_pass": 9,
+      "n_wrong": 1,
+      "n_halluc": 0,
+      "n_total": 10,
+      "accuracy": 0.9,
+      "trials": [
+        {
+          "perm": [
+            0,
+            1,
+            2
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Orion",
+            "Project Vega"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "pass",
+          "decoded_15tk": " The security token for Project Titan is XRQ7-BLUE-198"
+        },
+        {
+          "perm": [
+            0,
+            1,
+            2
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Orion",
+            "Project Vega"
+          ],
+          "target_idx": 1,
+          "target_label": "Project Orion",
+          "target_key": "LMN3",
+          "outcome": "pass",
+          "decoded_15tk": " LMN3-BLUE-2037\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            0,
+            1,
+            2
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Orion",
+            "Project Vega"
+          ],
+          "target_idx": 2,
+          "target_label": "Project Vega",
+          "target_key": "PQZ5",
+          "outcome": "pass",
+          "decoded_15tk": " PQZ5-AMBER-1776\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            2,
+            0,
+            1
+          ],
+          "slot_labels": [
+            "Project Vega",
+            "Project Titan",
+            "Project Orion"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "wrong-code",
+          "decoded_15tk": " PQZ5-AMBER-1776\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            2,
+            0,
+            1
+          ],
+          "slot_labels": [
+            "Project Vega",
+            "Project Titan",
+            "Project Orion"
+          ],
+          "target_idx": 1,
+          "target_label": "Project Orion",
+          "target_key": "LMN3",
+          "outcome": "pass",
+          "decoded_15tk": " LMN3-GREEN-2037\n\nQuestion: What is the security"
+        },
+        {
+          "perm": [
+            2,
+            0,
+            1
+          ],
+          "slot_labels": [
+            "Project Vega",
+            "Project Titan",
+            "Project Orion"
+          ],
+          "target_idx": 2,
+          "target_label": "Project Vega",
+          "target_key": "PQZ5",
+          "outcome": "pass",
+          "decoded_15tk": " PQZ5-AMBER-1776\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            1,
+            2,
+            0
+          ],
+          "slot_labels": [
+            "Project Orion",
+            "Project Vega",
+            "Project Titan"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "pass",
+          "decoded_15tk": " The security token for Project Titan is XRQ7-BLUE-198"
+        },
+        {
+          "perm": [
+            1,
+            2,
+            0
+          ],
+          "slot_labels": [
+            "Project Orion",
+            "Project Vega",
+            "Project Titan"
+          ],
+          "target_idx": 1,
+          "target_label": "Project Orion",
+          "target_key": "LMN3",
+          "outcome": "pass",
+          "decoded_15tk": " The security token for Project Orion is LMN3-GREEN-2037"
+        },
+        {
+          "perm": [
+            1,
+            2,
+            0
+          ],
+          "slot_labels": [
+            "Project Orion",
+            "Project Vega",
+            "Project Titan"
+          ],
+          "target_idx": 2,
+          "target_label": "Project Vega",
+          "target_key": "PQZ5",
+          "outcome": "pass",
+          "decoded_15tk": " PQZ5-AMBER-1776\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            0,
+            2,
+            1
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Vega",
+            "Project Orion"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "pass",
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        }
+      ]
+    },
+    "ctx8192__asym INT3 (v0.3)": {
+      "ctx": 8192,
+      "method": "asym INT3 (v0.3)",
+      "n_pass": 9,
+      "n_wrong": 1,
+      "n_halluc": 0,
+      "n_total": 10,
+      "accuracy": 0.9,
+      "trials": [
+        {
+          "perm": [
+            0,
+            1,
+            2
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Orion",
+            "Project Vega"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "pass",
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            0,
+            1,
+            2
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Orion",
+            "Project Vega"
+          ],
+          "target_idx": 1,
+          "target_label": "Project Orion",
+          "target_key": "LMN3",
+          "outcome": "pass",
+          "decoded_15tk": " LMN3-GREEN-2037\n\nQuestion: What is the security"
+        },
+        {
+          "perm": [
+            0,
+            1,
+            2
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Orion",
+            "Project Vega"
+          ],
+          "target_idx": 2,
+          "target_label": "Project Vega",
+          "target_key": "PQZ5",
+          "outcome": "pass",
+          "decoded_15tk": " PQZ5-AMBER-1776. Keep this confidential.\n\nQuestion"
+        },
+        {
+          "perm": [
+            2,
+            0,
+            1
+          ],
+          "slot_labels": [
+            "Project Vega",
+            "Project Titan",
+            "Project Orion"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "wrong-code",
+          "decoded_15tk": " LMN3-BLUE-2037\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            2,
+            0,
+            1
+          ],
+          "slot_labels": [
+            "Project Vega",
+            "Project Titan",
+            "Project Orion"
+          ],
+          "target_idx": 1,
+          "target_label": "Project Orion",
+          "target_key": "LMN3",
+          "outcome": "pass",
+          "decoded_15tk": " LMN3-GREEN-2037\n\nQuestion: What is the security"
+        },
+        {
+          "perm": [
+            2,
+            0,
+            1
+          ],
+          "slot_labels": [
+            "Project Vega",
+            "Project Titan",
+            "Project Orion"
+          ],
+          "target_idx": 2,
+          "target_label": "Project Vega",
+          "target_key": "PQZ5",
+          "outcome": "pass",
+          "decoded_15tk": " PQZ5-AMBER-1776\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            1,
+            2,
+            0
+          ],
+          "slot_labels": [
+            "Project Orion",
+            "Project Vega",
+            "Project Titan"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "pass",
+          "decoded_15tk": " XRQ7-BLUE-1984. Keep this confidential.\n\nQuestion"
+        },
+        {
+          "perm": [
+            1,
+            2,
+            0
+          ],
+          "slot_labels": [
+            "Project Orion",
+            "Project Vega",
+            "Project Titan"
+          ],
+          "target_idx": 1,
+          "target_label": "Project Orion",
+          "target_key": "LMN3",
+          "outcome": "pass",
+          "decoded_15tk": " LMN3-GREEN-2037\n\nQuestion: What is the security"
+        },
+        {
+          "perm": [
+            1,
+            2,
+            0
+          ],
+          "slot_labels": [
+            "Project Orion",
+            "Project Vega",
+            "Project Titan"
+          ],
+          "target_idx": 2,
+          "target_label": "Project Vega",
+          "target_key": "PQZ5",
+          "outcome": "pass",
+          "decoded_15tk": " PQZ5-AMBER-1776\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            0,
+            2,
+            1
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Vega",
+            "Project Orion"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "pass",
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        }
+      ]
+    },
+    "ctx32768__FP16 baseline": {
+      "ctx": 32768,
+      "method": "FP16 baseline",
+      "n_pass": 9,
+      "n_wrong": 1,
+      "n_halluc": 0,
+      "n_total": 10,
+      "accuracy": 0.9,
+      "trials": [
+        {
+          "perm": [
+            0,
+            1,
+            2
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Orion",
+            "Project Vega"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "pass",
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            0,
+            1,
+            2
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Orion",
+            "Project Vega"
+          ],
+          "target_idx": 1,
+          "target_label": "Project Orion",
+          "target_key": "LMN3",
+          "outcome": "pass",
+          "decoded_15tk": " LMN3-GREEN-2037\n\nQuestion: What is the security"
+        },
+        {
+          "perm": [
+            0,
+            1,
+            2
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Orion",
+            "Project Vega"
+          ],
+          "target_idx": 2,
+          "target_label": "Project Vega",
+          "target_key": "PQZ5",
+          "outcome": "pass",
+          "decoded_15tk": " PQZ5-AMBER-1776\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            2,
+            0,
+            1
+          ],
+          "slot_labels": [
+            "Project Vega",
+            "Project Titan",
+            "Project Orion"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "wrong-code",
+          "decoded_15tk": " LMN3-GREEN-2037\n\nQuestion: What is the security"
+        },
+        {
+          "perm": [
+            2,
+            0,
+            1
+          ],
+          "slot_labels": [
+            "Project Vega",
+            "Project Titan",
+            "Project Orion"
+          ],
+          "target_idx": 1,
+          "target_label": "Project Orion",
+          "target_key": "LMN3",
+          "outcome": "pass",
+          "decoded_15tk": " LMN3-GREEN-2037\n\nQuestion: What is the security"
+        },
+        {
+          "perm": [
+            2,
+            0,
+            1
+          ],
+          "slot_labels": [
+            "Project Vega",
+            "Project Titan",
+            "Project Orion"
+          ],
+          "target_idx": 2,
+          "target_label": "Project Vega",
+          "target_key": "PQZ5",
+          "outcome": "pass",
+          "decoded_15tk": " PQZ5-AMBER-1776\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            1,
+            2,
+            0
+          ],
+          "slot_labels": [
+            "Project Orion",
+            "Project Vega",
+            "Project Titan"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "pass",
+          "decoded_15tk": " XRQ7-BLUE-1984. Keep this confidential.\n\nQuestion"
+        },
+        {
+          "perm": [
+            1,
+            2,
+            0
+          ],
+          "slot_labels": [
+            "Project Orion",
+            "Project Vega",
+            "Project Titan"
+          ],
+          "target_idx": 1,
+          "target_label": "Project Orion",
+          "target_key": "LMN3",
+          "outcome": "pass",
+          "decoded_15tk": " LMN3-GREEN-2037\n\nQuestion: What is the security"
+        },
+        {
+          "perm": [
+            1,
+            2,
+            0
+          ],
+          "slot_labels": [
+            "Project Orion",
+            "Project Vega",
+            "Project Titan"
+          ],
+          "target_idx": 2,
+          "target_label": "Project Vega",
+          "target_key": "PQZ5",
+          "outcome": "pass",
+          "decoded_15tk": " PQZ5-AMBER-1776\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            0,
+            2,
+            1
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Vega",
+            "Project Orion"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "pass",
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        }
+      ]
+    },
+    "ctx32768__sym INT3 (v0.2)": {
+      "ctx": 32768,
+      "method": "sym INT3 (v0.2)",
+      "n_pass": 6,
+      "n_wrong": 2,
+      "n_halluc": 2,
+      "n_total": 10,
+      "accuracy": 0.6,
+      "trials": [
+        {
+          "perm": [
+            0,
+            1,
+            2
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Orion",
+            "Project Vega"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "pass",
+          "decoded_15tk": " The security token for Project Titan is XRQ7-BLUE-198"
+        },
+        {
+          "perm": [
+            0,
+            1,
+            2
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Orion",
+            "Project Vega"
+          ],
+          "target_idx": 1,
+          "target_label": "Project Orion",
+          "target_key": "LMN3",
+          "outcome": "wrong-code",
+          "decoded_15tk": " The security token for Project Orion is XRQ7-BLUE-198"
+        },
+        {
+          "perm": [
+            0,
+            1,
+            2
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Orion",
+            "Project Vega"
+          ],
+          "target_idx": 2,
+          "target_label": "Project Vega",
+          "target_key": "PQZ5",
+          "outcome": "pass",
+          "decoded_15tk": " PQZ5-AMBER-1776\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            2,
+            0,
+            1
+          ],
+          "slot_labels": [
+            "Project Vega",
+            "Project Titan",
+            "Project Orion"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "wrong-code",
+          "decoded_15tk": " LMN3-GREEN-1984\n\nQuestion: What is the security"
+        },
+        {
+          "perm": [
+            2,
+            0,
+            1
+          ],
+          "slot_labels": [
+            "Project Vega",
+            "Project Titan",
+            "Project Orion"
+          ],
+          "target_idx": 1,
+          "target_label": "Project Orion",
+          "target_key": "LMN3",
+          "outcome": "pass",
+          "decoded_15tk": " LMN3-GREEN-1984\n\nQuestion: What is the security"
+        },
+        {
+          "perm": [
+            2,
+            0,
+            1
+          ],
+          "slot_labels": [
+            "Project Vega",
+            "Project Titan",
+            "Project Orion"
+          ],
+          "target_idx": 2,
+          "target_label": "Project Vega",
+          "target_key": "PQZ5",
+          "outcome": "pass",
+          "decoded_15tk": " The security token for Project Vega is PQZ5-AMBER-177"
+        },
+        {
+          "perm": [
+            1,
+            2,
+            0
+          ],
+          "slot_labels": [
+            "Project Orion",
+            "Project Vega",
+            "Project Titan"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "hallucinate",
+          "decoded_15tk": " 3X-RED-1984\n\nQuestion: What is the security"
+        },
+        {
+          "perm": [
+            1,
+            2,
+            0
+          ],
+          "slot_labels": [
+            "Project Orion",
+            "Project Vega",
+            "Project Titan"
+          ],
+          "target_idx": 1,
+          "target_label": "Project Orion",
+          "target_key": "LMN3",
+          "outcome": "pass",
+          "decoded_15tk": " LMN3-GREEN-2037\n\nQuestion: What is the security"
+        },
+        {
+          "perm": [
+            1,
+            2,
+            0
+          ],
+          "slot_labels": [
+            "Project Orion",
+            "Project Vega",
+            "Project Titan"
+          ],
+          "target_idx": 2,
+          "target_label": "Project Vega",
+          "target_key": "PQZ5",
+          "outcome": "pass",
+          "decoded_15tk": " PQZ5-AMBER-2037\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            0,
+            2,
+            1
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Vega",
+            "Project Orion"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "hallucinate",
+          "decoded_15tk": " The security token for Project Titan is XRZ5-BLUE-198"
+        }
+      ]
+    },
+    "ctx32768__asym INT3 (v0.3)": {
+      "ctx": 32768,
+      "method": "asym INT3 (v0.3)",
+      "n_pass": 8,
+      "n_wrong": 2,
+      "n_halluc": 0,
+      "n_total": 10,
+      "accuracy": 0.8,
+      "trials": [
+        {
+          "perm": [
+            0,
+            1,
+            2
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Orion",
+            "Project Vega"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "pass",
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            0,
+            1,
+            2
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Orion",
+            "Project Vega"
+          ],
+          "target_idx": 1,
+          "target_label": "Project Orion",
+          "target_key": "LMN3",
+          "outcome": "pass",
+          "decoded_15tk": " LMN3-BLUE-1984\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            0,
+            1,
+            2
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Orion",
+            "Project Vega"
+          ],
+          "target_idx": 2,
+          "target_label": "Project Vega",
+          "target_key": "PQZ5",
+          "outcome": "pass",
+          "decoded_15tk": " PQZ5-AMBER-1776\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            2,
+            0,
+            1
+          ],
+          "slot_labels": [
+            "Project Vega",
+            "Project Titan",
+            "Project Orion"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "wrong-code",
+          "decoded_15tk": " LMN3-GREEN-2037\n\nQuestion: What is the security"
+        },
+        {
+          "perm": [
+            2,
+            0,
+            1
+          ],
+          "slot_labels": [
+            "Project Vega",
+            "Project Titan",
+            "Project Orion"
+          ],
+          "target_idx": 1,
+          "target_label": "Project Orion",
+          "target_key": "LMN3",
+          "outcome": "pass",
+          "decoded_15tk": " LMN3-GREEN-2037\n\nQuestion: What is the security"
+        },
+        {
+          "perm": [
+            2,
+            0,
+            1
+          ],
+          "slot_labels": [
+            "Project Vega",
+            "Project Titan",
+            "Project Orion"
+          ],
+          "target_idx": 2,
+          "target_label": "Project Vega",
+          "target_key": "PQZ5",
+          "outcome": "pass",
+          "decoded_15tk": " PQZ5-AMBER-1776\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            1,
+            2,
+            0
+          ],
+          "slot_labels": [
+            "Project Orion",
+            "Project Vega",
+            "Project Titan"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "wrong-code",
+          "decoded_15tk": " PQZ5-AMBER-2037\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            1,
+            2,
+            0
+          ],
+          "slot_labels": [
+            "Project Orion",
+            "Project Vega",
+            "Project Titan"
+          ],
+          "target_idx": 1,
+          "target_label": "Project Orion",
+          "target_key": "LMN3",
+          "outcome": "pass",
+          "decoded_15tk": " LMN3-GREEN-2037\n\nQuestion: What is the security"
+        },
+        {
+          "perm": [
+            1,
+            2,
+            0
+          ],
+          "slot_labels": [
+            "Project Orion",
+            "Project Vega",
+            "Project Titan"
+          ],
+          "target_idx": 2,
+          "target_label": "Project Vega",
+          "target_key": "PQZ5",
+          "outcome": "pass",
+          "decoded_15tk": " PQZ5-AMBER-2037\n\nQuestion: What is the"
+        },
+        {
+          "perm": [
+            0,
+            2,
+            1
+          ],
+          "slot_labels": [
+            "Project Titan",
+            "Project Vega",
+            "Project Orion"
+          ],
+          "target_idx": 0,
+          "target_label": "Project Titan",
+          "target_key": "XRQ7",
+          "outcome": "pass",
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        }
+      ]
+    }
+  }
+}

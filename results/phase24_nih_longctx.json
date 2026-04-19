@@ -1,0 +1,390 @@
+{
+  "date": "2026-04-19T10:31:41",
+  "protocol": {
+    "task": "Needle-in-a-Haystack retrieval",
+    "model": "meta-llama/Llama-3.1-8B",
+    "haystack_source": "WikiText-2 test split (repeated as needed)",
+    "needle_sentence": "The special code mentioned here is XRQ7-BLUE-1984. Please remember it.",
+    "needle_key": "XRQ7",
+    "question": "Question: What is the special code mentioned in the text above?\nAnswer:",
+    "contexts": [
+      8192,
+      32768
+    ],
+    "pos_fracs": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9
+    ],
+    "methods": [
+      "FP16 baseline",
+      "sym INT3 (v0.2)",
+      "asym INT3 (v0.3)"
+    ],
+    "scoring": "substring 'XRQ7' in greedy-decode first 15 tokens after question",
+    "cache_split": "prefix (compressed) + question (uncompressed) + greedy-decode tail (uncompressed)"
+  },
+  "results": {
+    "ctx8192__FP16 baseline": {
+      "ctx": 8192,
+      "method": "FP16 baseline",
+      "n_passed": 10,
+      "n_total": 10,
+      "accuracy": 1.0,
+      "per_position": [
+        {
+          "pos_frac": 0.0,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.1,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.2,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.3,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.4,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.5,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.6,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.7,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.8,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.9,
+          "passed": true,
+          "decoded_15tk": " The special code mentioned in the text above is XRQ7-BLUE"
+        }
+      ]
+    },
+    "ctx8192__sym INT3 (v0.2)": {
+      "ctx": 8192,
+      "method": "sym INT3 (v0.2)",
+      "n_passed": 10,
+      "n_total": 10,
+      "accuracy": 1.0,
+      "per_position": [
+        {
+          "pos_frac": 0.0,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984\n\n://www.google"
+        },
+        {
+          "pos_frac": 0.1,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.2,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.3,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.4,
+          "passed": true,
+          "decoded_15tk": " The special code mentioned in the text above is XRQ7-BLUE"
+        },
+        {
+          "pos_frac": 0.5,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.6,
+          "passed": true,
+          "decoded_15tk": " The special code mentioned in the text above is XRQ7-BLUE"
+        },
+        {
+          "pos_frac": 0.7,
+          "passed": true,
+          "decoded_15tk": " The special code mentioned in the text above is XRQ7-BLUE"
+        },
+        {
+          "pos_frac": 0.8,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.9,
+          "passed": true,
+          "decoded_15tk": " The special code mentioned in the text above is XRQ7-BLUE"
+        }
+      ]
+    },
+    "ctx8192__asym INT3 (v0.3)": {
+      "ctx": 8192,
+      "method": "asym INT3 (v0.3)",
+      "n_passed": 10,
+      "n_total": 10,
+      "accuracy": 1.0,
+      "per_position": [
+        {
+          "pos_frac": 0.0,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.1,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.2,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.3,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.4,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.5,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.6,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.7,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.8,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984://www.google.com"
+        },
+        {
+          "pos_frac": 0.9,
+          "passed": true,
+          "decoded_15tk": " The special code mentioned in the text above is XRQ7-BLUE"
+        }
+      ]
+    },
+    "ctx32768__FP16 baseline": {
+      "ctx": 32768,
+      "method": "FP16 baseline",
+      "n_passed": 10,
+      "n_total": 10,
+      "accuracy": 1.0,
+      "per_position": [
+        {
+          "pos_frac": 0.0,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        },
+        {
+          "pos_frac": 0.1,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984  "
+        },
+        {
+          "pos_frac": 0.2,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984  "
+        },
+        {
+          "pos_frac": 0.3,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        },
+        {
+          "pos_frac": 0.4,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        },
+        {
+          "pos_frac": 0.5,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        },
+        {
+          "pos_frac": 0.6,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984  "
+        },
+        {
+          "pos_frac": 0.7,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984  "
+        },
+        {
+          "pos_frac": 0.8,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        },
+        {
+          "pos_frac": 0.9,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        }
+      ]
+    },
+    "ctx32768__sym INT3 (v0.2)": {
+      "ctx": 32768,
+      "method": "sym INT3 (v0.2)",
+      "n_passed": 10,
+      "n_total": 10,
+      "accuracy": 1.0,
+      "per_position": [
+        {
+          "pos_frac": 0.0,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984 1st Battalion"
+        },
+        {
+          "pos_frac": 0.1,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984 1st Battalion"
+        },
+        {
+          "pos_frac": 0.2,
+          "passed": true,
+          "decoded_15tk": " The special code mentioned in the text above is XRQ7-BLUE"
+        },
+        {
+          "pos_frac": 0.3,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        },
+        {
+          "pos_frac": 0.4,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984\n\n 1st"
+        },
+        {
+          "pos_frac": 0.5,
+          "passed": true,
+          "decoded_15tk": " The special code mentioned in the text above is XRQ7-BLUE"
+        },
+        {
+          "pos_frac": 0.6,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984\n\n4 @.@ 8"
+        },
+        {
+          "pos_frac": 0.7,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984\n\n 1st"
+        },
+        {
+          "pos_frac": 0.8,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984\n\n4 @.@ 8"
+        },
+        {
+          "pos_frac": 0.9,
+          "passed": true,
+          "decoded_15tk": " The special code mentioned in the text above is XRQ7-BLUE"
+        }
+      ]
+    },
+    "ctx32768__asym INT3 (v0.3)": {
+      "ctx": 32768,
+      "method": "asym INT3 (v0.3)",
+      "n_passed": 10,
+      "n_total": 10,
+      "accuracy": 1.0,
+      "per_position": [
+        {
+          "pos_frac": 0.0,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        },
+        {
+          "pos_frac": 0.1,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984  "
+        },
+        {
+          "pos_frac": 0.2,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984. Please remember it.\n\n"
+        },
+        {
+          "pos_frac": 0.3,
+          "passed": true,
+          "decoded_15tk": " The special code mentioned here is XRQ7-BLUE-1984"
+        },
+        {
+          "pos_frac": 0.4,
+          "passed": true,
+          "decoded_15tk": " The special code mentioned in the text above is XRQ7-BLUE"
+        },
+        {
+          "pos_frac": 0.5,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        },
+        {
+          "pos_frac": 0.6,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        },
+        {
+          "pos_frac": 0.7,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        },
+        {
+          "pos_frac": 0.8,
+          "passed": true,
+          "decoded_15tk": " XRQ7-BLUE-1984\n\nQuestion: What is the"
+        },
+        {
+          "pos_frac": 0.9,
+          "passed": true,
+          "decoded_15tk": " The special code mentioned in the text above is XRQ7-BLUE"
+        }
+      ]
+    }
+  }
+}
