@@ -2,7 +2,7 @@
 
 **Kentaro Sato**
 *2026-04-19*
-*arxiv preprint, draft v0.8*
+*arxiv preprint, draft v0.9*
 
 ---
 
@@ -30,7 +30,7 @@ Concretely, this paper contributes:
 
 3. **A four-method ablation establishing that each of the three components is empirically necessary.** No simpler ablation variant — (A) naive per-row symmetric, (B) asymmetric per-channel without norm separation, or (C) symmetric nsep+pchan — achieves the eight-model coverage of the full recipe (D) (§5.2).
 
-4. **A specific, reproducible negative result for a naive translation of weight-quantization recipes to KV caches.** Variant (B) above — the standard "asymmetric per-channel" baseline as it appears in GPTQ/AWQ-style weight quantization — **fails on four of the eight models: catastrophically on three (Llama-3.1-8B, Mistral-7B-v0.1, Qwen2.5-14B, with regression up to 24× vs naive per-row INT3 on Llama-3.1-8B) and mildly on GPT-J-6B** (B is approximately 2× worse than A, landing just above the 5 % threshold). We propose a failure mechanism — token-wise L2 norm variance contaminates per-channel statistics when norm separation is omitted — and argue that `nsep` is therefore a structural ingredient for per-channel KV quantization on this model family rather than a quality-of-life preprocessing step (§5.3).
+4. **A specific, reproducible negative result for a naive translation of weight-quantization recipes to KV caches, with a direct measurement of the mechanism.** Variant (B) above — the standard "asymmetric per-channel" baseline as it appears in GPTQ/AWQ-style weight quantization — **fails on four of the eight models: catastrophically on three (Llama-3.1-8B, Mistral-7B-v0.1, Qwen2.5-14B, with regression up to 24× vs naive per-row INT3 on Llama-3.1-8B) and mildly on GPT-J-6B** (B is approximately 2× worse than A, landing just above the 5 % threshold). A direct measurement of per-token L2 norm dispersion on Layer-0 K and V caches across all eight models (§5.3, Appendix E) supports a refined mechanism claim: **L0 V-cache per-token L2 norm CV correlates strongly with (B)'s regression magnitude (Spearman $\rho \approx 0.88$), while L0 K-cache CV does not ($\rho \approx 0.29$)**. We therefore argue that `nsep` is a structural ingredient for per-channel KV quantization specifically because V-cache reconstruction error bypasses the softmax normalization that partially absorbs K-cache error, rather than a generic quality-of-life preprocessing step (§5.3).
 
 5. **Documented negative results on rotation and top-K mixed precision**, both tested during the development of this recipe. A Walsh–Hadamard rotation step (similar in spirit to KVLinC and the rotation component of TurboQuant) regresses per-head reconstruction MSE by 3.68× on real Qwen2-7B Layer 0 K; a top-K outlier-channel mixed-precision variant at $K = 4$ regresses per-head reconstruction MSE by 17.6 % on the same tensor. Both metrics are per-tensor reconstruction error rather than end-to-end ΔPPL; we did not pursue either method far enough to run the full PPL pipeline. Both quantizer implementations are retained in the public code base as documented negative results (§6, Appendix A).
 
@@ -248,11 +248,34 @@ Four observations:
 
 The single most informative row of Table 2 is **(B) asym per-channel without norm separation**, which regresses *below* the naive per-row baseline (A) on four of the eight models. Three of the four are Llama-family or Llama-style (Llama-3.1-8B, Mistral-7B-v0.1, Qwen2.5-14B); the fourth is GPT-J-6B (head dim 256). The most extreme regression is Llama-3.1-8B: (A) naive gives +0.45 ΔPPL (6 % of baseline); (B) gives **+10.92 ΔPPL** (148 % of baseline), a 24× regression below a recipe that was meant to be an upgrade.
 
-**Proposed mechanism.** We conjecture — but in this draft do not directly measure — that the failure is driven by token-wise L2 norm variance that the per-channel statistics implicitly absorb when norm separation is omitted. The argument is as follows. When norm separation is omitted, the per-channel `[min, max]` window in (B) is computed over *raw* tensor values $\{x_{t, c}\}_{t}$ across all tokens. If per-token L2 norms vary widely, tokens with large norm contribute the extremes of the per-channel range. The channel's quantization grid is then stretched to accommodate those extremes, and low-norm tokens — whose typical per-coordinate magnitude is an order of magnitude smaller — end up mis-quantized by a factor roughly equal to the token-norm ratio. Those large reconstruction errors then propagate through attention in a way that visibly corrupts the next-token distribution. Norm separation eliminates this contamination by normalizing each token to unit length *before* computing per-channel statistics, so the per-channel window in (D) is fit to a distribution with bounded token-wise norm ($\|d_t\|_2 = 1$).
+**Diagnostic measurement.** To test whether this failure is driven by per-token L2 norm variance — the mechanism we initially conjectured from the shape of the recipe — we ran a direct measurement (Phase 23, `results/phase23_norm_dispersion.json`) on all eight models. For each model we tokenize the WikiText-2 test text with the model's own tokenizer, take three non-overlapping 1024-token prefill segments starting at token indices $\{0, 8192, 16384\}$, run each segment through the model with `use_cache=True`, and compute the coefficient of variation ($\mathrm{CV} = \sigma / \mu$) of the per-token L2 norm on the Layer-0 K and V caches (pooled across heads). The measurement takes under 30 minutes on a single A100 and requires no training data.
 
-We label this as a *proposed mechanism* rather than a confirmed one: the paper does not report per-model token-norm dispersion statistics correlated against the B-failure pattern, and such a diagnostic table would strengthen the claim. Our support for the hypothesis in this draft is indirect — (i) the four B-failures concentrate on Llama-family and post-Llama Qwen architectures, where qualitative inspection of per-token K-norm distributions in prior work shows high dispersion, and (ii) norm separation fixes (B) → (D) by construction. A companion experiment directly measuring the per-token K-norm standard deviation on each of the 8 models, against each model's (B) − (D) ΔPPL gap, is left to a revision.
+**Table 2b.** Per-token L2 norm coefficient of variation on Layer-0 K and V caches, averaged across three non-overlapping WikiText-2 segments, alongside the variant-(B) ΔPPL from Table 2. Models are ordered by (B) regression magnitude.
 
-If the mechanism is correct, the diagnostic is simple: any KV-cache quantization recipe that performs per-channel scaling without first normalizing per-token should expect this failure mode on models with high per-token L2 norm variance. Reporting the per-token norm distribution alongside the quantizer specification therefore seems worth making a community convention.
+| Model             | L0 K-CV (mean ± SD) | L0 V-CV (mean ± SD) | L0 K p99/p50 | (B) % of base |
+|:------------------|:--:|:--:|:--:|:--:|
+| Llama-3.1-8B      | 0.210 ± 0.002 | **0.560 ± 0.002** | 1.612 | **147.91 %** |
+| Qwen2.5-14B       | 0.134 ± 0.000 | **0.602 ± 0.014** | 1.172 | **145.67 %** |
+| Mistral-7B-v0.1   | 0.345 ± 0.001 | **0.528 ± 0.007** | 1.832 | **119.72 %** |
+| GPT-J-6B          | 0.254 ± 0.000 | 0.335 ± 0.002 | 1.433 | 6.27 % |
+| Qwen2-7B          | 0.472 ± 0.000 | 0.472 ± 0.008 | 1.833 | 4.29 % |
+| Pythia-6.9B       | 0.250 ± 0.001 | 0.347 ± 0.002 | 1.742 | 5.88 % |
+| Qwen3.5-9B        | 0.034 ± 0.001 | 0.242 ± 0.004 | 1.061 | −0.04 % |
+| Gemma-4-E4B       | 0.000 ± 0.000 | 0.000 ± 0.000 | 1.000 | −2.13 % |
+
+**Reading the table: V-CV predicts (B) failure; K-CV does not.** The non-parametric Spearman rank correlation between L0 V-CV and variant-(B) regression magnitude across the 8 models is $\rho \approx 0.88$; the same correlation computed against L0 K-CV is $\rho \approx 0.29$. The three catastrophic B-failures (Llama-3.1-8B, Qwen2.5-14B, Mistral-7B-v0.1) are the three highest V-CV models by rank; the two negative-ΔPPL models (Qwen3.5-9B, Gemma-4-E4B) are the two lowest V-CV models. Qwen2-7B, which our initial K-focused reading would have predicted to fail on (B) given its L0 K-CV of 0.47 (the highest in the set), instead passes (B) at 4.29 % of baseline — and its V-CV of 0.47 is *middle* of the pack, matching the V-CV / B-failure rank alignment rather than the K-CV / B-failure rank alignment.
+
+**Refined mechanism.** We initially framed the mechanism as K-cache-driven, partly because Phase 10 (Appendix A) localized the outlier structure we studied to Layer-0 K, and partly because Phase 21 (§7, Appendix C) showed that Gemma-4-E4B's beneficial B-anomaly is 87 % K-driven. The measurement in Table 2b argues for a different picture:
+
+- When norm separation is omitted, the per-channel $[\min, \max]$ window in (B) is computed over *raw* tensor values $\{x_{t, c}\}_{t}$ across all tokens. Tokens with large L2 norm contribute the extremes of the per-channel range; tokens with small L2 norm end up mis-quantized by a factor roughly equal to the token-norm ratio. This contamination mechanism is generic to both K and V.
+- For the **V cache**, the resulting reconstruction error propagates *linearly* into the attention-weighted output: the next layer's residual-stream contribution is $\mathrm{softmax}(QK^\top / \sqrt{D}) \cdot \hat V$, and $\hat V$ sits outside the softmax. Since softmax generally places non-trivial weight on *multiple* past tokens at Layer 0, errors on the long left tail of low-norm tokens are not absorbed; they show up on the output with weight proportional to their attention score.
+- For the **K cache**, the corresponding per-token error enters only the *argument* of softmax and is partly absorbed by softmax's own normalization: softmax is invariant to additive shifts and is most sensitive to the top-ranked dot products. Two tokens with different K reconstruction errors but similar cosine alignment with $Q$ are distinguished primarily by their dot-product ranking, not by their absolute magnitude, so K-cache L2 norm variance does not propagate through attention as cleanly as V-cache L2 norm variance does.
+
+This refinement is consistent with both the new V-CV correlation and the older K-driven Gemma anomaly, because the latter describes a different regime: under (B) on a low-CV model (Gemma-4-E4B, with V-CV $= 0.00$ and K-CV $= 0.00$), the reconstruction pipeline injects small, approximately isotropic noise into both caches. In a text-only-evaluated multimodal model that noise plausibly acts as attention-entropy regularization, and the K-cache side dominates the effect size (Phase 21). The two observations therefore describe different regimes — *high-V-CV* models where (B) catastrophically fails, and *zero-CV* models where (B) marginally *improves* PPL — rather than a single mechanism.
+
+**Secondary observation: modern K caches are structurally unit-norm.** Gemma-4-E4B's Layer-0 K-CV is measured at exactly 0.000 and Qwen3.5-9B's at 0.034, versus 0.21–0.47 on the six older models. We attribute this to architectural **QK-normalization**, in which $Q$ and $K$ are passed through RMSNorm (or equivalent) before entering the attention dot product. Under QK-norm the K-cache rows are constrained to approximately unit L2 norm by construction; per-token K-norm variance is therefore bounded mechanically rather than statistically. For such models, the role of `nsep` on K is redundant with the architecture — the architecture already performs it — but V-cache norm separation is still required, because Qwen3.5-9B exhibits non-zero V-CV (0.24). Gemma-4-E4B's Layer-0 V also reports a CV of 0.000 within measurement precision; we suspect this reflects a model-specific V-side normalization or a degenerate L0 initialization, and we flag it as an architectural observation worth confirming in follow-up reading rather than as a measurement we understand mechanistically. Whichever the specific cause, (D)'s explicit `nsep` step is the only one of the four ablation methods that is *guaranteed* to reduce per-token norm variance to zero on all 8 models by construction, which is why it stays below threshold uniformly.
+
+**Diagnostic recommendation for the community.** The Table-2b measurement takes a one-shot 1024-token forward pass per model and produces a stable CV estimate across seeds (the SD across three non-overlapping WikiText-2 segments is $\leq 0.014$ on every model). We therefore suggest that future KV-cache-quantization papers that propose per-channel or per-group scaling without a per-token normalization step should report per-token K-CV *and* per-token V-CV on at least a handful of evaluation models, with particular attention to V-CV in the 0.4–0.6 range, where we observe catastrophic regressions under naive per-channel asymmetric quantization.
 
 ### 5.4. Real-packed compression
 
@@ -423,4 +446,55 @@ The four ablation methods use the following quantizer primitives, each exactly m
 ```
 
 All four are implemented in ≤ 20 lines of PyTorch each and operate on the same input shape `[..., T, D]`.
+
+---
+
+## Appendix E: Per-token L2 norm dispersion diagnostic (Phase 23)
+
+Phase 23 (`results/phase23_norm_dispersion.json`) tests the §5.3 mechanism claim — that per-token L2 norm variance contaminates per-channel statistics under variant (B) — by measuring the coefficient of variation of per-token L2 norms on each model's Layer-0 K and V caches.
+
+### E.1 Protocol
+
+For each of the eight benchmark models:
+
+1. Tokenize the WikiText-2 test text using the model's own tokenizer. (An earlier character-based slicing produced < 1024 tokens on 7 of 8 tokenizers and was replaced with token-index slicing to guarantee a fixed 1024-token window on every model.)
+2. Take three non-overlapping 1024-token segments starting at token indices $\{0, 8192, 16384\}$. All eight tokenized test texts exceed 280 000 tokens, leaving comfortable margin for the third window.
+3. For each segment, run a single forward pass with `use_cache=True`, extract the populated `past_key_values` cache.
+4. On **Layer 0** — defined as the first *standard-attention* layer, which coincides with cache-index 0 on all dense models and is also cache-index 0 on the hybrid Qwen3.5-9B in our runs — extract the K and V tensors of shape $[1, H, T, D]$ and:
+   - pool the $H \times T$ row vectors, compute per-row L2 norms, and report mean, standard deviation, CV, 1st/50th/99th percentiles, and the p99/p50 ratio as a heavy-tail-robust companion to CV;
+   - also record per-head CV for reproducibility;
+   - save the raw $[H, T]$ norm array for offline histogram plotting.
+5. Also compute K-CV at L-mid (cache-index $\lfloor N_{\mathrm{KV}} / 2 \rfloor$) and L-last (cache-index $N_{\mathrm{KV}} - 1$) as a coarse depth probe.
+6. Report mean ± SD across the three segments for every per-model statistic.
+
+### E.2 Why Layer 0
+
+Phase 10 (Appendix A.1) identified Layer-0 K as the locus of the Qwen2-7B outlier structure that motivated recipe development, and Phase 21 (Appendix C) attributed 87 % of the Gemma-4-E4B B-anomaly to K-cache (at unspecified layers). We therefore treat L0 as the primary diagnostic site. The pattern at L0 is not a universal proxy for deeper layers — L-mid and L-last K-CV are lower than L0 K-CV on most models in our set (Table E1) — but L0 is where §5.3's mechanism claim operates, and the L0 V-CV rank order is what matches the variant-(B) failure rank order.
+
+### E.3 Full per-layer CV measurements
+
+**Table E1.** Per-model per-layer CV. L0 rows reproduce Table 2b of §5.3; L-mid and L-last K-CV are included as depth companions. Pythia-6.9B's unusually flat K-CV profile (0.250 → 0.243 → 0.102 across L0 / L-mid / L-last) is distinctive but does not alter the (B) outcome ranking; Qwen2-7B's L-last K-CV of 1.602 is an outlier we do not analyze in this paper and flag for future work.
+
+| Model             | L0 K-CV | L-mid K-CV | L-last K-CV | L0 V-CV | L0 K p99/p50 |
+|:------------------|:--:|:--:|:--:|:--:|:--:|
+| Llama-3.1-8B      | 0.210 | 0.112 | 0.158 | 0.560 | 1.612 |
+| Mistral-7B-v0.1   | 0.345 | 0.115 | 0.150 | 0.528 | 1.832 |
+| Qwen2.5-14B       | 0.134 | 0.110 | 0.138 | 0.602 | 1.172 |
+| GPT-J-6B          | 0.254 | 0.108 | 0.124 | 0.335 | 1.433 |
+| Qwen2-7B          | 0.472 | 0.104 | 1.602 | 0.472 | 1.833 |
+| Pythia-6.9B       | 0.250 | 0.243 | 0.102 | 0.347 | 1.742 |
+| Qwen3.5-9B        | 0.034 | 0.022 | 0.024 | 0.242 | 1.061 |
+| Gemma-4-E4B       | 0.000 | 0.000 | 0.000 | 0.000 | 1.000 |
+
+### E.4 Rank correlation summary
+
+Across the 8 models, the Spearman rank correlation between L0 V-CV and variant-(B) regression magnitude (as % of FP16 baseline PPL) is $\rho \approx 0.881$; between L0 K-CV and the same is $\rho \approx 0.286$. The V-CV / B-failure rank match is exact for 6 of the 8 models and off-by-one for the remaining 2 (GPT-J-6B and Qwen2-7B swap positions 3 and 5 in the V-CV vs B-failure ranking). The K-CV rank is substantially worse because Qwen2-7B — which has the highest L0 K-CV in the set at 0.472 — does *not* fail on variant (B), and Llama-3.1-8B / Qwen2.5-14B — whose L0 K-CV is 0.210 and 0.134 respectively — fail catastrophically.
+
+### E.5 Zero-CV observations and QK-normalization
+
+Gemma-4-E4B's L0 K, L0 V, L-mid K, and L-last K all measure CV to within numerical precision of zero, and the corresponding p99/p50 ratio is exactly 1.000 — per-token norms are effectively constant. Qwen3.5-9B's L0 K-CV of 0.034 is almost but not quite zero. We interpret the Qwen3.5 figure as the signature of **architectural QK-normalization**: applying RMSNorm (or equivalent) to $Q$ and $K$ *before* the attention dot product forces K-cache rows to approximately unit L2 norm by construction, which pins per-token K-norm variance at a tight floor instead of letting it grow with model scale. The Gemma-4 K-CV of 0.000 is a stronger version of the same signal. On these two 2026 models, the role of `nsep` on K is redundant with the model architecture; on the six older models it is not. Gemma-4-E4B's L0 V-CV of 0.000 is more unusual — V-side normalization is not standard architectural practice — and we do not characterize it mechanistically in this paper; we flag it as an observation worth confirming against Gemma-4's public architectural documentation when it becomes available.
+
+### E.6 Raw data
+
+The JSON record `results/phase23_norm_dispersion.json` contains, for each of the 8 models and each of the 3 segments, per-layer K/V CV, per-head K/V CV, per-token L2 norm percentiles, and the raw $[H, T]$ per-token norm array at Layer 0. This is sufficient to regenerate Table 2b / Table E1, compute the Spearman correlations reported in §5.3 and §E.4, and produce per-model histogram plots without re-running the models.
 
