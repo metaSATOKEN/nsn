@@ -194,16 +194,38 @@ def build_fewshot_prefix(subject_name, dev_split):
 
 def _letter_token_ids(tok):
     """Get the token IDs for ' A', ' B', ' C', ' D' (space-prefixed)
-    as used after 'Answer:'. Many tokenizers have a single token for
-    ' A' etc.; we fall back to the first token if the tokenizer
-    splits further."""
+    as used after 'Answer:'. We require single-token, mutually
+    distinct IDs for the scoring to be meaningful -- if any two
+    letters share the same leading token (e.g., the tokenizer emits
+    a stand-alone space token first), the argmax over letter logits
+    is ambiguous. We assert both conditions and error out loudly
+    rather than silently returning bad numbers; callers on such
+    tokenizers should switch to multi-token choice log-likelihood
+    scoring instead of this single-token shortcut.
+    """
     ids = []
+    multi_token_letters = []
     for letter in ["A", "B", "C", "D"]:
-        # try ' A' first (space-prefixed, most common after 'Answer:')
         toks = tok.encode(" " + letter, add_special_tokens=False)
         if len(toks) == 0:
             toks = tok.encode(letter, add_special_tokens=False)
+        if len(toks) != 1:
+            multi_token_letters.append((letter, toks))
         ids.append(toks[0])
+
+    if multi_token_letters:
+        raise RuntimeError(
+            "Single-token scoring assumes each of ' A', ' B', ' C', ' D' "
+            "tokenizes to exactly one token; got multi-token encodings "
+            f"for: {multi_token_letters}. Switch to multi-token "
+            "choice log-likelihood scoring on this tokenizer."
+        )
+    if len(set(ids)) != 4:
+        raise RuntimeError(
+            f"Single-token scoring requires four distinct letter token "
+            f"IDs; got {ids} (duplicates). Argmax over letter logits "
+            f"would be ambiguous; switch to multi-token scoring."
+        )
     return ids
 
 
