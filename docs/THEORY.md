@@ -34,9 +34,9 @@ INT2: +122.62   INT3: +11.92   INT4: +1382.07   INT5: +4.69   INT6: +11.67   INT
 
 This is the **"INT4 valley of death"**. It's a specific mathematical interaction between outlier magnitude and grid size, not a monotonic function of bit width.
 
-## Two empirically separable modes
+## The common case, and one observed special case
 
-We ran the same bit-width sweep on 7 models from 5 vendors. Only one (Qwen2-7B) showed the INT4 valley. The others were monotonic: more bits, less error, no surprises. A selective-compression experiment confirms the dichotomy causally.
+We ran the same bit-width sweep on 7 models from 5 vendors. Only one (Qwen2-7B) showed the INT4 valley. The other six were monotonic: more bits, less error, no surprises. A selective-compression experiment shows that the Qwen2-7B anomaly is mechanistically distinct from the small-but-nonzero damage the other failing-model candidates sustain at lower bit widths.
 
 **Causal test:** On each failing model, compress only Layer 0 with `nsep+pchan`; leave the other layers under naive INT4. What fraction of the damage does fixing Layer 0 alone rescue?
 
@@ -47,7 +47,7 @@ We ran the same bit-width sweep on 7 models from 5 vendors. Only one (Qwen2-7B) 
 | Pythia-6.9B (moderate) | +7.5 | +7.5 | 0.1% |
 | Qwen2.5-14B (mild) | +0.19 | +0.18 | 4.3% |
 
-Two cleanly separated patterns:
+The causal pattern separates cleanly, but the sample sizes are very unequal — one Mode 1 case, many Mode 2 cases:
 
 **Mode 1 — Layer-0-localized, outlier-driven.** A single K outlier at Layer 0 dominates the per-row scale. Errors at Layer 0 propagate multiplicatively through every subsequent attention, because Layer 0 K determines which tokens every later layer ends up reading. Fixing Layer 0 alone essentially cures the model. Observed in 1 of 27 models we've evaluated (Qwen2-7B only). Signature: K_max ≥ 15× at Layer 0.
 

@@ -9,7 +9,7 @@
 
 ## TL;DR
 
-Low-bit KV cache quantization can fail dramatically on some models — for example, naive INT4 produces **+1382 ΔPPL on Qwen2-7B**. modeq investigates why this happens and provides a simple, calibration-free INT3 recipe that handles a range of recent models reliably.
+Low-bit KV cache quantization usually scales smoothly with bit width, but can fail dramatically on some models — naive INT4 produces **+1382 ΔPPL on Qwen2-7B** (the one model in our 27-model survey that shows this "INT4 valley of death"; not observed in the other 26). modeq investigates why this happens and provides a simple, calibration-free INT3 recipe that handles a range of recent models reliably.
 
 > **v0.3 default**: `nsep+pchan` asymmetric INT3.
 
@@ -60,9 +60,11 @@ WikiText-2 perplexity increase (ΔPPL) vs bit width on 7 models, naive absmax (n
 
 One of these is not like the others. **Qwen2-7B at INT4 is 295× worse than at INT5, and 116× worse than at INT3.** This is the INT4 valley of death.
 
-### Two failure modes, causally separated
+### The common case, and one observed special case
 
-We ran a selective-compression experiment: compress only Layer 0, leave every other layer uncompressed.
+In the 27-model bit-width survey from the companion paper, 26 of 27 models scale monotonically under naive INT quantization: more bits → smoothly less ΔPPL, no surprises. Of the 8 models we re-benchmarked end-to-end for v0.3, 7 show the same smooth pattern. We call this "Mode 2" — the common case.
+
+**One model in our sample — Qwen2-7B — does not follow it.** Its naive-INT curve is non-monotonic: +12 at INT3, **+1382 at INT4**, +5 at INT5. A selective-compression experiment traces the entire anomaly to a single outlier channel at Layer 0 of the K cache:
 
 | Regime (Qwen2-7B) | ΔPPL |
 |:------|:--|
@@ -70,14 +72,11 @@ We ran a selective-compression experiment: compress only Layer 0, leave every ot
 | **Naive INT4 on layers 1–27, nsep+pchan on Layer 0 only** | **+0.38** (99.97% rescue) |
 | Naive INT4 on Layer 0 only, nsep+pchan on layers 1–27 | +1368.18 (catastrophe preserved) |
 
-Layer 0 is the single point of failure. Fixing it alone rescues essentially all the damage. On three other failing models (Pythia-6.9B, Pythia-12B, Qwen2.5-14B) the opposite holds: Layer 0 contributes < 5% of the damage.
+We call this "Mode 1". It is important to be explicit about the sample size:
 
-This is what we mean by two modes:
+> **Mode 1 is an n = 1 observation.** Qwen2-7B is the only model in our 27-model survey (and the only one in our 8-model v0.3 benchmark) to exhibit the INT4-valley / Layer-0-outlier pattern. Whether the phenomenon recurs in models we have not tested — other Qwen releases, other families, future models — is not something this dataset can settle. Other KV-quantization papers (KVQuant, KIVI) report per-channel outliers in a way that suggests specific-channel issues are not unique to Qwen2-7B, but we cannot independently connect those reports to the specific non-monotonic INT4 behavior we observe. Treat "Mode 1" as a label for a phenomenon we have observed once, not as a claim about a broader class of models.
 
-- **Mode 1** — Layer-0-localized, outlier-driven. Naive INT4 breaks catastrophically. Rare (1/27 models we've tested).
-- **Mode 2** — Distributed, norm-variation-driven. Naive INT scales monotonically with bit width. Common (26/27 models).
-
-Both are handled by the same preprocessing: **norm separation + per-channel scaling** (`nsep+pchan`). v0.3 adds **asymmetric per-channel scaling** on top, which cuts ΔPPL by another large factor at the same bit budget.
+For the practical v0.3 recommendation this caveat does not change the recipe: **norm separation + per-channel scaling + asymmetric window** (nsep+pchan asym) handles both the common Mode-2 case and the single Mode-1 case uniformly, and both land below our 5 % threshold at 3 bits/value.
 
 ---
 
@@ -254,13 +253,13 @@ The "Verdict" column is a modeq-internal convention — it is not a deployment c
 
 Three ideas combined:
 
-**Norm separation** — decompose each vector into its L2 length (stored exactly) and its unit direction (quantized). Removes token-wise dynamic-range variation before quantization. Addresses Mode 2.
+**Norm separation** — decompose each vector into its L2 length (stored exactly) and its unit direction (quantized). Removes token-wise dynamic-range variation before quantization. This is the component that matters most for the common-case (Mode 2) models with high per-token norm variance.
 
-**Per-channel scaling** — quantize each channel with its own scale instead of a per-row scale. Prevents an outlier channel from dominating the quantizer. Addresses Mode 1.
+**Per-channel scaling** — quantize each channel with its own scale instead of a per-row scale. Prevents an outlier channel from dominating the quantizer. On the Qwen2-7B special case (Mode 1) this is the load-bearing component; on other models it is still useful as a standard per-channel preconditioner.
 
 **Asymmetric per-channel (v0.3)** — store `d_min` and `d_step = (d_max − d_min) / (2^bits − 1)` per channel, quantize to unsigned indices `[0, 2^bits − 1]`. Fits biased post-RoPE distributions instead of wasting the empty side of a symmetric window. Costs one extra FP16 per channel and ~0.008 bits/value.
 
-Neither `nsep` nor `pchan` alone is sufficient; their conjunction rescues Qwen2-7B's 1382 ΔPPL catastrophe down to +0.40 at symmetric INT3. Adding asymmetry drops it further, to +0.10 at the same bit rate.
+Neither `nsep` nor `pchan` alone is sufficient on Qwen2-7B: their conjunction rescues the 1382 ΔPPL catastrophe down to +0.40 at symmetric INT3. Adding asymmetry drops it further, to +0.10 at the same bit rate. On the other 7 models in our benchmark, naive INT3 is already sub-catastrophic; the big win from asymmetry there is consistency and headroom, not rescue.
 
 The full diagnosis, including the 11-model K/V outlier asymmetry study and the causal-isolation experiment, is in the companion paper:
 
@@ -438,9 +437,9 @@ See `results/phase7_residual_correction.json`, `results/phase8_rms_residual_vali
 
 ### What modeq contributes that isn't in prior work
 
-1. **Two empirically separable failure modes.** Naive INT KV quantization fails in two distinct ways: Mode 1 (Layer-0 outlier-driven, catastrophic INT4 valley) and Mode 2 (distributed norm-variation). See [docs/THEORY.md](docs/THEORY.md). PolarQuant, TurboQuant, KVLinC do not separate or diagnose these modes.
+1. **A diagnostic distinction between the common case and one observed special case.** Naive INT KV quantization almost always scales monotonically with bit width (Mode 2, 26 of 27 models in our survey). The single exception we have observed — Qwen2-7B — shows a non-monotonic "INT4 valley" localized to Layer 0 of the K cache (Mode 1, n = 1). We do not claim that only one such model exists; we claim only that we have observed this phenomenon once. See [docs/THEORY.md](docs/THEORY.md). PolarQuant, TurboQuant, and KVLinC neither diagnose this distinction nor characterize the Qwen2-7B pathology.
 
-2. **The INT4 valley of death.** Naive INT shows a non-monotonic ΔPPL vs bit-width curve on Mode 1 models: INT4 is catastrophically worse than both INT3 and INT5 (by 295× on Qwen2-7B). This grid-alignment interaction between outlier magnitude and quantization step size is not, to our knowledge, previously characterized.
+2. **The INT4 valley of death (observed on Qwen2-7B).** On Qwen2-7B, naive INT shows a non-monotonic ΔPPL vs bit-width curve: INT4 is catastrophically worse than both INT3 and INT5 (by 295× at INT4 vs INT5). This grid-alignment interaction between outlier magnitude and quantization step size is not, to our knowledge, previously characterized. We report it as a phenomenon observed on one model, not as a general property of "Mode 1" models — we have not tested enough instances of the pattern to make that stronger claim.
 
 3. **Layer-0 causal isolation.** On Qwen2-7B, applying `nsep+pchan` to Layer 0 alone rescues 99.97% of the catastrophic ΔPPL. No prior KV quantization work performs this kind of selective-layer intervention to isolate the site of failure.
 
