@@ -2,7 +2,7 @@
 
 **Kentaro Sato**
 *2026-04-19*
-*arxiv preprint, draft v0.9*
+*arxiv preprint, draft v0.10*
 
 ---
 
@@ -79,6 +79,8 @@ The remainder of the paper is organized as follows. §2 surveys related work. §
 ### 3.1 Setup and notation
 
 Consider a single key or value tensor from one head of a Transformer's KV cache, shaped $[T, D]$, where $T$ is the number of cached tokens and $D$ is the head dimension. Let $x_t \in \mathbb{R}^{D}$ denote the row corresponding to token $t$. We evaluate quantizers that map $x_t$ to a low-precision representation $\hat{x}_t$ and measure the end-to-end effect via WikiText-2 perplexity on a Transformer whose KV cache has been replaced by the reconstruction. Throughout, *bits per value* refers to the storage cost in the reconstructed tensor averaged over coordinates — including any per-channel or per-token metadata that is stored alongside the packed integer data.
+
+**Scope of the "minimal" claim.** Where we later describe the proposed recipe as "minimalist", we mean it within the class of *scalar, data-independent* quantizers — schemes that compute all parameters directly from the tensor statistics without a calibration pass, a learned adapter, a non-uniform codebook, or a rotation matrix. We do not claim minimality against learned quantizers or calibrated codebooks, which can be simpler in other senses (e.g., lower bit rate for the same quality); the trade we study is a different operating point in which the recipe itself carries no state outside the per-channel and per-token scalars it computes from the input.
 
 ### 3.2 The recipe
 
@@ -193,7 +195,7 @@ Qwen3.5-9B uses a hybrid attention architecture in which 8 of 32 layers are stan
 
 Table 1 reports the WikiText-2 ΔPPL under our recipe — the `nsep+pchan+asym` variant at $b = 3$ — against the v0.2 symmetric baseline at the same bit budget. Both methods operate at exactly 3.0 bits/value plus $O(D/T)$ FP16 metadata, so the comparison is at matched bit rate.
 
-**Table 1.** Eight-model WikiText-2 ΔPPL at INT3 (ctx = 1024, 10 windows). "sym" = symmetric nsep+pchan (this paper's v0.2 baseline variant). "asym" = the recipe proposed in §3.
+**Table 1.** Eight-model WikiText-2 ΔPPL at INT3 (ctx = 1024, 10 windows). "sym" = symmetric nsep+pchan (this paper's v0.2 baseline variant). "asym" = the recipe proposed in §3. All numbers below use the primary fp16 / 10-window protocol; Gemma-4-E4B under a follow-up bf16 / 30-window probe lands at 5.5 %–7.0 % of baseline depending on text segment (§7, Appendix C) and is therefore borderline rather than uniformly below threshold under stricter protocols.
 
 | Model             | base PPL | sym INT3 ΔPPL | asym INT3 ΔPPL | reduction | % of base |
 |:------------------|:--:|:--:|:--:|:--:|:--:|
@@ -220,7 +222,7 @@ To test whether each of the three ingredients of the recipe — `nsep`, `pchan`,
 - **(C)** symmetric `nsep+pchan` INT3 (this paper's baseline; the v0.2 recipe);
 - **(D)** asymmetric `nsep+pchan` INT3 (the proposed recipe).
 
-**Table 2.** Four-method ablation on all eight models: ΔPPL as % of FP16 baseline PPL.
+**Table 2.** Four-method ablation on all eight models: ΔPPL as % of FP16 baseline PPL. Negative entries in column (B) for Qwen3.5-9B and Gemma-4-E4B are real — quantization noise marginally *improves* PPL on those two 2026 models — and are analyzed separately in §7 as an observation rather than a deployment recommendation.
 
 | Model             | (A) naive | (B) asym no nsep | (C) sym nsep+pchan | (D) **proposed** |
 |:------------------|:--:|:--:|:--:|:--:|
@@ -263,15 +265,25 @@ The single most informative row of Table 2 is **(B) asym per-channel without nor
 | Qwen3.5-9B        | 0.034 ± 0.001 | 0.242 ± 0.004 | 1.061 | −0.04 % |
 | Gemma-4-E4B       | 0.000 ± 0.000 | 0.000 ± 0.000 | 1.000 | −2.13 % |
 
-**Reading the table: V-CV predicts (B) failure; K-CV does not.** The non-parametric Spearman rank correlation between L0 V-CV and variant-(B) regression magnitude across the 8 models is $\rho \approx 0.88$; the same correlation computed against L0 K-CV is $\rho \approx 0.29$. The three catastrophic B-failures (Llama-3.1-8B, Qwen2.5-14B, Mistral-7B-v0.1) are the three highest V-CV models by rank; the two negative-ΔPPL models (Qwen3.5-9B, Gemma-4-E4B) are the two lowest V-CV models. Qwen2-7B, which our initial K-focused reading would have predicted to fail on (B) given its L0 K-CV of 0.47 (the highest in the set), instead passes (B) at 4.29 % of baseline — and its V-CV of 0.47 is *middle* of the pack, matching the V-CV / B-failure rank alignment rather than the K-CV / B-failure rank alignment.
+**Reading the table: V-CV predicts (B) failure; K-CV does not.** The non-parametric Spearman rank correlation between L0 V-CV and variant-(B) regression magnitude across the 8 models is $\rho \approx 0.88$ (Fisher-z 95 % CI $\approx [0.46, 0.98]$); the same correlation computed against L0 K-CV is $\rho \approx 0.29$ (95 % CI $\approx [-0.52, 0.82]$, which straddles zero and therefore does not rule out the null). Both intervals are wide because $n = 8$ — we draw conclusions from the relative ordering of the two correlations (V-CV cleanly dominates), not from the absolute value of either. The three catastrophic B-failures (Llama-3.1-8B, Qwen2.5-14B, Mistral-7B-v0.1) are the three highest V-CV models by rank; the two negative-ΔPPL models (Qwen3.5-9B, Gemma-4-E4B) are the two lowest V-CV models. Qwen2-7B, which our initial K-focused reading would have predicted to fail on (B) given its L0 K-CV of 0.47 (the highest in the set), instead passes (B) at 4.29 % of baseline — and its V-CV of 0.47 is *middle* of the pack, matching the V-CV / B-failure rank alignment rather than the K-CV / B-failure rank alignment.
+
+**Confounder caveat.** The three catastrophic B-failures cluster architecturally: Llama-3.1-8B, Mistral-7B-v0.1, and Qwen2.5-14B all use $D = 128$, $H_{\mathrm{KV}} = 8$, GQA, SwiGLU MLPs, and Llama-style RoPE. At $n = 8$ we therefore cannot statistically distinguish "V-CV is the causal driver" from "V-CV is a proxy for some other architectural variable (attention-head layout, MLP family, RoPE implementation, training-data mixture) that co-varies with the Llama-family-style design". The V-CV / failure correlation is consistent with the proposed mechanism — and the mechanism predicts V-CV rather than architecture as the *direct* knob — but disentangling the two would require either a larger model set that breaks the family clustering, a held-out family in which one can perturb V-CV independently of architecture, or a controlled-synthetic model with adjustable per-token V-norm variance. We flag this limitation explicitly and treat the §5.3 mechanism as a consistent, not confirmed, causal explanation at the present sample size.
 
 ![Figure 5. Two-panel scatter of L0 V-cache CV (left) and L0 K-cache CV (right) vs variant-(B) ΔPPL as % of FP16 baseline, symlog y. Each panel reports the non-parametric Spearman rank correlation across the 8 models; the V-CV panel shows a near-monotone ramp with catastrophic models (red) clustered at high V-CV, while the K-CV panel scatters the same models across the horizontal axis. Point colors indicate the four (B)-outcome categories (catastrophic / mild / OK / negative ΔPPL).](../figures/fig05_norm_dispersion.png)
 
 **Refined mechanism.** We initially framed the mechanism as K-cache-driven, partly because Phase 10 (Appendix A) localized the outlier structure we studied to Layer-0 K, and partly because Phase 21 (§7, Appendix C) showed that Gemma-4-E4B's beneficial B-anomaly is 87 % K-driven. The measurement in Table 2b argues for a different picture:
 
 - When norm separation is omitted, the per-channel $[\min, \max]$ window in (B) is computed over *raw* tensor values $\{x_{t, c}\}_{t}$ across all tokens. Tokens with large L2 norm contribute the extremes of the per-channel range; tokens with small L2 norm end up mis-quantized by a factor roughly equal to the token-norm ratio. This contamination mechanism is generic to both K and V.
-- For the **V cache**, the resulting reconstruction error propagates *linearly* into the attention-weighted output: the next layer's residual-stream contribution is $\mathrm{softmax}(QK^\top / \sqrt{D}) \cdot \hat V$, and $\hat V$ sits outside the softmax. Since softmax generally places non-trivial weight on *multiple* past tokens at Layer 0, errors on the long left tail of low-norm tokens are not absorbed; they show up on the output with weight proportional to their attention score.
-- For the **K cache**, the corresponding per-token error enters only the *argument* of softmax and is partly absorbed by softmax's own normalization: softmax is invariant to additive shifts and is most sensitive to the top-ranked dot products. Two tokens with different K reconstruction errors but similar cosine alignment with $Q$ are distinguished primarily by their dot-product ranking, not by their absolute magnitude, so K-cache L2 norm variance does not propagate through attention as cleanly as V-cache L2 norm variance does.
+- For the **V cache**, the resulting reconstruction error propagates *linearly* into the attention-weighted output. Writing the attention output as $y = \mathrm{softmax}(QK^\top / \sqrt{D}) \cdot V$ and expanding to first order in $\Delta V$:
+$$
+\Delta y \;\big|_{V \to V + \Delta V} \;=\; \mathrm{softmax}(QK^\top / \sqrt{D}) \cdot \Delta V,
+$$
+which is linear and un-damped — every per-token V error contributes to $y$ with weight equal to that token's attention score. Since softmax generally places non-trivial weight on *multiple* past tokens at Layer 0, errors on the long left tail of low-norm tokens are not absorbed.
+- For the **K cache**, the corresponding per-token error enters only the *argument* of softmax. A first-order expansion under $K \to K + \Delta K$ gives
+$$
+\Delta y \;\big|_{K \to K + \Delta K} \;\approx\; \frac{1}{\sqrt{D}}\,\mathrm{diag}(p) \cdot \bigl(Q \Delta K^\top - p\,(Q \Delta K^\top)\bigr) \cdot V,
+$$
+where $p = \mathrm{softmax}(QK^\top / \sqrt{D})$ and the bracketed factor is the standard softmax Jacobian, which is bounded in norm by $\max_i p_i (1 - p_i) \leq 1/4$. The K-side perturbation is therefore *doubly* damped — by $1/\sqrt{D}$ and by the softmax Jacobian — and is additionally projected through the (reconstructed) $V$ matrix on the output side. Two tokens with different K reconstruction errors but similar cosine alignment with $Q$ are distinguished primarily by their dot-product *ranking*, not by their absolute magnitude, so K-cache L2 norm variance does not propagate through attention as cleanly as V-cache L2 norm variance does.
 
 This refinement is consistent with both the new V-CV correlation and the older K-driven Gemma anomaly, because the latter describes a different regime: under (B) on a low-CV model (Gemma-4-E4B, with V-CV $= 0.00$ and K-CV $= 0.00$), the reconstruction pipeline injects small, approximately isotropic noise into both caches. In a text-only-evaluated multimodal model that noise plausibly acts as attention-entropy regularization, and the K-cache side dominates the effect size (Phase 21). The two observations therefore describe different regimes — *high-V-CV* models where (B) catastrophically fails, and *zero-CV* models where (B) marginally *improves* PPL — rather than a single mechanism.
 
@@ -292,7 +304,7 @@ Table 3 reports measured bytes on realistic per-model KV-cache configurations. C
 
 The asymmetric variant costs $\approx 0.02\times$ less compression than the symmetric variant (one additional FP16 per channel) but delivers the 58 %–74 % ΔPPL reduction reported on these same two models in Table 1. In practice the recipe trades 0.02× of compression for roughly 3× quality headroom. The theoretical maximum is $16 / 3 \approx 5.33\times$; the $\approx 4.5 \%$ overhead in our measurement is the FP16 norm + per-channel metadata (§3.3). A fused CUDA kernel — not implemented here — could reduce the Python decode overhead, but not the FP16 metadata cost.
 
-Extrapolating the measured Llama ratio to longer contexts (under the asymptotic $b_\text{eff} = 3.125$ bits/value at $T \to \infty$):
+Extrapolating the measured Llama ratio to longer contexts: the asymptotic bit rate at $T \to \infty$ is $b_\text{eff}^\text{asym} \to b + 16/D = 3.125$ bits/value on a $D = 128$ head, corresponding to a compression ratio of $16 / 3.125 = 5.12\times$ — i.e., the measured $5.09\times$ at $T = 2048$ gains a further $\sim 0.6 \%$ as context length grows, because the per-channel $(m_c, s_c)$ metadata is amortized over more tokens. The savings table below uses the asymptotic value:
 
 | Context length | FP16 | asym INT3 | Savings |
 |:-:|:-:|:-:|:-:|
@@ -308,7 +320,7 @@ Figure 4 consolidates the results of §§5.1–5.2 as a bits-vs-quality scatter.
 
 The main results above are WikiText-2 perplexity; both cross-review rounds we received on earlier drafts flagged this as the paper's biggest unanswered question. As a bounded-cost exploratory probe, we measured MMLU 5-shot [Hendrycks et al., 2021] accuracy on Qwen2-7B and Llama-3.1-8B under the same three methods used in Table 1, on five subjects chosen for diversity (`high_school_psychology`, `college_computer_science`, `global_facts`, `anatomy`, `moral_disputes`) with 100 test questions per subject. Cache compression is applied between the 5-shot prefix forward pass and the test-question forward pass, matching the deployment pattern of compressed prefix + fresh query. Scoring is next-token argmax over {` A`, ` B`, ` C`, ` D`} tokens after "Answer:".
 
-**Table 4.** MMLU 5-shot accuracy, 500 test questions per run, under fp16 model load.
+**Table 4.** MMLU 5-shot accuracy, 500 test questions per run, under fp16 model load. At this sample size every reported Δ vs FP16 lies within the $\approx 3$ pp conservative independent-proportion delta standard error (see below); entries should therefore be read as "no statistically significant accuracy change detected" rather than as quantitative accuracy comparisons between methods.
 
 | Model | Method | Accuracy | Δ vs FP16 |
 |:---|:---|:---:|:---:|
@@ -490,7 +502,11 @@ Phase 10 (Appendix A.1) identified Layer-0 K as the locus of the Qwen2-7B outlie
 
 ### E.4 Rank correlation summary
 
-Across the 8 models, the Spearman rank correlation between L0 V-CV and variant-(B) regression magnitude (as % of FP16 baseline PPL) is $\rho \approx 0.881$; between L0 K-CV and the same is $\rho \approx 0.286$. The V-CV / B-failure rank match is exact for 6 of the 8 models and off-by-one for the remaining 2 (GPT-J-6B and Qwen2-7B swap positions 3 and 5 in the V-CV vs B-failure ranking). The K-CV rank is substantially worse because Qwen2-7B — which has the highest L0 K-CV in the set at 0.472 — does *not* fail on variant (B), and Llama-3.1-8B / Qwen2.5-14B — whose L0 K-CV is 0.210 and 0.134 respectively — fail catastrophically.
+Across the 8 models, the Spearman rank correlation between L0 V-CV and variant-(B) regression magnitude (as % of FP16 baseline PPL) is $\rho_V \approx 0.881$; between L0 K-CV and the same is $\rho_K \approx 0.286$. The V-CV / B-failure rank match is exact for 6 of the 8 models and off-by-one for the remaining 2 (GPT-J-6B and Qwen2-7B swap positions 3 and 5 in the V-CV vs B-failure ranking). The K-CV rank is substantially worse because Qwen2-7B — which has the highest L0 K-CV in the set at 0.472 — does *not* fail on variant (B), and Llama-3.1-8B / Qwen2.5-14B — whose L0 K-CV is 0.210 and 0.134 respectively — fail catastrophically.
+
+**Confidence intervals (Fisher $z$-transform).** With $n = 8$, the Fisher-$z$ 95 % confidence interval for $\rho_V \approx 0.881$ is approximately $[0.46, 0.98]$, and for $\rho_K \approx 0.286$ is approximately $[-0.52, 0.82]$. Both intervals are wide at this sample size, and the K-CV interval in particular crosses zero — our measurement therefore does not rule out the null hypothesis that L0 K-CV is uncorrelated with variant-(B) failure. The conclusion we draw is the *relative* rank of the two correlations (V clearly dominates K in predictive ranking), not a precise estimate of either coefficient.
+
+**Confounding.** The three catastrophic B-failures in our benchmark cluster on a specific architectural profile ($D = 128$, $H_{\mathrm{KV}} = 8$, GQA, SwiGLU MLPs, Llama-style RoPE; Llama-3.1-8B, Mistral-7B-v0.1, Qwen2.5-14B). At $n = 8$ we cannot distinguish a causal V-CV mechanism from a scenario in which V-CV is merely a proxy for another architectural variable that co-varies with this family — the correlation is therefore *consistent* with the mechanism in §5.3 without confirming it. A larger model set that breaks the family clustering, or a controlled-synthetic probe that perturbs V-CV without touching the rest of the architecture, would separate the two readings; we treat this as primary future work for the mechanism claim.
 
 ### E.5 Zero-CV observations and QK-normalization
 
