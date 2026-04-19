@@ -56,7 +56,7 @@ WikiText-2 perplexity increase (ΔPPL) vs bit width on 7 models, naive absmax (n
 | GPT-J-6B (Mode 2) | 10.29 | +6 | +0.3 | +0.03 | +0 | +0 | +0 |
 | Phi-3-medium (Mode 2) | 2.13 | +5 | +0.2 | +0.03 | +0.01 | +0 | +0 |
 
-![INT4 valley of death on Qwen2-7B (ΔPPL vs bit width on 7 models, log y-axis)](figures/fig01_int4_valley.png)
+![Naive INT quantization ΔPPL vs bit width on 7 models (log y-axis). 6 of 7 scale monotonically; Qwen2-7B is the exception with a +1382 ΔPPL spike at INT4 — an n=1 anomaly in our sample.](figures/fig01_int4_valley.png)
 
 One of these is not like the others. **Qwen2-7B at INT4 is 295× worse than at INT5, and 116× worse than at INT3.** This is the INT4 valley of death.
 

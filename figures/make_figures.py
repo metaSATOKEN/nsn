@@ -9,8 +9,9 @@ Produces 4 figures (PNG @ 160 DPI + PDF) from the JSON data in
 
     fig01_int4_valley.{png,pdf}
         The motivation figure: naive per-row absmax INT quantization
-        across 7 models and 6 bit widths. Shows the Qwen2-7B INT4
-        valley of death on a log y-axis.
+        across 7 models and 6 bit widths. Shows the non-monotonic
+        +1382 ΔPPL spike at INT4 on Qwen2-7B -- an n=1 anomaly in
+        our sample, not a property shared with the other 6 models.
 
     fig02_8model_headline.{png,pdf}
         v0.3 headline: symmetric vs asymmetric INT3 nsep+pchan on 8
@@ -145,8 +146,8 @@ def fig01_int4_valley():
     ax.set_yscale("log")
     ax.set_xlabel("Bit width (naive per-row absmax INT quantization)")
     ax.set_ylabel(r"$\Delta\mathrm{PPL}$ on WikiText-2 (log scale)")
-    ax.set_title("The INT4 valley of death:\n"
-                 "naive INT KV quantization fails non-monotonically on Qwen2-7B",
+    ax.set_title("Naive INT KV quantization scales monotonically on 6 of 7 tested models;\n"
+                 "Qwen2-7B is the only exception in our sample (n = 1 anomaly)",
                  loc="left")
 
     ax.axhline(1.0, color=C_THRESH, linestyle=":", linewidth=0.8)
@@ -157,7 +158,7 @@ def fig01_int4_valley():
     ax.grid(True, which="major", axis="y", alpha=0.25)
     ax.set_xlim(1.7, 8.3)
 
-    ax.annotate("+1382 ΔPPL at INT4\nMode 1 signature →",
+    ax.annotate("+1382 ΔPPL at INT4\nQwen2-7B anomaly (1/27) →",
                 xy=(4, 1382.07), xytext=(5.8, 800),
                 fontsize=9.5, color="#c94141", ha="right",
                 arrowprops=dict(arrowstyle="->", color="#c94141",

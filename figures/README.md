@@ -18,12 +18,17 @@ across figures.
 Naive per-row absmax INT quantization across 7 models and 6 bit widths,
 log y-axis. Source: companion paper V5 top-of-README sweep.
 
-Reading: the **Qwen2-7B** curve (red) is non-monotonic — INT4 is
-**+1382 ΔPPL** while INT3 and INT5 are both below +15. This "INT4 valley
-of death" is the Mode 1 pathology that motivated modeq; every other
-model in the sample scales monotonically with bit width.
+Reading: **6 of 7 models scale monotonically** with bit width — more
+bits, smoothly less ΔPPL. The **Qwen2-7B** curve (red) is the
+exception: **+1382 ΔPPL at INT4** vs +12 at INT3 and +5 at INT5. This
+non-monotonic spike (which we informally call the "INT4 valley") is
+the one observation in our 27-model survey that motivates modeq's
+mechanism work. It is **n = 1** in our sample; we do not claim the
+pattern generalizes to untested models.
 
-Good for: blog intro, paper motivation, talk opening slide.
+Good for: blog intro, paper motivation, talk opening slide. Pair with
+the n = 1 caveat in the main [README](../README.md#the-common-case-and-one-observed-special-case)
+when used in a published context.
 
 ## fig02_8model_headline — "v0.3 at a glance"
 
