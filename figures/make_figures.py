@@ -29,6 +29,13 @@ Produces 4 figures (PNG @ 160 DPI + PDF) from the JSON data in
         on y. Visualizes why (D) is the INT3-tier recommendation
         and why INT4 can still be justified for maximum quality.
 
+    fig05_norm_dispersion.{png,pdf}
+        Phase 23 mechanism figure: two side-by-side scatter panels
+        showing that L0 V-cache per-token L2 norm CV predicts
+        variant-(B) failure at Spearman rho ~= 0.88, while the
+        corresponding K-cache CV does not (rho ~= 0.29). Directly
+        supports §5.3 of the paper.
+
 Run from the repo root:
 
     python3 figures/make_figures.py
@@ -371,6 +378,162 @@ def fig04_bits_vs_quality():
 
 
 # ---------------------------------------------------------------------------
+# Figure 5: V-CV vs (B) failure (rho ~= 0.88) vs K-CV vs (B) failure (rho ~= 0.29)
+# ---------------------------------------------------------------------------
+#
+# Phase 23 (results/phase23_norm_dispersion.json) measures per-token L2
+# norm coefficient of variation on L0 K and V caches for each of the 8
+# benchmark models and pairs it with variant-(B)'s ΔPPL from Table 2.
+# This figure puts V-CV (left) and K-CV (right) next to each other on
+# a shared y-axis so the reader sees the V-CV monotone ramp and the
+# K-CV scatter in one glance. The title carries both Spearman rho
+# figures.
+
+def _spearman_rho(xs, ys):
+    """Spearman's rho without scipy (small n=8, ties unlikely)."""
+    def rank(values):
+        order = sorted(range(len(values)), key=lambda i: values[i])
+        r = [0] * len(values)
+        for rk, idx in enumerate(order, start=1):
+            r[idx] = rk
+        return r
+    rx = rank(xs)
+    ry = rank(ys)
+    n = len(xs)
+    d2 = sum((a - b) ** 2 for a, b in zip(rx, ry))
+    return 1 - 6 * d2 / (n * (n * n - 1))
+
+
+def fig05_norm_dispersion():
+    src = load_json("phase23_norm_dispersion.json")
+    rows = src["summary_table"]
+
+    # Stable ordering: ascending by V-CV, which is roughly also the
+    # "safe -> catastrophic" axis for (B) under our hypothesis.
+    rows_v = sorted(rows, key=lambda r: r["L0_V_CV_mean"])
+
+    v_cv  = [r["L0_V_CV_mean"] for r in rows_v]
+    k_cv  = [r["L0_K_CV_mean"] for r in rows_v]
+    b_pct = [r["B_variant_pct_of_base"] for r in rows_v]
+    models = [r["model"] for r in rows_v]
+
+    rho_v = _spearman_rho(v_cv,  b_pct)
+    rho_k = _spearman_rho(k_cv,  b_pct)
+
+    # Color-code each model by its (B) outcome so the reader can see
+    # catastrophic vs OK vs B-negative at a glance without reading labels.
+    def color_for(pct):
+        if pct >= 100: return "#c94141"       # catastrophic: red
+        if pct >=   5: return "#d08418"       # mild / borderline: amber
+        if pct >=   0: return "#4a8c4a"       # OK: green
+        return "#2c62c9"                       # negative (B-anomaly): blue
+
+    colors = [color_for(p) for p in b_pct]
+
+    fig, (axL, axR) = plt.subplots(1, 2, figsize=(11.5, 5.3), sharey=True)
+
+    # Shared y-axis: symlog so -2..+148 fits and the 0-line is visible.
+    for ax in (axL, axR):
+        ax.set_yscale("symlog", linthresh=5.0)
+        ax.axhline(5.0, color=C_THRESH, linestyle="--", linewidth=1.0)
+        ax.axhline(0.0, color="#c0c0c0", linestyle="-", linewidth=0.7)
+        ax.axhline(100.0, color="#c94141", linestyle=":", linewidth=0.8,
+                   alpha=0.55)
+        ax.grid(True, axis="y", which="major", alpha=0.25)
+        ax.set_ylim(-4, 400)
+
+    # --- Left panel: V-CV (strong correlation) -----------------------------
+    axL.scatter(v_cv, b_pct, s=110, c=colors, edgecolors="white",
+                linewidth=1.3, zorder=5)
+    # Least-squares line as a visual monotone guide (not a claim of linearity).
+    zL = np.polyfit(v_cv, b_pct, 1)
+    xx = np.linspace(-0.02, max(v_cv) + 0.05, 50)
+    axL.plot(xx, np.polyval(zL, xx), color="#888888", linewidth=1.0,
+             linestyle="--", alpha=0.7, zorder=2)
+
+    axL.set_xlabel("L0 V-cache per-token L2 norm CV  ($\\sigma / \\mu$)")
+    axL.set_ylabel("Variant-(B) $\\Delta\\mathrm{PPL}$  "
+                   "(% of FP16 baseline, symlog)")
+    axL.set_title(f"V-CV predicts (B) failure   "
+                  f"Spearman $\\rho \\approx {rho_v:.2f}$",
+                  loc="left", color="#2c62c9")
+    axL.set_xlim(-0.03, 0.70)
+
+    # --- Right panel: K-CV (weak correlation) ------------------------------
+    axR.scatter(k_cv, b_pct, s=110, c=colors, edgecolors="white",
+                linewidth=1.3, zorder=5)
+    zR = np.polyfit(k_cv, b_pct, 1)
+    xx2 = np.linspace(-0.02, max(k_cv) + 0.05, 50)
+    axR.plot(xx2, np.polyval(zR, xx2), color="#888888", linewidth=1.0,
+             linestyle="--", alpha=0.7, zorder=2)
+
+    axR.set_xlabel("L0 K-cache per-token L2 norm CV  ($\\sigma / \\mu$)")
+    axR.set_title(f"K-CV does not   "
+                  f"Spearman $\\rho \\approx {rho_k:.2f}$",
+                  loc="left", color="#c94141")
+    axR.set_xlim(-0.03, 0.55)
+
+    # Per-point labels. Keep them short and offset so they don't overlap.
+    # We hand-tune offsets for the 8 known models to avoid collisions.
+    offsets_v = {  # (dx, dy_symlog_units, ha)
+        "Gemma-4-E4B":      ( 0.03, -1.8, "left"),
+        "Qwen3.5-9B":       ( 0.03, -1.8, "left"),
+        "GPT-J-6B":         (-0.02,  2.0, "right"),
+        "Pythia-6.9B":      ( 0.03, -2.5, "left"),
+        "Qwen2-7B":         ( 0.03,  2.0, "left"),
+        "Mistral-7B-v0.1":  (-0.02, 45,   "right"),
+        "Llama-3.1-8B":     (-0.02, 45,   "right"),
+        "Qwen2.5-14B":      ( 0.03, -25,  "left"),
+    }
+    offsets_k = {
+        "Gemma-4-E4B":      ( 0.03, -1.8, "left"),
+        "Qwen3.5-9B":       ( 0.03,  2.0, "left"),
+        "Qwen2.5-14B":      ( 0.03, 30,   "left"),
+        "Llama-3.1-8B":     ( 0.03, 45,   "left"),
+        "Pythia-6.9B":      (-0.02, -2.5, "right"),
+        "GPT-J-6B":         ( 0.03,  2.0, "left"),
+        "Mistral-7B-v0.1":  (-0.02, 45,   "right"),
+        "Qwen2-7B":         (-0.02,  2.0, "right"),
+    }
+
+    for (ax, cv_arr, offsets) in [
+        (axL, v_cv, offsets_v),
+        (axR, k_cv, offsets_k),
+    ]:
+        for m, cv, pct in zip(models, cv_arr, b_pct):
+            dx, dy, ha = offsets[m]
+            ax.annotate(
+                m, xy=(cv, pct), xytext=(cv + dx, pct + dy),
+                fontsize=7.8, color="#333333", ha=ha, va="center",
+            )
+
+    # Shared threshold labels (on the left panel only to avoid clutter).
+    axL.text(0.68, 5.3, "5 % usability", ha="right", va="bottom",
+             fontsize=8, color=C_THRESH)
+    axL.text(0.68, 105, "100 % baseline (catastrophic)",
+             ha="right", va="bottom", fontsize=8, color="#c94141", alpha=0.8)
+
+    # Category legend, shared.
+    legend_handles = [
+        mpatches.Patch(color="#c94141", label="(B) catastrophic (> 100 % base)"),
+        mpatches.Patch(color="#d08418", label="(B) mild (5–100 % base)"),
+        mpatches.Patch(color="#4a8c4a", label="(B) OK (< 5 % base)"),
+        mpatches.Patch(color="#2c62c9", label="(B) negative ΔPPL (B-anomaly)"),
+    ]
+    fig.legend(handles=legend_handles, loc="lower center", ncol=4,
+               frameon=True, framealpha=0.95, edgecolor="#cccccc",
+               bbox_to_anchor=(0.5, -0.01))
+
+    fig.suptitle("Why `nsep` is necessary: V-cache per-token L2 norm "
+                 "dispersion predicts variant-(B) failure; K-cache does not",
+                 fontsize=12, y=1.00)
+
+    fig.tight_layout(rect=(0, 0.06, 1, 0.97))
+    save_both(fig, "fig05_norm_dispersion")
+    plt.close(fig)
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 
@@ -380,6 +543,7 @@ def main():
     fig02_8model_headline()
     fig03_ablation()
     fig04_bits_vs_quality()
+    fig05_norm_dispersion()
     print("Done.")
 
 
