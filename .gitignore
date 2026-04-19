@@ -56,3 +56,4 @@ htmlcov/
 # Build artifacts
 *.pdf
 !paper/*.pdf
+!figures/*.pdf
