@@ -36,6 +36,15 @@ Produces 4 figures (PNG @ 160 DPI + PDF) from the JSON data in
         corresponding K-cache CV does not (rho ~= 0.29). Directly
         supports §5.3 of the paper.
 
+    fig06_nih_longctx.{png,pdf}
+        Phase 24(b-d) long-context multi-needle NIH pooled result:
+        left panel shows pass / wrong-code / hallucinate composition
+        as stacked bars at 8K and 32K across 3 methods (FP16 / sym /
+        asym); right panel shows per-model 32K pass rates so the
+        pooled story is visibly consistent across Llama-3.1-8B,
+        Qwen2-7B, and Qwen2.5-14B. Fisher exact p-values are
+        annotated on the 32K bars in the left panel. Supports §5.7.
+
 Run from the repo root:
 
     python3 figures/make_figures.py
@@ -534,6 +543,261 @@ def fig05_norm_dispersion():
 
 
 # ---------------------------------------------------------------------------
+# Figure 6: Long-context NIH pooled result (Phases 24b / 24c / 24d)
+# ---------------------------------------------------------------------------
+#
+# Two panels:
+#   A (left, wider) : pooled stacked bars -- 6 bars (2 contexts x
+#                     3 methods), stacked by pass / wrong-code /
+#                     hallucinate. Fisher exact p-values annotated
+#                     on the 32K bars.
+#   B (right, narrow): per-model 32K pass rates as grouped bars,
+#                      so the reader sees the pooled story replicates
+#                      on each of the 3 individual models.
+#
+# Outcome colors are CHOSEN to match common visual conventions
+# (green = correct, amber = wrong-but-plausible, red = hallucinate)
+# and are independent of the method colors reused throughout fig01-05.
+
+C_PASS      = "#3c8c4a"   # green: correct retrieval
+C_WRONG     = "#d08418"   # amber: a different real needle retrieved
+C_HALLUC    = "#c94141"   # red: characters not in any needle (or fused)
+
+
+def _fisher_p_label(p):
+    """Format a Fisher exact p-value for axis annotation."""
+    if p >= 0.1:
+        return f"p = {p:.2f} (n.s.)"
+    if p >= 0.01:
+        return f"p = {p:.3f}"
+    if p >= 1e-4:
+        return f"p = {p:.4f}"
+    # very small p
+    exp = int(np.floor(np.log10(p)))
+    mant = p / (10 ** exp)
+    return f"p ≈ {mant:.1f} × 10$^{{{exp}}}$"
+
+
+def fig06_nih_longctx():
+    # --- Load phase24b/c/d JSONs and pool -----------------------------------
+    sources = [
+        ("phase24b_nih_multineedle.json",        "Llama-3.1-8B"),
+        ("phase24c_nih_multineedle_qwen2.json",  "Qwen2-7B"),
+        ("phase24d_nih_multineedle_qwen25_14b.json", "Qwen2.5-14B"),
+    ]
+    per_model = {}
+    for fname, label in sources:
+        per_model[label] = load_json(fname)["results"]
+
+    methods = [
+        ("FP16 baseline",      C_NAIVE),
+        ("sym INT3 (v0.2)",    C_V02),
+        ("asym INT3 (v0.3)",   C_V03),
+    ]
+    method_labels_short = {
+        "FP16 baseline":      "FP16",
+        "sym INT3 (v0.2)":    "(C) sym",
+        "asym INT3 (v0.3)":   "(D) asym",
+    }
+
+    # Pool pass/wrong/halluc across the 3 models at each (ctx, method).
+    def pooled(ctx, method_name):
+        p = w = h = 0
+        for label in per_model:
+            r = per_model[label][f"ctx{ctx}__{method_name}"]
+            p += r["n_pass"]; w += r["n_wrong"]; h += r["n_halluc"]
+        return p, w, h
+
+    # Compute Fisher exact p-values (pooled sym / asym vs FP16 at each ctx).
+    # We use a self-contained scipy-free implementation: for the sample
+    # sizes here the two-sided p-value equals 2 * min(left, right) tail of
+    # the hypergeometric, with a 1.0 cap. scipy's version is numerically
+    # identical on integer counts of this magnitude.
+    from math import comb
+
+    def fisher_exact_2sided(a, b, c, d):
+        n1 = a + b   # row 1 total
+        n2 = c + d   # row 2 total
+        k  = a + c   # col 1 total
+        n  = n1 + n2
+        # observed odds ratio direction -> compute tail probabilities
+        p_obs = comb(n1, a) * comb(n2, c) / comb(n, k)
+        ps = []
+        for i in range(max(0, k - n2), min(n1, k) + 1):
+            ps.append(comb(n1, i) * comb(n2, k - i) / comb(n, k))
+        # two-sided: sum of all outcomes at least as extreme (<= p_obs)
+        p = sum(pi for pi in ps if pi <= p_obs + 1e-15)
+        return min(p, 1.0)
+
+    # --- Build data for Panel A (stacked bars) ------------------------------
+    contexts = [8192, 32768]
+    stacked_data = {}
+    for ctx in contexts:
+        for mname, _ in methods:
+            stacked_data[(ctx, mname)] = pooled(ctx, mname)
+
+    # Fisher exact p-values at 32K for sym vs FP16, asym vs FP16
+    fp16_p, fp16_w, fp16_h = stacked_data[(32768, "FP16 baseline")]
+    sym_p,  sym_w,  sym_h  = stacked_data[(32768, "sym INT3 (v0.2)")]
+    asym_p, asym_w, asym_h = stacked_data[(32768, "asym INT3 (v0.3)")]
+    n_cell = 30  # 3 models x 10 trials
+    p_sym_vs_fp16  = fisher_exact_2sided(fp16_p, n_cell - fp16_p,
+                                         sym_p,  n_cell - sym_p)
+    p_asym_vs_fp16 = fisher_exact_2sided(fp16_p, n_cell - fp16_p,
+                                         asym_p, n_cell - asym_p)
+    p_asym_vs_sym  = fisher_exact_2sided(sym_p,  n_cell - sym_p,
+                                         asym_p, n_cell - asym_p)
+
+    # --- Layout -------------------------------------------------------------
+    fig, (axL, axR) = plt.subplots(
+        1, 2, figsize=(12, 5.6),
+        gridspec_kw={"width_ratios": [1.45, 1.0]},
+    )
+
+    # --- Panel A: Stacked bars at 8K and 32K --------------------------------
+    # Within each context block, 3 adjacent bars (FP16 / sym / asym).
+    # Bars are drawn at numeric x positions.
+    x_positions = []
+    x_labels    = []
+    bar_width   = 0.62
+    gap_between_ctx = 1.0
+    pos = 0.0
+    ctx_centers = []
+    for ctx in contexts:
+        ctx_start = pos
+        for mname, _ in methods:
+            x_positions.append(pos)
+            x_labels.append(method_labels_short[mname])
+            pos += 1.0
+        ctx_centers.append((ctx_start + pos - 1.0) / 2)
+        pos += gap_between_ctx
+
+    bars_pass = []; bars_wrong = []; bars_halluc = []
+    method_color_per_bar = []
+    for i, (ctx, mname) in enumerate(
+        [(c, m[0]) for c in contexts for m in methods]
+    ):
+        p, w, h = stacked_data[(ctx, mname)]
+        bars_pass.append(p); bars_wrong.append(w); bars_halluc.append(h)
+        method_color_per_bar.append(dict(methods)[mname])
+
+    x = np.array(x_positions)
+    b1 = axL.bar(x, bars_pass,   bar_width, color=C_PASS,   label="pass",
+                 edgecolor="white", linewidth=1.0)
+    b2 = axL.bar(x, bars_wrong,  bar_width, bottom=bars_pass, color=C_WRONG,
+                 label="wrong-code", edgecolor="white", linewidth=1.0)
+    b3 = axL.bar(x, bars_halluc, bar_width,
+                 bottom=[p + w for p, w in zip(bars_pass, bars_wrong)],
+                 color=C_HALLUC, label="hallucinate",
+                 edgecolor="white", linewidth=1.0)
+
+    # Count labels inside bar segments (only if the segment is big enough).
+    for xi, (p, w, h) in enumerate(zip(bars_pass, bars_wrong, bars_halluc)):
+        if p >= 2:
+            axL.text(x[xi], p / 2, f"{p}", ha="center", va="center",
+                     fontsize=10, color="white", fontweight="bold")
+        if w >= 2:
+            axL.text(x[xi], p + w / 2, f"{w}", ha="center", va="center",
+                     fontsize=9, color="white", fontweight="bold")
+        if h >= 2:
+            axL.text(x[xi], p + w + h / 2, f"{h}", ha="center", va="center",
+                     fontsize=9, color="white", fontweight="bold")
+
+    # Fisher exact annotations on the 32K bars (second context block).
+    # FP16 32K bar is x_positions[3], sym is x_positions[4], asym is [5].
+    y_annot = 32
+    # Horizontal brackets for the two key comparisons.
+    # sym vs FP16
+    axL.annotate("", xy=(x_positions[3], y_annot + 1.3),
+                 xytext=(x_positions[4], y_annot + 1.3),
+                 arrowprops=dict(arrowstyle="-", color="#c94141", lw=1.2))
+    axL.text((x_positions[3] + x_positions[4]) / 2, y_annot + 2.0,
+             f"sym vs FP16: {_fisher_p_label(p_sym_vs_fp16)}",
+             ha="center", va="bottom", fontsize=8.5,
+             color="#c94141", fontweight="bold")
+    # asym vs FP16
+    axL.annotate("", xy=(x_positions[3], y_annot + 5.0),
+                 xytext=(x_positions[5], y_annot + 5.0),
+                 arrowprops=dict(arrowstyle="-", color="#3c8c4a", lw=1.2))
+    axL.text((x_positions[3] + x_positions[5]) / 2, y_annot + 5.7,
+             f"asym vs FP16: {_fisher_p_label(p_asym_vs_fp16)}",
+             ha="center", va="bottom", fontsize=8.5,
+             color="#3c8c4a", fontweight="bold")
+    # asym vs sym
+    axL.annotate("", xy=(x_positions[4], y_annot + 9.2),
+                 xytext=(x_positions[5], y_annot + 9.2),
+                 arrowprops=dict(arrowstyle="-", color="#2c62c9", lw=1.2))
+    axL.text((x_positions[4] + x_positions[5]) / 2, y_annot + 9.9,
+             f"asym vs sym: {_fisher_p_label(p_asym_vs_sym)}",
+             ha="center", va="bottom", fontsize=8.5,
+             color="#2c62c9", fontweight="bold")
+
+    # Context labels beneath
+    axL.set_xticks(x_positions)
+    axL.set_xticklabels(x_labels, fontsize=9)
+    for c, ctx in zip(ctx_centers, contexts):
+        axL.text(c, -4.0, f"{ctx // 1024} K context",
+                 ha="center", va="top", fontsize=10.5,
+                 color="#333333", fontweight="bold")
+
+    axL.set_ylabel("Trial count (pooled, $n = 30$)")
+    axL.set_ylim(0, 50)
+    axL.set_yticks([0, 10, 20, 30])
+    axL.axhline(30, color="#aaaaaa", linestyle=":", linewidth=0.7)
+    axL.grid(True, axis="y", alpha=0.25)
+    axL.legend(loc="upper left", frameon=True, framealpha=0.95,
+               facecolor="white", edgecolor="#cccccc",
+               bbox_to_anchor=(0.015, 0.99), fontsize=9)
+    axL.set_title("Pooled multi-needle NIH outcomes (3 models, $n = 30$)",
+                  loc="left", fontsize=11)
+
+    # --- Panel B: Per-model 32K pass rates (grouped bars) -------------------
+    models = ["Llama-3.1-8B", "Qwen2-7B", "Qwen2.5-14B"]
+    width_b = 0.26
+    x_b = np.arange(len(models))
+
+    for i, (mname, color) in enumerate(methods):
+        ys = []
+        for label in models:
+            r = per_model[label][f"ctx32768__{mname}"]
+            ys.append(r["n_pass"] / r["n_total"] * 100)
+        offset = (i - 1) * width_b
+        bars = axR.bar(x_b + offset, ys, width_b, color=color,
+                       label=method_labels_short[mname],
+                       edgecolor="white", linewidth=0.8)
+        for xi, y in zip(x_b + offset, ys):
+            axR.text(xi, y + 1.3, f"{y:.0f}%",
+                     ha="center", va="bottom", fontsize=8.5,
+                     color=color, fontweight="bold")
+
+    axR.set_xticks(x_b)
+    axR.set_xticklabels(
+        [m.replace("-", "-\n", 1) for m in models],
+        fontsize=8.5,
+    )
+    axR.set_ylabel("Pass rate at 32 K (%)")
+    axR.set_ylim(0, 118)
+    axR.set_yticks([0, 25, 50, 75, 100])
+    axR.axhline(100, color="#aaaaaa", linestyle=":", linewidth=0.7)
+    axR.grid(True, axis="y", alpha=0.25)
+    axR.legend(loc="lower left", frameon=True, framealpha=0.95,
+               facecolor="white", edgecolor="#cccccc", fontsize=8.5,
+               bbox_to_anchor=(0.015, 0.015))
+    axR.set_title("32 K pass rate per model  "
+                  "(asym ≥ sym on 3 / 3)",
+                  loc="left", fontsize=11)
+
+    fig.suptitle(
+        "v0.3 asym INT3 retains 32K NIH retrieval indistinguishably "
+        "from FP16; v0.2 sym INT3 drops to 50 % with bit-mixing hallucinations",
+        fontsize=11.5, y=1.00,
+    )
+    fig.tight_layout(rect=(0, 0.01, 1, 0.96))
+    save_both(fig, "fig06_nih_longctx")
+    plt.close(fig)
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 
@@ -544,6 +808,7 @@ def main():
     fig03_ablation()
     fig04_bits_vs_quality()
     fig05_norm_dispersion()
+    fig06_nih_longctx()
     print("Done.")
 
 

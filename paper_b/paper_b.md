@@ -366,6 +366,8 @@ The three needle sentences are placed at haystack fractions $\{0.2, 0.5, 0.8\}$ 
 
 **Pooled 32 K finding.** Across the three models at 32 K, the asymmetric recipe (D) retains 25 / 30 = 83.3 % pass rate, **statistically indistinguishable from the FP16 baseline** at 29 / 30 = 96.7 % (Fisher exact two-sided $p = 0.194$). The symmetric recipe (C) retains 15 / 30 = 50.0 %, **significantly worse than both FP16** ($p = 6.4 \times 10^{-5}$) **and asymmetric** ($p = 0.013$). At 8 K the same comparison is saturated — (C) and (D) are tied (22 / 30 vs 23 / 30, $p = 1.00$) — which is consistent with 8 K being below the compression-sensitivity threshold for this protocol on these models.
 
+![Figure 6. Pooled multi-needle NIH outcomes across 3 models (Llama-3.1-8B, Qwen2-7B, Qwen2.5-14B). Left: pooled stacked bars at 8K and 32K, segmented by pass / wrong-code / hallucinate; Fisher exact p-values annotated on the 32K bars. At 32K, (D) asymmetric (25/30) is statistically indistinguishable from FP16 (29/30), while (C) symmetric (15/30) is significantly worse and produces 9 hallucinations (vs 0 under asym). Right: per-model 32K pass rate, showing that asym ≥ sym holds on all three individual models before pooling.](../figures/fig06_nih_longctx.png)
+
 **Qualitative: bit-mixing hallucinations are universal under (C) at 32 K.** Under symmetric INT3 at 32 K, each of the three models produces hallucinations in which the decoded "code" fuses characters across multiple needles or substitutes characters not present in any needle:
 
 - Llama-3.1-8B: `"3X-RED-1984"` (RED not in any needle; 1984 from Titan), `"XRZ5-BLUE"` (X from XRQ7 + Z from PQZ5 + BLUE from Titan).
