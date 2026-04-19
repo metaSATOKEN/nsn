@@ -11,14 +11,16 @@ submission.
 
 - **KIVI** — Liu, Z., et al. "KIVI: A Tuning-Free Asymmetric 2bit Quantization for KV Cache." *ICML 2024*. arXiv:2402.02750.
 - **KVQuant** — Hooper, C., et al. "KVQuant: Towards 10 Million Context Length LLM Inference with KV Cache Quantization." *NeurIPS 2024*. https://www.stat.berkeley.edu/~mmahoney/pubs/neurips-2024-kvquant.pdf
+- **Atom** — Zhao, Y., et al. "Atom: Low-bit Quantization for Efficient and Accurate LLM Serving." *MLSys 2024*. arXiv:2310.19102.
 - **PolarQuant** — Wang, et al. "PolarQuant: Efficient KV Cache Quantization with Polar Decomposition." 2025. arXiv:2502.02617.
 - **TurboQuant** — (Google Research). "TurboQuant: Data-Oblivious KV Cache Compression via Random Rotation and Lloyd-Max Quantization." *ICLR 2026*. arXiv:2504.19874 (or final ICLR proceedings version).
 - **KVLinC** — (preprint). "KVLinC: KV Cache Quantization with Hadamard Rotation and Linear Correction." October 2025. arXiv:2510.05373.
 - **SQuat** — (2025). "SQuat: Subspace-Orthogonal KV Cache Quantization." arXiv:2503.24358.
 
-## Weight quantization (ingredients transplanted in the ablation)
+## Weight and activation quantization (ingredients transplanted in the ablation)
 
 - **LLM.int8** — Dettmers, T., Lewis, M., Belkada, Y., Zettlemoyer, L. "LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale." *NeurIPS 2022*.
+- **SmoothQuant** — Xiao, G., Lin, J., Seznec, M., Wu, H., Demouth, J., Han, S. "SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models." *ICML 2023*. arXiv:2211.10438.
 - **GPTQ** — Frantar, E., Ashkboos, S., Hoefler, T., Alistarh, D. "GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers." *ICLR 2023*.
 - **AWQ** — Lin, J., Tang, J., et al. "AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration." *MLSys 2024*.
 - **SpQR** — Dettmers, T., et al. "SpQR: A Sparse-Quantized Representation for Near-Lossless LLM Weight Compression." *ICLR 2024*.
