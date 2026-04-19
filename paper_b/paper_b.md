@@ -2,7 +2,7 @@
 
 **Kentaro Sato**
 *2026-04-19*
-*arxiv preprint, draft v0.5*
+*arxiv preprint, draft v0.6*
 
 ---
 
@@ -14,7 +14,9 @@ We show that the composition of three data-independent operations — **norm sep
 
 A four-method ablation across the same eight models yields a specific and, to our knowledge, previously uncharacterized failure: **asymmetric per-channel INT3 *without* norm separation — a near-direct transplant of a standard weight-quantization recipe — fails our threshold on four of the eight models, and regresses catastrophically (> 100 % of baseline PPL) on three of them**, reaching 24× worse ΔPPL than naive per-row quantization on Llama-3.1-8B; the fourth failure (GPT-J-6B) is a mild threshold violation rather than a catastrophe. The failure correlates with models whose token-wise L2 norm variance is large, pointing at a structural difference between KV cache and weight distributions. We also report one curious observation — small but reproducible *beneficial* ΔPPL on Gemma-4-E4B under the same ablation variant — and document why it does not translate into a deployment recommendation.
 
-We release the recipe, benchmark scripts, and raw JSON measurements so that each number in the paper is reproducible from the committed data. We are explicit about scope limitations: the quality claim rests on WikiText-2 sliding-window perplexity alone, downstream-task accuracy was not measured, throughput was not measured, and the Qwen2-7B INT4 valley is a single-model observation ($n = 1$ in both the 27-model broader survey we draw on and the 8-model benchmark reported here). We do not claim that simpler recipes fail on models we did not test, nor that the proposed recipe is Pareto-optimal at bit rates below 3 bits/value.
+As an exploratory downstream probe, we also measure MMLU 5-shot accuracy on 500 test questions across five subjects for two canonical models (Qwen2-7B and Llama-3.1-8B) and find that the proposed INT3 recipe's accuracy delta vs FP16 is within the single-proportion noise floor ($\pm 1$ pp, not statistically significant at 500 questions): the WikiText-2 ΔPPL reduction does not translate into a detectable accuracy cost on this task.
+
+We release the recipe, benchmark scripts, and raw JSON measurements so that each number in the paper is reproducible from the committed data. We are explicit about scope limitations: the main quality claim rests on WikiText-2 sliding-window perplexity, the downstream measurement covers a single task (MMLU 5-shot on a 500-question subset of five subjects) on only two models, throughput was not measured, and the Qwen2-7B INT4 valley is a single-model observation ($n = 1$ in both the 27-model broader survey we draw on and the 8-model benchmark reported here). We do not claim that simpler recipes fail on models we did not test, nor that the proposed recipe is Pareto-optimal at bit rates below 3 bits/value.
 
 ---
 
@@ -33,6 +35,8 @@ Concretely, this paper contributes:
 5. **Documented negative results on rotation and top-K mixed precision**, both tested during the development of this recipe. A Walsh–Hadamard rotation step (similar in spirit to KVLinC and the rotation component of TurboQuant) regresses per-head reconstruction MSE by 3.68× on real Qwen2-7B Layer 0 K; a top-K outlier-channel mixed-precision variant at $K = 4$ regresses per-head reconstruction MSE by 17.6 % on the same tensor. Both metrics are per-tensor reconstruction error rather than end-to-end ΔPPL; we did not pursue either method far enough to run the full PPL pipeline. Both quantizer implementations are retained in the public code base as documented negative results (§6, Appendix A).
 
 6. **An open observation on accidental K-cache entropy regularization.** On Gemma-4-E4B evaluated text-only, variant (B) produces a small but reproducible *negative* ΔPPL (−0.32 to −0.44 on two non-overlapping WikiText-2 segments). A K-only vs V-only split attributes 87 % of the effect to the Key cache, consistent with quantization noise softening an over-confident attention distribution on an off-distribution (text-only) input to a multimodal-trained model. We do not promote this as a method — the same ablation fails the threshold on four other models (catastrophically on three of them) — but record it as a phenomenon worth instrumenting in future work (§7).
+
+7. **An MMLU 5-shot downstream probe showing no detectable accuracy cost on the two canonical benchmark models.** At 500 test questions across five subjects, asymmetric INT3 (the v0.3 recipe) delivers accuracy deltas of +1.00 pp on Qwen2-7B and −0.20 pp on Llama-3.1-8B relative to the FP16 baseline — both within the $\approx 3$ pp paired-proportion noise floor at this sample size. This is a single-task probe and does not replace a full downstream campaign; we discuss scope in §5.6.
 
 We also argue, as a secondary contribution, that the **"Mode 1" phenomenon** — a non-monotonic INT4 ΔPPL valley observed on Qwen2-7B (n = 1 in our sample) — is a concrete, reproducible failure case of naive KV quantization that motivates looking for robust recipes in the first place. We emphasize throughout that this remains an n = 1 observation and explicitly do not claim it generalizes to untested models (§2, §5.3).
 
@@ -275,6 +279,27 @@ Extrapolating the measured Llama ratio to longer contexts (under the asymptotic 
 
 Figure 4 consolidates the results of §§5.1–5.2 as a bits-vs-quality scatter. At 3 bits/value, the four-method cloud shows that only (D) has its cross-model median clearly below the 5 % usability line; (C) and (A) sit visibly above, and (B)'s cloud is bimodal (good on some models, catastrophic on others). The 4-bit reference points for Qwen2-7B and Llama-3.1-8B (under sym nsep+pchan INT4) achieve lower absolute ΔPPL but at 33 % higher memory footprint; (D) at 3 bits is the Pareto-preferred choice for deployments in which memory is the dominant constraint.
 
+### 5.6. MMLU 5-shot downstream probe
+
+The main results above are WikiText-2 perplexity; both cross-review rounds we received on earlier drafts flagged this as the paper's biggest unanswered question. As a bounded-cost exploratory probe, we measured MMLU 5-shot [Hendrycks et al., 2021] accuracy on Qwen2-7B and Llama-3.1-8B under the same three methods used in Table 1, on five subjects chosen for diversity (`high_school_psychology`, `college_computer_science`, `global_facts`, `anatomy`, `moral_disputes`) with 100 test questions per subject. Cache compression is applied between the 5-shot prefix forward pass and the test-question forward pass, matching the deployment pattern of compressed prefix + fresh query. Scoring is next-token argmax over {` A`, ` B`, ` C`, ` D`} tokens after "Answer:".
+
+**Table 4.** MMLU 5-shot accuracy, 500 test questions per run, under fp16 model load.
+
+| Model | Method | Accuracy | Δ vs FP16 |
+|:---|:---|:---:|:---:|
+| Qwen2-7B (Mode 1) | FP16 baseline | 67.20 % | — |
+| Qwen2-7B (Mode 1) | sym INT3 (v0.2) | 64.80 % | −2.40 pp |
+| Qwen2-7B (Mode 1) | **asym INT3 (v0.3)** | **68.20 %** | **+1.00 pp** |
+| Llama-3.1-8B (Mode 2) | FP16 baseline | 59.20 % | — |
+| Llama-3.1-8B (Mode 2) | sym INT3 (v0.2) | 62.20 % | +3.00 pp |
+| Llama-3.1-8B (Mode 2) | **asym INT3 (v0.3)** | **59.00 %** | **−0.20 pp** |
+
+At 500 questions per run, the single-proportion standard error is $\sqrt{p(1-p)/500} \approx 2.1$ pp at $p \approx 0.6$, and the paired-proportion delta SE is at most $\approx 3.0$ pp assuming independence (the paired interval is at most this wide). All four observed deltas in Table 4 fall within roughly $\pm 1$ SE of zero; there is no statistically-significant accuracy change from any of the INT3 variants at this sample size. The cautious reading is that **v0.3's WikiText-2 ΔPPL reduction does not, on this probe, come at a detectable downstream accuracy cost** on the two benchmarked models.
+
+The +3.00 pp row for sym INT3 on Llama-3.1-8B is surprising in direction (quantization that helps baseline) and sits close to the 1-SE boundary of noise. It is plausibly a small-sample artifact, but it is also of the same qualitative sign as the accidental-regularization effect we observe on Gemma-4-E4B in §7; we do not attempt to disambiguate at the 500-question scale. The shipped recipe (D) does not show this pattern: its Llama-3.1-8B delta is −0.20 pp, i.e. essentially zero.
+
+**Scope of this probe (explicit).** This subsection is a single-task, single-subject-slice, 500-question-per-model probe. It does not address reasoning benchmarks (GSM-8K, MATH), code generation (HumanEval), instruction-following quality, or long-context retrieval tasks (LongBench, needle-in-haystack). We do not claim the result generalizes beyond MMLU 5-shot on these two models; we report it only to replace the earlier draft's "downstream task accuracy was not measured" with "one downstream probe was run and showed no detectable degradation". Raw data is in `results/phase22_mmlu_downstream.json`.
+
 ---
 
 ## 6. Discussion
@@ -294,7 +319,7 @@ The proposed recipe is targeted at a specific regime. It is likely *not* the rig
 
 ### 6.3 Limitations
 
-1. *Single quality benchmark.* Every reported ΔPPL number is on WikiText-2. We chose this benchmark for comparability with prior KV quantization work (KIVI, KVQuant, PolarQuant all report it), but it is a narrow slice of "model quality". A paper-scale downstream-task evaluation on MMLU, GSM-8K, HumanEval, and a retrieval benchmark is warranted future work.
+1. *Single primary quality benchmark, plus one exploratory downstream probe.* Every reported ΔPPL number is on WikiText-2. We chose this benchmark for comparability with prior KV quantization work (KIVI, KVQuant, PolarQuant all report it), but it is a narrow slice of "model quality". §5.6 adds a single downstream task — MMLU 5-shot on 500 questions across five subjects for two models — and reports no statistically-significant accuracy delta from the proposed recipe, but this is itself a narrow probe: reasoning benchmarks (GSM-8K, MATH), code generation (HumanEval), instruction following, and long-context retrieval (LongBench, needle-in-haystack) are not touched. A paper-scale downstream-task campaign covering these remains warranted future work.
 
 2. *Sample size for the Mode 1 anomaly.* See §6.1. The Qwen2-7B observation is $n = 1$; we structure our claims accordingly but cannot exclude the possibility that other models exhibit this pattern.
 
