@@ -56,6 +56,8 @@ WikiText-2 perplexity increase (ΔPPL) vs bit width on 7 models, naive absmax (n
 | GPT-J-6B (Mode 2) | 10.29 | +6 | +0.3 | +0.03 | +0 | +0 | +0 |
 | Phi-3-medium (Mode 2) | 2.13 | +5 | +0.2 | +0.03 | +0.01 | +0 | +0 |
 
+![INT4 valley of death on Qwen2-7B (ΔPPL vs bit width on 7 models, log y-axis)](figures/fig01_int4_valley.png)
+
 One of these is not like the others. **Qwen2-7B at INT4 is 295× worse than at INT5, and 116× worse than at INT3.** This is the INT4 valley of death.
 
 ### Two failure modes, causally separated
@@ -123,6 +125,8 @@ Phase 16 extended Phase 14 to four additional models from the v0.2 sweep. Phase 
 
 **Aggregate (8 runnable models): asym beats sym on 8 of 8, mean reduction −66.0 %, range −50.5 % to −95.8 %. All 8 models stay below our conservative < 5 %-of-baseline-PPL threshold on WikiText-2 (what we call the "✅ usable" label; see [definition](#what-we-mean-by-the--usable-label)).** Phi-3-medium-4k-instruct is counted as "attempted but blocked", not as a failure — see the [Phi-3 note](#phi-3-medium-compatibility-note) below.
 
+![8-model WikiText-2 ΔPPL: v0.2 symmetric INT3 vs v0.3 asymmetric INT3 as % of FP16 baseline, with the 5 % usability threshold dashed in](figures/fig02_8model_headline.png)
+
 Three specific callouts:
 
 - **Pythia-6.9B crosses from "research-only" to "✅ usable" by our threshold.** Under v0.2's symmetric INT3 it drifted +22.1% of baseline (our "✗ research-only" tier). Under v0.3's asymmetric INT3 at identical 3.0 bits/value it drifts +0.92% of baseline — the largest relative improvement in the 8-model sample.
@@ -165,11 +169,17 @@ Phase 18 + 19 decomposed the v0.3 recipe into four INT3 variants and measured ea
 | (C) nsep+pchan sym INT3 (v0.2) | 5 / 8 (over threshold on Pythia, Qwen2.5, Gemma 4) |
 | **(D) nsep+pchan asym INT3 (v0.3)** | **8 / 8** |
 
+![Four-method INT3 ablation across 8 models on a log y-axis; only v0.3 (D) stays below the 5 % usability threshold on every model](figures/fig03_ablation.png)
+
 The critical finding is that method (B) — asymmetric per-channel INT3 *without* norm separation, a drop-in recipe common in weight quantization — **catastrophically regresses on 4 of 8 models** (up to 24× worse than naive on Llama-3.1-8B). The failure correlates with modern Llama-family architectures that have high token-wise L2-norm variance: without `nsep`, per-channel min/max is dominated by high-norm tokens, which mis-scales the low-norm tokens. `nsep` removes this contamination by normalizing each token to unit length before computing per-channel statistics.
 
 Symmetric per-channel (C, v0.2) also fails on 3 of 8 models — notably Pythia-6.9B (22 % of baseline) — because the post-RoPE direction-vector distribution is biased and a symmetric window around zero wastes roughly half its levels. `asym` fixes that by fitting `[min, max]` tightly.
 
 Only **(D) = nsep + pchan + asym** stays under the < 5 %-baseline threshold on all 8 runnable models. This is the empirical content of the v0.3 recommendation.
+
+![Bits/value vs ΔPPL Pareto: per-model dots plus cross-model median for each method, with INT4 references at 4 bits](figures/fig04_bits_vs_quality.png)
+
+Visualized as a bits-vs-quality Pareto plot: at 3 bits, only v0.3 (D, blue) has its cross-model median clearly below the 5 % line. Going to 4 bits (green squares; measured on Qwen2-7B and Llama-3.1-8B) costs 33 % more memory for a further quality gain. v0.3 at 3 bits is the practical choice when memory is the dominant constraint.
 
 ### Real-packed compression
 
