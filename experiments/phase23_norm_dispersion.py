@@ -408,10 +408,10 @@ B_VARIANT_PCT_OF_BASE = {
 }
 
 B_CATEGORY = {
-    "GPT-J-6B":         "mild (threshold violation)",
-    "Pythia-6.9B":      "OK (below threshold)",
+    "GPT-J-6B":         "mild (threshold violation)",      # 6.27%  > 5% threshold
+    "Pythia-6.9B":      "mild (threshold violation)",      # 5.88%  > 5% threshold
     "Mistral-7B-v0.1":  "catastrophic (>100% base)",
-    "Qwen2-7B":         "OK (below threshold)",
+    "Qwen2-7B":         "OK (below threshold)",            # 4.29% < 5%
     "Qwen2.5-14B":      "catastrophic (>100% base)",
     "Llama-3.1-8B":     "catastrophic (>100% base)",
     "Qwen3.5-9B":       "negative dPPL (B-anomaly class)",

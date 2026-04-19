@@ -31,7 +31,7 @@
   },
   "ablation_B_categories": {
     "GPT-J-6B": "mild (threshold violation)",
-    "Pythia-6.9B": "OK (below threshold)",
+    "Pythia-6.9B": "mild (threshold violation)",
     "Mistral-7B-v0.1": "catastrophic (>100% base)",
     "Qwen2-7B": "OK (below threshold)",
     "Qwen2.5-14B": "catastrophic (>100% base)",
@@ -92,7 +92,7 @@
       "L0_V_CV_mean": 0.34668359811947047,
       "L0_K_p99_over_p50": 1.742163699991299,
       "B_variant_pct_of_base": 5.88,
-      "B_variant_category": "OK (below threshold)"
+      "B_variant_category": "mild (threshold violation)"
     },
     {
       "model": "Qwen3.5-9B",

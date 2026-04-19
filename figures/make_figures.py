@@ -788,8 +788,8 @@ def fig06_nih_longctx():
                   loc="left", fontsize=11)
 
     fig.suptitle(
-        "v0.3 asym INT3 retains 32K NIH retrieval indistinguishably "
-        "from FP16; v0.2 sym INT3 drops to 50 % with bit-mixing hallucinations",
+        "v0.3 asym INT3 shows no significant 32K NIH lead-key retrieval "
+        "loss vs FP16; v0.2 sym INT3 drops to 50 % with bit-mixing hallucinations",
         fontsize=11.5, y=1.00,
     )
     fig.tight_layout(rect=(0, 0.01, 1, 0.96))
