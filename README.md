@@ -17,6 +17,31 @@ At the same **3.0 bits/value**, this default reduces WikiText-2 ΔPPL by an aver
 
 It also achieves **5.09× real-packed memory reduction** vs FP16 with minimal code changes. No training, no calibration, no rotation, no codebook.
 
+**The full method, in ~10 lines of PyTorch:**
+
+```python
+def qa_nsep_pchan_asym(x, bits=3):
+    """Norm-separated per-channel asymmetric INT quantization.
+
+    x: shape [..., T, D], dtype fp16 or fp32.
+    Returns a same-shape, same-dtype tensor reconstructed from the
+    INT-quantized direction vector plus the exact per-token L2 norm.
+    """
+    dtype = x.dtype
+    xf = x.float()
+    n = xf.norm(dim=-1, keepdim=True).clamp(min=1e-12)  # per-token
+    d = xf / n                                          # unit direction
+    m = d.amin(dim=-2, keepdim=True)                    # per-channel
+    M = d.amax(dim=-2, keepdim=True)
+    step = ((M - m) / (2**bits - 1)).clamp(min=1e-12)
+    q = ((d - m) / step).round().clamp(0, 2**bits - 1)  # integer index
+    d_q = m + q * step                                  # dequantize
+    d_q = d_q / d_q.norm(dim=-1, keepdim=True).clamp(min=1e-8)
+    return (n * d_q).to(dtype)
+```
+
+Every step is closed-form arithmetic on the input tensor's own statistics — no calibration corpus, no learned parameters, no rotation matrix, no codebook. The function is also available as `from modeq import qa_nsep_pchan_asym` if you want to drop it into an existing pipeline as a simulator. For actual INT3 bit-packing (the 5.09× memory-reduction number), use the cache class instead:
+
 ```python
 from modeq import Int3AsymNsepPchanCache
 
