@@ -139,9 +139,12 @@ class Int3AsymNsepPchanCache:
       * 8 levels instead of 7 (uses the full 3-bit unsigned range).
       * Stores per-channel ``d_min`` in addition to ``d_step``, so the
         metadata is 2 FP16 per channel per (head, K/V) direction
-        instead of 1 - roughly +0.02 bits/value at typical context
-        lengths, negligible next to the 58-74% ΔPPL reduction this
-        method buys on WikiText-2 (Phase 14).
+        instead of 1. Amortized over T cached tokens, this extra
+        per-channel scalar costs +16/T bits/value -- roughly +0.008
+        bits/value at T=2048 -- matching the Phase 15 packed
+        measurement (3.141 vs 3.133 effective bits/value). Negligible
+        next to the 58-74% ΔPPL reduction this method buys on
+        WikiText-2 (Phase 14).
 
     Storage fields (all on same device as input):
         packed_d : uint8 tensor, shape [..., 3*D/8]
