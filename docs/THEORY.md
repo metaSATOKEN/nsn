@@ -101,7 +101,7 @@ Phases 10, 13, and 14 (see `results/`) found that **asymmetric per-channel quant
 - Qwen3.5-9B (hybrid attention, 2026): +0.275 → +0.094 (−65.7%)
 - Gemma 4-E4B (multimodal, 2026): +1.879 → +0.930 (−50.5%)
 
-**All 8 land in the < 5% baseline production tier under asym INT3 at identical 3.0 bits/value.**
+**Under our primary evaluation protocol (fp16 load, 10 WikiText-2 windows at 1024 ctx), all 8 stay below the < 5 % baseline usability threshold under asym INT3 at identical 3.0 bits/value.** A follow-up bf16 / 30-window probe on Gemma-4-E4B places that specific model at 5.5 %–7.0 % of baseline, so we describe Gemma-4-E4B as borderline under the stricter probe rather than uniformly below threshold. See Phase 20 / 21 JSON in `results/` and `paper_b/paper_b.md` §7 for the full breakdown.
 
 Mechanism: post-RoPE K channels have strongly biased distributions. The symmetric absmax window wastes roughly half of its quantization levels on the empty side of zero. Asymmetric fits `[min, max]` tightly and uses all `2**bits` levels (8 instead of 7 at INT3 — a 14% base gain just from level count, on top of the much larger range-fit advantage). The storage cost is one additional FP16 per channel (+0.008 bits/value in real packing), so the v0.3 `Int3AsymNsepPchanCache` measures 5.09× compression vs FP16 — essentially identical to v0.2's 5.08× but with 58–96% less ΔPPL drift.
 
