@@ -1,6 +1,6 @@
 # modeq
 
-**Mode-aware KV cache quantization for Pre-LN Transformers.** A practical INT3 default with a reproducible, calibration-free path from industry-naive to a simple recipe that reaches WikiText-2 production tier on 8 of 8 models we were able to run.
+**Mode-aware KV cache quantization for Pre-LN Transformers.** A practical INT3 default with a reproducible, calibration-free recipe that stays within our conservative WikiText-2 ΔPPL threshold (< 5 % of baseline) on 8 of 8 models we were able to run.
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.9+-green.svg)](#installation)
@@ -35,10 +35,10 @@ cached.size_bytes()
 ### Scope and caveats
 
 - **Sample**: 8 runnable models (2021–2026). One additional model (Phi-3-medium-4k-instruct) was attempted but blocked by a transformers / custom-code incompatibility unrelated to modeq; see the [Phi-3 note](#phi-3-medium-compatibility-note).
-- **Quality metric**: WikiText-2 sliding-window perplexity (ctx = 1024, 10 windows). Downstream task accuracy (MMLU, GSM-8K, HumanEval, retrieval) was *not* measured; the "production tier" wording is a ΔPPL proxy, not a deployment certification.
+- **Quality metric**: WikiText-2 sliding-window perplexity (ctx = 1024, 10 windows). Downstream task accuracy (MMLU, GSM-8K, HumanEval, retrieval) was *not* measured. The "✅ usable" label used in this README is a modeq-internal ΔPPL threshold (< 5 % of baseline on WikiText-2), **not** a deployment certification — see [what we mean by "✅ usable"](#what-we-mean-by-the--usable-label).
 - **Throughput**: not measured. The current Python implementation adds roughly +21 % decode latency on 7B-class models; a fused kernel (unimplemented) would remove most of that. The `< 5 %` claim is about quality only.
 
-> **Note on prior art.** Asymmetric per-channel quantization is a standard building block of *weight* quantization (GPTQ, AWQ, RTN variants, LLM.int8()); the norm–direction split is prior art as of [PolarQuant (2025)](https://arxiv.org/abs/2502.02617) / [TurboQuant (ICLR 2026)](https://arxiv.org/abs/2504.19874). modeq's contribution is the empirical demonstration that composing these two specific ingredients on the KV cache, without calibration or codebook, lands in the < 5 % baseline production tier on 8 of 8 runnable models — plus the failure-mode diagnosis that motivated looking there in the first place. See [Related work](#related-work-and-how-modeq-differs).
+> **Note on prior art.** Asymmetric per-channel quantization is a standard building block of *weight* quantization (GPTQ, AWQ, RTN variants, LLM.int8()); the norm–direction split is prior art as of [PolarQuant (2025)](https://arxiv.org/abs/2502.02617) / [TurboQuant (ICLR 2026)](https://arxiv.org/abs/2504.19874). modeq's contribution is the empirical demonstration that composing these two specific ingredients on the KV cache, without calibration or codebook, keeps WikiText-2 ΔPPL under 5 % of baseline on 8 of 8 runnable models — plus the failure-mode diagnosis that motivated looking there in the first place. See [Related work](#related-work-and-how-modeq-differs).
 
 ---
 
@@ -121,12 +121,12 @@ Phase 16 extended Phase 14 to four additional models from the v0.2 sweep. Phase 
 | **Qwen3.5-9B** (2026, hybrid attn) | — | 10.32 | +0.2750 | **+0.0942** | **−65.7%** | 0.91% ✅ |
 | **Gemma 4-E4B** (2026, multimodal) | — | 20.60 | +1.8786 | **+0.9302** | **−50.5%** | 4.51% ✅ |
 
-**Aggregate (8 runnable models): asym beats sym on 8 of 8, mean reduction −66.0 %, range −50.5 % to −95.8 %. All 8 models stay below our conservative production threshold of < 5 % of baseline PPL on WikiText-2.** (Phi-3-medium-4k-instruct is counted as "attempted but blocked", not as a failure — see the [Phi-3 note](#phi-3-medium-compatibility-note) below.)
+**Aggregate (8 runnable models): asym beats sym on 8 of 8, mean reduction −66.0 %, range −50.5 % to −95.8 %. All 8 models stay below our conservative < 5 %-of-baseline-PPL threshold on WikiText-2 (what we call the "✅ usable" label; see [definition](#what-we-mean-by-the--usable-label)).** Phi-3-medium-4k-instruct is counted as "attempted but blocked", not as a failure — see the [Phi-3 note](#phi-3-medium-compatibility-note) below.
 
 Three specific callouts:
 
-- **Pythia-6.9B jumps from "research only" to production.** Under v0.2's symmetric INT3 it drifted +22.1% of baseline (our "✗ research only" tier). Under v0.3's asymmetric INT3 at identical 3.0 bits/value it drifts +0.92% of baseline — the largest relative improvement in the 8-model sample and a clean move into the production tier.
-- **Gemma 4-E4B is the second dramatic rescue.** Symmetric INT3 drifts 9.12% of baseline (research-only tier); asymmetric INT3 brings it to 4.51% (production tier). Largest absolute ΔPPL improvement (+0.948) in the set.
+- **Pythia-6.9B crosses from "research-only" to "✅ usable" by our threshold.** Under v0.2's symmetric INT3 it drifted +22.1% of baseline (our "✗ research-only" tier). Under v0.3's asymmetric INT3 at identical 3.0 bits/value it drifts +0.92% of baseline — the largest relative improvement in the 8-model sample.
+- **Gemma 4-E4B is the second notable rescue.** Symmetric INT3 drifts 9.12% of baseline (borderline tier); asymmetric INT3 brings it to 4.51% (within our < 5 % threshold). Largest absolute ΔPPL improvement (+0.948) in the set.
 - **Qwen3.5-9B is a hybrid architecture** (8 standard-attention layers + 24 linear-attention layers, the latter having no K/V cache). modeq compresses only the standard-attention subset, and even so asym INT3 cuts ΔPPL by 65.7% vs symmetric at identical bit rate. The benefit is layer-local — it doesn't require full-model compression.
 - **GPT-J-6B has head_dim=256, not 128.** Its −62.5% reduction confirms the asym recipe is head-dim agnostic at the per-channel level.
 
@@ -154,22 +154,22 @@ Phase 18 + 19 decomposed the v0.3 recipe into four INT3 variants and measured ea
 | Qwen3.5-9B | 2026 | hybrid | +0.24 | −0.004 | +0.28 | **+0.09** ✅ |
 | Gemma 4-E4B | 2026 | — | +5.45 💥 | −0.44 † | +1.88 | **+0.93** ✅ |
 
-💥 = catastrophic (> 5 % baseline ΔPPL). ⚠ = B worse than naive A. ✅ = production tier (< 5 % baseline).
+💥 = catastrophic (> 5 % baseline ΔPPL). ⚠ = B worse than naive A. ✅ = under our < 5 %-baseline usability threshold.
 
-**Production-tier coverage per method:**
+**Coverage per method (models below our < 5 %-baseline threshold):**
 
-| Method | Models in production tier |
+| Method | Under threshold |
 |:---|:---:|
-| (A) naive per-row sym INT3 | 3 / 8 (fails on Qwen2, Pythia, Gemma 4; borderline on Qwen2.5) |
-| (B) asym per-channel, no nsep | 3 / 8 (fails on Llama, Mistral, Qwen2.5) |
-| (C) nsep+pchan sym INT3 (v0.2) | 5 / 8 (fails on Pythia, Qwen2.5, Gemma 4) |
+| (A) naive per-row sym INT3 | 3 / 8 (over threshold on Qwen2, Pythia, Gemma 4; borderline on Qwen2.5) |
+| (B) asym per-channel, no nsep | 3 / 8 (over threshold on Llama, Mistral, Qwen2.5) |
+| (C) nsep+pchan sym INT3 (v0.2) | 5 / 8 (over threshold on Pythia, Qwen2.5, Gemma 4) |
 | **(D) nsep+pchan asym INT3 (v0.3)** | **8 / 8** |
 
 The critical finding is that method (B) — asymmetric per-channel INT3 *without* norm separation, a drop-in recipe common in weight quantization — **catastrophically regresses on 4 of 8 models** (up to 24× worse than naive on Llama-3.1-8B). The failure correlates with modern Llama-family architectures that have high token-wise L2-norm variance: without `nsep`, per-channel min/max is dominated by high-norm tokens, which mis-scales the low-norm tokens. `nsep` removes this contamination by normalizing each token to unit length before computing per-channel statistics.
 
 Symmetric per-channel (C, v0.2) also fails on 3 of 8 models — notably Pythia-6.9B (22 % of baseline) — because the post-RoPE direction-vector distribution is biased and a symmetric window around zero wastes roughly half its levels. `asym` fixes that by fitting `[min, max]` tightly.
 
-Only **(D) = nsep + pchan + asym** hits production tier on all 8. This is the empirical content of the v0.3 recommendation.
+Only **(D) = nsep + pchan + asym** stays under the < 5 %-baseline threshold on all 8 runnable models. This is the empirical content of the v0.3 recommendation.
 
 ### Real-packed compression
 
@@ -192,23 +192,23 @@ Extrapolating the Llama ratio:
 
 ---
 
-## INT3 at production quality (8 of 8 runnable models, 2021–2026)
+## INT3 WikiText-2 quality: 8 of 8 runnable models below our < 5 % threshold (2021–2026)
 
-Applying `qa_nsep_pchan_asym` at INT3 — 3 bits per value, 5.09× compression vs FP16. Phase 14 + Phase 16 + Phase 17 summary:
+Applying `qa_nsep_pchan_asym` at INT3 — 3 bits per value, 5.09× compression vs FP16. Phase 14 + Phase 16 + Phase 17 summary. The **"✅ usable"** label is a modeq-internal convention meaning "ΔPPL < 5 % of baseline on WikiText-2", not a deployment certification; see [what we mean by "✅ usable"](#what-we-mean-by-the--usable-label) below for the full set of caveats.
 
-| Model | Release | Δ PPL (v0.3 asym) | % of baseline | Compression | Verdict |
+| Model | Release | Δ PPL (v0.3 asym) | % of baseline | Compression | Label |
 |:------|:--|:--|:--|:--|:--|
-| GPT-J-6B | 2021 | +0.0703 | 0.68% | 5.09× (extrap.) | ✅ production |
-| Pythia-6.9B | 2023 | +0.0994 | 0.92% | 5.09× (extrap.) | ✅ production |
-| Mistral-7B-v0.1 | 2023 | +0.0547 | 0.87% | 5.09× (extrap.) | ✅ production |
-| Qwen2-7B (Mode 1, rescued) | 2024 | +0.1034 | 1.24% | 5.09× (measured) | ✅ production |
-| Qwen2.5-14B | 2024 | +0.0909 | 4.64% | 5.09× (extrap.) | ✅ production |
-| Llama-3.1-8B | 2024 | +0.1059 | 1.43% | 5.09× (measured) | ✅ production |
-| **Qwen3.5-9B** (hybrid attn) | **2026-02** | **+0.0942** | **0.91%** | 5.09× (extrap.) | ✅ production |
-| **Gemma 4-E4B** (multimodal) | **2026-04** | **+0.9302** | **4.51%** | 5.09× (extrap.) | ✅ production |
+| GPT-J-6B | 2021 | +0.0703 | 0.68% | 5.09× (extrap.) | ✅ usable |
+| Pythia-6.9B | 2023 | +0.0994 | 0.92% | 5.09× (extrap.) | ✅ usable |
+| Mistral-7B-v0.1 | 2023 | +0.0547 | 0.87% | 5.09× (extrap.) | ✅ usable |
+| Qwen2-7B (Mode 1, rescued) | 2024 | +0.1034 | 1.24% | 5.09× (measured) | ✅ usable |
+| Qwen2.5-14B | 2024 | +0.0909 | 4.64% | 5.09× (extrap.) | ✅ usable |
+| Llama-3.1-8B | 2024 | +0.1059 | 1.43% | 5.09× (measured) | ✅ usable |
+| **Qwen3.5-9B** (hybrid attn) | **2026-02** | **+0.0942** | **0.91%** | 5.09× (extrap.) | ✅ usable |
+| **Gemma 4-E4B** (multimodal) | **2026-04** | **+0.9302** | **4.51%** | 5.09× (extrap.) | ✅ usable |
 | Phi-3-medium-4k-instruct | 2024 | — | — | — | ⚠ HF-compat (pending, see note) |
 
-All 8 runnable models stay below our conservative production threshold (< 5 % of baseline PPL) under v0.3's asymmetric INT3 default, spanning GPT-J (2021) through Gemma 4 / Qwen3.5 (2026). By the same threshold, v0.2's symmetric INT3 had 4 of 7 below threshold and 1 in "research only" (Pythia-6.9B at +22.1 % baseline drift); v0.3 moves Pythia and two 2026 flagships (Qwen3.5, Gemma 4) below threshold at identical 3.0 bits/value.
+All 8 runnable models stay below our conservative < 5 % of baseline PPL threshold under v0.3's asymmetric INT3 default, spanning GPT-J (2021) through Gemma 4 / Qwen3.5 (2026). By the same threshold, v0.2's symmetric INT3 had 4 of 7 below it and 1 in "research-only" (Pythia-6.9B at +22.1 % baseline drift); v0.3 brings Pythia and two 2026 flagships (Qwen3.5, Gemma 4) below the threshold at identical 3.0 bits/value.
 
 ### Phi-3-medium compatibility note
 
@@ -220,22 +220,23 @@ Phi-3-medium-4k-instruct uses a bundled `modeling_phi3.py` in its HF repo (commi
 
 This is unrelated to modeq — the same bundled code breaks on any quantization project using current `transformers`. A clean fix would require either (a) pinning `transformers` to a version contemporaneous with the Phi-3 commit, (b) a bundled-code update from Microsoft, or (c) re-running against a maintained Phi-3 sibling (Phi-3.5-mini, Phi-3-small). We defer to v0.3.3+.
 
-### What we mean by "production quality"
+### What we mean by the "✅ usable" label
 
-The "Verdict" column classifies by a specific, reproducible threshold on WikiText-2 ΔPPL.
+The "Verdict" column is a modeq-internal convention — it is not a deployment certification, and nobody outside this repository has validated these models for a production use case. It only reports where each measurement falls relative to a set of reproducible ΔPPL thresholds we chose as a rough proxy for "likely to be usable in practice if memory is the dominant constraint".
 
-| Tier | WikiText-2 ΔPPL criterion | Interpretation |
+| Tier | WikiText-2 ΔPPL criterion | Rough interpretation |
 |:---|:---|:---|
-| ✅ **production** | < 5% of baseline PPL | Conservative proxy for "acceptable for typical KV-compressed deployment". Downstream-task drift is not measured. |
-| 🟡 **borderline** | 5–10% of baseline PPL | Usable in memory-constrained settings; monitor downstream task quality before deployment. |
-| △ **acceptable** | 10–20% of baseline PPL | Quality drop measurable; acceptable trade-off if memory is the dominant constraint. |
-| ✗ **research only** | > 20% of baseline PPL | Compression too aggressive for this model at this bit width; treat as an ablation, not a deployment recommendation. |
+| ✅ **usable** | < 5% of baseline PPL | Conservative threshold; we expect this level of ΔPPL to be tolerable for many memory-constrained use cases, but downstream-task drift is not measured. |
+| 🟡 **borderline** | 5–10% of baseline PPL | Likely usable in memory-constrained settings; we would recommend monitoring downstream-task quality first. |
+| △ **acceptable with caveats** | 10–20% of baseline PPL | Quality drop measurable; may still be an acceptable trade-off if memory is the dominant constraint and the downstream task is error-tolerant. |
+| ✗ **research-only** | > 20% of baseline PPL | Compression too aggressive for this model at this bit width; treat as an ablation rather than a deployment candidate. |
 
-**Caveats that apply to any "production" verdict here:**
+**Caveats that apply to any "✅ usable" verdict here:**
 
-1. **Downstream task accuracy** (MMLU, GSM-8K, HumanEval, RAG) was not measured. WikiText-2 ΔPPL is a proxy.
-2. **Inference throughput / latency** was not measured. Our implementation is Python-only and adds roughly +21% decode latency on 7B-class models. A fused CUDA kernel would remove this.
+1. **Downstream task accuracy** (MMLU, GSM-8K, HumanEval, RAG) was not measured. WikiText-2 ΔPPL is a proxy, and the labels above describe behavior on that one benchmark.
+2. **Inference throughput / latency** was not measured. Our implementation is Python-only and adds roughly +21% decode latency on 7B-class models. A fused CUDA kernel would remove this. The "✅ usable" label is about quality only.
 3. **Sample size for the INT3 asym claim** is 8 runnable models (Qwen2-7B, Llama-3.1-8B from Phase 14; Pythia-6.9B, Qwen2.5-14B, Mistral-7B-v0.1, GPT-J-6B from Phase 16; Qwen3.5-9B, Gemma 4-E4B from Phase 17). Phi-3-medium-4k-instruct was the intended 7th Phase-16 model and is pending an HF custom-code / transformers compatibility fix.
+4. **Evaluate on your own task before shipping.** A ✅ label here means "our measurements suggest this model + INT3 asym is likely usable for many deployments", not "this is certified for yours".
 
 ---
 
@@ -365,9 +366,9 @@ v0.3 went through twelve numbered experimental phases (see `experiments/phase9_*
 
 5. **Phase 15 — real-packed compression benchmark** via `Int3AsymNsepPchanCache` confirmed **5.09× compression ratio** for both target models; asym metadata overhead is 0.008 bits/value vs the v0.2 symmetric cache.
 
-6. **Phase 16 — 6-model generalization** added Mistral-7B-v0.1, Qwen2.5-14B, GPT-J-6B, Pythia-6.9B, plus an attempted Phi-3-medium-4k-instruct run that was blocked by an unrelated HF custom-code incompatibility. 6 of 6 runnable models beat the symmetric baseline by 56–96 %; Pythia jumped from v0.2's "research only" tier into production.
+6. **Phase 16 — 6-model generalization** added Mistral-7B-v0.1, Qwen2.5-14B, GPT-J-6B, Pythia-6.9B, plus an attempted Phi-3-medium-4k-instruct run that was blocked by an unrelated HF custom-code incompatibility. 6 of 6 runnable models beat the symmetric baseline by 56–96 %; Pythia moved from v0.2's "research-only" tier to below our < 5 %-baseline threshold.
 
-7. **Phase 17 — 2026 flagships** added Qwen3.5-9B (hybrid attention) and Gemma 4-E4B (multimodal). All 8 runnable models — the 6 above plus the 2 flagships — land in the < 5 % baseline production tier on WikiText-2. We say "runnable" because Phi-3-medium-4k-instruct was attempted earlier but blocked by an HF custom-code incompatibility unrelated to modeq; see the [Phi-3 note](#phi-3-medium-compatibility-note).
+7. **Phase 17 — 2026 flagships** added Qwen3.5-9B (hybrid attention) and Gemma 4-E4B (multimodal). All 8 runnable models — the 6 above plus the 2 flagships — stay below our < 5 %-of-baseline ΔPPL threshold on WikiText-2. We say "runnable" because Phi-3-medium-4k-instruct was attempted earlier but blocked by an HF custom-code incompatibility unrelated to modeq; see the [Phi-3 note](#phi-3-medium-compatibility-note).
 
 ### Why we know every component of v0.3 is necessary
 
@@ -447,9 +448,9 @@ See `results/phase7_residual_correction.json`, `results/phase8_rms_residual_vali
 
 **Compression engineering**: PolarQuant, TurboQuant, and KVLinC squeeze out more bits via codebooks / residuals / adapters. modeq does not compete with them at the 1–2 bit frontier.
 
-**INT3-tier practical SOTA**: modeq v0.3 is a competitive, calibration-free, 10-line-of-code recipe that delivers 58–74% ΔPPL reduction over the symmetric nsep+pchan baseline at identical bit rate. That is the niche modeq serves.
+**INT3-tier practical recipe**: modeq v0.3 is a calibration-free, roughly-10-line-of-code recipe that delivers a 58–74 % ΔPPL reduction over the symmetric `nsep+pchan` baseline at identical bit rate on the 8 models we evaluated. We do not claim state-of-the-art at the 1–2 bit frontier where codebook / adapter methods win; the niche modeq targets is "simple INT3 that works broadly without calibration".
 
-**Diagnosis and mechanism**: modeq is uniquely positioned — we show *when and why* naive INT quantization breaks, with causal experiments. That's the gap in the literature modeq tries to fill.
+**Diagnosis and mechanism**: the more distinctive contribution, we think — modeq characterizes *when and why* naive INT quantization breaks on KV caches, with the causal Layer-0 intervention in the companion paper and the four-method ablation in this release. That is the gap in the literature modeq primarily tries to fill.
 
 ---
 
@@ -459,7 +460,7 @@ This is a **v0.3 research prototype** (April 2026). It works, the numbers are re
 
 - **Python overhead**: current implementation adds ~+21% decode latency on 7B-class models because quantize/dequantize happens in Python. A fused CUDA kernel (Triton or native) would remove this; contributions welcome.
 - **Not yet a drop-in for HuggingFace Transformers**: you wire `Int3AsymNsepPchanCache` against the model's `DynamicCache` manually for now. Proper integration is on the roadmap.
-- **v0.3 PPL measured on 8 models** (Phase 14 + Phase 16 + Phase 17): GPT-J-6B (2021), Pythia-6.9B / Mistral-7B-v0.1 (2023), Qwen2-7B / Qwen2.5-14B / Llama-3.1-8B (2024), Qwen3.5-9B / Gemma 4-E4B (2026). 8 of 8 land in the production tier, all beating the symmetric baseline by 50–96%. Phi-3-medium-4k-instruct was the intended 7th Phase-16 model but is blocked by an HF custom-code / transformers version incompatibility unrelated to modeq.
+- **v0.3 PPL measured on 8 models** (Phase 14 + Phase 16 + Phase 17): GPT-J-6B (2021), Pythia-6.9B / Mistral-7B-v0.1 (2023), Qwen2-7B / Qwen2.5-14B / Llama-3.1-8B (2024), Qwen3.5-9B / Gemma 4-E4B (2026). 8 of 8 stay below our < 5 %-of-baseline-PPL threshold on WikiText-2, all beating the symmetric baseline by 50–96 %. Phi-3-medium-4k-instruct was the intended 7th Phase-16 model but is blocked by an HF custom-code / transformers version incompatibility unrelated to modeq.
 - **Real bit-packing measured on 2 models**: `Int3AsymNsepPchanCache.size_bytes()` empirically validated on Qwen2-7B and Llama-3.1-8B (5.09× measured). The other 4 models were validated in simulation (quantize → dequantize → WikiText-2 PPL); their real-packed ratios would be essentially identical (within 0.01 bits/value for head_dim=128, slightly higher for GPT-J-6B's head_dim=256 due to per-channel metadata overhead).
 - **Sample size for Mode 1**: only one catastrophic case (Qwen2-7B) in our 27-model sample. The Layer-0 mechanism is causally isolated, but how often the pattern occurs in the open-model population is unknown. Safe default: always use `qa_nsep_pchan_asym`, which handles both modes.
 - **Pre-LN only**: Post-LN models (GPT-1 style) are not evaluated.
