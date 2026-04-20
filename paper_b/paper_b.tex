@@ -122,7 +122,7 @@
 INT3 Recipe for KV Cache
 Quantization}\label{norm-separation-is-necessary-a-minimalist-calibration-free-int3-recipe-for-kv-cache-quantization}
 
-\textbf{Kentaro Sato} \emph{2026-04-19} \emph{Preprint, draft v0.15
+\textbf{Kentaro Sato} \emph{2026-04-19} \emph{Preprint, draft v0.16
 (Zenodo-first release; arXiv posting pending endorsement)}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
@@ -308,16 +308,17 @@ calibration-based non-uniform quantizer. \textbf{PolarQuant} {[}Wang et
 al., 2025{]} replaces the Euclidean coordinates of each KV vector with a
 polar-coordinate decomposition and trains a \(k\)-means codebook on the
 polar angles after a random orthogonal rotation. \textbf{TurboQuant}
-{[}ICLR 2026{]} applies a random orthogonal rotation, a Lloyd--Max
-scalar quantizer on the rotated coordinates, and a QJL-style residual
-correction to obtain a data-oblivious recipe that is competitive at the
-3-bit tier. \textbf{KVLinC} {[}preprint, 2025{]} combines a Hadamard
-rotation with learned linear correction adapters to push 2-bit KV cache
-on Llama and Qwen families. Each of these methods delivers stronger
-compression ratios or finer-grained precision than a naive scalar
-quantizer, but each introduces a corresponding complexity dependency: a
-codebook, a calibration corpus, a rotation matrix (random or Hadamard),
-a trained adapter, or a non-trivial mixed-precision scheme.
+{[}Google Research, 2026{]} applies a random orthogonal rotation, a
+Lloyd--Max scalar quantizer on the rotated coordinates, and a QJL-style
+residual correction to obtain a data-oblivious recipe that is
+competitive at the 3-bit tier. \textbf{KVLinC} {[}KVLinC authors,
+2025{]} combines a Hadamard rotation with learned linear correction
+adapters to push 2-bit KV cache on Llama and Qwen families. Each of
+these methods delivers stronger compression ratios or finer-grained
+precision than a naive scalar quantizer, but each introduces a
+corresponding complexity dependency: a codebook, a calibration corpus, a
+rotation matrix (random or Hadamard), a trained adapter, or a
+non-trivial mixed-precision scheme.
 
 Against this backdrop we consider a narrower and more practical
 question. \textbf{Is there a recipe that stays at the INT3 tier} --- 3.0
@@ -333,7 +334,7 @@ idea underlying PolarQuant and TurboQuant; per-channel absmax scaling is
 the standard per-channel preconditioner used throughout weight
 quantization since LLM.int8 {[}Dettmers et al., 2022{]}; asymmetric
 \([\min, \max]\) quantization windows are the default in GPTQ {[}Frantar
-et al., 2023{]} and AWQ {[}Lin et al., 2023{]} for \emph{weights}. The
+et al., 2023{]} and AWQ {[}Lin et al., 2024{]} for \emph{weights}. The
 question of interest is not the novelty of any ingredient but the
 empirical behavior of a particular composition of them on \emph{KV
 caches} across a representative model population.
@@ -427,34 +428,36 @@ comparable or slightly higher bit rate.
 {[}Wang et al., 2025{]} decomposes each KV vector into its L2 radius
 (stored at full precision) and its angular coordinates on the unit
 sphere, the latter quantized via a \(k\)-means codebook fit after a
-random orthogonal rotation. TurboQuant {[}ICLR 2026{]} builds on a
-similar random-rotation idea by applying a Lloyd-Max scalar quantizer on
-the rotated coordinates with a QJL-style residual correction, yielding a
-fully data-oblivious recipe. Our work shares the norm-direction
-decomposition with these methods but deliberately uses the simplest
-possible direction quantizer (per-channel absmax with asymmetric window)
-instead of a codebook or a rotation-plus-residual scheme.
+random orthogonal rotation. TurboQuant {[}Google Research, 2026{]}
+builds on a similar random-rotation idea by applying a Lloyd-Max scalar
+quantizer on the rotated coordinates with a QJL-style residual
+correction, yielding a fully data-oblivious recipe. Our work shares the
+norm-direction decomposition with these methods but deliberately uses
+the simplest possible direction quantizer (per-channel absmax with
+asymmetric window) instead of a codebook or a rotation-plus-residual
+scheme.
 
-\emph{Rotation-based quantization.} KVLinC {[}preprint, 2025{]} applies
-a Hadamard rotation to the K cache and trains small linear-correction
-adapters that compensate for the residual quantization error. Outside
-the KV-cache-specific setting, QuaRot {[}Ashkboos et al., 2024{]}
-applies a fixed Hadamard rotation to weights and activations to enable
-4-bit inference, and SpinQuant {[}2024{]} learns the rotation matrix
-end-to-end; both target weight+activation quantization rather than KV
-caches per se. Rotation spreads outlier energy across coordinates and is
-broadly effective at 2 bits in the KVLinC pipeline. In early development
-of the present work we tested a fixed Walsh--Hadamard rotation as a
-drop-in preprocessing step before \texttt{nsep+pchan} and observed a
-\(3.68\times\) per-head reconstruction-MSE regression on real Qwen2-7B
-Layer 0 K, which we attribute to the specific multi-channel plateau
-structure of that tensor (§A.1). We therefore do not rotate in the
-proposed recipe; the present method obtains its generality from norm
-separation plus per-channel asymmetric scaling alone, without learned
-correction. This is a negative result for \emph{fixed Walsh-Hadamard
-rotation pre-pended to \texttt{nsep+pchan}}; it is not a negative result
-for the KVLinC pipeline in its published form, which combines rotation
-with an adapter and targets 2-bit rather than 3-bit regimes.
+\emph{Rotation-based quantization.} KVLinC {[}KVLinC authors, 2025{]}
+applies a Hadamard rotation to the K cache and trains small
+linear-correction adapters that compensate for the residual quantization
+error. Outside the KV-cache-specific setting, QuaRot {[}Ashkboos et al.,
+2024{]} applies a fixed Hadamard rotation to weights and activations to
+enable 4-bit inference, and SpinQuant {[}Liu et al., 2024{]} learns the
+rotation matrix end-to-end; both target weight+activation quantization
+rather than KV caches per se. Rotation spreads outlier energy across
+coordinates and is broadly effective at 2 bits in the KVLinC pipeline.
+In early development of the present work we tested a fixed
+Walsh--Hadamard rotation as a drop-in preprocessing step before
+\texttt{nsep+pchan} and observed a \(3.68\times\) per-head
+reconstruction-MSE regression on real Qwen2-7B Layer 0 K, which we
+attribute to the specific multi-channel plateau structure of that tensor
+(§A.1). We therefore do not rotate in the proposed recipe; the present
+method obtains its generality from norm separation plus per-channel
+asymmetric scaling alone, without learned correction. This is a negative
+result for \emph{fixed Walsh-Hadamard rotation pre-pended to
+\texttt{nsep+pchan}}; it is not a negative result for the KVLinC
+pipeline in its published form, which combines rotation with an adapter
+and targets 2-bit rather than 3-bit regimes.
 
 \emph{Weight- and activation-quantization ingredients transplanted to
 KV.} Per-channel scaling as a preconditioner for low-bit Transformer
@@ -463,7 +466,7 @@ isolation and to SmoothQuant {[}Xiao et al., 2023{]}, which migrates the
 activation dynamic range onto the weights so that per-channel activation
 quantization becomes feasible at INT8. Asymmetric per-channel
 \([\min, \max]\) quantization is the standard preconditioner in GPTQ
-{[}Frantar et al., 2023{]}, AWQ {[}Lin et al., 2023{]}, and SpQR
+{[}Frantar et al., 2023{]}, AWQ {[}Lin et al., 2024{]}, and SpQR
 {[}Dettmers et al., 2024{]} on the weight side. To our knowledge there
 is no work that explicitly isolates whether this ingredient transplants
 cleanly from weights or activations to KV caches when applied naively.
@@ -641,15 +644,15 @@ packing, exactly reproduces the reconstruction above, and exposes a
 
 \subsection{4. Experimental Setup}\label{experimental-setup}
 
-\textbf{Benchmark.} All ΔPPL measurements are on WikiText-2 (test split)
-under a sliding-window protocol: context length \(= 1024\) tokens,
-stride \(= 512\), and up to 10 windows per evaluation unless otherwise
-stated. Each window is split in half: the first 512 tokens are fed
-without target loss to populate the KV cache; the KV cache is then
-optionally replaced by a quantized reconstruction; the second 512 tokens
-are scored. This matches the sliding-window perplexity protocol used by
-PolarQuant and KIVI. Baseline PPL is the model's own FP16 PPL under the
-same protocol with no quantization.
+\textbf{Benchmark.} All ΔPPL measurements are on WikiText-2 {[}Merity et
+al., 2017{]} (test split) under a sliding-window protocol: context
+length \(= 1024\) tokens, stride \(= 512\), and up to 10 windows per
+evaluation unless otherwise stated. Each window is split in half: the
+first 512 tokens are fed without target loss to populate the KV cache;
+the KV cache is then optionally replaced by a quantized reconstruction;
+the second 512 tokens are scored. This matches the sliding-window
+perplexity protocol used by PolarQuant and KIVI. Baseline PPL is the
+model's own FP16 PPL under the same protocol with no quantization.
 
 \textbf{Quality metric.} We report
 \(\Delta\mathrm{PPL} = \mathrm{PPL}(\text{quantized}) - \mathrm{PPL}(\text{baseline})\)
