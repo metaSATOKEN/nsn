@@ -2,7 +2,7 @@
 
 **Kentaro Sato**
 *2026-04-19*
-*arxiv preprint, draft v0.13*
+*Preprint, draft v0.14 (Zenodo-first release; arXiv posting pending endorsement)*
 
 ---
 
@@ -459,7 +459,51 @@ The author retains full responsibility for the scientific content, for every num
 
 ## References
 
-See `refs.md` for the current citation list (in preparation — to be converted to bibtex for the arxiv submission).
+References are organized by role in the paper. The BibTeX equivalents of every entry below are maintained in `paper_b/refs.bib`; entries flagged with "author list pending" there are short-form placeholders that should be spot-checked against the arXiv record at camera-ready.
+
+**KV cache quantization (primary related work).**
+
+- Liu, Z., Yuan, J., Jin, H., Zhong, S., Xu, Z., Braverman, V., Chen, B., and Hu, X. (2024). *KIVI: A Tuning-Free Asymmetric 2bit Quantization for KV Cache.* Proceedings of the 41st International Conference on Machine Learning (ICML). arXiv:2402.02750.
+- Hooper, C., Kim, S., Mohammadzadeh, H., Mahoney, M. W., Shao, Y. S., Keutzer, K., and Gholami, A. (2024). *KVQuant: Towards 10 Million Context Length LLM Inference with KV Cache Quantization.* Advances in Neural Information Processing Systems (NeurIPS).
+- Zhao, Y., Lin, C.-Y., Zhu, K., Ye, Z., Chen, L., Zheng, S., Ceze, L., Krishnamurthy, A., Chen, T., and Kasikci, B. (2024). *Atom: Low-bit Quantization for Efficient and Accurate LLM Serving.* Proceedings of Machine Learning and Systems (MLSys). arXiv:2310.19102.
+- Wang, I., *et al.* (2025). *PolarQuant: Efficient KV Cache Quantization with Polar Decomposition.* arXiv:2502.02617. [Author list on the arXiv record supersedes this short form.]
+- Google Research. (2026). *TurboQuant: Online Vector Quantization with Near-optimal Distortion Rate.* Proceedings of the International Conference on Learning Representations (ICLR). arXiv:2504.19874.
+- KVLinC authors. (2025). *KVLinC: KV Cache Quantization with Hadamard Rotation and Linear Correction.* arXiv:2510.05373. [Preprint; author list pending from the arXiv record.]
+- SQuat authors. (2025). *SQuat: Subspace-Orthogonal KV Cache Quantization.* arXiv:2503.24358. [Preprint; author list pending.]
+
+**Weight and activation quantization (ingredients transplanted to KV).**
+
+- Dettmers, T., Lewis, M., Belkada, Y., and Zettlemoyer, L. (2022). *LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale.* Advances in Neural Information Processing Systems (NeurIPS). arXiv:2208.07339.
+- Xiao, G., Lin, J., Seznec, M., Wu, H., Demouth, J., and Han, S. (2023). *SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models.* Proceedings of the 40th International Conference on Machine Learning (ICML). arXiv:2211.10438.
+- Frantar, E., Ashkboos, S., Hoefler, T., and Alistarh, D. (2023). *GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers.* Proceedings of the International Conference on Learning Representations (ICLR). arXiv:2210.17323.
+- Lin, J., Tang, J., Tang, H., Yang, S., Chen, W.-M., Wang, W.-C., Xiao, G., Dang, X., Gan, C., and Han, S. (2024). *AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration.* Proceedings of Machine Learning and Systems (MLSys). arXiv:2306.00978.
+- Dettmers, T., Svirschevski, R., Egiazarian, V., Kuznedelev, D., Frantar, E., Ashkboos, S., Borzunov, A., Hoefler, T., and Alistarh, D. (2024). *SpQR: A Sparse-Quantized Representation for Near-Lossless LLM Weight Compression.* Proceedings of the International Conference on Learning Representations (ICLR). arXiv:2306.03078.
+
+**Rotation-based quantization.**
+
+- Ashkboos, S., Mohtashami, A., Croci, M. L., Li, B., Cameron, P., Jaggi, M., Alistarh, D., Torr, P. H. S., and Hensman, J. (2024). *QuaRot: Outlier-Free 4-Bit Inference in Rotated LLMs.* Advances in Neural Information Processing Systems (NeurIPS). arXiv:2404.00456.
+- Liu, Z., Zhao, C., Fedorov, I., Soran, B., Choudhary, D., Krishnamoorthi, R., Chandra, V., Tian, Y., and Blankevoort, T. (2024). *SpinQuant: LLM Quantization with Learned Rotations.* arXiv:2405.16406.
+
+**Companion paper (same author, cited as context).**
+
+- Sato, K. (2026). *Norm-Separated Quantization: A Training-Free Fix for KV Cache INT4 Failures.* Zenodo preprint. <https://github.com/metaSATOKEN/norm-separated-quantization>. [Companion mechanism-focused study by the same author. Cited as context only; the present paper re-measures every main-line claim end-to-end.]
+
+**Benchmarks.**
+
+- Merity, S., Xiong, C., Bradbury, J., and Socher, R. (2017). *Pointer Sentinel Mixture Models.* Proceedings of the International Conference on Learning Representations (ICLR). arXiv:1609.07843. [Introduced the WikiText-2 benchmark used for all ΔPPL numbers in this work.]
+- Hendrycks, D., Burns, C., Basart, S., Zou, A., Mazeika, M., Song, D., and Steinhardt, J. (2021). *Measuring Massive Multitask Language Understanding.* Proceedings of the International Conference on Learning Representations (ICLR). arXiv:2009.03300. [MMLU; the downstream task evaluated in §5.6.]
+
+**Models benchmarked in this paper.**
+
+- Wang, B., and Komatsuzaki, A. (2021). *GPT-J-6B: A 6 Billion Parameter Autoregressive Language Model.* <https://huggingface.co/EleutherAI/gpt-j-6b>.
+- Biderman, S., Schoelkopf, H., Anthony, Q., Bradley, H., O'Brien, K., Hallahan, E., Khan, M. A., Purohit, S., Prashanth, U. S., Raff, E., Skowron, A., Sutawika, L., and van der Wal, O. (2023). *Pythia: A Suite for Analyzing Large Language Models Across Training and Scaling.* arXiv:2304.01373.
+- Jiang, A. Q., Sablayrolles, A., Mensch, A., Bamford, C., Chaplot, D. S., de las Casas, D., Bressand, F., Lengyel, G., Lample, G., Saulnier, L., Lavaud, L. R., *et al.* (2023). *Mistral 7B.* arXiv:2310.06825.
+- Qwen Team. (2024a). *Qwen2: Technical Report.* arXiv:2407.10671.
+- Qwen Team. (2024b). *Qwen2.5 Technical Report.* arXiv:2412.15115.
+- Meta AI. (2024). *The Llama 3 Herd of Models.* arXiv:2407.21783. [Llama-3.1-8B is the 8B parameter member of the Llama 3.1 release used in this work.]
+- Qwen Team. (2026, February). *Qwen3.5: 2026 Release.* <https://huggingface.co/Qwen/Qwen3.5-9B>. [The 9B-dense hybrid-attention variant is used in the eight-model benchmark; citation to be updated to the technical report once released.]
+- Google DeepMind. (2026, April). *Gemma 4: A Family of Efficient Multimodal Foundation Models.* <https://huggingface.co/google/gemma-4-E4B>. [The "E4B" Efficient variant is used in the eight-model benchmark; citation to be updated to the technical report once released.]
+- Microsoft. (2024). *Phi-3: Technical Report.* arXiv:2404.14219. [Phi-3-medium-4k-instruct was the intended ninth benchmark model; its bundled modeling code was incompatible with current transformers at measurement time and it is reported as attempted-but-blocked.]
 
 ---
 
