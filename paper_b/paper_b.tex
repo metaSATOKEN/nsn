@@ -122,7 +122,7 @@
 INT3 Recipe for KV Cache
 Quantization}\label{norm-separation-is-necessary-a-minimalist-calibration-free-int3-recipe-for-kv-cache-quantization}
 
-\textbf{Kentaro Sato} \emph{2026-04-19} \emph{Preprint, draft v0.16
+\textbf{Kentaro Sato} \emph{2026-04-19} \emph{Preprint, draft v0.17
 (Zenodo-first release; arXiv posting pending endorsement)}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
@@ -305,9 +305,9 @@ per-channel for keys and per-token for values at 2 bits and introduces
 outlier protection logic. \textbf{KVQuant} {[}Hooper et al., 2024{]}
 uses per-channel key quantization in the pre-RoPE frame with a
 calibration-based non-uniform quantizer. \textbf{PolarQuant} {[}Wang et
-al., 2025{]} replaces the Euclidean coordinates of each KV vector with a
-polar-coordinate decomposition and trains a \(k\)-means codebook on the
-polar angles after a random orthogonal rotation. \textbf{TurboQuant}
+al., 2025a{]} replaces the Euclidean coordinates of each KV vector with
+a polar-coordinate decomposition and trains a \(k\)-means codebook on
+the polar angles after a random orthogonal rotation. \textbf{TurboQuant}
 {[}Google Research, 2026{]} applies a random orthogonal rotation, a
 Lloyd--Max scalar quantizer on the rotated coordinates, and a QJL-style
 residual correction to obtain a data-oblivious recipe that is
@@ -425,7 +425,7 @@ the recipe we propose is simpler (no outlier slot, no calibration) at a
 comparable or slightly higher bit rate.
 
 \emph{Polar / norm-direction decomposition with codebooks.} PolarQuant
-{[}Wang et al., 2025{]} decomposes each KV vector into its L2 radius
+{[}Wang et al., 2025a{]} decomposes each KV vector into its L2 radius
 (stored at full precision) and its angular coordinates on the unit
 sphere, the latter quantized via a \(k\)-means codebook fit after a
 random orthogonal rotation. TurboQuant {[}Google Research, 2026{]}
@@ -454,10 +454,26 @@ attribute to the specific multi-channel plateau structure of that tensor
 (§A.1). We therefore do not rotate in the proposed recipe; the present
 method obtains its generality from norm separation plus per-channel
 asymmetric scaling alone, without learned correction. This is a negative
-result for \emph{fixed Walsh-Hadamard rotation pre-pended to
+result for \emph{fixed Walsh--Hadamard rotation pre-pended to
 \texttt{nsep+pchan}}; it is not a negative result for the KVLinC
 pipeline in its published form, which combines rotation with an adapter
 and targets 2-bit rather than 3-bit regimes.
+
+\emph{Subspace-orthogonal projection.} Beyond rotation proper, SQuat
+{[}Wang et al., 2025b{]} is a calibration-free K-cache quantizer that
+builds a subspace from the query tensors and constrains the
+(de)quantization error on keys to lie in the \emph{orthogonal
+complement} of that subspace --- engineering the K-side residual to land
+in directions attention discards. This is methodologically complementary
+to our §5.3 finding that Layer-0 K-cache per-token norm CV does
+\emph{not} predict variant-(B) failure (Spearman \(\rho \approx 0.29\))
+while the Layer-0 V-cache CV does (\(\rho \approx 0.88\)): where SQuat
+actively steers K error into attention-irrelevant directions, we observe
+that K-side error is already partly absorbed by softmax normalization
+and is therefore the smaller of the two concerns at INT3. The two
+findings point in the same direction --- K-side error is cheaper to
+tolerate than V-side error --- from opposite sides of the attention
+operator.
 
 \emph{Weight- and activation-quantization ingredients transplanted to
 KV.} Per-channel scaling as a preconditioner for low-bit Transformer
@@ -1830,7 +1846,7 @@ that should be spot-checked against the arXiv record at camera-ready.
   Low-bit Quantization for Efficient and Accurate LLM Serving.}
   Proceedings of Machine Learning and Systems (MLSys). arXiv:2310.19102.
 \item
-  Wang, I., \emph{et al.} (2025). \emph{PolarQuant: Efficient KV Cache
+  Wang, I., \emph{et al.} (2025a). \emph{PolarQuant: Efficient KV Cache
   Quantization with Polar Decomposition.} arXiv:2502.02617. {[}Author
   list on the arXiv record supersedes this short form.{]}
 \item
@@ -1842,8 +1858,8 @@ that should be spot-checked against the arXiv record at camera-ready.
   Hadamard Rotation and Linear Correction.} arXiv:2510.05373.
   {[}Preprint; author list pending from the arXiv record.{]}
 \item
-  SQuat authors. (2025). \emph{SQuat: Subspace-Orthogonal KV Cache
-  Quantization.} arXiv:2503.24358. {[}Preprint; author list pending.{]}
+  Wang, H., Han, L., Xu, K., and Srivastava, A. (2025b). \emph{SQuat:
+  Subspace-Orthogonal KV Cache Quantization.} arXiv:2503.24358.
 \end{itemize}
 
 \textbf{Weight and activation quantization (ingredients transplanted to
