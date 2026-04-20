@@ -466,10 +466,15 @@ combined = {
         "statistic":         "per-token L2 norm; CV = std/mean pooled across K heads",
         "companion_stat":    "p99/p50 norm ratio (heavy-tail robust)",
         "notes":             (
-            "per-head CV also recorded. Raw L0 K per-token norms "
-            "saved for histogram plotting. V-cache stats reported "
-            "as companion; §5.3 mechanism focuses on K since Phase 21 "
-            "showed Gemma B-anomaly is 87% K-driven."
+            "per-head CV also recorded for both K and V. Raw L0 K "
+            "per-token norms saved for histogram plotting. The "
+            "manuscript §5.3 / Appendix E finds that L0 V-CV is the "
+            "stronger predictor of variant-(B) failure (Spearman rho "
+            "~= 0.88 vs K-CV rho ~= 0.29); the initial K-focused "
+            "hypothesis from Phase 10 (L0 K outlier structure) and "
+            "Phase 21 (Gemma B-anomaly 87% K-driven) was revised to "
+            "a V-cache-dominated mechanism in light of this measurement, "
+            "with softmax partially absorbing K-side error."
         ),
     },
     "ablation_B_regressions_paper_table2": B_VARIANT_PCT_OF_BASE,

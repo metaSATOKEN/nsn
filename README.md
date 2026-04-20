@@ -186,16 +186,18 @@ Phase 18 + 19 decomposed the v0.3 recipe into four INT3 variants and measured ea
 
 **Coverage per method (models below our < 5 %-baseline threshold):**
 
-| Method | Under threshold |
-|:---|:---:|
-| (A) naive per-row sym INT3 | 3 / 8 (over threshold on Qwen2, Pythia, Gemma 4; borderline on Qwen2.5) |
-| (B) asym per-channel, no nsep | 3 / 8 (over threshold on Llama, Mistral, Qwen2.5) |
-| (C) nsep+pchan sym INT3 (v0.2) | 5 / 8 (over threshold on Pythia, Qwen2.5, Gemma 4) |
-| **(D) nsep+pchan asym INT3 (v0.3)** | **8 / 8** |
+| Method | Under threshold | Over threshold |
+|:---|:---:|:---|
+| (A) naive per-row sym INT3 | 3 / 8 | Pythia 💥, Qwen2 💥, Qwen2.5 (43.95 %), Llama (mild 6.03 %), Gemma (26.45 %) |
+| (B) asym per-channel, no nsep | 3 / 8 | Llama 💥, Mistral 💥, Qwen2.5 💥, GPT-J (mild 6.27 %), Pythia (mild 5.88 %) |
+| (C) nsep+pchan sym INT3 (v0.2) | 5 / 8 | Pythia (22.10 %), Qwen2.5 (13.32 %), Gemma (9.12 %) |
+| **(D) nsep+pchan asym INT3 (v0.3)** | **8 / 8** | — |
+
+💥 = catastrophic (> 100 % of baseline PPL).
 
 ![Four-method INT3 ablation across 8 models on a log y-axis; only v0.3 (D) stays below the 5 % usability threshold on every model](figures/fig03_ablation.png)
 
-The critical finding is that method (B) — asymmetric per-channel INT3 *without* norm separation, a drop-in recipe common in weight quantization — **catastrophically regresses on 4 of 8 models** (up to 24× worse than naive on Llama-3.1-8B). A direct Phase-23 measurement of per-token L2 norm coefficient of variation across all 8 models shows that **L0 V-cache CV predicts the failure magnitude at Spearman $\rho \approx 0.88$, while L0 K-cache CV does not ($\rho \approx 0.29$)**: without `nsep`, per-channel min/max is dominated by high-norm tokens, which mis-scales the low-norm tokens, and the resulting V-cache error propagates linearly through the attention-weighted output while the corresponding K-cache error is partly absorbed by softmax. `nsep` removes this contamination by normalizing each token to unit length before computing per-channel statistics. (Gemma-4-E4B and Qwen3.5-9B exhibit near-zero K-CV — 0.000 and 0.034 — as an architectural signature of QK-normalization, so modern K caches are already structurally unit-norm; V-cache `nsep` is still required.)
+The critical finding is that method (B) — asymmetric per-channel INT3 *without* norm separation, a drop-in recipe common in weight quantization — **fails the usability threshold on 5 of 8 models, catastrophically on 3** (up to 24× worse than naive on Llama-3.1-8B; the remaining two violations are mild, at 6.27 % and 5.88 % of baseline on GPT-J-6B and Pythia-6.9B). A direct Phase-23 measurement of per-token L2 norm coefficient of variation across all 8 models shows that **L0 V-cache CV predicts the failure magnitude at Spearman $\rho \approx 0.88$, while L0 K-cache CV does not ($\rho \approx 0.29$)**: without `nsep`, per-channel min/max is dominated by high-norm tokens, which mis-scales the low-norm tokens, and the resulting V-cache error propagates linearly through the attention-weighted output while the corresponding K-cache error is partly absorbed by softmax. `nsep` removes this contamination by normalizing each token to unit length before computing per-channel statistics. (Gemma-4-E4B and Qwen3.5-9B exhibit near-zero K-CV — 0.000 and 0.034 — as an architectural signature of QK-normalization, so modern K caches are already structurally unit-norm; V-cache `nsep` is still required.)
 
 ![Two-panel scatter showing L0 V-cache per-token L2 norm CV vs variant-(B) ΔPPL (Spearman rho ≈ 0.88, monotone rise) alongside L0 K-cache CV (rho ≈ 0.29, scattered). V-cache dispersion predicts the failure; K-cache dispersion does not.](figures/fig05_norm_dispersion.png)
 
@@ -306,7 +308,7 @@ The "Verdict" column is a modeq-internal convention — it is not a deployment c
 
 **Caveats that apply to any "✅ usable" verdict here:**
 
-1. **Downstream task accuracy** (MMLU, GSM-8K, HumanEval, RAG) was not measured. WikiText-2 ΔPPL is a proxy, and the labels above describe behavior on that one benchmark.
+1. **Downstream task accuracy coverage is narrow.** Two bounded probes are now in the repo: MMLU 5-shot on Qwen2-7B and Llama-3.1-8B (Phase 22, 500 questions each), and a multi-needle NIH lead-key retrieval probe on Llama-3.1-8B / Qwen2-7B / Qwen2.5-14B at 8K and 32K (Phases 24b-d, pooled n = 30). Neither covers reasoning (GSM-8K, MATH), code generation (HumanEval), instruction following, or the multi-task LongBench / RULER suites. WikiText-2 ΔPPL remains the primary metric; the labels above describe behavior on that one benchmark.
 2. **Inference throughput / latency** was not measured. Our implementation is Python-only and adds roughly +21% decode latency on 7B-class models. A fused CUDA kernel would remove this. The "✅ usable" label is about quality only.
 3. **Sample size for the INT3 asym claim** is 8 runnable models (Qwen2-7B, Llama-3.1-8B from Phase 14; Pythia-6.9B, Qwen2.5-14B, Mistral-7B-v0.1, GPT-J-6B from Phase 16; Qwen3.5-9B, Gemma 4-E4B from Phase 17). Phi-3-medium-4k-instruct was the intended 7th Phase-16 model and is pending an HF custom-code / transformers compatibility fix.
 4. **Evaluate on your own task before shipping.** A ✅ label here means "our measurements suggest this model + INT3 asym is likely usable for many deployments", not "this is certified for yours".
@@ -449,7 +451,7 @@ v0.3 went through twelve numbered experimental phases (see `experiments/phase9_*
 
 ### Things we noticed but are not claiming
 
-9. **Phase 20 + 21 — Gemma 4-E4B B-anomaly probe.** The asym-only ablation (B) showed a small but reproducible *negative* ΔPPL on gemma-4-E4B (−0.40 on one text segment, −0.15 on a fresh segment, across fp16 and native bf16). A K-only / V-only split isolated ~87 % of the effect to the Key cache, suggesting accidental attention-logit entropy regularization on this multimodal-trained model when evaluated text-only. **We do NOT recommend deploying (B)** — the same variant catastrophically regresses on 4 of 8 other models (Phase 19). The v0.3 recommended (D) is unaffected (+0.93 to +1.16 ΔPPL consistently). Flagged as an appendix-level open question; see `results/phase21_gemma_b_anomaly_probe.json` for the full breakdown.
+9. **Phase 20 + 21 — Gemma 4-E4B B-anomaly probe.** The asym-only ablation (B) showed a small but reproducible *negative* ΔPPL on gemma-4-E4B (−0.40 on one text segment, −0.15 on a fresh segment, across fp16 and native bf16). A K-only / V-only split isolated ~87 % of the effect to the Key cache, suggesting accidental attention-logit entropy regularization on this multimodal-trained model when evaluated text-only. **We do NOT recommend deploying (B)** — the same variant fails the usability threshold on 5 of 8 other models (catastrophically on 3, mildly on 2; Phase 19). The v0.3 recommended (D) is unaffected (+0.93 to +1.16 ΔPPL consistently). Flagged as an appendix-level open question; see `results/phase21_gemma_b_anomaly_probe.json` for the full breakdown.
 
 ### Honesty note on Mode 2 at INT4
 

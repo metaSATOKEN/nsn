@@ -118,20 +118,22 @@ After v0.3 shipped, we ran a four-method INT3 ablation on all 8 benchmarked mode
 - **(C) `nsep+pchan` symmetric INT3** — `nsep` and `pchan`, but not `asym`. This is modeq **v0.2**.
 - **(D) `nsep+pchan` asymmetric INT3** — all three. This is modeq **v0.3**.
 
-Usability-tier coverage (< 5 % baseline ΔPPL on WikiText-2) across 8 models:
+Usability-tier coverage (< 5 % baseline ΔPPL on WikiText-2) across 8 models. Table 2b / Appendix E of `paper_b/paper_b.md` is the authoritative version; the row-year split here is a quick readable aggregate.
 
-| Method | 2021 models | 2023 models | 2024 models | 2026 models | Total |
+| Method | 2021 (GPT-J) | 2023 (Pythia, Mistral) | 2024 (Qwen2, Qwen2.5, Llama) | 2026 (Qwen3.5, Gemma) | Total under threshold |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| (A) naive | 1 / 1 | 2 / 2 | 1 / 3 | 1 / 2 (Qwen3.5) | **5 / 8** (but fails 💥 on 3 Mode-1 / high-noise models) |
-| (B) asym no `nsep` | 0 / 1 | 1 / 2 | 1 / 3 | 2 / 2 | **4 / 8** (fails 💥 on 4 of 8) |
-| (C) `nsep+pchan` sym (v0.2) | 1 / 1 | 1 / 2 | 2 / 3 | 1 / 2 | **5 / 8** |
+| (A) naive | 1 / 1 | 1 / 2 | 0 / 3 | 1 / 2 | **3 / 8** (over threshold on Pythia 💥, Qwen2 💥, Qwen2.5-14B, Llama mild, Gemma) |
+| (B) asym no `nsep` | 0 / 1 | 0 / 2 | 1 / 3 | 2 / 2 | **3 / 8** (over threshold on 5 — 💥 catastrophic on Llama, Mistral, Qwen2.5-14B; mild on GPT-J 6.27 % and Pythia 5.88 %) |
+| (C) `nsep+pchan` sym (v0.2) | 1 / 1 | 1 / 2 | 2 / 3 | 1 / 2 | **5 / 8** (over threshold on Pythia 22.1 %, Qwen2.5-14B 13.3 %, Gemma 9.1 %) |
 | **(D) `nsep+pchan` asym (v0.3)** | **1 / 1** | **2 / 2** | **3 / 3** | **2 / 2** | **8 / 8** 🏆 |
+
+💥 = catastrophic (> 100 % of baseline PPL).
 
 Concretely, each component is empirically necessary:
 
-**1. `pchan` is needed for Mode-1-style outlier channels.** Without per-channel scaling, method (A) fails catastrophically on Qwen2-7B (+11.9 ΔPPL, 142 % of baseline) and Pythia-6.9B (+22.5 ΔPPL, 209 %), because a per-row absmax scale is stretched wide to accommodate the outlier channel and mis-quantizes the other channels.
+**1. `pchan` is needed for Mode-1-style outlier channels.** Without per-channel scaling, method (A) fails catastrophically on Qwen2-7B (+11.9 ΔPPL, 142 % of baseline) and Pythia-6.9B (+22.5 ΔPPL, 209 %), because a per-row absmax scale is stretched wide to accommodate the outlier channel and mis-quantizes the other channels. Qwen2.5-14B (43.95 %), Llama-3.1-8B (6.03 %), and Gemma-4-E4B (26.45 %) are also over the 5 % threshold under (A).
 
-**2. `nsep` is needed for Mode-2-style high-norm-variance distributions.** Without norm separation, method (B) fails catastrophically on Llama-3.1-8B (+10.9 ΔPPL, 148 %), Mistral-7B-v0.1 (+7.5 ΔPPL, 120 %), and Qwen2.5-14B (+2.9 ΔPPL, 146 %). The failure mechanism is specific to KV cache and does not appear in weight quantization: per-channel `[min, max]` computed on raw activations is dominated by high-norm tokens, and the resulting scale mis-quantizes low-norm tokens by a factor equal to the token-norm ratio. `nsep` normalizes each token to unit length before computing per-channel statistics, removing this contamination.
+**2. `nsep` is needed for Mode-2-style high-norm-variance distributions.** Without norm separation, method (B) fails our threshold on 5 of 8 — catastrophically on Llama-3.1-8B (+10.9 ΔPPL, 148 %), Mistral-7B-v0.1 (+7.5 ΔPPL, 120 %), and Qwen2.5-14B (+2.9 ΔPPL, 146 %), and mildly on GPT-J-6B (6.27 %) and Pythia-6.9B (5.88 %). The failure mechanism is specific to KV cache and does not appear in weight quantization: per-channel `[min, max]` computed on raw activations is dominated by high-norm tokens, and the resulting scale mis-quantizes low-norm tokens by a factor equal to the token-norm ratio. `nsep` normalizes each token to unit length before computing per-channel statistics, removing this contamination. The V-side of this mechanism dominates in practice (§5.3 / Appendix E: Spearman rho(V-CV, (B) failure) ~= 0.88 vs rho(K-CV, (B) failure) ~= 0.29), because V-cache error propagates linearly through the attention-weighted output while K-cache error is partly absorbed by softmax normalization.
 
 **3. `asym` is needed for post-RoPE biased distributions.** Without asymmetric quantization, method (C, v0.2) lands in only 5 of 8 models — Pythia-6.9B at 22 % of baseline is the clearest failure. Asymmetric fits `[min, max]` tightly and avoids wasting half the quantization levels on the empty side of a symmetric window.
 
