@@ -2,7 +2,7 @@
 
 **Kentaro Sato**
 *2026-04-19*
-*arxiv preprint, draft v0.12*
+*arxiv preprint, draft v0.13*
 
 ---
 
@@ -438,6 +438,22 @@ Two bounded-cost downstream probes support the intrinsic-metric picture. An MMLU
 The scope of the positive claim is deliberately narrow. We do not compete with rotation-based or codebook-based methods at the 1–2 bit frontier; we do not claim generalization to reasoning, code, or multi-task long-context benchmarks beyond the two probes above; we do not claim the Qwen2-7B "INT4 valley of death" pathology generalizes beyond $n = 1$; and we flag a single-cell 8 K Qwen2-7B NIH anomaly (§5.7, Appendix F.4) as an open observation to revisit. What we do claim is that a very simple recipe, with no moving parts outside of per-channel arithmetic, attains the common-case quality of more complex methods at INT3 on a range of open-weight Transformers that spans half a decade of architectural evolution. We also claim that the recipe's three ingredients are empirically indivisible: this is a finding we believe is useful independent of the practical deployment case, because it specifies a concrete way in which naive weight-quantization recipes do *not* transplant cleanly to KV caches.
 
 The reference implementation, benchmark scripts, and measured JSON data are released under Apache 2.0. Every number in this paper is reproducible by running the corresponding script in `experiments/` against the committed data under `results/`.
+
+---
+
+## Acknowledgments and disclosure of LLM use
+
+Per current arxiv / peer-review norms, we explicitly disclose that a large language model assistant was used substantively in the preparation of this paper. The tool was Anthropic's Claude (Sonnet 4.7, 1 M context window) accessed through Claude Code. Its role spanned four concrete areas:
+
+1. **Experimental infrastructure.** The Colab-paste scripts under `experiments/phase22_*.py`, `phase23_*.py`, and `phase24*.py` were drafted by the assistant against protocol specifications in this paper. The author ran each script on Google Colab, copied the JSON output into `results/`, and audited the numbers against the manuscript; every reported number is traceable to a committed JSON.
+
+2. **Figure generation.** The `figures/make_figures.py` script (fig01–fig06) was written by the assistant from the data layout of the committed JSONs. Per-figure design choices (color palette, stacked / grouped bar structure, Fisher-exact annotations on Figure 6, symlog axis on Figure 5) were authored jointly.
+
+3. **Manuscript drafting and revision.** Section text, tables, and captions were drafted iteratively with the assistant. The author directed scope ("we do not claim X"), enforced honesty caveats (for example the "lead-key retrieval, not full-code retrieval" clarification in §5.7, the confounder caveat in §5.3, and the non-inferiority phrasing on the Fisher-exact results), and made all final decisions about what claims to make.
+
+4. **Internal cross-review.** Five rounds of externally-run LLM review (GPT-5 × 4, Grok × 2, Gemini × 1, and a GenSpark Mixture-of-Agents round) were used as a pre-publication review substitute; the assistant helped triage each round's comments against the manuscript. Every reviewer comment was read by the author and accepted, rejected, or rewritten; final wording is the author's.
+
+The author retains full responsibility for the scientific content, for every numerical claim against the committed data, and for the final phrasing of every claim. No measurement in the paper was generated or paraphrased by a language model: every ΔPPL, every Spearman correlation, every Fisher-exact p-value is computed from code in `experiments/` or `figures/make_figures.py` on data from `results/`, and can be regenerated from the committed artifacts. Where a language model suggested a wording the author disagreed with, the suggestion was not used; where it suggested a measurement the author had not yet run (most notably the Phase 23 V-cache CV probe and the Phase 24 multi-needle NIH protocol), the author ran the measurement and reported whatever came out of the data, including the "Qwen2-7B 8 K anomaly" that does not support the paper's main story and is flagged as an open observation.
 
 ---
 
