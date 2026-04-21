@@ -228,6 +228,17 @@ Extrapolating the Llama ratio:
 | 32K | 4.10 GB | 803 MB | 3.31 GB |
 | 128K | 16.4 GB | 3.21 GB | 13.2 GB |
 
+### Simulator vs real cache (Phase 26)
+
+The ΔPPL numbers in the 8-model table above were measured under the `qa_nsep_pchan_asym` simulator (no actual bit packing). Phase 26 re-ran the WikiText-2 benchmark using the real `Int3AsymNsepPchanCache.from_fp16()` + `.to_fp16()` round-trip on Qwen2-7B and Llama-3.1-8B and confirmed the numbers match:
+
+| Model | Simulator PPL | Real cache PPL | \|sim − real\| |
+|:---|---:|---:|---:|
+| Qwen2-7B | 8.4727 | 8.4730 | 2.5×10⁻⁴ |
+| Llama-3.1-8B | 7.4900 | 7.4898 | 2.0×10⁻⁴ |
+
+ΔPPL rounds to +0.103 on Qwen2-7B and +0.106 on Llama-3.1-8B under both methods. The 2×10⁻⁴ divergence is FP16 rounding on the per-channel metadata — the `pack_int3_unsigned` / `unpack_int3_unsigned` primitives themselves are bit-exact on integer indices in {0, …, 7}. Script: `experiments/phase26_real_cache_ppl.py`. Raw data: `results/phase26_real_cache_ppl.json`. Paper B §5.4.
+
 ---
 
 ## Downstream quality probes (MMLU + long-context NIH)
