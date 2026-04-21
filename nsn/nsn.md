@@ -1,7 +1,9 @@
-# Norm Separation is Necessary: A Minimalist Calibration-Free INT3 Recipe for KV Cache Quantization
+---
+title: "Norm Separation is Necessary: A Minimalist Calibration-Free INT3 Recipe for KV Cache Quantization"
+author: "Kentaro Sato"
+date: "2026-04-19"
+---
 
-**Kentaro Sato**
-*2026-04-19*
 *Preprint, draft v0.19 (Zenodo-first release; arXiv posting pending endorsement)*
 
 ---
@@ -453,7 +455,7 @@ This work was conducted with substantial assistance from large language models (
 
 ## References
 
-References are organized by role in the paper. The BibTeX equivalents of every entry below are maintained in `paper_b/refs.bib`; entries flagged with "author list pending" there are short-form placeholders that should be spot-checked against the arXiv record at camera-ready.
+References are organized by role in the paper. The BibTeX equivalents of every entry below are maintained in `nsn/refs.bib`; entries flagged with "author list pending" there are short-form placeholders that should be spot-checked against the arXiv record at camera-ready.
 
 **KV cache quantization (primary related work).**
 

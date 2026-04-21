@@ -52,7 +52,7 @@
   },
   "composition_implications": {
     "modeq_extension_candidate": "Add nsep+pchan+residual variant to the library (v0.2). The RMS per-channel variant is recommended default; fixed-0.25 should be discouraged on unaudited models.",
-    "paper_b_contribution": "Residual correction as orthogonal composition: provides a new Pareto-optimal point on Mode 1 at 4+ε bits, surpassing native INT4. Complements (does not compete with) TurboQuant's rotated QJL residual.",
+    "nsn_contribution": "Residual correction as orthogonal composition: provides a new Pareto-optimal point on Mode 1 at 4+ε bits, surpassing native INT4. Complements (does not compete with) TurboQuant's rotated QJL residual.",
     "relationship_to_turboquant": "TurboQuant's 1-bit residual operates on post-rotation scalar quantization of the full vector. Ours operates on per-channel absmax-scaled direction values of normalized vectors. Mechanistically orthogonal axes; both address residual quantization error, via different bases."
   },
   "open_questions": [

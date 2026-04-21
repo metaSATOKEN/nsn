@@ -5,7 +5,7 @@
 # Phase 25: Fractional-bit KV cache quantization (EXPLORATORY)
 # ============================================================
 # NOTE: This phase is a sandbox probe and is NOT integrated into
-# paper_b/paper_b.md. It may become a Paper C extension or a v0.5
+# nsn/nsn.md. It may become a Paper C extension or a v0.5
 # feature later, depending on what the data says.
 #
 # Motivation. The NSN paper §5.1 / §5.5 plots the 4-method INT3 ablation
@@ -396,7 +396,7 @@ combined = {
     },
     "results": results,
     "status":  ("EXPLORATORY / sandbox. Not integrated into "
-                "paper_b/paper_b.md. May become a Paper C extension or "
+                "nsn/nsn.md. May become a Paper C extension or "
                 "a v0.5 feature depending on what the Pareto curve shape "
                 "says."),
 }

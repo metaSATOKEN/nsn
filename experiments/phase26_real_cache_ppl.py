@@ -471,7 +471,7 @@ combined = {
     "results":  results,
     "verdicts": verdicts,
     "status":   ("Verification run. Confirms that the ΔPPL numbers "
-                 "in paper_b §5.1 (measured under qa_nsep_pchan_asym "
+                 "in nsn §5.1 (measured under qa_nsep_pchan_asym "
                  "simulator) equal those under the real "
                  "Int3AsymNsepPchanCache bit-packed storage, closing "
                  "the empirical loop on paper §3.4's 'bit-exact "

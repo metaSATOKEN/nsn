@@ -2,7 +2,7 @@
 
 To be converted into bibtex when the arxiv submission is prepared.
 All entries below are the ones already mentioned in the current
-`paper_b.md` draft. Venue / arXiv IDs should be verified before
+`nsn.md` draft. Venue / arXiv IDs should be verified before
 submission.
 
 ---

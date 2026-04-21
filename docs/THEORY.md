@@ -101,7 +101,7 @@ Phases 10, 13, and 14 (see `results/`) found that **asymmetric per-channel quant
 - Qwen3.5-9B (hybrid attention, 2026): +0.275 → +0.094 (−65.7%)
 - Gemma 4-E4B (multimodal, 2026): +1.879 → +0.930 (−50.5%)
 
-**Under our primary evaluation protocol (fp16 load, 10 WikiText-2 windows at 1024 ctx), all 8 stay below the < 5 % baseline usability threshold under asym INT3 at identical 3.0 bits/value.** A follow-up bf16 / 30-window probe on Gemma-4-E4B places that specific model at 5.5 %–7.0 % of baseline, so we describe Gemma-4-E4B as borderline under the stricter probe rather than uniformly below threshold. See Phase 20 / 21 JSON in `results/` and `paper_b/paper_b.md` §7 for the full breakdown.
+**Under our primary evaluation protocol (fp16 load, 10 WikiText-2 windows at 1024 ctx), all 8 stay below the < 5 % baseline usability threshold under asym INT3 at identical 3.0 bits/value.** A follow-up bf16 / 30-window probe on Gemma-4-E4B places that specific model at 5.5 %–7.0 % of baseline, so we describe Gemma-4-E4B as borderline under the stricter probe rather than uniformly below threshold. See Phase 20 / 21 JSON in `results/` and `nsn/nsn.md` §7 for the full breakdown.
 
 Mechanism: post-RoPE K channels have strongly biased distributions. The symmetric absmax window wastes roughly half of its quantization levels on the empty side of zero. Asymmetric fits `[min, max]` tightly and uses all `2**bits` levels (8 instead of 7 at INT3 — a 14% base gain just from level count, on top of the much larger range-fit advantage). The storage cost is one additional FP16 per channel (+0.008 bits/value in real packing), so the v0.3 `Int3AsymNsepPchanCache` measures 5.09× compression vs FP16 — essentially identical to v0.2's 5.08× but with 58–96% less ΔPPL drift.
 
@@ -118,7 +118,7 @@ After v0.3 shipped, we ran a four-method INT3 ablation on all 8 benchmarked mode
 - **(C) `nsep+pchan` symmetric INT3** — `nsep` and `pchan`, but not `asym`. This is modeq **v0.2**.
 - **(D) `nsep+pchan` asymmetric INT3** — all three. This is modeq **v0.3**.
 
-Usability-tier coverage (< 5 % baseline ΔPPL on WikiText-2) across 8 models. Table 2b / Appendix E of `paper_b/paper_b.md` is the authoritative version; the row-year split here is a quick readable aggregate.
+Usability-tier coverage (< 5 % baseline ΔPPL on WikiText-2) across 8 models. Table 2b / Appendix E of `nsn/nsn.md` is the authoritative version; the row-year split here is a quick readable aggregate.
 
 | Method | 2021 (GPT-J) | 2023 (Pythia, Mistral) | 2024 (Qwen2, Qwen2.5, Llama) | 2026 (Qwen3.5, Gemma) | Total under threshold |
 |:---|:---:|:---:|:---:|:---:|:---:|
@@ -185,7 +185,7 @@ At 32 K, the v0.3 recipe shows no significant difference from FP16 on this lead-
 
 ## References
 
-- *Norm Separation is Necessary* (preprint draft, `paper_b/paper_b.md`): this is the authoritative writeup; v0.19+ integrates Phase 22 / 23 / 24 / 26 results described in this document.
+- *Norm Separation is Necessary* (preprint draft, `nsn/nsn.md`): this is the authoritative writeup; v0.19+ integrates Phase 22 / 23 / 24 / 26 results described in this document.
 - Companion paper (2024 mechanism study): [Norm-Separated Quantization](https://github.com/metaSATOKEN/norm-separated-quantization) (V5, 23 pages), for the Mode 1 / Mode 2 framing and the 27-model bit-width survey.
 - v0.3 empirical data (head): `results/phase10_real_kv_distribution.json`, `phase13_full_sweep.json`, `phase14_asym_wikitext2_ppl.json`, `phase15_real_compression.json`, `phase16_asym_seven_model_sweep.json`, `phase17_2026_flagships.json`.
 - v0.3 ablation + anomaly probe: `results/phase18_ablation_vs_industry_naive.json`, `phase19_ablation_generalization.json`, `phase20_bf16_disambiguation.json`, `phase21_gemma_b_anomaly_probe.json`.
