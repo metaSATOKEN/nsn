@@ -88,7 +88,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
 # =============================================================
-# === CELL V2 === Quantizers (inline; identical to Paper B §3.5)
+# === CELL V2 === Quantizers (inline; identical to the NSN paper §3.5)
 # =============================================================
 
 def qa_nsep_pchan_sym(x, bits):

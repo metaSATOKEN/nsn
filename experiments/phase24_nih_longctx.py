@@ -4,7 +4,7 @@
 # ============================================================
 # Phase 24: Needle-in-a-Haystack long-context probe
 # ============================================================
-# Paper B v0.10 §6.3 Limitations explicitly flags:
+# The NSN paper v0.10 §6.3 Limitations explicitly flags:
 #
 #     "long-context retrieval (LongBench, needle-in-haystack)
 #      are not touched"
@@ -90,7 +90,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
 # =============================================================
-# === CELL V2 === Quantizers (inline; identical to Paper B §3.5)
+# === CELL V2 === Quantizers (inline; identical to the NSN paper §3.5)
 # =============================================================
 
 def qa_nsep_pchan_sym(x, bits):
@@ -389,7 +389,7 @@ print("\n" + "=" * 96)
 print("READING")
 print("=" * 96)
 print("""
-  HYPOTHESIS (Paper B v0.10 §5 extrapolation):
+  HYPOTHESIS (the NSN paper v0.10 §5 extrapolation):
       v0.3 asym INT3 at 3.141 bits/value preserves enough
       attention fidelity that long-range retrieval remains
       functional. The 5.09x compression measurement in §5.4

@@ -1,4 +1,4 @@
-# Paper B — preliminary reference list
+# Reference list for *Norm Separation is Necessary* (preliminary)
 
 To be converted into bibtex when the arxiv submission is prepared.
 All entries below are the ones already mentioned in the current

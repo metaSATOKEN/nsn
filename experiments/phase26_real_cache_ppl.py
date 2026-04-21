@@ -4,7 +4,7 @@
 # ============================================================
 # Phase 26: Real-packed-cache PPL verification
 # ============================================================
-# Paper B §5.1 / §5.2 / §5.7 reports ΔPPL numbers measured under
+# The NSN paper §5.1 / §5.2 / §5.7 reports ΔPPL numbers measured under
 # the ``qa_nsep_pchan_asym`` simulator (Phase 14 / 16 / 17 / 18 /
 # 19 / 24): the simulator computes the quantization + reconstruction
 # mathematically but never actually packs values into 3-bit storage.
@@ -17,7 +17,7 @@
 #     "Your compression ratio is from the real packed cache, but
 #      your ΔPPL is from a simulator. Are the two jointly valid?"
 #
-# Paper B §3.4 argues they are, because the 3-bit pack / unpack is
+# The NSN paper §3.4 argues they are, because the 3-bit pack / unpack is
 # bit-exact on integers in {0, ..., 7} and the rest of the reconstruction
 # is identical to the simulator. This phase closes the loop empirically:
 # we re-run the primary PPL benchmark on two canonical models
@@ -148,7 +148,7 @@ def unpack_int3_unsigned(bytes_in, N):
 # =============================================================
 
 class Int3AsymNsepPchanCache:
-    """Real-packed INT3 asymmetric nsep+pchan cache (paper B v0.3 default).
+    """Real-packed INT3 asymmetric nsep+pchan cache (the NSN paper v0.3 default).
 
     Storage:
       packed_d : uint8 [..., 3*D/8]     -- 3-bit unsigned direction indices
@@ -197,7 +197,7 @@ class Int3AsymNsepPchanCache:
 
 
 # =============================================================
-# === CELL V4 === Simulator (paper B §3.5, qa_nsep_pchan_asym)
+# === CELL V4 === Simulator (the NSN paper §3.5, qa_nsep_pchan_asym)
 # =============================================================
 
 def qa_nsep_pchan_asym(x, bits):

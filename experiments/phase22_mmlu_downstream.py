@@ -4,7 +4,7 @@
 # ============================================================
 # Phase 22: MMLU 5-shot downstream task (single exploratory run)
 # ============================================================
-# The Paper B drafts through v0.5 have measured quality exclusively
+# The NSN paper drafts through v0.5 have measured quality exclusively
 # on WikiText-2 sliding-window perplexity (Phases 14, 16, 17). Both
 # cross-review rounds flagged this as the paper's biggest scope
 # limitation: ΔPPL is a proxy, and downstream-task accuracy is what
@@ -73,7 +73,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
 # =============================================================
-# === CELL V2 === Quantizers (inline; same as Paper B §3.5)
+# === CELL V2 === Quantizers (inline; same as the NSN paper §3.5)
 # =============================================================
 
 def qa_nsep_pchan_sym(x, bits):
@@ -400,5 +400,5 @@ print("""
   cost and we should treat the paper's 'usable' label more cautiously.
 
   Either direction is informative and gets reported honestly in the
-  Paper B revision.
+  the NSN paper revision.
 """)

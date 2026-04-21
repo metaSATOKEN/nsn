@@ -90,5 +90,5 @@
     "Qwen2-7B": "AGREE (< 1e-3 PPL)",
     "Llama-3.1-8B": "AGREE (< 1e-3 PPL)"
   },
-  "status": "Verification run. Confirms that the \u0394PPL numbers in paper_b \u00a75.1 (measured under qa_nsep_pchan_asym simulator) equal those under the real Int3AsymNsepPchanCache bit-packed storage, closing the empirical loop on paper \u00a73.4's 'bit-exact pack/unpack' claim."
+  "status": "Verification run. Confirms that the \u0394PPL numbers in the NSN paper \u00a75.1 (measured under qa_nsep_pchan_asym simulator) equal those under the real Int3AsymNsepPchanCache bit-packed storage, closing the empirical loop on the paper's \u00a73.4 'bit-exact pack/unpack' claim."
 }

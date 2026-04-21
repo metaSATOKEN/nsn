@@ -8,7 +8,7 @@
 # paper_b/paper_b.md. It may become a Paper C extension or a v0.5
 # feature later, depending on what the data says.
 #
-# Motivation. Paper B §5.1 / §5.5 plots the 4-method INT3 ablation
+# Motivation. The NSN paper §5.1 / §5.5 plots the 4-method INT3 ablation
 # at exactly 3.0 bits/value. Phase 1-4 characterized the naive INT
 # sweep at integer bit widths 2, 3, 4, 5, 6, 8. Nothing in the
 # paper covers *fractional* bit widths -- in particular the obvious
@@ -38,7 +38,7 @@
 #      some of the damage.
 #
 #   3. INT2.5 is the first sub-INT3 point we would measure with the
-#      v0.3 recipe. Paper B explicitly does not claim anything below
+#      v0.3 recipe. The NSN paper explicitly does not claim anything below
 #      INT3, so INT2.5 data tells us how steep the quality cliff is
 #      beyond the recipe's advertised operating range.
 #
@@ -103,7 +103,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 # =============================================================
 
 def qa_nsep_pchan_asym(x, bits):
-    """v0.3 asymmetric nsep+pchan (paper B §3.5)."""
+    """v0.3 asymmetric nsep+pchan (the NSN paper §3.5)."""
     dtype = x.dtype
     xf = x.float()
     n = xf.norm(dim=-1, keepdim=True).clamp(min=1e-12)

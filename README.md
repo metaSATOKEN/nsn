@@ -237,7 +237,7 @@ The ΔPPL numbers in the 8-model table above were measured under the `qa_nsep_pc
 | Qwen2-7B | 8.4727 | 8.4730 | 2.5×10⁻⁴ |
 | Llama-3.1-8B | 7.4900 | 7.4898 | 2.0×10⁻⁴ |
 
-ΔPPL rounds to +0.103 on Qwen2-7B and +0.106 on Llama-3.1-8B under both methods. The 2×10⁻⁴ divergence is FP16 rounding on the per-channel metadata — the `pack_int3_unsigned` / `unpack_int3_unsigned` primitives themselves are bit-exact on integer indices in {0, …, 7}. Script: `experiments/phase26_real_cache_ppl.py`. Raw data: `results/phase26_real_cache_ppl.json`. Paper B §5.4.
+ΔPPL rounds to +0.103 on Qwen2-7B and +0.106 on Llama-3.1-8B under both methods. The 2×10⁻⁴ divergence is FP16 rounding on the per-channel metadata — the `pack_int3_unsigned` / `unpack_int3_unsigned` primitives themselves are bit-exact on integer indices in {0, …, 7}. Script: `experiments/phase26_real_cache_ppl.py`. Raw data: `results/phase26_real_cache_ppl.json`. *Norm Separation is Necessary* §5.4.
 
 ---
 

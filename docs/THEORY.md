@@ -185,7 +185,7 @@ At 32 K, the v0.3 recipe shows no significant difference from FP16 on this lead-
 
 ## References
 
-- Paper (arxiv draft, `paper_b/paper_b.md`): this is the authoritative writeup; v0.11 integrates Phase 22 / 23 / 24 results described in this document.
+- *Norm Separation is Necessary* (preprint draft, `paper_b/paper_b.md`): this is the authoritative writeup; v0.19+ integrates Phase 22 / 23 / 24 / 26 results described in this document.
 - Companion paper (2024 mechanism study): [Norm-Separated Quantization](https://github.com/metaSATOKEN/norm-separated-quantization) (V5, 23 pages), for the Mode 1 / Mode 2 framing and the 27-model bit-width survey.
 - v0.3 empirical data (head): `results/phase10_real_kv_distribution.json`, `phase13_full_sweep.json`, `phase14_asym_wikitext2_ppl.json`, `phase15_real_compression.json`, `phase16_asym_seven_model_sweep.json`, `phase17_2026_flagships.json`.
 - v0.3 ablation + anomaly probe: `results/phase18_ablation_vs_industry_naive.json`, `phase19_ablation_generalization.json`, `phase20_bf16_disambiguation.json`, `phase21_gemma_b_anomaly_probe.json`.

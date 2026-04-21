@@ -4,7 +4,7 @@
 # ============================================================
 # Phase 23: per-token K-cache L2 norm dispersion measurement
 # ============================================================
-# Paper B §5.3 proposes a mechanism for why variant (B) --
+# The NSN paper §5.3 proposes a mechanism for why variant (B) --
 # asymmetric per-channel INT3 WITHOUT norm separation -- fails
 # catastrophically on Llama-family models while passing on
 # Qwen3.5-9B / Gemma-4-E4B:
@@ -491,7 +491,7 @@ print("\n" + "=" * 96)
 print("READING")
 print("=" * 96)
 print("""
-  HYPOTHESIS (Paper B v0.8 §5.3):
+  HYPOTHESIS (the NSN paper v0.8 §5.3):
       Models where variant (B) catastrophically regresses will
       show substantially higher L0 K-CV than models where (B)
       stays within threshold or produces negative dPPL.
