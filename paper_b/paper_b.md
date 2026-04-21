@@ -2,7 +2,7 @@
 
 **Kentaro Sato**
 *2026-04-19*
-*Preprint, draft v0.18 (Zenodo-first release; arXiv posting pending endorsement)*
+*Preprint, draft v0.19 (Zenodo-first release; arXiv posting pending endorsement)*
 
 ---
 
@@ -315,6 +315,8 @@ Extrapolating the measured Llama ratio to longer contexts: the asymptotic bit ra
 | 8 K    | 1.02 GB | 200 MB  | 822 MB |
 | 32 K   | 4.10 GB | 803 MB  | 3.31 GB |
 | 128 K  | 16.4 GB | 3.21 GB | 13.2 GB |
+
+**PPL equivalence with the real packed cache (Phase 26).** The ΔPPL numbers reported in Table 1 and §5.2 were measured under the `qa_nsep_pchan_asym` simulator, which computes the nsep + per-channel + asymmetric quantization arithmetic but does not actually pack values into 3-bit storage. To verify that the simulator matches what would be obtained with the real bit-packed cache, we re-ran the WikiText-2 sliding-window PPL benchmark on Qwen2-7B and Llama-3.1-8B using `Int3AsymNsepPchanCache.from_fp16()` + `.to_fp16()` as the cache-compression step (Phase 26, `results/phase26_real_cache_ppl.json`). The end-to-end PPLs agreed to within $2.5 \times 10^{-4}$ absolute ($\approx 3 \times 10^{-5}$ relative) on both models — well below the third decimal digit of the reported numbers — with ΔPPL matching to $+0.103$ on Qwen2-7B (simulator $+0.1034$, real cache $+0.1037$) and $+0.106$ on Llama-3.1-8B (simulator $+0.1059$, real cache $+0.1057$). The equivalence is expected by construction — the `pack_int3_unsigned` / `unpack_int3_unsigned` primitives are bit-exact on integer indices in $\{0, \dots, 7\}$, so the only source of divergence is FP16 rounding on the per-channel $d_{\min}$ and $d_{\mathrm{step}}$ metadata — and is now measured directly rather than left as a theoretical argument.
 
 ### 5.5. Bits vs quality
 

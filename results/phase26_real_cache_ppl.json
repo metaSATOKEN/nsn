@@ -1,0 +1,94 @@
+{
+  "date": "2026-04-21T06:22:37",
+  "protocol": {
+    "task": "WikiText-2 sliding-window perplexity",
+    "ctx_len": 1024,
+    "stride": 512,
+    "max_windows": 10,
+    "text_chars": 48000,
+    "methods": [
+      "FP16 baseline",
+      "asym INT3 (simulator)",
+      "asym INT3 (real cache)"
+    ],
+    "models": [
+      "Qwen2-7B",
+      "Llama-3.1-8B"
+    ],
+    "modeq_source": "inlined copy of src/modeq/cache.py and pack.py at commit dbafe03 (repository was private at run time; pip install git+... would fail)"
+  },
+  "sanity_simulator_vs_real_on_synthetic": {
+    "max_abs_diff": 0.005859375,
+    "max_rel_diff": 0.07487309724092484,
+    "mismatched": 223471,
+    "total_elements": 262144,
+    "shape": [
+      2048,
+      128
+    ],
+    "dtype": "torch.float16"
+  },
+  "results": {
+    "Qwen2-7B": {
+      "model": "Qwen/Qwen2-7B",
+      "baseline_ppl": 8.369283550767774,
+      "per_method": {
+        "FP16 baseline": {
+          "ppl": 8.369283550767774,
+          "delta_ppl": 0.0,
+          "pct_of_base": 0.0,
+          "n_windows": 10
+        },
+        "asym INT3 (simulator)": {
+          "ppl": 8.47271682136514,
+          "delta_ppl": 0.10343327059736573,
+          "pct_of_base": 1.2358676817429262,
+          "n_windows": 10
+        },
+        "asym INT3 (real cache)": {
+          "ppl": 8.472963978467451,
+          "delta_ppl": 0.10368042769967722,
+          "pct_of_base": 1.2388208270248637,
+          "n_windows": 10
+        },
+        "sim_vs_real_diff": {
+          "abs": 0.00024715710231149046,
+          "rel": 2.9170938616554408e-05
+        }
+      }
+    },
+    "Llama-3.1-8B": {
+      "model": "meta-llama/Llama-3.1-8B",
+      "baseline_ppl": 7.384042802442341,
+      "per_method": {
+        "FP16 baseline": {
+          "ppl": 7.384042802442341,
+          "delta_ppl": 0.0,
+          "pct_of_base": 0.0,
+          "n_windows": 10
+        },
+        "asym INT3 (simulator)": {
+          "ppl": 7.48997006767542,
+          "delta_ppl": 0.10592726523307938,
+          "pct_of_base": 1.4345429470972588,
+          "n_windows": 10
+        },
+        "asym INT3 (real cache)": {
+          "ppl": 7.489772745118363,
+          "delta_ppl": 0.10572994267602187,
+          "pct_of_base": 1.431870663602474,
+          "n_windows": 10
+        },
+        "sim_vs_real_diff": {
+          "abs": -0.000197322557057511,
+          "rel": 2.6344905957514974e-05
+        }
+      }
+    }
+  },
+  "verdicts": {
+    "Qwen2-7B": "AGREE (< 1e-3 PPL)",
+    "Llama-3.1-8B": "AGREE (< 1e-3 PPL)"
+  },
+  "status": "Verification run. Confirms that the \u0394PPL numbers in paper_b \u00a75.1 (measured under qa_nsep_pchan_asym simulator) equal those under the real Int3AsymNsepPchanCache bit-packed storage, closing the empirical loop on paper \u00a73.4's 'bit-exact pack/unpack' claim."
+}
