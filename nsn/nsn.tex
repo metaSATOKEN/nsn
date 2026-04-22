@@ -1,128 +1,3 @@
-% Options for packages loaded elsewhere
-\PassOptionsToPackage{unicode}{hyperref}
-\PassOptionsToPackage{hyphens}{url}
-\documentclass[
-]{article}
-\usepackage{xcolor}
-\usepackage[margin=0.9in]{geometry}
-\usepackage{amsmath,amssymb}
-\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
-\usepackage{iftex}
-\ifPDFTeX
-  \usepackage[T1]{fontenc}
-  \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provide euro and other symbols
-\else % if luatex or xetex
-  \usepackage{unicode-math} % this also loads fontspec
-  \defaultfontfeatures{Scale=MatchLowercase}
-  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
-\fi
-\usepackage{lmodern}
-\ifPDFTeX\else
-  % xetex/luatex font selection
-  \setmainfont[]{Times New Roman}
-  \setmonofont[]{Menlo}
-\fi
-% Use upquote if available, for straight quotes in verbatim environments
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\IfFileExists{microtype.sty}{% use microtype if available
-  \usepackage[]{microtype}
-  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
-}{}
-\makeatletter
-\@ifundefined{KOMAClassName}{% if non-KOMA class
-  \IfFileExists{parskip.sty}{%
-    \usepackage{parskip}
-  }{% else
-    \setlength{\parindent}{0pt}
-    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
-}{% if KOMA class
-  \KOMAoptions{parskip=half}}
-\makeatother
-\usepackage{color}
-\usepackage{fancyvrb}
-\newcommand{\VerbBar}{|}
-\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
-% Add ',fontsize=\small' for more characters per line
-\newenvironment{Shaded}{}{}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
-\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
-\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
-\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
-\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
-\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
-\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
-\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
-\newcommand{\ExtensionTok}[1]{#1}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
-\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
-\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
-\newcommand{\NormalTok}[1]{#1}
-\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
-\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
-\newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
-\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
-\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
-\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
-\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
-\usepackage{longtable,booktabs,array}
-\newcounter{none} % for unnumbered tables
-\usepackage{calc} % for calculating minipage widths
-% Correct order of tables after \paragraph or \subparagraph
-\usepackage{etoolbox}
-\makeatletter
-\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
-\makeatother
-% Allow footnotes in longtable head/foot
-\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
-\makesavenoteenv{longtable}
-\usepackage{graphicx}
-\makeatletter
-\newsavebox\pandoc@box
-\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
-  \sbox\pandoc@box{#1}%
-  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
-  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
-  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
-  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
-  \else\usebox{\pandoc@box}%
-  \fi%
-}
-% Set default figure placement to htbp
-\def\fps@figure{htbp}
-\makeatother
-\setlength{\emergencystretch}{3em} % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\usepackage{bookmark}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same}
-\hypersetup{
-  pdftitle={Norm Separation is Necessary: A Minimalist Calibration-Free INT3 Recipe for KV Cache Quantization},
-  pdfauthor={Kentaro Sato},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-
-\title{Norm Separation is Necessary: A Minimalist Calibration-Free INT3
-Recipe for KV Cache Quantization}
-\author{Kentaro Sato}
-\date{2026-04-22}
-
-\begin{document}
-\maketitle
-
 \emph{Preprint, draft v0.20 (Zenodo-first release; arXiv posting pending
 endorsement)}
 
@@ -163,10 +38,13 @@ recipe.
 
 All scripts and raw data are released under Apache 2.0. Scope
 limitations: downstream coverage is two probes on limited model subsets,
-throughput is not measured, and the Qwen2-7B INT4 valley is an \(n = 1\)
-observation. Further detail on the Gemma-4-E4B under stricter protocols
-(§5.1 / §7), the confounder caveat on the V-CV mechanism (§5.3), and the
-8 K Qwen2-7B NIH anomaly (§5.7) lives in the body.
+throughput is measured but only in Python (no hand-written CUDA kernel),
+and non-monotone naive-quantization failures have been probed in detail
+only within the Qwen family (four checkpoints beyond the main
+benchmark). Further detail on the Gemma-4-E4B under stricter protocols
+(§5.1 / §7), the confounder caveat on the V-CV mechanism (§5.3), the 8 K
+Qwen2-7B NIH anomaly (§5.7), and the Qwen-family Mode 1 follow-up (§6.1,
+Phase 28 / 28b / 28c) lives in the body.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -276,12 +154,15 @@ Concretely, this paper contributes:
 \end{enumerate}
 
 We also argue, as a secondary contribution, that the \textbf{``Mode 1''
-phenomenon} (a non-monotonic INT4 ΔPPL valley observed on Qwen2-7B (n =
-1 in our sample)) is a concrete, reproducible failure case of naive KV
+phenomenon} (non-monotonic ΔPPL-vs-bit-width under naive per-row
+quantization) is a concrete, reproducible failure case of naive KV
 quantization that motivates looking for robust recipes in the first
-place. We emphasize throughout that this remains an n = 1 observation
-and explicitly do not claim it generalizes to untested models (§2,
-§5.3).
+place. A follow-up probe of the Qwen family (Phase 28 / 28b / 28c)
+locates four such non-monotone cases --- Qwen2-7B (INT4 valley),
+Qwen2.5-1.5B (INT3 spike), Qwen2.5-3B (INT3 valley), and Qwen2.5-7B
+(three-peak INT2 / INT4 / INT6) --- all rescued by the proposed recipe.
+We still do not claim the phenomenon generalizes to non-Qwen families at
+bit-width granularity we have not probed (§6.1).
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -369,37 +250,40 @@ that norm separation therefore is not a quality-of-life preprocessing
 step but a structural requirement for per-channel KV quantization on
 this model family.
 
-The benchmark also includes one anomaly that we treat explicitly as
-\(n = 1\): Qwen2-7B exhibits a non-monotonic INT4 failure under naive
-per-row quantization (+1382 ΔPPL at INT4 versus +12 at INT3 and +5 at
-INT5), which we trace to an outlier channel at Layer 0 of the K cache.
-This ``INT4 valley'' is the one observation of this pattern in our
-27-model broader survey (seven of which we re-benchmarked end-to-end for
-the present work). We report it as a concrete failure mode that
-motivates looking for recipes robust across the bit-width axis, and we
-are explicit throughout that it is a single-model observation; we do not
-claim a general ``Mode 1'' class of models exists. The proposed recipe
-handles this anomaly alongside the common case at identical bit budget
-(§5.1, §6). Finally, we document one curious \emph{beneficial} anomaly
---- a reproducible small negative ΔPPL on Gemma-4-E4B under the
-asymmetric-without-nsep variant, traced at 87 \% to the Key cache and
-plausibly caused by accidental attention-logit entropy regularization on
-a multimodal-trained model evaluated text-only (§7). We include this
-only as an observation in search of a theory; it is not a deployment
-recommendation.
+The benchmark also includes a family of non-monotone naive-quantization
+failures within the Qwen lineage. Qwen2-7B exhibits a non-monotonic INT4
+failure under naive per-row quantization (+1382 ΔPPL at INT4 versus +12
+at INT3 and +5 at INT5), which we trace to an outlier channel at Layer 0
+of the K cache. A follow-up sweep on four additional Qwen2.5 checkpoints
+(0.5B / 1.5B / 3B / 7B, Phase 28 / 28b / 28c) finds three further
+non-monotone cases --- Qwen2.5-1.5B (INT3 spike), Qwen2.5-3B (INT3
+valley), and Qwen2.5-7B (three peaks at INT2 / INT4 / INT6) --- for four
+Qwen-family non-monotone cases in total. We report these as concrete
+failure modes that motivate looking for recipes robust across the
+bit-width axis, and we are explicit (§6.1) that the probed scope is the
+Qwen family only; we do not claim the phenomenon extends to non-Qwen
+architectures at finer granularity than the main Table 1 measurement.
+The proposed recipe handles all four Qwen non-monotone cases alongside
+the common case at identical bit budget (§5.1, §6.1). Finally, we
+document one curious \emph{beneficial} anomaly --- a reproducible small
+negative ΔPPL on Gemma-4-E4B under the asymmetric-without-nsep variant,
+traced at 87 \% to the Key cache and plausibly caused by accidental
+attention-logit entropy regularization on a multimodal-trained model
+evaluated text-only (§7). We include this only as an observation in
+search of a theory; it is not a deployment recommendation.
 
 The remainder of the paper is organized as follows. §2 surveys related
 work. §3 specifies the \texttt{nsep+pchan+asym} recipe in closed form.
 §4 describes our experimental setup. §5 reports the main results,
 including the four-method ablation. §6 discusses limitations --- in
 particular our reliance on a single-benchmark (WikiText-2) proxy for
-quality, the \(n = 1\) status of the Qwen2-7B anomaly, and
-Python-implementation overhead that our measurements do not attempt to
-remove. §7 documents the Gemma-4-E4B K-cache regularization observation.
-§8 concludes. Reproducibility materials, including dead-end experiments,
-the full Phase 13 method sweep, and the complete set of measured JSON
-results, are provided in the appendices and in the public code
-repository.
+quality, the Qwen-family scope of our non-monotone-failure
+characterization, and Python-implementation overhead that our
+measurements do not attempt to remove. §7 documents the Gemma-4-E4B
+K-cache regularization observation. §8 concludes. Reproducibility
+materials, including dead-end experiments, the full Phase 13 method
+sweep, and the complete set of measured JSON results, are provided in
+the appendices and in the public code repository.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -1553,26 +1437,120 @@ F collects the full hallucination table and trial design.
 
 \subsection{6. Discussion}\label{discussion}
 
-\subsubsection{\texorpdfstring{6.1 The Qwen2-7B ``INT4 valley'': an
-\(n = 1\)
-observation}{6.1 The Qwen2-7B ``INT4 valley'': an n = 1 observation}}\label{the-qwen2-7b-int4-valley-an-n-1-observation}
+\subsubsection{6.1 Non-monotone naive-quantization failures across the
+Qwen
+family}\label{non-monotone-naive-quantization-failures-across-the-qwen-family}
 
-In our broader 27-model survey from the companion (preprint) mechanism
-study, and in the 8-model subset we re-benchmarked end-to-end for the
-present work, the \textbf{Qwen2-7B naive INT4 failure (+1382 ΔPPL) is
-the single observation of a non-monotonic bit-width failure}. We
-emphasize the sample size explicitly: 1 / 27 in the survey, 1 / 8 in the
-present benchmark. We do not claim there is a class of ``Mode 1'' models
-characterized by this pattern; we only claim that one model shows it.
-Whether the phenomenon recurs on untested models (other Qwen releases,
-other families, future training recipes) is beyond what our data can
-settle. Other KV-quantization papers (KVQuant, KIVI) report per-channel
-outliers on a broader set of models, so specific-channel pathology is
-likely not unique to Qwen2-7B, but we cannot independently connect those
-reports to the specific non-monotonic INT4 behavior we observe. The
-proposed recipe in §3 handles the Qwen2-7B anomaly and the common case
-under the same bit budget, which is what allows us to recommend the
-recipe without bifurcating on mode classification.
+The initial version of this paper reported the Qwen2-7B naive INT4
+failure (+1382 ΔPPL, versus +12 at INT3 and +5 at INT5) as the single
+observation of a non-monotone bit-width failure in our 27-model survey
+and 8-model end-to-end benchmark. A follow-up probe (Phase 28 / 28b /
+28c, \texttt{results/phase28*.json}) ran the same naive per-row
+symmetric INT-\(b\) sweep for \(b \in \{2, 3, 4, 5, 6, 8\}\) on four
+additional Qwen2.5 checkpoints (0.5B, 1.5B, 3B, 7B) with the v0.3 recipe
+also measured at INT3. The four-checkpoint naive sweep is summarised in
+Table 5.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1600}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1040}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1200}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1040}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0880}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1040}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0640}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1520}}
+  >{\centering\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1040}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Qwen2.5 checkpoint
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+INT2
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+INT3
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+INT4
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+INT5
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+INT6
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+INT8
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Pattern
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+v0.3 rescue
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0.5B & +994.2 \% & +21.8 \% & +13.0 \% & +2.9 \% & +3.3 \% & +0.2 \% &
+Monotone & +10.75 \% \\
+1.5B & +727.9 \% & \textbf{+59675 \%} & +103.7 \% & +149.5 \% & +133.4
+\% & −0.0 \% & \textbf{INT3 spike} & \textbf{+2.48 \%} \\
+3B & +172.8 \% & \textbf{+743.5 \%} & +14.4 \% & +9.7 \% & +0.3 \% &
++0.0 \% & \textbf{INT3 valley} & \textbf{+0.91 \%} \\
+7B & \textbf{+3414 \%} & +175.7 \% & \textbf{+3663 \%} & +66.6 \% &
+\textbf{+3498 \%} & +0.3 \% & \textbf{Multi-peak} & \textbf{+3.47 \%} \\
+\end{longtable}
+}
+
+Table 5: Naive per-row symmetric INT-\(b\) ΔPPL as a percentage of FP16
+baseline PPL across four Qwen2.5 checkpoints, plus the v0.3
+\texttt{nsep+pchan+asym} INT3 result. Baseline PPLs: 14.05 (0.5B), 9.99
+(1.5B), 8.40 (3B), 5.21 (7B). Raw numbers in
+\texttt{results/phase28*.json}. ``Mode 1'' is our internal label for any
+non-monotone bit-width pattern: at least one interior bit width produces
+a large ΔPPL that relaxes at a \emph{higher} bit width.
+
+\textbf{The phenomenon is not \(n = 1\).} Three of the four Qwen2.5
+checkpoints probed (1.5B, 3B, 7B) exhibit non-monotone
+naive-quantization failures. Combined with the original Qwen2-7B INT4
+valley, this gives four Qwen-family Mode 1 cases in total. Only
+Qwen2.5-0.5B shows a (nearly) monotone ΔPPL-vs-bits curve under naive
+quantization, with a tiny INT6 → INT5 reversal inside the
+bit-budget-dominated regime (+3.3 \% → +2.9 \%) that we treat as noise
+rather than a true non-monotone spike.
+
+\textbf{Three qualitatively different failure shapes within one family.}
+(i) Qwen2-7B has a clean INT4 valley: INT3 (\(+143 \%\)) and INT5
+(\(+60 \%\)) are each much smaller than the INT4 peak (+1382 ΔPPL,
+\(+16514 \%\)). (ii) Qwen2.5-3B has a clean INT3 valley with rapid
+relaxation to a near-lossless INT8 (\(+0.0 \%\)). (iii) Qwen2.5-1.5B has
+an INT3 spike where the rest of the naive sweep (INT4 -- INT6) is
+already above \(+100 \%\) of baseline; the naive regime is broken almost
+everywhere, with a \(\sim 400 \times\) extra spike precisely at INT3.
+(iv) Qwen2.5-7B has three peaks at INT2, INT4, and INT6 (all above
+\(+3000 \%\) of baseline), with the odd bit widths INT3 (\(+176 \%\))
+and INT5 (\(+67 \%\)) at intermediate regressions and INT8 essentially
+lossless (\(+0.30 \%\)). We record this bit-parity pattern as an open
+observation rather than a mechanism claim: the raw data is in
+\texttt{results/phase28c\_mid\_qwen\_scale.json} for follow-up work.
+
+\textbf{The v0.3 recipe rescues all four Qwen non-monotone cases to
+below our 5 \%-of-baseline threshold.} Under \texttt{nsep+pchan+asym}
+INT3, the measured regressions are: Qwen2-7B \(+1.24 \%\) (Table 1),
+Qwen2.5-1.5B \(+2.48 \%\), Qwen2.5-3B \(+0.91 \%\), Qwen2.5-7B
+\(+3.47 \%\). Qwen2.5-14B, which is monotone under naive quantization,
+is at \(+4.64 \%\) (Table 1). Qwen2.5-0.5B is rescued only partially to
+\(+10.75 \%\) of baseline --- above our threshold but two orders of
+magnitude better than naive INT3 on the same model; we treat this as a
+scope caveat (§6.3) rather than a claim of universal coverage.
+
+\textbf{Scope of the generalization.} The non-monotone failures we have
+confirmed are all in the Qwen family (Qwen2 and Qwen2.5 releases).
+Whether the same pattern appears in non-Qwen architectures at finer
+bit-width granularity than the main Table 1 measurement is untested;
+other KV-quantization papers (KVQuant, KIVI) report per-channel outliers
+on broader model sets, so specific-channel pathology is likely not
+unique to Qwen, but we cannot independently connect those reports to the
+specific non-monotone bit-width behaviour we observe. The proposed
+recipe in §3 handles all Qwen non-monotone cases we have measured and
+the common case at the same bit budget, which is what allows us to
+recommend the recipe without bifurcating on mode classification at
+deploy time.
 
 \subsubsection{\texorpdfstring{6.2 When modeq is \emph{not} the right
 choice}{6.2 When modeq is not the right choice}}\label{when-modeq-is-not-the-right-choice}
@@ -1636,15 +1614,22 @@ cache structure were not evaluated.
   touched. A paper-scale downstream-task campaign covering these remains
   warranted future work.
 \item
-  \emph{Sample size for the Mode 1 anomaly.} See §6.1. The Qwen2-7B
-  observation is \(n = 1\); we structure our claims accordingly but
-  cannot exclude the possibility that other models exhibit this pattern.
+  \emph{Scope of the Mode 1 characterization is the Qwen family only.}
+  See §6.1 and Table 5. We have four confirmed non-monotone-failure
+  cases (Qwen2-7B, Qwen2.5-1.5B, Qwen2.5-3B, Qwen2.5-7B), all rescued by
+  the v0.3 recipe, plus one partially-rescued small-scale case
+  (Qwen2.5-0.5B, +10.75 \% of baseline). Whether the same pattern
+  appears on non-Qwen architectures at bit-width granularity finer than
+  the main Table 1 measurement remains untested.
 \item
-  \emph{No throughput measurement.} The current implementation is
-  Python-level quantize/dequantize on top of the stock
-  \texttt{DynamicCache}. A fused Triton or CUDA kernel would remove the
-  Python overhead. The ``\textless{} 5 \%'' claim in this paper is about
-  quality only; we make no speed claim.
+  \emph{Throughput measured end-to-end in Python only.} Measured
+  per-token decode overhead of \texttt{Int3AsymNsepPchanCache} on an
+  A100 (Phase 27) is \(+2.4 \%\) on Qwen2-7B and \(+4.2 \%\) on
+  Llama-3.1-8B via \texttt{torch.compile(dynamic=False)} over the
+  per-layer batched unpack (§6.2). No hand-written CUDA or Triton kernel
+  has been written or profiled; the absolute-lower-overhead operating
+  point may be lower than our Python-side measurement and has not been
+  characterized.
 \item
   \emph{Reproducibility with current HuggingFace \texttt{transformers}.}
   One of our intended nine benchmark models (Phi-3-medium-4k-instruct)
@@ -1773,18 +1758,20 @@ probes no degradation was detected''.
 The scope of the positive claim is deliberately narrow. We do not
 compete with rotation-based or codebook-based methods at the 1--2 bit
 frontier; we do not claim generalization to reasoning, code, or
-multi-task long-context benchmarks beyond the two probes above; we do
-not claim the Qwen2-7B ``INT4 valley of death'' pathology generalizes
-beyond \(n = 1\); and we flag a single-cell 8 K Qwen2-7B NIH anomaly
-(§5.7, Appendix F.4) as an open observation to revisit. What we do claim
-is that a very simple recipe, with no moving parts outside of
-per-channel arithmetic, attains the common-case quality of more complex
-methods at INT3 on a range of open-weight Transformers that spans half a
-decade of architectural evolution. We also claim that the recipe's three
-ingredients are empirically indivisible: this is a finding we believe is
-useful independent of the practical deployment case, because it
-specifies a concrete way in which naive weight-quantization recipes do
-\emph{not} transplant cleanly to KV caches.
+multi-task long-context benchmarks beyond the two probes above; we
+characterize non-monotone naive-quantization failures on four
+Qwen-family checkpoints (§6.1, Table 5) but do not claim they extend to
+non-Qwen architectures at the same bit-width granularity; and we flag a
+single-cell 8 K Qwen2-7B NIH anomaly (§5.7, Appendix F.4) as an open
+observation to revisit. What we do claim is that a very simple recipe,
+with no moving parts outside of per-channel arithmetic, attains the
+common-case quality of more complex methods at INT3 on a range of
+open-weight Transformers that spans half a decade of architectural
+evolution. We also claim that the recipe's three ingredients are
+empirically indivisible: this is a finding we believe is useful
+independent of the practical deployment case, because it specifies a
+concrete way in which naive weight-quantization recipes do \emph{not}
+transplant cleanly to KV caches.
 
 The reference implementation, benchmark scripts, and measured JSON data
 are released under Apache 2.0. Every number in this paper is
@@ -2544,5 +2531,3 @@ settle}\label{f.5-what-this-probe-cannot-settle}
   sampling with temperature could reveal a different noise / retrieval
   regime we did not probe.
 \end{itemize}
-
-\end{document}
