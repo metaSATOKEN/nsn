@@ -11,7 +11,7 @@
 
 ## TL;DR
 
-Low-bit KV cache quantization usually scales smoothly with bit width, but can fail dramatically on some models — naive INT4 produces **+1382 ΔPPL on Qwen2-7B** (the one model in our 27-model survey that shows this "INT4 valley of death"; not observed in the other 26). modeq investigates why this happens and provides a simple, calibration-free INT3 recipe that handles a range of recent models reliably.
+Low-bit KV cache quantization usually scales smoothly with bit width, but can fail dramatically on some models — naive INT4 produces **+1382 ΔPPL on Qwen2-7B** (the original "INT4 valley of death" case from our 27-model survey). A follow-up sweep on four additional Qwen2.5 checkpoints (Phase 28 / 28b / 28c) finds three further non-monotone cases: Qwen2.5-1.5B (INT3 spike), Qwen2.5-3B (INT3 valley), and Qwen2.5-7B (three-peak INT2 / INT4 / INT6) — four Qwen-family non-monotone cases in total. modeq investigates why this happens and provides a simple, calibration-free INT3 recipe that handles a range of recent models reliably.
 
 > **v0.3 default**: `nsep+pchan` asymmetric INT3.
 
@@ -83,7 +83,7 @@ WikiText-2 perplexity increase (ΔPPL) vs bit width on 7 models, naive absmax (n
 | GPT-J-6B (Mode 2) | 10.29 | +6 | +0.3 | +0.03 | +0 | +0 | +0 |
 | Phi-3-medium (Mode 2) | 2.13 | +5 | +0.2 | +0.03 | +0.01 | +0 | +0 |
 
-![Naive INT quantization ΔPPL vs bit width on 7 models (log y-axis). 6 of 7 scale monotonically; Qwen2-7B is the exception with a +1382 ΔPPL spike at INT4 — an n=1 anomaly in our sample.](figures/fig01_int4_valley.png)
+![Naive INT quantization ΔPPL vs bit width on 7 models (log y-axis). 6 of 7 scale monotonically; Qwen2-7B is the exception with a +1382 ΔPPL spike at INT4. This figure shows the original 7-model snapshot; a follow-up Qwen-family probe (see the Mode 1 scope section below) finds three more non-monotone cases on Qwen2.5 checkpoints.](figures/fig01_int4_valley.png)
 
 One of these is not like the others. **Qwen2-7B at INT4 is 295× worse than at INT5, and 116× worse than at INT3.** This is the INT4 valley of death.
 
@@ -99,11 +99,20 @@ In the 27-model bit-width survey from the companion paper, 26 of 27 models scale
 | **Naive INT4 on layers 1–27, nsep+pchan on Layer 0 only** | **+0.38** (99.97% rescue) |
 | Naive INT4 on Layer 0 only, nsep+pchan on layers 1–27 | +1368.18 (catastrophe preserved) |
 
-We call this "Mode 1". It is important to be explicit about the sample size:
+We call this "Mode 1". It is important to be explicit about the scope of the observation:
 
-> **Mode 1 is an n = 1 observation.** Qwen2-7B is the only model in our 27-model survey (and the only one in our 8-model v0.3 benchmark) to exhibit the INT4-valley / Layer-0-outlier pattern. Whether the phenomenon recurs in models we have not tested — other Qwen releases, other families, future models — is not something this dataset can settle. Other KV-quantization papers (KVQuant, KIVI) report per-channel outliers in a way that suggests specific-channel issues are not unique to Qwen2-7B, but we cannot independently connect those reports to the specific non-monotonic INT4 behavior we observe. Treat "Mode 1" as a label for a phenomenon we have observed once, not as a claim about a broader class of models.
+> **Mode 1 is characterized on the Qwen family only.** The initial Qwen2-7B INT4 valley was the single observation of this pattern in our 27-model survey and 8-model v0.3 benchmark. A follow-up probe (Phase 28 / 28b / 28c, `results/phase28*.json`) ran the same naive per-row INT-$b$ sweep for $b \in \{2, 3, 4, 5, 6, 8\}$ on four additional Qwen2.5 checkpoints. Three of the four (1.5B, 3B, 7B) also exhibit non-monotone failures under naive quantization; Qwen2.5-0.5B does not. In total we now have **four Qwen-family Mode 1 cases** (Qwen2-7B INT4 valley, Qwen2.5-1.5B INT3 spike, Qwen2.5-3B INT3 valley, Qwen2.5-7B three-peak INT2 / INT4 / INT6). The three failure shapes are qualitatively different: clean single-bit valleys (Qwen2-7B, Qwen2.5-3B), an INT3 spike on top of an already-degraded naive sweep (Qwen2.5-1.5B), and a bit-parity multi-peak pattern (Qwen2.5-7B where even bit widths fail while odd bit widths do not). Whether the phenomenon recurs in non-Qwen families at the bit-width granularity we probed is not something this dataset can settle; other KV-quantization papers (KVQuant, KIVI) report per-channel outliers in ways consistent with broader occurrence, but we cannot independently connect those reports to the specific non-monotonic patterns we observe. Treat "Mode 1" as a label for a phenomenon we have now observed four times within one model family, not as a claim about arbitrary architectures.
 
-For the practical v0.3 recommendation this caveat does not change the recipe: **norm separation + per-channel scaling + asymmetric window** (nsep+pchan asym) handles both the common Mode-2 case and the single Mode-1 case uniformly, and both land below our 5 % threshold at 3 bits/value.
+| Qwen2.5 checkpoint | INT2        | INT3          | INT4        | INT5      | INT6        | INT8   | Pattern          | v0.3 rescue |
+|:-------------------|------------:|--------------:|------------:|----------:|------------:|-------:|:-----------------|:-----------:|
+| 0.5B               |   +994.2 %  |      +21.8 %  |    +13.0 %  |    +2.9 % |     +3.3 %  | +0.2 % | Monotone         | +10.75 %    |
+| 1.5B               |   +727.9 %  | **+59675 %**  |   +103.7 %  |  +149.5 % |   +133.4 %  | −0.0 % | **INT3 spike**   | **+2.48 %** |
+| 3B                 |   +172.8 %  |   **+743.5 %**|    +14.4 %  |    +9.7 % |     +0.3 %  | +0.0 % | **INT3 valley**  | **+0.91 %** |
+| 7B                 | **+3414 %** |     +175.7 %  | **+3663 %** |   +66.6 % | **+3498 %** | +0.3 % | **Multi-peak**   | **+3.47 %** |
+
+Numbers are naive per-row symmetric INT-$b$ ΔPPL as a percentage of FP16 baseline, except the rightmost column (v0.3 `nsep+pchan+asym` INT3). Baseline PPLs: 14.05 (0.5B), 9.99 (1.5B), 8.40 (3B), 5.21 (7B). Qwen2-7B is not in this table because it was probed under a different Phase-13 sweep and appears elsewhere in the report at +1382 ΔPPL (INT4).
+
+For the practical v0.3 recommendation this scope caveat does not change the recipe: **norm separation + per-channel scaling + asymmetric window** (nsep+pchan asym) handles the common Mode-2 case and every one of the four Qwen Mode-1 cases uniformly; all four rescue to below 5 % of baseline PPL at 3 bits/value. The one exception is Qwen2.5-0.5B, which is partially rescued to +10.75 % of baseline — roughly 2× our threshold, but about 100× better than naive INT3 on the same model. We retain that as a scope caveat: the recipe is not claimed to clear the 5 % bar at sub-1B-parameter scale.
 
 ---
 
@@ -516,9 +525,9 @@ See `results/phase7_residual_correction.json`, `results/phase8_rms_residual_vali
 
 ### What modeq contributes that isn't in prior work
 
-1. **A diagnostic distinction between the common case and one observed special case.** Naive INT KV quantization almost always scales monotonically with bit width (Mode 2, 26 of 27 models in our survey). The single exception we have observed — Qwen2-7B — shows a non-monotonic "INT4 valley" localized to Layer 0 of the K cache (Mode 1, n = 1). We do not claim that only one such model exists; we claim only that we have observed this phenomenon once. See [docs/THEORY.md](docs/THEORY.md). PolarQuant, TurboQuant, and KVLinC neither diagnose this distinction nor characterize the Qwen2-7B pathology.
+1. **A diagnostic distinction between the common case and a family of non-monotone special cases.** Naive INT KV quantization usually scales monotonically with bit width (Mode 2, the majority pattern). The initial 27-model survey flagged Qwen2-7B as the one exception with a non-monotonic "INT4 valley" localized to Layer 0 of the K cache. A follow-up probe (Phase 28 / 28b / 28c) extends this to four Qwen-family cases with three qualitatively different failure shapes (clean single-bit valleys, an INT3 spike on top of an already-degraded naive sweep, and a bit-parity multi-peak). We do not claim the pattern extends to non-Qwen architectures at the bit-width granularity we probed; we claim only that we have observed it four times within one family. See [docs/THEORY.md](docs/THEORY.md). PolarQuant, TurboQuant, and KVLinC neither diagnose this distinction nor characterize the Qwen-family pathology.
 
-2. **The INT4 valley of death (observed on Qwen2-7B).** On Qwen2-7B, naive INT shows a non-monotonic ΔPPL vs bit-width curve: INT4 is catastrophically worse than both INT3 and INT5 (by 295× at INT4 vs INT5). This grid-alignment interaction between outlier magnitude and quantization step size is not, to our knowledge, previously characterized. We report it as a phenomenon observed on one model, not as a general property of "Mode 1" models — we have not tested enough instances of the pattern to make that stronger claim.
+2. **The INT4 valley of death and related non-monotone patterns.** On Qwen2-7B, naive INT shows a non-monotonic ΔPPL vs bit-width curve: INT4 is catastrophically worse than both INT3 and INT5 (by 295× at INT4 vs INT5). The Phase 28 / 28c follow-up finds related non-monotone patterns on Qwen2.5-1.5B, 3B, and 7B (see the Mode 1 scope section and its table). This grid-alignment interaction between outlier magnitude and quantization step size is not, to our knowledge, previously characterized. We report it as a phenomenon now observed on four Qwen-family checkpoints, not as a general property of arbitrary Transformers — we have not tested enough non-Qwen instances at the same granularity to make that stronger claim.
 
 3. **Layer-0 causal isolation.** On Qwen2-7B, applying `nsep+pchan` to Layer 0 alone rescues 99.97% of the catastrophic ΔPPL. No prior KV quantization work performs this kind of selective-layer intervention to isolate the site of failure.
 
@@ -550,7 +559,7 @@ This is a **v0.3 research prototype** (April 2026). It works, the numbers are re
 - **Not yet a drop-in for HuggingFace Transformers**: you wire `Int3AsymNsepPchanCache` against the model's `DynamicCache` manually for now. Proper integration is on the roadmap.
 - **v0.3 PPL measured on 8 models** (Phase 14 + Phase 16 + Phase 17): GPT-J-6B (2021), Pythia-6.9B / Mistral-7B-v0.1 (2023), Qwen2-7B / Qwen2.5-14B / Llama-3.1-8B (2024), Qwen3.5-9B / Gemma 4-E4B (2026). 8 of 8 stay below our < 5 %-of-baseline-PPL threshold on WikiText-2, all beating the symmetric baseline by 50–96 %. Phi-3-medium-4k-instruct was the intended 7th Phase-16 model but is blocked by an HF custom-code / transformers version incompatibility unrelated to modeq.
 - **Real bit-packing measured on 2 models**: `Int3AsymNsepPchanCache.size_bytes()` empirically validated on Qwen2-7B and Llama-3.1-8B (5.09× measured). The other 4 models were validated in simulation (quantize → dequantize → WikiText-2 PPL); their real-packed ratios would be essentially identical (within 0.01 bits/value for head_dim=128, slightly higher for GPT-J-6B's head_dim=256 due to per-channel metadata overhead).
-- **Sample size for Mode 1**: only one catastrophic case (Qwen2-7B) in our 27-model sample. The Layer-0 mechanism is causally isolated, but how often the pattern occurs in the open-model population is unknown. Safe default: always use `qa_nsep_pchan_asym`, which handles both modes.
+- **Sample size for Mode 1**: four non-monotone naive-quantization cases confirmed within the Qwen family (Qwen2-7B INT4 valley, Qwen2.5-1.5B INT3 spike, Qwen2.5-3B INT3 valley, Qwen2.5-7B three-peak INT2 / INT4 / INT6; see the scope section above and `results/phase28*.json`), plus one partially-rescued small-scale case (Qwen2.5-0.5B at +10.75 % of baseline). Non-Qwen families have not been probed at the same bit-width granularity. Safe default: always use `qa_nsep_pchan_asym`, which handles both modes and all four Qwen-family non-monotone cases uniformly.
 - **Pre-LN only**: Post-LN models (GPT-1 style) are not evaluated.
 - **Long-context validation pending**: all PPL numbers are at ctx=1024 sliding window. 32K+ is a roadmap item.
 

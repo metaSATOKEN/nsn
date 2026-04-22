@@ -66,7 +66,7 @@ Added in **v0.3.12**. See [Phase 27](experiments/phase27_decode_latency.py) for 
 
 ## The problem this solves
 
-Low-bit KV cache quantization *usually* scales smoothly with bit width — except when it doesn't. Naive INT4 produces **+1382 ΔPPL on Qwen2-7B** (1 of 27 models we surveyed), while INT3 on the same model gives just +12 and INT5 gives +5. This is the **INT4 valley of death**:
+Low-bit KV cache quantization *usually* scales smoothly with bit width — except when it doesn't. Naive INT4 produces **+1382 ΔPPL on Qwen2-7B**, while INT3 on the same model gives just +12 and INT5 gives +5. This is the **INT4 valley of death** — and a follow-up sweep (`results/phase28*.json`) finds three further non-monotone cases in the Qwen family (Qwen2.5-1.5B / 3B / 7B):
 
 ![Naive INT quantization ΔPPL vs bit width on 7 models (log y-axis). Qwen2-7B spikes at INT4 (+1382 ΔPPL); the other 6 models scale monotonically.](figures/fig01_int4_valley.png)
 
@@ -148,7 +148,7 @@ Going to 4 bits costs 33 % more memory for a further quality gain; v0.3 at 3 bit
 
 - Primary quality metric is **WikiText-2 sliding-window perplexity**. Two bounded downstream probes (MMLU 5-shot on 2 models, NIH on 3 models at 8K/32K) show no degradation; reasoning / code / instruction-following / LongBench are *not* yet measured.
 - **Throughput**: measured. `Int3AsymNsepPchanCache.to_fp16_compiled()` (v0.3.12) adds **+2.4 % (Qwen2-7B) / +4.2 % (Llama-3.1-8B)** per-token decode overhead vs FP16 baseline on A100 Colab (Phase 27). A naive per-head Python loop is much slower (+146 / +354 %); the `torch.compile` inside `.to_fp16_compiled()` fuses the small kernels into 1-2 compiled kernels and removes essentially all overhead. No hand-written CUDA kernel required.
-- **Qwen2-7B "INT4 valley"**: an n = 1 observation in our 27-model survey; we don't claim it generalizes.
+- **Non-monotone naive-quantization failures**: characterized in detail on four Qwen checkpoints (Qwen2-7B INT4 valley, Qwen2.5-1.5B INT3 spike, Qwen2.5-3B INT3 valley, Qwen2.5-7B three-peak INT2 / INT4 / INT6). All rescued by the v0.3 recipe. Non-Qwen families have not been probed at the same bit-width granularity; we don't claim the pattern generalizes beyond Qwen.
 - **`usable` label**: a modeq-internal threshold (< 5 % of baseline WikiText-2 ΔPPL), **not** a deployment certification.
 
 ## Citation
