@@ -475,9 +475,28 @@ v0.3 went through twelve numbered experimental phases (see `experiments/phase9_*
 
 9. **Phase 20 + 21 — Gemma 4-E4B B-anomaly probe.** The asym-only ablation (B) showed a small but reproducible *negative* ΔPPL on gemma-4-E4B (−0.40 on one text segment, −0.15 on a fresh segment, across fp16 and native bf16). A K-only / V-only split isolated ~87 % of the effect to the Key cache, suggesting accidental attention-logit entropy regularization on this multimodal-trained model when evaluated text-only. **We do NOT recommend deploying (B)** — the same variant fails the usability threshold on 5 of 8 other models (catastrophically on 3, mildly on 2; Phase 19). The v0.3 recommended (D) is unaffected (+0.93 to +1.16 ΔPPL consistently). Flagged as an appendix-level open question; see `results/phase21_gemma_b_anomaly_probe.json` for the full breakdown.
 
+10. **Phase 28d — the naive bit-parity pattern on Qwen2.5-7B is a per-row-sym artifact, not a grid-structural property.** Qwen2.5-7B shows a striking multi-peak failure under naive per-row symmetric quantization: INT2, INT4, INT6 all regress by > +3000 % of baseline, while the odd bit widths INT3 (+176 %) and INT5 (+67 %) are comparatively mild. A natural hypothesis is that this is bit-parity-structural — the zero level aligning with outlier positions at even grid step counts. Phase 28d (`results/phase28d_qwen25_7b_asym_sweep.json`) disambiguates this by running the v0.3 `nsep+pchan+asym` recipe at every bit width in $\{2, 3, 4, 5, 6, 8\}$ on Qwen2.5-7B:
+
+    | bit  | naive %   | asym %   | rescue factor | verdict                  |
+    |:---- |----------:|---------:|--------------:|:-------------------------|
+    | INT2 | +3414 %   | +41.5 %  |         82×   | bit-floor, still broken  |
+    | INT3 |  +176 %   |  +3.5 %  |         51×   | passes 5 % threshold     |
+    | INT4 | +3663 %   |  +1.0 %  |      3 540×   | passes 5 % threshold     |
+    | INT5 |   +67 %   |  −0.02 % |      ~$\infty$ | indistinguishable from FP16 |
+    | INT6 | +3498 %   |  +0.07 % |     53 670×   | indistinguishable from FP16 |
+    | INT8 |   +0.3 %  |  +0.02 % |        —      | both clean               |
+
+    The even-bit naive catastrophe **completely disappears** under asym at INT4 and INT6, and INT5 and INT6 are essentially lossless. The one exception is INT2 (+41.5 %), which we interpret as the 3-bit floor already flagged in the paper §6.2 — 2 bits is 4 levels and simply does not have enough resolution for the post-RoPE direction distribution, rescue factor of 82× notwithstanding. So the broader claim is:
+
+    * The naive "bit-parity" multi-peak pattern on Qwen2.5-7B is a **per-row sym zero-level grid-alignment artifact**, not a structural grid-parity phenomenon. Asymmetric windowing removes it entirely at INT4+.
+    * On this particular broken model, **v0.3 is effectively bit-width-universal** above the INT3 floor. INT4 and INT6 asym are close to lossless despite naive catastrophe at the same bits.
+    * This observation is one model ($n = 1$ for Qwen2.5-7B), and therefore does NOT elevate to a paper claim; the paper's "INT3-tier recipe" scope remains accurate as a deployment pitch across the benchmark. See also the Mode-2-at-INT4 note below for the opposite direction on Llama-3.1-8B.
+
 ### Honesty note on Mode 2 at INT4
 
 Phase 14 also found that **asymmetric INT4 is *worse* than symmetric INT4 on Llama-3.1-8B** (+0.027 vs +0.013 ΔPPL) while tying on Qwen2-7B. Above INT3, the zero-centering of symmetric quantization appears to carry value that asym's extra level cannot make up for. Accordingly the v0.3 dispatcher uses asym at INT3 only and returns to symmetric for INT4+.
+
+Phase 28d (item 10 above) finds the opposite direction on Qwen2.5-7B: asym INT4 gives only +0.05 ΔPPL while naive INT4 gives +191 ΔPPL, and asym INT6 is essentially lossless while naive INT6 catastrophically fails. The two observations together suggest that the Mode-2-at-INT4 honesty note is **distribution-dependent**: on "clean" models where naive INT4 is already good, sym's zero-centering wins a marginal edge over asym; on "broken" models where naive INT4 is catastrophic, asym's outlier-hugging window wins by orders of magnitude. The shipped v0.3 dispatcher currently defaults to sym at INT4+, which is the conservative choice for the clean majority but leaves headroom on the broken-distribution edge cases.
 
 ---
 

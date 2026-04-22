@@ -1,0 +1,141 @@
+{
+  "date": "2026-04-22T13:18:09",
+  "phase": "28d",
+  "purpose": "Test whether v0.3 (nsep+pchan+asym) rescues Qwen2.5-7B at ALL bit widths or only at INT3, to disambiguate bit-parity-survives-asym (H2) from naive-artifact (H1).",
+  "model": "Qwen/Qwen2.5-7B",
+  "label": "Qwen2.5-7B",
+  "protocol": {
+    "task": "WikiText-2 sliding-window PPL",
+    "ctx_len": 1024,
+    "stride": 512,
+    "max_windows": 10,
+    "bits_probed": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      8
+    ]
+  },
+  "baseline_ppl": 5.211838298197663,
+  "per_method": {
+    "FP16 baseline": {
+      "ppl": 5.211838298197663,
+      "delta_ppl": 0.0,
+      "pct_of_base": 0.0
+    },
+    "(A) naive INT2": {
+      "ppl": 183.15721580433276,
+      "delta_ppl": 177.9453775061351,
+      "pct_of_base": 3414.2536150377387
+    },
+    "(A) naive INT3": {
+      "ppl": 14.370818383925156,
+      "delta_ppl": 9.158980085727492,
+      "pct_of_base": 175.73415677333682
+    },
+    "(A) naive INT4": {
+      "ppl": 196.11761611300656,
+      "delta_ppl": 190.90577781480889,
+      "pct_of_base": 3662.9259561031886
+    },
+    "(A) naive INT5": {
+      "ppl": 8.684613270602313,
+      "delta_ppl": 3.4727749724046495,
+      "pct_of_base": 66.63243895355676
+    },
+    "(A) naive INT6": {
+      "ppl": 187.53574176612958,
+      "delta_ppl": 182.3239034679319,
+      "pct_of_base": 3498.2647779188082
+    },
+    "(A) naive INT8": {
+      "ppl": 5.227731964552125,
+      "delta_ppl": 0.015893666354461544,
+      "pct_of_base": 0.30495317477439443
+    },
+    "(D) asym INT2": {
+      "ppl": 7.376606002340351,
+      "delta_ppl": 2.1647677041426876,
+      "pct_of_base": 41.5355884101642
+    },
+    "(D) asym INT3": {
+      "ppl": 5.392918045892188,
+      "delta_ppl": 0.1810797476945245,
+      "pct_of_base": 3.4743930516252735
+    },
+    "(D) asym INT4": {
+      "ppl": 5.2657653417709,
+      "delta_ppl": 0.05392704357323641,
+      "pct_of_base": 1.034702929902588
+    },
+    "(D) asym INT5": {
+      "ppl": 5.210935876620179,
+      "delta_ppl": -0.0009024215774839917,
+      "pct_of_base": -0.01731484220828692
+    },
+    "(D) asym INT6": {
+      "ppl": 5.215235428148881,
+      "delta_ppl": 0.003397129951217437,
+      "pct_of_base": 0.06518103127628151
+    },
+    "(D) asym INT8": {
+      "ppl": 5.212912946531087,
+      "delta_ppl": 0.0010746483334234114,
+      "pct_of_base": 0.02061937212816142
+    }
+  },
+  "per_bit_rescue": {
+    "2": {
+      "naive_pct": 3414.2536150377387,
+      "asym_pct": 41.5355884101642,
+      "rescue_x": 82.2006800847977,
+      "verdict": "asym BROKEN too"
+    },
+    "3": {
+      "naive_pct": 175.73415677333682,
+      "asym_pct": 3.4743930516252735,
+      "rescue_x": 50.579814707818045,
+      "verdict": "asym passes 5 %"
+    },
+    "4": {
+      "naive_pct": 3662.9259561031886,
+      "asym_pct": 1.034702929902588,
+      "rescue_x": 3540.0749821478075,
+      "verdict": "asym passes 5 %"
+    },
+    "5": {
+      "naive_pct": 66.63243895355676,
+      "asym_pct": -0.01731484220828692,
+      "rescue_x": 66632.43895355676,
+      "verdict": "asym passes 5 %"
+    },
+    "6": {
+      "naive_pct": 3498.2647779188082,
+      "asym_pct": 0.06518103127628151,
+      "rescue_x": 53669.98203957198,
+      "verdict": "asym passes 5 %"
+    },
+    "8": {
+      "naive_pct": 0.30495317477439443,
+      "asym_pct": 0.02061937212816142,
+      "rescue_x": NaN,
+      "verdict": "(both clean)"
+    }
+  },
+  "summary": {
+    "even_bits_asym_pct": [
+      41.5355884101642,
+      1.034702929902588,
+      0.06518103127628151
+    ],
+    "odd_bits_asym_pct": [
+      3.4743930516252735,
+      -0.01731484220828692
+    ],
+    "all_rescued_under_5pct": false,
+    "some_even_bit_asym_broken": true,
+    "verdict": "H2 supported -- bit parity survives asym. Even-bit failures are structural to the quantization grid, not purely outlier-driven."
+  }
+}
