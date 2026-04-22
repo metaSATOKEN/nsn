@@ -1,0 +1,158 @@
+{
+  "date": "2026-04-22T10:23:32",
+  "protocol": {
+    "task": "WikiText-2 sliding-window PPL",
+    "ctx_len": 1024,
+    "stride": 512,
+    "max_windows": 10,
+    "text_chars": 48000,
+    "naive_bits": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      8
+    ],
+    "extra_methods": [
+      "(C) sym INT3 (v0.2) nsep+pchan",
+      "(D) asym INT3 (v0.3) nsep+pchan, shipped recipe"
+    ],
+    "models": [
+      "Qwen2.5-3B",
+      "Qwen2.5-7B"
+    ],
+    "mode_1_rule": "naive INT-b dPPL > 5x max of INT-(b-1) dPPL and INT-(b+1) dPPL, for interior bits b in {3, 4, 5, 6}. Heuristic; matches the 'non-monotone single-bit valley' definition used in Phase 28 and paper \u00a76.1.",
+    "rescue_rule": "recipe_rescues = (asym INT3 pct_of_base < 5 %)."
+  },
+  "context": {
+    "phase_28_prior_finding": "Qwen2.5-1.5B has a non-monotone INT3 valley (+5961 dPPL at INT3 vs +10 at INT4 and +15 at INT5 under naive per-row). Qwen2.5-0.5B is monotone Mode 2.",
+    "phase_28b_prior_finding": "v0.3 recipe rescues Qwen2.5-1.5B's INT3 valley from +59675 % to +2.48 % of baseline (24026x improvement ratio). Qwen2.5-0.5B is partially rescued to +10.75 % but does not reach the 5 % threshold.",
+    "paper_existing_qwen_coverage": "Qwen2-7B (INT4 valley, rescued to +1.24 %) and Qwen2.5-14B (Mode 2, rescued to +4.64 %) are already in the main 8-model benchmark."
+  },
+  "results": {
+    "Qwen2.5-3B": {
+      "model": "Qwen/Qwen2.5-3B",
+      "baseline_ppl": 8.39843050436953,
+      "per_method": {
+        "FP16 baseline": {
+          "ppl": 8.39843050436953,
+          "delta_ppl": 0.0,
+          "pct_of_base": 0.0
+        },
+        "(A) naive INT2": {
+          "ppl": 22.914814629918176,
+          "delta_ppl": 14.516384125548646,
+          "pct_of_base": 172.8463921681089
+        },
+        "(A) naive INT3": {
+          "ppl": 70.83706228530592,
+          "delta_ppl": 62.43863178093639,
+          "pct_of_base": 743.4559558294952
+        },
+        "(A) naive INT4": {
+          "ppl": 9.604288804908569,
+          "delta_ppl": 1.2058583005390382,
+          "pct_of_base": 14.35813870117345
+        },
+        "(A) naive INT5": {
+          "ppl": 9.217003202866504,
+          "delta_ppl": 0.8185726984969737,
+          "pct_of_base": 9.746734203147684
+        },
+        "(A) naive INT6": {
+          "ppl": 8.424892807255748,
+          "delta_ppl": 0.02646230288621787,
+          "pct_of_base": 0.31508628752062756
+        },
+        "(A) naive INT8": {
+          "ppl": 8.399074782576765,
+          "delta_ppl": 0.00064427820723445,
+          "pct_of_base": 0.007671412020367916
+        },
+        "(C) sym INT3 (v0.2)": {
+          "ppl": 8.858581072180737,
+          "delta_ppl": 0.46015056781120656,
+          "pct_of_base": 5.479006673589782
+        },
+        "(D) asym INT3 (v0.3)": {
+          "ppl": 8.474737721459512,
+          "delta_ppl": 0.07630721708998145,
+          "pct_of_base": 0.9085890161296254
+        }
+      },
+      "naive_dppl_by_bit": {
+        "2": 14.516384125548646,
+        "3": 62.43863178093639,
+        "4": 1.2058583005390382,
+        "5": 0.8185726984969737,
+        "6": 0.02646230288621787,
+        "8": 0.00064427820723445
+      },
+      "mode_1_spike_bit": 3,
+      "recipe_rescues": true
+    },
+    "Qwen2.5-7B": {
+      "model": "Qwen/Qwen2.5-7B",
+      "baseline_ppl": 5.211838298197663,
+      "per_method": {
+        "FP16 baseline": {
+          "ppl": 5.211838298197663,
+          "delta_ppl": 0.0,
+          "pct_of_base": 0.0
+        },
+        "(A) naive INT2": {
+          "ppl": 183.15721580433276,
+          "delta_ppl": 177.9453775061351,
+          "pct_of_base": 3414.2536150377387
+        },
+        "(A) naive INT3": {
+          "ppl": 14.370818383925156,
+          "delta_ppl": 9.158980085727492,
+          "pct_of_base": 175.73415677333682
+        },
+        "(A) naive INT4": {
+          "ppl": 196.11761611300656,
+          "delta_ppl": 190.90577781480889,
+          "pct_of_base": 3662.9259561031886
+        },
+        "(A) naive INT5": {
+          "ppl": 8.684613270602313,
+          "delta_ppl": 3.4727749724046495,
+          "pct_of_base": 66.63243895355676
+        },
+        "(A) naive INT6": {
+          "ppl": 187.53574176612958,
+          "delta_ppl": 182.3239034679319,
+          "pct_of_base": 3498.2647779188082
+        },
+        "(A) naive INT8": {
+          "ppl": 5.227731964552125,
+          "delta_ppl": 0.015893666354461544,
+          "pct_of_base": 0.30495317477439443
+        },
+        "(C) sym INT3 (v0.2)": {
+          "ppl": 5.969183496749002,
+          "delta_ppl": 0.7573451985513389,
+          "pct_of_base": 14.531248960913482
+        },
+        "(D) asym INT3 (v0.3)": {
+          "ppl": 5.392918045892188,
+          "delta_ppl": 0.1810797476945245,
+          "pct_of_base": 3.4743930516252735
+        }
+      },
+      "naive_dppl_by_bit": {
+        "2": 177.9453775061351,
+        "3": 9.158980085727492,
+        "4": 190.90577781480889,
+        "5": 3.4727749724046495,
+        "6": 182.3239034679319,
+        "8": 0.015893666354461544
+      },
+      "mode_1_spike_bit": 4,
+      "recipe_rescues": true
+    }
+  },
+  "status": "Phase 28c closes the Qwen2.5 scale coverage at 3B and 7B. Combined with Phase 28 / 28b and the paper's existing benchmark, the Qwen family is now characterized at 0.5B / 1.5B / 3B / 7B (Qwen2-7B) / 7B (Qwen2.5) / 14B -- six Qwen checkpoints across roughly 30x parameter range."
+}
