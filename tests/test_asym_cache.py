@@ -153,3 +153,64 @@ def test_asym_cache_cuda():
     y = cache.to_fp16()
     assert y.device == x.device
     assert y.shape == x.shape
+
+
+# ---------------------------------------------------------------------------
+# to_fp16_compiled (v0.3.12): torch.compile-accelerated unpack
+# ---------------------------------------------------------------------------
+
+def test_to_fp16_compiled_matches_eager_cpu():
+    """Compiled unpack must match eager to_fp16() within FP16 rounding.
+    CPU path, so small tensors only; the full Phase-27 CUDA measurement
+    lives under experiments/phase27_decode_latency.py.
+    """
+    torch.manual_seed(0)
+    x = torch.randn(4, 64, 128, dtype=torch.float16)
+    cache = Int3AsymNsepPchanCache.from_fp16(x)
+
+    eager    = cache.to_fp16()
+    compiled = cache.to_fp16_compiled()
+
+    assert eager.shape == compiled.shape
+    assert eager.dtype == compiled.dtype
+    # Within FP16 rounding (the compile path processes through fp32
+    # intermediaries identically to to_fp16 but the operator order
+    # may differ slightly after fusion).
+    max_abs_diff = (eager.float() - compiled.float()).abs().max().item()
+    assert max_abs_diff < 1e-2, f"compiled vs eager diverges: {max_abs_diff}"
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA not available")
+def test_to_fp16_compiled_matches_eager_cuda():
+    """Same check on CUDA, where the compile path actually matters."""
+    torch.manual_seed(0)
+    x = torch.randn(8, 1024, 128, dtype=torch.float16, device="cuda")
+    cache = Int3AsymNsepPchanCache.from_fp16(x)
+
+    eager    = cache.to_fp16()
+    compiled = cache.to_fp16_compiled()
+
+    assert eager.shape == compiled.shape
+    max_abs_diff = (eager.float() - compiled.float()).abs().max().item()
+    assert max_abs_diff < 1e-2, f"compiled vs eager diverges: {max_abs_diff}"
+
+
+def test_compiled_unpack_is_cached_at_class_level():
+    """The first call populates Int3AsymNsepPchanCache._compiled_unpack;
+    subsequent calls reuse it instead of recompiling every time.
+    """
+    # Reset any prior compile cache so this test is self-contained
+    Int3AsymNsepPchanCache._compiled_unpack = None
+
+    x = torch.randn(2, 16, 64, dtype=torch.float16)
+    cache = Int3AsymNsepPchanCache.from_fp16(x)
+    _ = cache.to_fp16_compiled()
+
+    # After one call, the class-level cache must be non-None
+    assert Int3AsymNsepPchanCache._compiled_unpack is not None
+
+    # A second instance should reuse the same compiled object
+    first_ref = Int3AsymNsepPchanCache._compiled_unpack
+    cache2 = Int3AsymNsepPchanCache.from_fp16(x)
+    _ = cache2.to_fp16_compiled()
+    assert Int3AsymNsepPchanCache._compiled_unpack is first_ref

@@ -207,6 +207,56 @@ class Int3AsymNsepPchanCache:
         d_renorm = d_q / d_q.norm(dim=-1, keepdim=True).clamp(min=1e-8)
         return (self.norm.float() * d_renorm).half()
 
+    def to_fp16_compiled(self):
+        """torch.compile-accelerated variant of :meth:`to_fp16`.
+
+        Numerically identical to :meth:`to_fp16` within FP16 rounding
+        (same mathematical pipeline), but wraps the unpack +
+        reconstruction + renormalization body in a ``torch.compile
+        (dynamic=False)`` kernel so the 10+ small CUDA kernels that
+        :meth:`to_fp16` launches get fused into 1-2 compiled kernels.
+
+        On an NVIDIA A100 (Colab, 1024-token prefill, 50 decode steps
+        median of 3 repeats) this reduces per-token decode overhead
+        from roughly +33 % (eager :meth:`to_fp16`, per-layer batched)
+        to +2.4 % on Qwen2-7B and +4.2 % on Llama-3.1-8B vs the FP16
+        baseline -- effectively at measurement noise. See
+        ``results/phase27_decode_latency.json`` and
+        ``experiments/phase27_decode_latency.py`` for the full
+        five-regime benchmark.
+
+        Caveats:
+
+        * First call to any compiled form triggers a JIT compilation
+          that takes a few seconds. Subsequent calls on the same
+          tensor shapes are effectively free. For reproducible
+          warm-state benchmarking, do 5-10 warm-up calls before the
+          timed window.
+        * ``dynamic=False`` specializes on the first observed
+          ``(..., T, D)`` shape. If you call across heterogeneous
+          shapes the first invocation at each new shape triggers a
+          recompile. For homogeneous models (all layers same shape)
+          this is a one-time cost.
+        * The compile cache is class-level (``_compiled_unpack``),
+          so multiple cache instances share the same JITed kernel.
+        """
+        return self._get_compiled_unpack()(
+            self.packed_d, self.norm, self.d_min, self.d_step
+        )
+
+    # Class-level cache for the compiled unpack. Initialized on first call.
+    _compiled_unpack = None
+
+    @classmethod
+    def _get_compiled_unpack(cls):
+        """Lazily compile :func:`_to_fp16_functional` once and cache
+        it at the class level so all instances share it."""
+        if cls._compiled_unpack is None:
+            cls._compiled_unpack = torch.compile(
+                _to_fp16_functional, dynamic=False
+            )
+        return cls._compiled_unpack
+
     def size_bytes(self):
         """Total bytes in real storage (packed + norm + d_min + d_step)."""
         return (
@@ -215,3 +265,49 @@ class Int3AsymNsepPchanCache:
             + self.d_min.numel() * 2
             + self.d_step.numel() * 2
         )
+
+
+# ---------------------------------------------------------------------------
+# Functional helpers (module-level) for torch.compile
+# ---------------------------------------------------------------------------
+
+def _to_fp16_functional(packed_d, norm, d_min, d_step):
+    """Pure-functional equivalent of :meth:`Int3AsymNsepPchanCache.to_fp16`.
+
+    Inlines :func:`unpack_int3_unsigned` so the whole pipeline
+    (bit-unpack + reconstruct + L2 renormalize + fp16 cast) is a
+    single contiguous graph that :func:`torch.compile` can fuse into
+    1-2 GPU kernels.
+
+    Parameters
+    ----------
+    packed_d : torch.Tensor (uint8, [..., 3*D/8])
+    norm     : torch.Tensor (fp16,  [..., T, 1])
+    d_min    : torch.Tensor (fp16,  [..., 1, D])
+    d_step   : torch.Tensor (fp16,  [..., 1, D])
+
+    Returns
+    -------
+    torch.Tensor (fp16, [..., T, D])
+    """
+    *prefix, P = packed_d.shape
+    N = P * 8 // 3
+
+    # Inlined unpack_int3_unsigned
+    grouped = packed_d.view(*prefix, N // 8, 3)
+    b0 = grouped[..., 0]
+    b1 = grouped[..., 1]
+    b2 = grouped[..., 2]
+    packed64 = (
+        b0.to(torch.int64)
+        | (b1.to(torch.int64) << 8)
+        | (b2.to(torch.int64) << 16)
+    )
+    shifts = torch.arange(8, device=packed_d.device, dtype=torch.int64) * 3
+    u = (packed64.unsqueeze(-1) >> shifts) & 7
+    d_idx = u.view(*prefix, N).to(torch.int8)
+
+    # Reconstruct
+    d_q = d_idx.float() * d_step.float() + d_min.float()
+    d_renorm = d_q / d_q.norm(dim=-1, keepdim=True).clamp(min=1e-8)
+    return (norm.float() * d_renorm).half()

@@ -49,6 +49,19 @@ k_recon = cached.to_fp16()                    # reconstruct for attention
 cached.size_bytes()                           # 5.09× smaller than FP16
 ```
 
+## Production decode: torch.compile in one line
+
+```python
+# +2.4 % (Qwen2-7B) / +4.2 % (Llama-3.1-8B) decode-step overhead vs FP16 baseline,
+# measured on A100 Colab (1024-token prefill, 50 decode steps, 3 repeats).
+# First call triggers a few-second JIT compile; subsequent calls are effectively
+# free. Numerically matches to_fp16() within FP16 rounding.
+
+k_recon = cached.to_fp16_compiled()   # drop-in replacement, torch.compile'd
+```
+
+Added in **v0.3.12**. See [Phase 27](experiments/phase27_decode_latency.py) for the five-regime benchmark (naive per-head loop = +146–354 %; per-layer batched = +33–37 %; torch.compile-fused = +2–4 %). No hand-written CUDA or Triton kernel required.
+
 ---
 
 ## The problem this solves
@@ -134,7 +147,7 @@ Going to 4 bits costs 33 % more memory for a further quality gain; v0.3 at 3 bit
 ## Scope and honesty notes (quick)
 
 - Primary quality metric is **WikiText-2 sliding-window perplexity**. Two bounded downstream probes (MMLU 5-shot on 2 models, NIH on 3 models at 8K/32K) show no degradation; reasoning / code / instruction-following / LongBench are *not* yet measured.
-- **Throughput**: measured. Per-token decode latency with `Int3AsymNsepPchanCache` + `torch.compile`'d unpack adds **+2.4 % on Qwen2-7B / +4.2 % on Llama-3.1-8B** vs FP16 baseline on A100 Colab (Phase 27). A naive per-head Python loop is much slower; `torch.compile` fuses the small kernels into 1-2 compiled kernels and removes essentially all overhead. No CUDA kernel required.
+- **Throughput**: measured. `Int3AsymNsepPchanCache.to_fp16_compiled()` (v0.3.12) adds **+2.4 % (Qwen2-7B) / +4.2 % (Llama-3.1-8B)** per-token decode overhead vs FP16 baseline on A100 Colab (Phase 27). A naive per-head Python loop is much slower (+146 / +354 %); the `torch.compile` inside `.to_fp16_compiled()` fuses the small kernels into 1-2 compiled kernels and removes essentially all overhead. No hand-written CUDA kernel required.
 - **Qwen2-7B "INT4 valley"**: an n = 1 observation in our 27-model survey; we don't claim it generalizes.
 - **`usable` label**: a modeq-internal threshold (< 5 % of baseline WikiText-2 ΔPPL), **not** a deployment certification.
 
