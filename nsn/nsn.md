@@ -1,10 +1,10 @@
 ---
 title: "Norm Separation is Necessary: A Minimalist Calibration-Free INT3 Recipe for KV Cache Quantization"
 author: "Kentaro Sato"
-date: "2026-04-19"
+date: "2026-04-22"
 ---
 
-*Preprint, draft v0.19 (Zenodo-first release; arXiv posting pending endorsement)*
+*Preprint, draft v0.20 (Zenodo-first release; arXiv posting pending endorsement)*
 
 ---
 
@@ -400,7 +400,7 @@ The proposed recipe is targeted at a specific regime. It is likely *not* the rig
 - **The bit budget is below INT3.** Several published methods operate at or below 2 bits/value with useful quality — KIVI targets 2-bit KV cache explicitly, and KVLinC, PolarQuant, and TurboQuant all report strong numbers in the 2–3 bit regime through codebook, rotation, or adapter machinery. Our recipe does not attempt to compete there; it is an INT3-tier recipe, and its reconstruction quality degrades rapidly below 3 bits because the per-channel asymmetric window provides insufficient levels for the post-RoPE direction distribution.
 - **Downstream task accuracy is the binding quality metric.** We measure WikiText-2 perplexity as our main metric and one exploratory MMLU 5-shot probe (§5.6) as a sanity check. On tasks we did not probe (retrieval, multi-step reasoning, code generation, instruction following) the quality drop may be larger or smaller than what our WikiText-2 or MMLU numbers suggest, and §5.6's result should not be extrapolated uncritically.
 - **A calibration corpus is available and a known-better quantizer exists.** KVQuant's calibrated non-uniform quantizer can beat our recipe where calibration data is cheap; we do not claim otherwise.
-- **Throughput is the binding metric.** Our reference implementation is Python-only and adds roughly $+21 \%$ decode latency on 7B-class models. A fused kernel would remove most of that but is not part of this paper.
+- **Throughput is the binding metric.** Measured per-token decode overhead of the Python-only `Int3AsymNsepPchanCache` on an NVIDIA A100 (Colab, 1024-token prefill, 50 decode steps averaged over 3 repeats) depends heavily on the decompression loop structure (Phase 27, `results/phase27_decode_latency.json`). A per-head Python loop over layers adds $+146 \%$ on Qwen2-7B and $+354 \%$ on Llama-3.1-8B. A per-layer batched unpack, leveraging the native `[..., T, D]` support of the cache class, brings this to $+33 \%$ and $+38 \%$ respectively. Wrapping the per-layer decompression in `torch.compile(dynamic=False)` — which fuses the bit-unpack, reconstruction, and renormalization into a handful of GPU kernels — reduces the overhead to **$+2.4 \%$ on Qwen2-7B and $+4.2 \%$ on Llama-3.1-8B**, essentially at measurement-noise level. No hand-written CUDA or Triton kernel is required to reach this operating point. The dominant cost on this hardware is CUDA kernel-launch latency of the naive Python loop, not the pack / unpack arithmetic itself.
 - **The model family is systematically different from anything in our benchmark.** Post-LN architectures, state-space models, and Transformer variants with very non-standard KV cache structure were not evaluated.
 
 ### 6.3 Limitations

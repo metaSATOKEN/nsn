@@ -134,7 +134,7 @@ Going to 4 bits costs 33 % more memory for a further quality gain; v0.3 at 3 bit
 ## Scope and honesty notes (quick)
 
 - Primary quality metric is **WikiText-2 sliding-window perplexity**. Two bounded downstream probes (MMLU 5-shot on 2 models, NIH on 3 models at 8K/32K) show no degradation; reasoning / code / instruction-following / LongBench are *not* yet measured.
-- **Throughput**: not measured. Python-only decode adds ~21 % latency; a fused kernel (unimplemented) would remove most of it. The < 5 % claim is about quality only.
+- **Throughput**: measured. Per-token decode latency with `Int3AsymNsepPchanCache` + `torch.compile`'d unpack adds **+2.4 % on Qwen2-7B / +4.2 % on Llama-3.1-8B** vs FP16 baseline on A100 Colab (Phase 27). A naive per-head Python loop is much slower; `torch.compile` fuses the small kernels into 1-2 compiled kernels and removes essentially all overhead. No CUDA kernel required.
 - **Qwen2-7B "INT4 valley"**: an n = 1 observation in our 27-model survey; we don't claim it generalizes.
 - **`usable` label**: a modeq-internal threshold (< 5 % of baseline WikiText-2 ΔPPL), **not** a deployment certification.
 

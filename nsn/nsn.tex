@@ -118,12 +118,12 @@
 \title{Norm Separation is Necessary: A Minimalist Calibration-Free INT3
 Recipe for KV Cache Quantization}
 \author{Kentaro Sato}
-\date{2026-04-19}
+\date{2026-04-22}
 
 \begin{document}
 \maketitle
 
-\emph{Preprint, draft v0.19 (Zenodo-first release; arXiv posting pending
+\emph{Preprint, draft v0.20 (Zenodo-first release; arXiv posting pending
 endorsement)}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
@@ -1596,12 +1596,26 @@ result should not be extrapolated uncritically. - \textbf{A calibration
 corpus is available and a known-better quantizer exists.} KVQuant's
 calibrated non-uniform quantizer can beat our recipe where calibration
 data is cheap; we do not claim otherwise. - \textbf{Throughput is the
-binding metric.} Our reference implementation is Python-only and adds
-roughly \(+21 \%\) decode latency on 7B-class models. A fused kernel
-would remove most of that but is not part of this paper. - \textbf{The
-model family is systematically different from anything in our
-benchmark.} Post-LN architectures, state-space models, and Transformer
-variants with very non-standard KV cache structure were not evaluated.
+binding metric.} Measured per-token decode overhead of the Python-only
+\texttt{Int3AsymNsepPchanCache} on an NVIDIA A100 (Colab, 1024-token
+prefill, 50 decode steps averaged over 3 repeats) depends heavily on the
+decompression loop structure (Phase 27,
+\texttt{results/phase27\_decode\_latency.json}). A per-head Python loop
+over layers adds \(+146 \%\) on Qwen2-7B and \(+354 \%\) on
+Llama-3.1-8B. A per-layer batched unpack, leveraging the native
+\texttt{{[}...,\ T,\ D{]}} support of the cache class, brings this to
+\(+33 \%\) and \(+38 \%\) respectively. Wrapping the per-layer
+decompression in \texttt{torch.compile(dynamic=False)} --- which fuses
+the bit-unpack, reconstruction, and renormalization into a handful of
+GPU kernels --- reduces the overhead to \textbf{\(+2.4 \%\) on Qwen2-7B
+and \(+4.2 \%\) on Llama-3.1-8B}, essentially at measurement-noise
+level. No hand-written CUDA or Triton kernel is required to reach this
+operating point. The dominant cost on this hardware is CUDA
+kernel-launch latency of the naive Python loop, not the pack / unpack
+arithmetic itself. - \textbf{The model family is systematically
+different from anything in our benchmark.} Post-LN architectures,
+state-space models, and Transformer variants with very non-standard KV
+cache structure were not evaluated.
 
 \subsubsection{6.3 Limitations}\label{limitations}
 
