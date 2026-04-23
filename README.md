@@ -11,8 +11,10 @@ Drop-in INT3, calibration-free, ~10 lines of Python, **5.09× memory reduction**
 ## Install
 
 ```bash
-pip install modeq
+pip install git+https://github.com/metaSATOKEN/modeq.git
 ```
+
+Requires Python 3.9+ and PyTorch 2.0+. *PyPI registration is pending — tracked for the v0.5 / Zenodo-paper release. See [EXPERIMENT_REPORT.md](EXPERIMENT_REPORT.md#installation) for the git-clone + editable-install path if you plan to run experiments locally.*
 
 ## The method, in one function
 
