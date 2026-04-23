@@ -166,6 +166,18 @@ Going to 4 bits costs 33 % more memory for a further quality gain; v0.3 at 3 bit
 }
 ```
 
+## Contact & Collaboration
+
+Feedback, bug reports, and collaboration proposals welcome.
+
+- Issues / Discussions on this repository
+- Email: info@metaclan.jp
+- X: [@RecyncAI](https://x.com/RecyncAI)
+
+## Acknowledgments
+
+This work was conducted with substantial assistance from large language models (Claude, Anthropic) for experiment design, code generation, debugging, data analysis, and manuscript drafting. All experimental results were produced by executing code on real hardware (NVIDIA A100 via Google Colab) and verified by the author. The author takes full responsibility for the scientific claims and any errors in this work.
+
 ## License
 
 Apache 2.0. See [LICENSE](LICENSE).
