@@ -111,7 +111,7 @@ A direct per-token L2 norm measurement on all 8 models localizes the catastrophi
 
 ![Two-panel scatter: L0 V-cache CV vs variant-(B) ΔPPL (Spearman 0.88, clean monotone rise) alongside L0 K-cache CV (Spearman 0.29, scattered). V-cache dispersion predicts failure; K-cache does not.](figures/fig05_norm_dispersion.png)
 
-Intuition: V-cache error propagates *linearly* into the attention-weighted output, while K-cache error is partly absorbed by softmax normalization. Norm separation removes the V-cache dispersion. *(See [EXPERIMENT_REPORT.md](EXPERIMENT_REPORT.md) or [nsn/nsn.pdf](nsn/nsn.pdf) §5.3 for the first-order math and the confounder caveat.)*
+Intuition: V-cache error propagates *linearly* into the attention-weighted output, while K-cache error is partly absorbed by softmax normalization. Norm separation removes the V-cache dispersion. *(See [EXPERIMENT_REPORT.md](EXPERIMENT_REPORT.md) or [paper/nsn.pdf](paper/nsn.pdf) §5.3 for the first-order math and the confounder caveat.)*
 
 ---
 
@@ -143,7 +143,7 @@ Going to 4 bits costs 33 % more memory for a further quality gain; v0.3 at 3 bit
 ## Want the full story?
 
 - **[EXPERIMENT_REPORT.md](EXPERIMENT_REPORT.md)** — casual long-form writeup (~540 lines): full protocols, dead-ends (Walsh–Hadamard rotation, top-K mixed precision), MMLU downstream probe, Phase 23 mechanism math, all the gory details
-- **[nsn/nsn.pdf](nsn/nsn.pdf)** — formal paper (27 pages, Zenodo-ready): academic writeup with full citations, Fisher-exact analyses, confounder caveats, 6 appendices
+- **[paper/nsn.pdf](paper/nsn.pdf)** — formal paper (27 pages, Zenodo-ready): academic writeup with full citations, Fisher-exact analyses, confounder caveats, 6 appendices
 - **[docs/THEORY.md](docs/THEORY.md)** — two-failure-modes background and the v0.2 → v0.3 update
 
 ## Scope and honesty notes (quick)

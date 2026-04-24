@@ -56,11 +56,10 @@ htmlcov/
 # Build artifacts
 *.pdf
 !paper/*.pdf
-!nsn/*.pdf
 !figures/*.pdf
 
 # pandoc latex build artifacts (keep .tex, drop aux / log)
-nsn/*.aux
-nsn/*.log
-nsn/*.out
-nsn/*.toc
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.toc

@@ -476,7 +476,7 @@ This work was conducted with substantial assistance from large language models (
 
 ## References
 
-References are organized by role in the paper. The BibTeX equivalents of every entry below are maintained in `nsn/refs.bib`; entries flagged with "author list pending" there are short-form placeholders that should be spot-checked against the arXiv record at camera-ready.
+References are organized by role in the paper. The BibTeX equivalents of every entry below are maintained in `paper/refs.bib`; entries flagged with "author list pending" there are short-form placeholders that should be spot-checked against the arXiv record at camera-ready.
 
 **KV cache quantization (primary related work).**
 
