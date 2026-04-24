@@ -5,6 +5,7 @@ Drop-in INT3, calibration-free, ~10 lines of Python, **5.09× memory reduction**
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.9+-green.svg)](#install)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19724817.svg)](https://doi.org/10.5281/zenodo.19724817)
 
 ---
 
@@ -162,7 +163,8 @@ Going to 4 bits costs 33 % more memory for a further quality gain; v0.3 at 3 bit
                   INT3 Recipe for KV Cache Quantization},
   year         = {2026},
   howpublished = {Zenodo preprint},
-  url          = {https://github.com/metaSATOKEN/modeq},
+  doi          = {10.5281/zenodo.19724817},
+  url          = {https://doi.org/10.5281/zenodo.19724817},
 }
 ```
 

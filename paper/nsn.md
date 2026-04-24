@@ -4,7 +4,8 @@ author: "Kentaro Sato"
 date: "2026-04-22"
 ---
 
-*Preprint, draft v0.20 (Zenodo-first release; arXiv posting pending endorsement)*
+*Preprint, draft v0.21 (Zenodo-first release; arXiv posting pending endorsement).*  
+*Zenodo DOI: [10.5281/zenodo.19724817](https://doi.org/10.5281/zenodo.19724817)*
 
 ---
 

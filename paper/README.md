@@ -3,6 +3,8 @@
 This folder contains the formal preprint for the modeq v0.3 INT3 KV cache
 quantization recipe.
 
+**Zenodo DOI:** [10.5281/zenodo.19724817](https://doi.org/10.5281/zenodo.19724817)
+
 ## Files
 
 - **[nsn.pdf](nsn.pdf)** — the preprint PDF (27 pages, Zenodo-ready)

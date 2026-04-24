@@ -600,6 +600,15 @@ If you use modeq or its findings, please cite:
   url    = {https://github.com/metaSATOKEN/modeq}
 }
 
+@misc{sato2026nsn,
+  author = {Sato, Kentaro},
+  title  = {Norm Separation is Necessary: A Minimalist Calibration-Free INT3 Recipe for KV Cache Quantization},
+  year   = {2026},
+  howpublished = {Zenodo preprint},
+  doi    = {10.5281/zenodo.19724817},
+  url    = {https://doi.org/10.5281/zenodo.19724817}
+}
+
 @article{sato2026normsep,
   author = {Sato, Kentaro},
   title  = {Norm-Separated Quantization: A Training-Free Fix for KV Cache INT4 Failures},
