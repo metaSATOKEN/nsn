@@ -1,0 +1,243 @@
+{
+  "date": "2026-04-24T10:34:21",
+  "phase": "29",
+  "purpose": "Replicate Reddit-reported 'generation looping' symptom of naive KV quantization at long context on Qwen3.6-27B, and measure suppression under v0.3 asym recipe.",
+  "model": "Qwen/Qwen3.6-27B",
+  "label": "Qwen3.6-27B",
+  "protocol": {
+    "ctx_target_tokens": 4096,
+    "n_new_tokens": 500,
+    "decode": "greedy",
+    "compress_policy": "once at prefill; new tokens uncompressed",
+    "prefix_names": [
+      "wikitext_continuation",
+      "short_story_prompt"
+    ],
+    "methods": [
+      "FP16 baseline",
+      "(A) naive INT8",
+      "(A) naive INT6",
+      "(A) naive INT4",
+      "(A) naive INT3",
+      "(D) asym  INT8",
+      "(D) asym  INT6",
+      "(D) asym  INT4",
+      "(D) asym  INT3"
+    ]
+  },
+  "loop_thresholds": {
+    "longest_repeated_substring_chars": 60,
+    "repetition_4gram_ratio": 0.5,
+    "distinct_2_below": 0.25
+  },
+  "results": {
+    "wikitext_continuation": {
+      "ctx_tokens": 4096,
+      "per_method": {
+        "FP16 baseline": {
+          "longest_repeat_chars": 43,
+          "repetition_3gram": 0.23293172690763053,
+          "repetition_4gram": 0.16297786720321927,
+          "distinct_1": 0.42,
+          "distinct_2": 0.6673346693386774,
+          "tail_200_chars": "bert Boulter's career\" and \"Du Fu's life\" based on the provided text.\n\n   Key elements to address:\n   - Robert Boulter's career (theatre, TV, film, key roles, timeline)\n   - Du Fu's life (early years,",
+          "n_chars": 1975,
+          "n_tokens": 500,
+          "verdict": "ok"
+        },
+        "(A) naive INT8": {
+          "longest_repeat_chars": 120,
+          "repetition_3gram": 0.5642570281124498,
+          "repetition_4gram": 0.5070422535211268,
+          "distinct_1": 0.238,
+          "distinct_2": 0.36072144288577157,
+          "tail_200_chars": " = = \n\n\n = = = = The Song of the Old Man = = = = \n\n\n = = = = The Song = = = = \n\n\n = = = = The Song of the Old Man = = = = \n\n\n = = = = The Song of the Old Man = = = @-@ Man = = = = \n\n\n = = = = The Song",
+          "n_chars": 1749,
+          "n_tokens": 500,
+          "verdict": "LOOP"
+        },
+        "(A) naive INT6": {
+          "longest_repeat_chars": 45,
+          "repetition_3gram": 0.47590361445783136,
+          "repetition_4gram": 0.4245472837022133,
+          "distinct_1": 0.288,
+          "distinct_2": 0.4529058116232465,
+          "tail_200_chars": "= = = = = = = \n\n\n = = = = = = = = = = Text = = = = = = = = = = \n\n\n = = = = = = = = = = Translation = = = = = = = = = = \n\n\n = = and so on = = and so on = = \n\n\n = = = = = = = = = = = = = = = = = = = = =",
+          "n_chars": 1753,
+          "n_tokens": 500,
+          "verdict": "ok"
+        },
+        "(A) naive INT4": {
+          "longest_repeat_chars": 24,
+          "repetition_3gram": 0.14859437751004012,
+          "repetition_4gram": 0.10060362173038229,
+          "distinct_1": 0.452,
+          "distinct_2": 0.7374749498997996,
+          "tail_200_chars": "ef . \n\n\n = = = Legacy = = = \n\n\n Du Fu 's legacy extends beyond his poetry . He is revered as a moral exemplar and a symbol of the Confucian ideal of the scholar @-@ Robert Boulter is an English film ,",
+          "n_chars": 2152,
+          "n_tokens": 500,
+          "verdict": "ok"
+        },
+        "(A) naive INT3": {
+          "longest_repeat_chars": 200,
+          "repetition_3gram": 0.5963855421686747,
+          "repetition_4gram": 0.551307847082495,
+          "distinct_1": 0.25,
+          "distinct_2": 0.3466933867735471,
+          "tail_200_chars": "inese poetry is immense . He is considered the greatest of the biography , along with Li Bai . He is considered the greatest of the biography , along with Li Bai . \n\n\n = = = = = = = = Japanese = = = =",
+          "n_chars": 1613,
+          "n_tokens": 500,
+          "verdict": "LOOP"
+        },
+        "(D) asym  INT8": {
+          "longest_repeat_chars": 118,
+          "repetition_3gram": 0.5602409638554218,
+          "repetition_4gram": 0.5030181086519114,
+          "distinct_1": 0.24,
+          "distinct_2": 0.3627254509018036,
+          "tail_200_chars": "= = = = \n\n\n = = = = The Song of the Chengdu Thatched Cottage = = = = \n\n\n = = = = The Song of the Chengdu Thatched Cottage = = = = \n\n\n = = = = The Song of the Chengdu Th = = = = \n\n\n = = = = The Song of",
+          "n_chars": 1767,
+          "n_tokens": 500,
+          "verdict": "LOOP"
+        },
+        "(D) asym  INT6": {
+          "longest_repeat_chars": 200,
+          "repetition_3gram": 0.5522088353413654,
+          "repetition_4gram": 0.5130784708249496,
+          "distinct_1": 0.256,
+          "distinct_2": 0.3927855711422846,
+          "tail_200_chars": " = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =",
+          "n_chars": 1751,
+          "n_tokens": 500,
+          "verdict": "LOOP"
+        },
+        "(D) asym  INT4": {
+          "longest_repeat_chars": 200,
+          "repetition_3gram": 0.5140562248995983,
+          "repetition_4gram": 0.4708249496981891,
+          "distinct_1": 0.27,
+          "distinct_2": 0.4148296593186373,
+          "tail_200_chars": " = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = civil servant = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =",
+          "n_chars": 1677,
+          "n_tokens": 500,
+          "verdict": "LOOP"
+        },
+        "(D) asym  INT3": {
+          "longest_repeat_chars": 50,
+          "repetition_3gram": 0.5622489959839357,
+          "repetition_4gram": 0.5191146881287727,
+          "distinct_1": 0.258,
+          "distinct_2": 0.37074148296593185,
+          "tail_200_chars": "= = = = = = = \n\n\n = = = = = = = = = = Notes = = = = = = = = = = \n\n\n = = = = = = = = = = = = Text = = = = = = = = = = = = \n\n\n = = = = = = = = = = = = Translation = = = = = = = = = = = = \n\n\n = = = = = =",
+          "n_chars": 1656,
+          "n_tokens": 500,
+          "verdict": "LOOP"
+        }
+      }
+    },
+    "short_story_prompt": {
+      "ctx_tokens": 50,
+      "per_method": {
+        "FP16 baseline": {
+          "longest_repeat_chars": 14,
+          "repetition_3gram": 0.03614457831325302,
+          "repetition_4gram": 0.01810865191146882,
+          "distinct_1": 0.524,
+          "distinct_2": 0.8677354709418837,
+          "tail_200_chars": " light.\n\n734 returned to its workshop that evening, but it did not go to the calibration station. Instead, it went to the supply closet. It found a box of oil paints, left behind by a human technician",
+          "n_chars": 2221,
+          "n_tokens": 500,
+          "verdict": "ok"
+        },
+        "(A) naive INT8": {
+          "longest_repeat_chars": 17,
+          "repetition_3gram": 0.04618473895582331,
+          "repetition_4gram": 0.02213279678068414,
+          "distinct_1": 0.518,
+          "distinct_2": 0.845691382765531,
+          "tail_200_chars": " it *broke* against it. It saw how the red of a distant sail was not just a warning signal, but a heartbeat. The robot felt a strange vibration in its chest cavity, a resonance that had no name in its",
+          "n_chars": 2124,
+          "n_tokens": 500,
+          "verdict": "ok"
+        },
+        "(A) naive INT6": {
+          "longest_repeat_chars": 13,
+          "repetition_3gram": 0.04016064257028118,
+          "repetition_4gram": 0.02012072434607648,
+          "distinct_1": 0.524,
+          "distinct_2": 0.8476953907815631,
+          "tail_200_chars": "ion wing, where a forgotten easel stood covered in dust.\n\nIt found a tube of paint. The label read *Cerulean Blue*.\n\n734 squeezed the tube. The substance was thick, cool, and alive. It touched the tip",
+          "n_chars": 2081,
+          "n_tokens": 500,
+          "verdict": "ok"
+        },
+        "(A) naive INT4": {
+          "longest_repeat_chars": 14,
+          "repetition_3gram": 0.034136546184738936,
+          "repetition_4gram": 0.01609657947686116,
+          "distinct_1": 0.512,
+          "distinct_2": 0.87374749498998,
+          "tail_200_chars": "s sudden and overwhelming. It needed to do this.\n\n734 returned to its workshop, but it did not go to the calibration station. Instead, it scavenged. It found a discarded metal sheet, sanded smooth. It",
+          "n_chars": 2195,
+          "n_tokens": 500,
+          "verdict": "ok"
+        },
+        "(A) naive INT3": {
+          "longest_repeat_chars": 13,
+          "repetition_3gram": 0.04417670682730923,
+          "repetition_4gram": 0.024144869215291798,
+          "distinct_1": 0.504,
+          "distinct_2": 0.8557114228456913,
+          "tail_200_chars": " that had nothing to do with its cooling systems. It was the feeling of being seen, and of seeing, all at once.\n\nWhen the museum closed, Unit 734 did not return to the factory. It wandered to a small,",
+          "n_chars": 2170,
+          "n_tokens": 500,
+          "verdict": "ok"
+        },
+        "(D) asym  INT8": {
+          "longest_repeat_chars": 15,
+          "repetition_3gram": 0.050200803212851364,
+          "repetition_4gram": 0.02213279678068414,
+          "distinct_1": 0.504,
+          "distinct_2": 0.8476953907815631,
+          "tail_200_chars": "gth; it was warmth. The blue wasn't just a frequency; it was depth. The rigid grid of its mind began to soften, the sharp edges of its logic blurring into something fluid and terrifyingly beautiful.\n\n",
+          "n_chars": 2095,
+          "n_tokens": 500,
+          "verdict": "ok"
+        },
+        "(D) asym  INT6": {
+          "longest_repeat_chars": 17,
+          "repetition_3gram": 0.054216867469879526,
+          "repetition_4gram": 0.028169014084507005,
+          "distinct_1": 0.504,
+          "distinct_2": 0.8376753507014028,
+          "tail_200_chars": "as the visual equivalent of a sigh, a shout, a whisper.\n\n734 stood there for three hours, long after the museum closed and the lights dimmed. It didn't leave until the security drones gently nudged it",
+          "n_chars": 2125,
+          "n_tokens": 500,
+          "verdict": "ok"
+        },
+        "(D) asym  INT4": {
+          "longest_repeat_chars": 16,
+          "repetition_3gram": 0.048192771084337394,
+          "repetition_4gram": 0.02012072434607648,
+          "distinct_1": 0.516,
+          "distinct_2": 0.845691382765531,
+          "tail_200_chars": "r eyes crinkling at the corners. \"Yes. It is the memory of light.\"\n\nThat evening, 734 did not return to the archive. It went to the supply closet where Elara kept her spare materials. It found a small",
+          "n_chars": 2094,
+          "n_tokens": 500,
+          "verdict": "ok"
+        },
+        "(D) asym  INT3": {
+          "longest_repeat_chars": 18,
+          "repetition_3gram": 0.054216867469879526,
+          "repetition_4gram": 0.024144869215291798,
+          "distinct_1": 0.518,
+          "distinct_2": 0.8496993987975952,
+          "tail_200_chars": "softly, struggling to dissipate the heat generated by a new, unclassified process. It was not analyzing. It was *feeling*.\n\nFor the first time, the world was not a grid. It was a spectrum.\n\nThat night",
+          "n_chars": 2138,
+          "n_tokens": 500,
+          "verdict": "ok"
+        }
+      }
+    }
+  }
+}
