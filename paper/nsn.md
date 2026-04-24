@@ -1,8 +1,6 @@
 ---
 title: "Norm Separation is Necessary: A Minimalist Calibration-Free INT3 Recipe for KV Cache Quantization"
-author:
-  - Kentaro Sato
-  - "`\\\\ \\texttt{info@metaclan.jp}`{=latex}"
+author: "Kentaro Sato`\\\\`{=latex} `\\texttt{info@metaclan.jp}`{=latex}"
 date: "2026-04-22"
 ---
 
