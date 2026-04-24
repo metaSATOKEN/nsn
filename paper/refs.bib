@@ -415,17 +415,21 @@
                   Complementary to the present paper's attention-K/V focus.},
 }
 
-@misc{kl_lens_2026,
-  author       = {{Anonymous}},
+@misc{kong2026kllens,
+  author       = {Kong, Jason and Pandey, Nilesh Prasad
+                  and Ponzina, Flavio and Rosing, Tajana},
   title        = {A {KL} Lens on Quantization: Fast, Forward-Only Sensitivity
                   for Mixed-Precision {SSM}-Transformer Models},
   year         = {2026},
   eprint       = {2604.13440},
   archivePrefix = {arXiv},
+  primaryClass = {cs.LG},
   howpublished = {\url{https://arxiv.org/abs/2604.13440}},
-  note         = {Backpropagation-free layer-wise sensitivity via KL
-                  divergence surrogate, specifically for hybrid SSM +
-                  Transformer architectures. Auto-selects per-layer bit
-                  widths under a mixed-precision budget. ArXiv ID to be
-                  verified against the published record before camera-ready.},
+  note         = {Backpropagation-free layer-wise sensitivity via a
+                  Kullback-Leibler divergence surrogate, specifically
+                  for hybrid SSM + Transformer architectures. Shows KL
+                  captures quantisation sensitivity for language
+                  modelling better than MSE or SQNR surrogates, and
+                  auto-selects per-layer bit widths under a mixed-
+                  precision budget.},
 }

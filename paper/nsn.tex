@@ -1601,17 +1601,17 @@ quantisation research with \textbf{component-specific recipes rather
 than per-element-uniform} ones --- ExpertsInt8 {[}Lieber et al., 2024{]}
 applies INT8 to MoE / MLP weights with in-kernel dequantisation, Quamba
 {[}Chiang et al., 2024{]} applies Hadamard-smoothed W8A8 specifically to
-SSM blocks, and recent forward-only sensitivity-analysis methods {[}KL
-Lens, 2026{]} auto-select per-layer bit widths for mixed-precision
-hybrid quantisation. A sandbox probe (Phase 29 series,
-\texttt{results/phase29*.json}) ran the v0.3 recipe on Qwen3.6-27B, a
-1-in-4 hybrid of linear-attention and softmax-attention layers, and
-found that the recipe's per-element perturbation exceeds a fragility
-threshold at approximately \(0.2 \%\) of per-token L2 norm on the sparse
-attention layers of this architecture --- well below what any realistic
-bit budget of a per-element uniform quantiser can achieve. This is a
-concrete and measured instance of the scope caveat: modeq is the
-KV-cache INT3 tool; Quamba and ExpertsInt8 are the SSM-weight and
+SSM blocks, and recent forward-only sensitivity-analysis methods {[}Kong
+et al., 2026{]} auto-select per-layer bit widths for mixed-precision
+hybrid quantisation using a KL-divergence surrogate. A sandbox probe
+(Phase 29 series, \texttt{results/phase29*.json}) ran the v0.3 recipe on
+Qwen3.6-27B, a 1-in-4 hybrid of linear-attention and softmax-attention
+layers, and found that the recipe's per-element perturbation exceeds a
+fragility threshold at approximately \(0.2 \%\) of per-token L2 norm on
+the sparse attention layers of this architecture --- well below what any
+realistic bit budget of a per-element uniform quantiser can achieve.
+This is a concrete and measured instance of the scope caveat: modeq is
+the KV-cache INT3 tool; Quamba and ExpertsInt8 are the SSM-weight and
 MoE-weight tools; the three are complementary rather than competitive on
 a hybrid-model deployment.
 
