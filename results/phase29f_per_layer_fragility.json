@@ -1,0 +1,639 @@
+{
+  "date": "2026-04-24T12:07:15",
+  "phase": "29f",
+  "purpose": "Per-layer fragility ranking on Qwen3.6-27B transformer-attention layers. For each of the 16 attention layers, measure r4 when ONLY that layer is asym-INT3-compressed.",
+  "model": "Qwen/Qwen3.6-27B",
+  "label": "Qwen3.6-27B",
+  "protocol": {
+    "ctx_target_tokens": 4096,
+    "n_new_tokens": 500,
+    "decode": "greedy",
+    "prefix": "wikitext_offset_0",
+    "attn_layer_ids": [
+      3,
+      7,
+      11,
+      15,
+      19,
+      23,
+      27,
+      31,
+      35,
+      39,
+      43,
+      47,
+      51,
+      55,
+      59,
+      63
+    ],
+    "quartile_groups": {
+      "Q1 early  (layers 3,7,11,15)": [
+        3,
+        7,
+        11,
+        15
+      ],
+      "Q2 mid-early (19,23,27,31)": [
+        19,
+        23,
+        27,
+        31
+      ],
+      "Q3 mid-late  (35,39,43,47)": [
+        35,
+        39,
+        43,
+        47
+      ],
+      "Q4 late   (51,55,59,63)": [
+        51,
+        55,
+        59,
+        63
+      ]
+    }
+  },
+  "fp16_r4_baseline": 0.16297786720321927,
+  "per_probe": {
+    "FP16 baseline": {
+      "label": "FP16 baseline",
+      "target_layer_ids": [],
+      "n_target_layers": 0,
+      "longest_repeat_chars": 43,
+      "repetition_4gram": 0.16297786720321927,
+      "distinct_2": 0.6673346693386774,
+      "tail_200_chars": "bert Boulter's career\" and \"Du Fu's life\" based on the provided text.\n\n   Key elements to address:\n   - Robert Boulter's career (theatre, TV, film, key roles, timeline)\n   - Du Fu's life (early years,",
+      "n_tokens": 500
+    },
+    "all_16_layers": {
+      "label": "asym INT3 K+V, all 16 attn layers",
+      "target_layer_ids": [
+        3,
+        7,
+        11,
+        15,
+        19,
+        23,
+        27,
+        31,
+        35,
+        39,
+        43,
+        47,
+        51,
+        55,
+        59,
+        63
+      ],
+      "n_target_layers": 16,
+      "longest_repeat_chars": 50,
+      "repetition_4gram": 0.5191146881287727,
+      "distinct_2": 0.37074148296593185,
+      "tail_200_chars": "= = = = = = = \n\n\n = = = = = = = = = = Notes = = = = = = = = = = \n\n\n = = = = = = = = = = = = Text = = = = = = = = = = = = \n\n\n = = = = = = = = = = = = Translation = = = = = = = = = = = = \n\n\n = = = = = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          3,
+          7,
+          11,
+          15,
+          19,
+          23,
+          27,
+          31,
+          35,
+          39,
+          43,
+          47,
+          51,
+          55,
+          59,
+          63
+        ],
+        "compressed_layers": 16,
+        "compressed_indices": [
+          3,
+          7,
+          11,
+          15,
+          19,
+          23,
+          27,
+          31,
+          35,
+          39,
+          43,
+          47,
+          51,
+          55,
+          59,
+          63
+        ]
+      },
+      "delta_r4_vs_fp16": 0.35613682092555343
+    },
+    "Q1 early  (layers 3,7,11,15)": {
+      "label": "Q1 early  (layers 3,7,11,15)",
+      "target_layer_ids": [
+        3,
+        7,
+        11,
+        15
+      ],
+      "n_target_layers": 4,
+      "longest_repeat_chars": 103,
+      "repetition_4gram": 0.5090543259557344,
+      "distinct_2": 0.35671342685370744,
+      "tail_200_chars": " = \n\n\n = = = = The Song of the = = = = \n\n\n = = = = The Song of the = = = = \n\n\n = = = = The Song of the = = topics = = = = \n\n\n = = = = The Song of the = = topics = = = = \n\n\n = = = = The Song of the = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          3,
+          7,
+          11,
+          15
+        ],
+        "compressed_layers": 4,
+        "compressed_indices": [
+          3,
+          7,
+          11,
+          15
+        ]
+      },
+      "delta_r4_vs_fp16": 0.34607645875251514
+    },
+    "Q2 mid-early (19,23,27,31)": {
+      "label": "Q2 mid-early (19,23,27,31)",
+      "target_layer_ids": [
+        19,
+        23,
+        27,
+        31
+      ],
+      "n_target_layers": 4,
+      "longest_repeat_chars": 51,
+      "repetition_4gram": 0.2334004024144869,
+      "distinct_2": 0.5771543086172345,
+      "tail_200_chars": "starred alongside Ben Whishaw , Shane Zaza , Harry Kent , Fraser Ayres , Sophie Stanton and Dominic Hall . \n\n\n In 2006 , Boulter starred alongside Whishaw in the play Citizenship written by Mark Raven",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          19,
+          23,
+          27,
+          31
+        ],
+        "compressed_layers": 4,
+        "compressed_indices": [
+          19,
+          23,
+          27,
+          31
+        ]
+      },
+      "delta_r4_vs_fp16": 0.07042253521126762
+    },
+    "Q3 mid-late  (35,39,43,47)": {
+      "label": "Q3 mid-late  (35,39,43,47)",
+      "target_layer_ids": [
+        35,
+        39,
+        43,
+        47
+      ],
+      "n_target_layers": 4,
+      "longest_repeat_chars": 66,
+      "repetition_4gram": 0.22937625754527158,
+      "distinct_2": 0.5871743486973948,
+      "tail_200_chars": " intensity . He was a master of the \" gushi \" ( ancient style ) and \" jinti \" ( modern style ) forms of poetry . He was also known for his use of allusion and his ability to convey complex emotions in",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          35,
+          39,
+          43,
+          47
+        ],
+        "compressed_layers": 4,
+        "compressed_indices": [
+          35,
+          39,
+          43,
+          47
+        ]
+      },
+      "delta_r4_vs_fp16": 0.0663983903420523
+    },
+    "Q4 late   (51,55,59,63)": {
+      "label": "Q4 late   (51,55,59,63)",
+      "target_layer_ids": [
+        51,
+        55,
+        59,
+        63
+      ],
+      "n_target_layers": 4,
+      "longest_repeat_chars": 37,
+      "repetition_4gram": 0.352112676056338,
+      "distinct_2": 0.46292585170340683,
+      "tail_200_chars": "Gate = = = = \n\n\n = = = = The Right Gate = = = @-@ Right Gate = = = = \n\n\n = = = = The Front Gate = = = = \n\n\n = = = = The Back Gate = = = = \n\n\n = = = = The Side Gate = = = = \n\n\n = = = = The Top Gate = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          51,
+          55,
+          59,
+          63
+        ],
+        "compressed_layers": 4,
+        "compressed_indices": [
+          51,
+          55,
+          59,
+          63
+        ]
+      },
+      "delta_r4_vs_fp16": 0.18913480885311873
+    },
+    "single layer  3": {
+      "label": "single layer  3",
+      "target_layer_ids": [
+        3
+      ],
+      "n_target_layers": 1,
+      "longest_repeat_chars": 38,
+      "repetition_4gram": 0.1529175050301811,
+      "distinct_2": 0.6893787575150301,
+      "tail_200_chars": "of his work has allowed him to be introduced to Western readers as \" the Chinese Virgil , Horace , Career , Ovid , Shakespeare , Milton , Burns , Wordsworth , Béranger , Hugo or Baudelaire \" . \n\n\n = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          3
+        ],
+        "compressed_layers": 1,
+        "compressed_indices": [
+          3
+        ]
+      },
+      "delta_r4_vs_fp16": -0.010060362173038184
+    },
+    "single layer  7": {
+      "label": "single layer  7",
+      "target_layer_ids": [
+        7
+      ],
+      "n_target_layers": 1,
+      "longest_repeat_chars": 200,
+      "repetition_4gram": 0.3762575452716298,
+      "distinct_2": 0.4749498997995992,
+      "tail_200_chars": "followed by a starring role in the play Herons written by Simon Stephens , which was performed in 2001 at the Royal Court Theatre . He had a guest role in the television series Judge John Deed in 2002",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          7
+        ],
+        "compressed_layers": 1,
+        "compressed_indices": [
+          7
+        ]
+      },
+      "delta_r4_vs_fp16": 0.21327967806841053
+    },
+    "single layer 11": {
+      "label": "single layer 11",
+      "target_layer_ids": [
+        11
+      ],
+      "n_target_layers": 1,
+      "longest_repeat_chars": 134,
+      "repetition_4gram": 0.4989939637826962,
+      "distinct_2": 0.3627254509018036,
+      "tail_200_chars": "The Song of the White2000 – 2005 = = = = \n\n\n = = = = The Song of the White Haired Woman = = = = \n\n\n = = = = The Song of the White Haired Woman = = = = \n\n\n = = = = The2000 – 2000 – 2005 = = = = \n\n\n = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          11
+        ],
+        "compressed_layers": 1,
+        "compressed_indices": [
+          11
+        ]
+      },
+      "delta_r4_vs_fp16": 0.33601609657947695
+    },
+    "single layer 15": {
+      "label": "single layer 15",
+      "target_layer_ids": [
+        15
+      ],
+      "n_target_layers": 1,
+      "longest_repeat_chars": 129,
+      "repetition_4gram": 0.1851106639839034,
+      "distinct_2": 0.625250501002004,
+      "tail_200_chars": "idley play Mercury Fur , which was performed at the Drum Theatre in Plymouth and the Menier Chocolate Factory in London . He was directed by John Tiffany and starred alongside Ben Whishaw , Shane Zaza",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          15
+        ],
+        "compressed_layers": 1,
+        "compressed_indices": [
+          15
+        ]
+      },
+      "delta_r4_vs_fp16": 0.02213279678068414
+    },
+    "single layer 19": {
+      "label": "single layer 19",
+      "target_layer_ids": [
+        19
+      ],
+      "n_target_layers": 1,
+      "longest_repeat_chars": 200,
+      "repetition_4gram": 0.4607645875251509,
+      "distinct_2": 0.41082164328657317,
+      "tail_200_chars": " = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          19
+        ],
+        "compressed_layers": 1,
+        "compressed_indices": [
+          19
+        ]
+      },
+      "delta_r4_vs_fp16": 0.29778672032193165
+    },
+    "single layer 23": {
+      "label": "single layer 23",
+      "target_layer_ids": [
+        23
+      ],
+      "n_target_layers": 1,
+      "longest_repeat_chars": 200,
+      "repetition_4gram": 0.43661971830985913,
+      "distinct_2": 0.4288577154308617,
+      "tail_200_chars": " = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          23
+        ],
+        "compressed_layers": 1,
+        "compressed_indices": [
+          23
+        ]
+      },
+      "delta_r4_vs_fp16": 0.27364185110663986
+    },
+    "single layer 27": {
+      "label": "single layer 27",
+      "target_layer_ids": [
+        27
+      ],
+      "n_target_layers": 1,
+      "longest_repeat_chars": 200,
+      "repetition_4gram": 0.4607645875251509,
+      "distinct_2": 0.4348697394789579,
+      "tail_200_chars": " = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = , = = = = = = = = = = = = = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          27
+        ],
+        "compressed_layers": 1,
+        "compressed_indices": [
+          27
+        ]
+      },
+      "delta_r4_vs_fp16": 0.29778672032193165
+    },
+    "single layer 31": {
+      "label": "single layer 31",
+      "target_layer_ids": [
+        31
+      ],
+      "n_target_layers": 1,
+      "longest_repeat_chars": 95,
+      "repetition_4gram": 0.317907444668008,
+      "distinct_2": 0.5571142284569138,
+      "tail_200_chars": "ne of Du Fu 's later works , To My Retired Friend Wei ( Chinese : = Robert Boulter = = = \n\n\n Below is an example of one of Du distinct sections of text . The first section is about Robert Boulter , an",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          31
+        ],
+        "compressed_layers": 1,
+        "compressed_indices": [
+          31
+        ]
+      },
+      "delta_r4_vs_fp16": 0.15492957746478875
+    },
+    "single layer 35": {
+      "label": "single layer 35",
+      "target_layer_ids": [
+        35
+      ],
+      "n_target_layers": 1,
+      "longest_repeat_chars": 56,
+      "repetition_4gram": 0.1851106639839034,
+      "distinct_2": 0.6212424849699398,
+      "tail_200_chars": "ns of the Philip Ridley play Mercury Fur , which was performed at the Drum Theatre in Plymouth and the Menier Chocolate Factory in London . He was directed by John Tiffany and starred alongside Ben Wh",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          35
+        ],
+        "compressed_layers": 1,
+        "compressed_indices": [
+          35
+        ]
+      },
+      "delta_r4_vs_fp16": 0.02213279678068414
+    },
+    "single layer 39": {
+      "label": "single layer 39",
+      "target_layer_ids": [
+        39
+      ],
+      "n_target_layers": 1,
+      "longest_repeat_chars": 188,
+      "repetition_4gram": 0.5050301810865191,
+      "distinct_2": 0.36472945891783565,
+      "tail_200_chars": "oems = \n\n\n = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          39
+        ],
+        "compressed_layers": 1,
+        "compressed_indices": [
+          39
+        ]
+      },
+      "delta_r4_vs_fp16": 0.3420523138832998
+    },
+    "single layer 43": {
+      "label": "single layer 43",
+      "target_layer_ids": [
+        43
+      ],
+      "n_target_layers": 1,
+      "longest_repeat_chars": 200,
+      "repetition_4gram": 0.5311871227364184,
+      "distinct_2": 0.35671342685370744,
+      "tail_200_chars": " = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = roles = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          43
+        ],
+        "compressed_layers": 1,
+        "compressed_indices": [
+          43
+        ]
+      },
+      "delta_r4_vs_fp16": 0.36820925553319916
+    },
+    "single layer 47": {
+      "label": "single layer 47",
+      "target_layer_ids": [
+        47
+      ],
+      "n_target_layers": 1,
+      "longest_repeat_chars": 154,
+      "repetition_4gram": 0.4185110663983903,
+      "distinct_2": 0.44889779559118237,
+      "tail_200_chars": "requently transferred to the provinces : \n\n\n = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          47
+        ],
+        "compressed_layers": 1,
+        "compressed_indices": [
+          47
+        ]
+      },
+      "delta_r4_vs_fp16": 0.25553319919517103
+    },
+    "single layer 51": {
+      "label": "single layer 51",
+      "target_layer_ids": [
+        51
+      ],
+      "n_target_layers": 1,
+      "longest_repeat_chars": 200,
+      "repetition_4gram": 0.43661971830985913,
+      "distinct_2": 0.4348697394789579,
+      "tail_200_chars": " = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = @-@ \n\n\n = = = = = = = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          51
+        ],
+        "compressed_layers": 1,
+        "compressed_indices": [
+          51
+        ]
+      },
+      "delta_r4_vs_fp16": 0.27364185110663986
+    },
+    "single layer 55": {
+      "label": "single layer 55",
+      "target_layer_ids": [
+        55
+      ],
+      "n_target_layers": 1,
+      "longest_repeat_chars": 91,
+      "repetition_4gram": 0.4044265593561368,
+      "distinct_2": 0.4529058116232465,
+      "tail_200_chars": "ambition was to serve his country as a civil servant , but he proved unable to make the necessary accommodations . His life , like the whole country , was frequently called the greatest of the Chinese",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          55
+        ],
+        "compressed_layers": 1,
+        "compressed_indices": [
+          55
+        ]
+      },
+      "delta_r4_vs_fp16": 0.24144869215291753
+    },
+    "single layer 59": {
+      "label": "single layer 59",
+      "target_layer_ids": [
+        59
+      ],
+      "n_target_layers": 1,
+      "longest_repeat_chars": 45,
+      "repetition_4gram": 0.42655935613682094,
+      "distinct_2": 0.44889779559118237,
+      "tail_200_chars": "tes = = = = = = = = \n\n\n = = = = = = = = = = Text = = = = = = = = = = \n\n\n = = = = = = = = = = Translation = = = = = = = = = = \n\n\n = = = = = = = = = = Notes = = = = = @-@ = = = = = = = = = = \n\n\n = = = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          59
+        ],
+        "compressed_layers": 1,
+        "compressed_indices": [
+          59
+        ]
+      },
+      "delta_r4_vs_fp16": 0.26358148893360167
+    },
+    "single layer 63": {
+      "label": "single layer 63",
+      "target_layer_ids": [
+        63
+      ],
+      "n_target_layers": 1,
+      "longest_repeat_chars": 200,
+      "repetition_4gram": 0.49698189134808857,
+      "distinct_2": 0.3186372745490982,
+      "tail_200_chars": "k>\n\n</think>\n\n15 years\nuser\nassistant\n<think>\n\n</think>\n\n15 years\nuser\nassistant\n<think>\n\n</think>\n\n15 years\nuser\nassistant\n<think>\n\n</think>\n\n15 years\nuser\nassistant\n<think>\n\n</think>\n\n15 years\nuser\n",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          63
+        ],
+        "compressed_layers": 1,
+        "compressed_indices": [
+          63
+        ]
+      },
+      "delta_r4_vs_fp16": 0.3340040241448693
+    }
+  },
+  "fragility_counts": {
+    "fragile_dr4_gt_0p15": 13,
+    "borderline_dr4_0p05_0p15": 0,
+    "safe_dr4_le_0p05": 3
+  }
+}

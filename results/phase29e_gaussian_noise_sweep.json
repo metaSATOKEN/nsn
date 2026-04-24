@@ -1,0 +1,170 @@
+{
+  "date": "2026-04-24T11:50:24",
+  "phase": "29e",
+  "purpose": "Gaussian-noise sweep on Qwen3.6-27B transformer-attention layers to locate the fragility threshold and resolve the structure-vs-magnitude question left open by Phase 29d.",
+  "model": "Qwen/Qwen3.6-27B",
+  "label": "Qwen3.6-27B",
+  "protocol": {
+    "ctx_target_tokens": 4096,
+    "n_new_tokens": 500,
+    "decode": "greedy",
+    "prefix": "wikitext_offset_0",
+    "sigma_fracs": [
+      0.001,
+      0.003,
+      0.01,
+      0.03,
+      0.1
+    ],
+    "probes": [
+      "1. FP16 baseline",
+      "2. Identity clone",
+      "3. Uniform rescale x*1.001",
+      "4. Gaussian noise sigma=0.001",
+      "5. Gaussian noise sigma=0.003",
+      "6. Gaussian noise sigma=0.01 ",
+      "7. Gaussian noise sigma=0.03 ",
+      "8. Gaussian noise sigma=0.1  ",
+      "9. asym INT3 K+V (ref)"
+    ],
+    "rng_seed": 42
+  },
+  "fp16_r4_baseline": 0.16297786720321927,
+  "per_probe": {
+    "1. FP16 baseline": {
+      "sigma_frac": null,
+      "longest_repeat_chars": 43,
+      "repetition_3gram": 0.23293172690763053,
+      "repetition_4gram": 0.16297786720321927,
+      "delta_r4_vs_fp16": 0.0,
+      "distinct_2": 0.6673346693386774,
+      "tail_200_chars": "bert Boulter's career\" and \"Du Fu's life\" based on the provided text.\n\n   Key elements to address:\n   - Robert Boulter's career (theatre, TV, film, key roles, timeline)\n   - Du Fu's life (early years,",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "compressed_layers": 0,
+        "skipped_layers": 64
+      }
+    },
+    "2. Identity clone": {
+      "sigma_frac": null,
+      "longest_repeat_chars": 43,
+      "repetition_3gram": 0.23293172690763053,
+      "repetition_4gram": 0.16297786720321927,
+      "delta_r4_vs_fp16": 0.0,
+      "distinct_2": 0.6673346693386774,
+      "tail_200_chars": "bert Boulter's career\" and \"Du Fu's life\" based on the provided text.\n\n   Key elements to address:\n   - Robert Boulter's career (theatre, TV, film, key roles, timeline)\n   - Du Fu's life (early years,",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "compressed_layers": 16,
+        "skipped_layers": 48
+      }
+    },
+    "3. Uniform rescale x*1.001": {
+      "sigma_frac": null,
+      "longest_repeat_chars": 43,
+      "repetition_3gram": 0.23293172690763053,
+      "repetition_4gram": 0.16297786720321927,
+      "delta_r4_vs_fp16": 0.0,
+      "distinct_2": 0.6673346693386774,
+      "tail_200_chars": "bert Boulter's career\" and \"Du Fu's life\" based on the provided text.\n\n   Key elements to address:\n   - Robert Boulter's career (theatre, TV, film, key roles, timeline)\n   - Du Fu's life (early years,",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "compressed_layers": 16,
+        "skipped_layers": 48
+      }
+    },
+    "4. Gaussian noise sigma=0.001": {
+      "sigma_frac": 0.001,
+      "longest_repeat_chars": 59,
+      "repetition_3gram": 0.24698795180722888,
+      "repetition_4gram": 0.1770623742454729,
+      "delta_r4_vs_fp16": 0.014084507042253613,
+      "distinct_2": 0.625250501002004,
+      "tail_200_chars": "in 2002 as \" Addem Armitage \" in the episode \" Political Expediency \" , and had a role as a different character \" Toby Steele \" on The Bill . \n\n\n He had a recurring role in 2000 Boulter had a guest @-",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "compressed_layers": 16,
+        "skipped_layers": 48
+      }
+    },
+    "5. Gaussian noise sigma=0.003": {
+      "sigma_frac": 0.003,
+      "longest_repeat_chars": 200,
+      "repetition_3gram": 0.5522088353413654,
+      "repetition_4gram": 0.5130784708249496,
+      "delta_r4_vs_fp16": 0.35010060362173034,
+      "distinct_2": 0.3927855711422846,
+      "tail_200_chars": " = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "compressed_layers": 16,
+        "skipped_layers": 48
+      }
+    },
+    "6. Gaussian noise sigma=0.01 ": {
+      "sigma_frac": 0.01,
+      "longest_repeat_chars": 200,
+      "repetition_3gram": 0.43775100401606426,
+      "repetition_4gram": 0.3762575452716298,
+      "delta_r4_vs_fp16": 0.21327967806841053,
+      "distinct_2": 0.4749498997995992,
+      "tail_200_chars": "followed by a starring role in the play Herons written by Simon Stephens , which was performed in 2001 at the Royal Court Theatre . He had a guest role in the television series Judge John Deed in 2002",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "compressed_layers": 16,
+        "skipped_layers": 48
+      }
+    },
+    "7. Gaussian noise sigma=0.03 ": {
+      "sigma_frac": 0.03,
+      "longest_repeat_chars": 200,
+      "repetition_3gram": 0.6024096385542168,
+      "repetition_4gram": 0.5674044265593561,
+      "delta_r4_vs_fp16": 0.4044265593561368,
+      "distinct_2": 0.3466933867735471,
+      "tail_200_chars": " = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "compressed_layers": 16,
+        "skipped_layers": 48
+      }
+    },
+    "8. Gaussian noise sigma=0.1  ": {
+      "sigma_frac": 0.1,
+      "longest_repeat_chars": 200,
+      "repetition_3gram": 0.5261044176706827,
+      "repetition_4gram": 0.4949698189134809,
+      "delta_r4_vs_fp16": 0.33199195171026163,
+      "distinct_2": 0.4188376753507014,
+      "tail_200_chars": " = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "compressed_layers": 16,
+        "skipped_layers": 48
+      }
+    },
+    "9. asym INT3 K+V (ref)": {
+      "sigma_frac": null,
+      "longest_repeat_chars": 50,
+      "repetition_3gram": 0.5622489959839357,
+      "repetition_4gram": 0.5191146881287727,
+      "delta_r4_vs_fp16": 0.35613682092555343,
+      "distinct_2": 0.37074148296593185,
+      "tail_200_chars": "= = = = = = = \n\n\n = = = = = = = = = = Notes = = = = = = = = = = \n\n\n = = = = = = = = = = = = Text = = = = = = = = = = = = \n\n\n = = = = = = = = = = = = Translation = = = = = = = = = = = = \n\n\n = = = = = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "compressed_layers": 16,
+        "skipped_layers": 48
+      }
+    }
+  }
+}
