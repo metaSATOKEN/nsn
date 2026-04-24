@@ -539,13 +539,39 @@ v0.3 went through twelve numbered experimental phases (see `experiments/phase9_*
     * It is spatially **concentrated but not obviously structured**: 3 of 16 attention layers are individually safe (attention indices 1, 4, 9 within the 1-in-4 pattern), but the fragile set is not "early" or "late" or any other simple position slice.
     * The **non-additive quartile result is the most surprising** finding: compressing layer 43 alone gives $\Delta r4 = +0.37$ (the worst single layer), but compressing layers 35, 39, 43, 47 *together* gives only $\Delta r4 = +0.07$. One plausible explanation is that greedy decode under a single-layer perturbation falls into a specific wrong-attractor, while a diffuse multi-layer perturbation pattern allows the downstream layers to compensate. We do not have a mechanistic account; we record it as an observation.
 
-    **Practical implication.** For deployers who want to compress Qwen3.6-27B-class hybrid models with `modeq v0.3`, the composite picture is that *no single knob* (bit width, K-only, V-only, specific-layer selection) within our framework rescues this architecture. A mixed-precision variant that keeps attention layers 3, 15, 35 at FP16 and compresses the other 13 at asym INT3 is theoretically possible but only saves memory on 13 of the model's 64 cache layers (~20 % of a mostly-SSM cache), which is not a useful compression ratio. This architecture wants a different compression paradigm — rotation-based, codebook-based, or recurrent-state-aware — not a tighter bit budget of the v0.3 per-element recipe.
+    **Phase 29g — anchor hypothesis test, rejected; dilution curve is non-monotonic.** Phase 29f's non-additive quartile finding suggested a testable conjecture: compressing the three individually-safe layers `{3, 15, 35}` together should leave them safe, and their "anchor" presence might stabilise the full 16-layer compression. Phase 29g tested this directly.
+
+    | probe                                        | n  | r4    | $\Delta r4$ vs FP16 | reading                                    |
+    |:---------------------------------------------|---:|------:|--------------------:|:-------------------------------------------|
+    | FP16 baseline                                |  0 | 0.163 |                  —  | reference                                  |
+    | `{3, 15, 35}` only (anchors, joint)          |  3 | **0.137** |        **−0.026** | ✅ joint safe; even slightly *below* FP16 |
+    | `{3, 15, 35}` + `{43}`                       |  4 | **0.553** |        **+0.390** | 💀 **worst condition of all**, worse than all-16 |
+    | `{3, 15, 35}` + top-3 fragile `{43, 39, 11}` |  6 | 0.290 |              +0.127 | ⚠️ partial recovery                        |
+    | `{3, 15, 35}` + all 13 fragile = all 16      | 16 | 0.519 |              +0.356 | 💀 matches Phase 29d all-16 reference      |
+    | 13 fragile only, anchors removed             | 13 | 0.521 |              +0.358 | 💀 identical to the all-16 figure          |
+
+    The anchor hypothesis is **cleanly rejected**: the difference between "13 fragile + 3 anchors" ($\Delta r4 = +0.356$) and "13 fragile alone, no anchors" ($\Delta r4 = +0.358$) is $+0.002$, well within noise. The three "safe" layers add nothing when combined with the fragile set; the full-16 fragility is entirely driven by the 13.
+
+    But the sweep surfaces a **non-monotonic dilution curve** that is even more interesting than the quartile non-additivity in 29f:
+
+    ```
+      layers compressed:      0  →   3   →   4    →   6    →   13    →   16
+      r4:                  0.16   0.14    0.55     0.29     0.52     0.52
+                              ↑      ↑      ↑↑       ↑        ↑        ↑
+                           safe   safe    WORST    semi-ok  broken   broken
+    ```
+
+    Going from 3-layer compression (safe) to 4-layer compression (one fragile added) is **catastrophic** — worse than compressing all 16. Going from 4 to 6 layers (two more fragile added) *improves* $r4$ from 0.55 back down to 0.29. Going to 13 or 16 layers breaks it again. The fragility-vs-density curve has a W shape, not a monotone ramp.
+
+    The "one noisy layer among many clean ones" regime (condition 3) is the worst. A plausible story is that the downstream transformer + SSM stack can handle *either* a uniformly clean cache *or* a uniformly noisy cache (where it treats noise as a distributional property and compensates), but not a single-layer anomaly inside an otherwise-clean stack; the single-layer perturbation dominates some attention route that the other layers cannot re-route.
+
+    **Practical implication (updated).** Combining Phase 29b / 29d / 29e / 29f / 29g, *no single-knob selection* within the v0.3 framework produces a useful hybrid-model compression recipe. The anchor-only `{3, 15, 35}` config is safe but compresses only 3 of 64 cache layers (~4.7 % memory savings). The mid-density condition 4 (anchors + top-3 fragile, 6 layers, $\Delta r4 = +0.13$) is borderline usable in terms of quality but still only compresses 6 of 64 cache layers (~9 %). Neither hits a deployer-relevant ratio. This architecture wants a different compression paradigm — rotation-based, codebook-based, or recurrent-state-aware — not a tighter bit budget or a smarter layer-selection policy on the v0.3 per-element recipe.
 
     **The Reddit looping report itself is unlikely to be a quantization story.** On Qwen3.6-27B the FP16 baseline loops on one of our two prefixes (`wiki_200k`, `r4 = 0.43`), meaning the reported Reddit behaviour is **partly an intrinsic greedy-decode instability of the hybrid model itself**, not a property of llama.cpp's `q8_0` KV cache. A practical mitigation for that user is almost certainly a sampling policy (e.g. `temperature = 0.7`, `top_p = 0.9`, `repetition_penalty = 1.1`) rather than any change to KV quantization.
 
     **Protocol failure we should own.** The second prefix we used, `wiki_200k` (a different 4 096-token WikiText-2 offset), is an unusable measurement on Qwen2.5-7B: its FP16 baseline was `r4 = 0.90` (essentially full collapse), so nothing else could register relative to it. The lesson for future generation-quality probes is to pre-screen prefixes for `FP16 r4 < 0.3` before using them as a comparison basis. We report the `wiki_200k` row for honesty but draw no conclusions from it.
 
-    **Why this is not in the paper.** The PPL-to-generation transfer finding would strengthen §5 if we had $n > 1$ model and $n > 1$ usable prefix — we currently have exactly one of each (Qwen2.5-7B on `wiki_0`). The hybrid scope-caveat finding is $n = 1$ in the hybrid column (Qwen3.6-27B) and would need a second hybrid model (e.g., Jamba, Samba, Zamba) to generalise; the quantitative 0.2 % threshold and the non-additive layer-group observation would need replication across architectures before we would stake a paper claim on either. All of it belongs in the report as open observations rather than paper claims.
+    **Why this is not in the paper.** The PPL-to-generation transfer finding would strengthen §5 if we had $n > 1$ model and $n > 1$ usable prefix — we currently have exactly one of each (Qwen2.5-7B on `wiki_0`). The hybrid scope-caveat finding is $n = 1$ in the hybrid column (Qwen3.6-27B) and would need a second hybrid model (e.g., Jamba, Samba, Zamba) to generalise; the quantitative 0.2 % threshold, the non-additive layer-group observation, and the W-shaped dilution curve would need replication across architectures before we would stake a paper claim on any of them. All of it belongs in the report as open observations rather than paper claims.
 
 Phase 14 also found that **asymmetric INT4 is *worse* than symmetric INT4 on Llama-3.1-8B** (+0.027 vs +0.013 ΔPPL) while tying on Qwen2-7B. Above INT3, the zero-centering of symmetric quantization appears to carry value that asym's extra level cannot make up for. Accordingly the v0.3 dispatcher uses asym at INT3 only and returns to symmetric for INT4+.
 

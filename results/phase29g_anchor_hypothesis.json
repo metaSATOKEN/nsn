@@ -1,0 +1,289 @@
+{
+  "date": "2026-04-24T12:28:49",
+  "phase": "29g",
+  "purpose": "Anchor-layer hypothesis test: do the 3 individually-safe layers {3, 15, 35} stabilise the 13 individually-fragile layers when compressed together?",
+  "model": "Qwen/Qwen3.6-27B",
+  "label": "Qwen3.6-27B",
+  "protocol": {
+    "ctx_target_tokens": 4096,
+    "n_new_tokens": 500,
+    "decode": "greedy",
+    "prefix": "wikitext_offset_0",
+    "safe_layers": [
+      3,
+      15,
+      35
+    ],
+    "fragile_top3": [
+      43,
+      39,
+      11
+    ],
+    "fragile_all13": [
+      7,
+      11,
+      19,
+      23,
+      27,
+      31,
+      39,
+      43,
+      47,
+      51,
+      55,
+      59,
+      63
+    ],
+    "probes": [
+      "1. FP16 baseline",
+      "2. {3,15,35} only (anchors)",
+      "3. {3,15,35} + {43}",
+      "4. {3,15,35} + top-3 fragile",
+      "5. {3,15,35} + all 13 fragile (all 16)",
+      "6. 13 fragile only (no anchors)"
+    ]
+  },
+  "fp16_r4_baseline": 0.16297786720321927,
+  "per_probe": {
+    "1. FP16 baseline": {
+      "target_layer_ids": [],
+      "n_target_layers": 0,
+      "longest_repeat_chars": 43,
+      "repetition_4gram": 0.16297786720321927,
+      "delta_r4_vs_fp16": 0.0,
+      "distinct_2": 0.6673346693386774,
+      "tail_200_chars": "bert Boulter's career\" and \"Du Fu's life\" based on the provided text.\n\n   Key elements to address:\n   - Robert Boulter's career (theatre, TV, film, key roles, timeline)\n   - Du Fu's life (early years,",
+      "n_tokens": 500,
+      "compression_info": {
+        "compressed_layers": 0,
+        "requested_layers": []
+      }
+    },
+    "2. {3,15,35} only (anchors)": {
+      "target_layer_ids": [
+        3,
+        15,
+        35
+      ],
+      "n_target_layers": 3,
+      "longest_repeat_chars": 38,
+      "repetition_4gram": 0.13682092555331993,
+      "delta_r4_vs_fp16": -0.026156941649899346,
+      "distinct_2": 0.6653306613226453,
+      "tail_200_chars": "was directed by John Tiffany and starred alongside Ben Whishaw , section , Shane Zaza , Harry Kent , Fraser Ayres , Sophie Stanton and Dominic Hall . \n\n\n In 2006 , Boulter starred alongside Whishaw in",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          3,
+          15,
+          35
+        ],
+        "compressed_layers": 3,
+        "compressed_indices": [
+          3,
+          15,
+          35
+        ]
+      }
+    },
+    "3. {3,15,35} + {43}": {
+      "target_layer_ids": [
+        3,
+        15,
+        35,
+        43
+      ],
+      "n_target_layers": 4,
+      "longest_repeat_chars": 200,
+      "repetition_4gram": 0.5533199195171026,
+      "delta_r4_vs_fp16": 0.3903420523138833,
+      "distinct_2": 0.3366733466933868,
+      "tail_200_chars": "= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = roles in the 2000s = = = = = = = = = = = = = = = = = = = = = = = = = = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          3,
+          15,
+          35,
+          43
+        ],
+        "compressed_layers": 4,
+        "compressed_indices": [
+          3,
+          15,
+          35,
+          43
+        ]
+      }
+    },
+    "4. {3,15,35} + top-3 fragile": {
+      "target_layer_ids": [
+        3,
+        11,
+        15,
+        35,
+        39,
+        43
+      ],
+      "n_target_layers": 6,
+      "longest_repeat_chars": 79,
+      "repetition_4gram": 0.289738430583501,
+      "delta_r4_vs_fp16": 0.12676056338028174,
+      "distinct_2": 0.5571142284569138,
+      "tail_200_chars": "the Tang dynasty. The two texts are completely unrelated and do not share any common themes or subjects.\"\n   - This looks like a prompt where the user is stating a fact/observation, possibly expecting",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          3,
+          11,
+          15,
+          35,
+          39,
+          43
+        ],
+        "compressed_layers": 6,
+        "compressed_indices": [
+          3,
+          11,
+          15,
+          35,
+          39,
+          43
+        ]
+      }
+    },
+    "5. {3,15,35} + all 13 fragile (all 16)": {
+      "target_layer_ids": [
+        3,
+        7,
+        11,
+        15,
+        19,
+        23,
+        27,
+        31,
+        35,
+        39,
+        43,
+        47,
+        51,
+        55,
+        59,
+        63
+      ],
+      "n_target_layers": 16,
+      "longest_repeat_chars": 50,
+      "repetition_4gram": 0.5191146881287727,
+      "delta_r4_vs_fp16": 0.35613682092555343,
+      "distinct_2": 0.37074148296593185,
+      "tail_200_chars": "= = = = = = = \n\n\n = = = = = = = = = = Notes = = = = = = = = = = \n\n\n = = = = = = = = = = = = Text = = = = = = = = = = = = \n\n\n = = = = = = = = = = = = Translation = = = = = = = = = = = = \n\n\n = = = = = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          3,
+          7,
+          11,
+          15,
+          19,
+          23,
+          27,
+          31,
+          35,
+          39,
+          43,
+          47,
+          51,
+          55,
+          59,
+          63
+        ],
+        "compressed_layers": 16,
+        "compressed_indices": [
+          3,
+          7,
+          11,
+          15,
+          19,
+          23,
+          27,
+          31,
+          35,
+          39,
+          43,
+          47,
+          51,
+          55,
+          59,
+          63
+        ]
+      }
+    },
+    "6. 13 fragile only (no anchors)": {
+      "target_layer_ids": [
+        7,
+        11,
+        19,
+        23,
+        27,
+        31,
+        39,
+        43,
+        47,
+        51,
+        55,
+        59,
+        63
+      ],
+      "n_target_layers": 13,
+      "longest_repeat_chars": 189,
+      "repetition_4gram": 0.5211267605633803,
+      "delta_r4_vs_fp16": 0.358148893360161,
+      "distinct_2": 0.41282565130260523,
+      "tail_200_chars": "emes = = = \n\n\n Du Fu 's called the \" Poet @-@ Sage \" by Chinese critics , while the range of his lead to his introduction to Robert Boulter is an English film , television and theatre actor . He had a",
+      "n_tokens": 500,
+      "compression_info": {
+        "total_layers": 64,
+        "requested_layers": [
+          7,
+          11,
+          19,
+          23,
+          27,
+          31,
+          39,
+          43,
+          47,
+          51,
+          55,
+          59,
+          63
+        ],
+        "compressed_layers": 13,
+        "compressed_indices": [
+          7,
+          11,
+          19,
+          23,
+          27,
+          31,
+          39,
+          43,
+          47,
+          51,
+          55,
+          59,
+          63
+        ]
+      }
+    }
+  },
+  "anchor_effect": {
+    "dr4_13_fragile_alone": 0.358148893360161,
+    "dr4_13_fragile_plus_anchors": 0.35613682092555343,
+    "dr4_reduction_by_anchors": 0.002012072434607548
+  }
+}
