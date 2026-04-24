@@ -1593,9 +1593,27 @@ level. No hand-written CUDA or Triton kernel is required to reach this
 operating point. The dominant cost on this hardware is CUDA
 kernel-launch latency of the naive Python loop, not the pack / unpack
 arithmetic itself. - \textbf{The model family is systematically
-different from anything in our benchmark.} Post-LN architectures,
-state-space models, and Transformer variants with very non-standard KV
-cache structure were not evaluated.
+different from anything in our benchmark.} Post-LN architectures, pure
+state-space models, and hybrid Transformer + SSM architectures (Jamba
+{[}Lieber et al., 2024{]}, Zamba, Bamba, Nemotron-H, etc.) were not
+evaluated. These architectures have their own active line of
+quantisation research with \textbf{component-specific recipes rather
+than per-element-uniform} ones --- ExpertsInt8 {[}Lieber et al., 2024{]}
+applies INT8 to MoE / MLP weights with in-kernel dequantisation, Quamba
+{[}Chiang et al., 2024{]} applies Hadamard-smoothed W8A8 specifically to
+SSM blocks, and recent forward-only sensitivity-analysis methods {[}KL
+Lens, 2026{]} auto-select per-layer bit widths for mixed-precision
+hybrid quantisation. A sandbox probe (Phase 29 series,
+\texttt{results/phase29*.json}) ran the v0.3 recipe on Qwen3.6-27B, a
+1-in-4 hybrid of linear-attention and softmax-attention layers, and
+found that the recipe's per-element perturbation exceeds a fragility
+threshold at approximately \(0.2 \%\) of per-token L2 norm on the sparse
+attention layers of this architecture --- well below what any realistic
+bit budget of a per-element uniform quantiser can achieve. This is a
+concrete and measured instance of the scope caveat: modeq is the
+KV-cache INT3 tool; Quamba and ExpertsInt8 are the SSM-weight and
+MoE-weight tools; the three are complementary rather than competitive on
+a hybrid-model deployment.
 
 \subsubsection{6.3 Limitations}\label{limitations}
 

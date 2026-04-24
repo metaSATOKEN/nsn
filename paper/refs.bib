@@ -373,3 +373,59 @@
                   transformers at measurement time and it is reported
                   as attempted-but-blocked.},
 }
+
+
+% ===========================================================
+% Hybrid Transformer + SSM model quantization
+% ===========================================================
+% Cited only in \S 6.2 to acknowledge that hybrid (attention + SSM)
+% architectures -- explicitly out of scope for the present work --
+% have their own active line of quantization research with component-
+% specific rather than per-element-uniform recipes.
+
+@misc{lieber2024jamba,
+  author       = {Lieber, Opher and Lenz, Barak and Bata, Hofit
+                  and Cohen, Gal and Osin, Jhonathan and Dalmedigos, Itay
+                  and Safahi, Erez and Meirom, Shaked and Belinkov, Yonatan
+                  and Shalev-Shwartz, Shai and Abend, Omri and Alon, Raz
+                  and Asida, Tomer and Bergman, Amir and others},
+  title        = {{Jamba-1.5}: Hybrid Transformer-Mamba Models at Scale},
+  year         = {2024},
+  eprint       = {2408.12570},
+  archivePrefix = {arXiv},
+  howpublished = {\url{https://arxiv.org/abs/2408.12570}},
+  note         = {Introduces the ExpertsInt8 scheme -- INT8 on MoE / MLP
+                  weights with in-kernel dequantisation -- and demonstrates
+                  256K-token inference of a 94B-active hybrid on 8xA100 / H100.
+                  Component-specific rather than per-element-uniform.},
+}
+
+@misc{chiang2024quamba,
+  author       = {Chiang, Hung-Yueh and Chang, Chi-Chih
+                  and Frumkin, Natalia and Wu, Kai-Chiang and Marculescu, Diana},
+  title        = {{Quamba}: A Post-Training Quantization Recipe for Selective
+                  State Space Models},
+  year         = {2024},
+  eprint       = {2410.13229},
+  archivePrefix = {arXiv},
+  howpublished = {\url{https://arxiv.org/abs/2410.13229}},
+  note         = {SSM-specific W8A8 quantisation using Hadamard smoothing
+                  and activation clustering. Applied to Jamba's SSM blocks
+                  with \textasciitilde 1\% zero-shot accuracy drop.
+                  Complementary to the present paper's attention-K/V focus.},
+}
+
+@misc{kl_lens_2026,
+  author       = {{Anonymous}},
+  title        = {A {KL} Lens on Quantization: Fast, Forward-Only Sensitivity
+                  for Mixed-Precision {SSM}-Transformer Models},
+  year         = {2026},
+  eprint       = {2604.13440},
+  archivePrefix = {arXiv},
+  howpublished = {\url{https://arxiv.org/abs/2604.13440}},
+  note         = {Backpropagation-free layer-wise sensitivity via KL
+                  divergence surrogate, specifically for hybrid SSM +
+                  Transformer architectures. Auto-selects per-layer bit
+                  widths under a mixed-precision budget. ArXiv ID to be
+                  verified against the published record before camera-ready.},
+}
