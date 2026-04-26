@@ -1,0 +1,102 @@
+{
+  "date": "2026-04-26T08:37:41",
+  "phase": "29h",
+  "purpose": "Two-track compression: attn modeq INT3 + ssm naive sym INT8/INT4 on Qwen3.6-27B. Tests whether uniformly perturbing both attention and SSM dilutes the attention-only fragility observed in Phase 29b/g.",
+  "model": "Qwen/Qwen3.6-27B",
+  "label": "Qwen3.6-27B",
+  "protocol": {
+    "ctx_target_tokens": 4096,
+    "n_new_tokens": 500,
+    "decode": "greedy",
+    "prefix": "wikitext_offset_0",
+    "probes": [
+      "1. FP16 baseline",
+      "2. attn modeq INT3 only (29b ref)",
+      "3. ssm naive INT8 only (control)",
+      "4. ssm naive INT4 only (control)",
+      "5. attn modeq INT3 + ssm naive INT8",
+      "6. attn modeq INT3 + ssm naive INT4"
+    ]
+  },
+  "fp16_r4_baseline": 0.16297786720321927,
+  "per_probe": {
+    "1. FP16 baseline": {
+      "longest_repeat_chars": 43,
+      "repetition_4gram": 0.16297786720321927,
+      "delta_r4_vs_fp16": 0.0,
+      "distinct_2": 0.6673346693386774,
+      "tail_200_chars": "bert Boulter's career\" and \"Du Fu's life\" based on the provided text.\n\n   Key elements to address:\n   - Robert Boulter's career (theatre, TV, film, key roles, timeline)\n   - Du Fu's life (early years,",
+      "n_tokens": 500,
+      "compression_info": {
+        "n_transformer_compressed": 0,
+        "n_ssm_compressed": 0,
+        "ssm_diagnostic": null
+      }
+    },
+    "2. attn modeq INT3 only (29b ref)": {
+      "longest_repeat_chars": 50,
+      "repetition_4gram": 0.5191146881287727,
+      "delta_r4_vs_fp16": 0.35613682092555343,
+      "distinct_2": 0.37074148296593185,
+      "tail_200_chars": "= = = = = = = \n\n\n = = = = = = = = = = Notes = = = = = = = = = = \n\n\n = = = = = = = = = = = = Text = = = = = = = = = = = = \n\n\n = = = = = = = = = = = = Translation = = = = = = = = = = = = \n\n\n = = = = = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "n_transformer_compressed": 16,
+        "n_ssm_compressed": 0,
+        "ssm_diagnostic": null
+      }
+    },
+    "3. ssm naive INT8 only (control)": {
+      "longest_repeat_chars": 43,
+      "repetition_4gram": 0.16297786720321927,
+      "delta_r4_vs_fp16": 0.0,
+      "distinct_2": 0.6673346693386774,
+      "tail_200_chars": "bert Boulter's career\" and \"Du Fu's life\" based on the provided text.\n\n   Key elements to address:\n   - Robert Boulter's career (theatre, TV, film, key roles, timeline)\n   - Du Fu's life (early years,",
+      "n_tokens": 500,
+      "compression_info": {
+        "n_transformer_compressed": 0,
+        "n_ssm_compressed": 0,
+        "ssm_diagnostic": null
+      }
+    },
+    "4. ssm naive INT4 only (control)": {
+      "longest_repeat_chars": 43,
+      "repetition_4gram": 0.16297786720321927,
+      "delta_r4_vs_fp16": 0.0,
+      "distinct_2": 0.6673346693386774,
+      "tail_200_chars": "bert Boulter's career\" and \"Du Fu's life\" based on the provided text.\n\n   Key elements to address:\n   - Robert Boulter's career (theatre, TV, film, key roles, timeline)\n   - Du Fu's life (early years,",
+      "n_tokens": 500,
+      "compression_info": {
+        "n_transformer_compressed": 0,
+        "n_ssm_compressed": 0,
+        "ssm_diagnostic": null
+      }
+    },
+    "5. attn modeq INT3 + ssm naive INT8": {
+      "longest_repeat_chars": 50,
+      "repetition_4gram": 0.5191146881287727,
+      "delta_r4_vs_fp16": 0.35613682092555343,
+      "distinct_2": 0.37074148296593185,
+      "tail_200_chars": "= = = = = = = \n\n\n = = = = = = = = = = Notes = = = = = = = = = = \n\n\n = = = = = = = = = = = = Text = = = = = = = = = = = = \n\n\n = = = = = = = = = = = = Translation = = = = = = = = = = = = \n\n\n = = = = = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "n_transformer_compressed": 16,
+        "n_ssm_compressed": 0,
+        "ssm_diagnostic": null
+      }
+    },
+    "6. attn modeq INT3 + ssm naive INT4": {
+      "longest_repeat_chars": 50,
+      "repetition_4gram": 0.5191146881287727,
+      "delta_r4_vs_fp16": 0.35613682092555343,
+      "distinct_2": 0.37074148296593185,
+      "tail_200_chars": "= = = = = = = \n\n\n = = = = = = = = = = Notes = = = = = = = = = = \n\n\n = = = = = = = = = = = = Text = = = = = = = = = = = = \n\n\n = = = = = = = = = = = = Translation = = = = = = = = = = = = \n\n\n = = = = = =",
+      "n_tokens": 500,
+      "compression_info": {
+        "n_transformer_compressed": 16,
+        "n_ssm_compressed": 0,
+        "ssm_diagnostic": null
+      }
+    }
+  }
+}
