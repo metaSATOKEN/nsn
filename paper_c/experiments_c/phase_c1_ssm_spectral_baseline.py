@@ -2,11 +2,11 @@
 # Licensed under the Apache License, Version 2.0
 
 # ============================================================
-# Phase C-1: SSM spectral baseline diagnostic on Mamba-2
+# Phase C-1: SSM spectral baseline diagnostic on Zamba2-2.7B
 # ============================================================
 # Paper C kickoff probe. NOT for the NSN paper (Paper B).
 #
-# Goal. Compute, per (layer, head/group) of a pure SSM model,
+# Goal. Compute, per (layer, head/group) of an SSM-bearing model,
 # the three quantities that the Paper C bit allocator needs:
 #
 #   rho_g    = E_t || A_bar_t,g ||_2          (forgetting / memory)
@@ -20,9 +20,25 @@
 # This is the per-state-group analog of Paper B's per-channel
 # asymmetric quantisation, generalised to recurrent state.
 #
-# Model. state-spaces/mamba2-2.7b. The script also runs on the
-# smaller members of the same family (130m / 370m / 780m / 1.3b)
-# by changing MODEL_ID below.
+# Model. We default to Zyphra/Zamba2-2.7B, an HF-native hybrid
+# Mamba2 + softmax-attention model. Initial attempt with
+# state-spaces/mamba2-2.7b failed because state-spaces ships
+# checkpoints in the original Mamba authors' format (no
+# `model_type` key in config.json), and the corresponding
+# mamba-ssm / causal-conv1d kernels do not build on Colab.
+# Zamba2 ships HF-native configs and uses HF transformers'
+# Mamba2Mixer reference implementation by default, which works
+# without those CUDA kernels.
+#
+# Bonus: Zamba2-2.7B is itself a hybrid model, which gives us a
+# *second* hybrid datapoint beyond the Phase 29 Qwen3.6-27B
+# experiments — directly relevant to the Paper-C-4 plan
+# (synchronisation-pulse hypothesis on a second hybrid).
+#
+# Mixer detection is by A_log presence (the canonical Mamba A
+# parameter), so this same script also runs on:
+#   - state-spaces/mamba-2.8b-hf (Mamba-1 HF-native, fallback)
+#   - any HF-native Mamba / Mamba-2 / hybrid checkpoint
 #
 # Two-track diagnostic so the script always produces SOMETHING:
 #
@@ -33,14 +49,14 @@
 #
 #   Empirical track: register a forward pre-hook on each mixer,
 #     capture the input hidden_states of one 1024-token WikiText-2
-#     window, replay the dt / A / B / C computation manually using
-#     the mixer's own parameters and standard Mamba-2 formulae, and
-#     average over time. Best effort; if the module structure is
-#     not what we expect, the empirical track is skipped and only
-#     the static track is reported.
+#     window, replay the dt computation manually using the mixer's
+#     own parameters and standard Mamba-2 formulae, and average
+#     over time. Best effort; if the module structure is not what
+#     we expect, the empirical track is skipped and only the
+#     static track is reported.
 #
-# Runtime ~10-15 min on A100 80 GB for mamba2-2.7b (download
-# dominates; the spectral pass itself is one forward).
+# Runtime ~10-15 min on A100 80 GB (download dominates; the
+# spectral pass itself is one forward).
 # ============================================================
 
 
@@ -64,9 +80,12 @@ if torch.cuda.is_available():
 
 !pip install -q -U transformers accelerate hf_transfer datasets
 
-# Mamba-2 official kernels (best-effort; the HF reference path
-# also works without these, just slower).
-!pip install -q mamba-ssm causal-conv1d || true
+# Note: NOT installing mamba-ssm / causal-conv1d here. Those
+# CUDA kernel packages reliably fail to build on Colab and are
+# only needed when loading state-spaces/mamba* checkpoints in
+# the original (non-HF) format. Zamba2-2.7B uses HF
+# transformers' built-in Mamba2Mixer reference path and runs
+# without them.
 
 import os
 os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
@@ -88,17 +107,19 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 # ─────────────────────────────────────────────────────────────
 # >>>>>  Adjust if you want a smaller / faster probe  <<<<<
-MODEL_ID    = "state-spaces/mamba2-2.7b"
-MODEL_LABEL = "Mamba2-2.7B"
+MODEL_ID    = "Zyphra/Zamba2-2.7B"
+MODEL_LABEL = "Zamba2-2.7B"
+# Alternatives that should also work with the same script:
+#   - "Zyphra/Zamba2-1.2B"           (smaller, faster iteration)
+#   - "state-spaces/mamba-2.8b-hf"   (Mamba-1 HF-native, static-only)
 # ─────────────────────────────────────────────────────────────
 
-# Mamba models on HF often need a separate tokenizer source
-# (state-spaces ships the model weights but reuses GPT-NeoX or
-# EleutherAI tokenizers). Try the model id first, fall back to
-# a known compatible one.
+# Zamba2 ships its own tokenizer; Mamba HF mirrors typically use
+# GPT-NeoX-20B's tokenizer as a fallback. Try the model id first,
+# fall back to known compatible alternatives.
 TOKENIZER_FALLBACKS = [
     MODEL_ID,
-    "state-spaces/mamba2-2.7b",
+    "Zyphra/Zamba2-2.7B",
     "EleutherAI/gpt-neox-20b",
 ]
 
@@ -158,15 +179,48 @@ if ssm_mixers:
     print(f"    class:    {type(mix0).__name__}")
     print(f"    A_log:    shape={tuple(mix0.A_log.shape)}  "
           f"dtype={mix0.A_log.dtype}")
-    for attr in ["dt_bias", "D", "n_heads", "n_groups",
-                 "head_dim", "ssm_state_size"]:
+
+    # Probe a wide set of canonical Mamba-2 attribute names; this
+    # is also our diagnostic for whether the empirical track will
+    # work, and for spotting Zamba2's renamings if any.
+    for attr in [
+        "dt_bias", "D", "n_heads", "num_heads", "n_groups",
+        "num_groups", "head_dim", "ssm_state_size", "d_state",
+        "expand", "conv_kernel", "chunk_size",
+        # projection layers; HF / mamba-ssm name them differently
+        "in_proj", "xb_proj", "x_proj", "Wxbcdt",
+        "out_proj", "norm", "act", "conv1d",
+    ]:
         if hasattr(mix0, attr):
             v = getattr(mix0, attr)
-            if isinstance(v, torch.nn.Parameter) or isinstance(v, torch.Tensor):
-                print(f"    {attr}: shape={tuple(v.shape)}  "
+            if isinstance(v, (torch.nn.Parameter, torch.Tensor)):
+                print(f"    {attr}: tensor shape={tuple(v.shape)}  "
                       f"dtype={v.dtype}")
+            elif hasattr(v, "weight"):
+                w = v.weight
+                print(f"    {attr}: {type(v).__name__} "
+                      f"weight shape={tuple(w.shape)}")
             else:
                 print(f"    {attr}: {v}")
+
+    # Also dump non-private attribute names that we did not list,
+    # so we can spot Zamba2-specific naming we did not anticipate.
+    expected = {
+        "A_log", "dt_bias", "D", "n_heads", "num_heads", "n_groups",
+        "num_groups", "head_dim", "ssm_state_size", "d_state",
+        "expand", "conv_kernel", "chunk_size", "in_proj", "xb_proj",
+        "x_proj", "Wxbcdt", "out_proj", "norm", "act", "conv1d",
+    }
+    other = sorted([
+        n for n in dir(mix0)
+        if not n.startswith("_")
+        and n not in expected
+        and not callable(getattr(mix0, n, None))
+    ])
+    if other:
+        print(f"    [other non-private attrs on the mixer]: "
+              f"{', '.join(other[:25])}"
+              f"{' ...' if len(other) > 25 else ''}")
 
 
 # =============================================================
@@ -306,17 +360,28 @@ for name, mix in ssm_mixers:
     x = captured_inputs[name]  # [B, T, d_model]
 
     # Try the canonical Mamba-2 attribute names. Different HF
-    # transformers versions and the original mamba_ssm library
-    # use slightly different layouts; if the layout we recognise
-    # is not present we just skip the empirical calc for this
-    # mixer (the static track already covers it).
-    in_proj      = getattr(mix, "in_proj",      None)
-    dt_bias      = getattr(mix, "dt_bias",      None)
-    n_heads      = getattr(mix, "n_heads",      None)
-    n_groups     = getattr(mix, "n_groups",     None)
-    head_dim     = getattr(mix, "head_dim",     None)
-    state_size   = getattr(mix, "ssm_state_size",
-                            getattr(mix, "d_state", None))
+    # transformers versions, the original mamba_ssm library, and
+    # downstream models like Zamba2 use slightly different layouts;
+    # if the layout we recognise is not present we just skip the
+    # empirical calc for this mixer (the static track already
+    # covers it).
+    def _first_attr(module, names):
+        for n in names:
+            v = getattr(module, n, None)
+            if v is not None:
+                return v, n
+        return None, None
+
+    in_proj, in_proj_name = _first_attr(
+        mix, ["in_proj", "Wxbcdt", "xb_proj", "x_proj"]
+    )
+    dt_bias    = getattr(mix, "dt_bias", None)
+    n_heads, _ = _first_attr(mix, ["n_heads", "num_heads"])
+    n_groups, _ = _first_attr(mix, ["n_groups", "num_groups"])
+    head_dim   = getattr(mix, "head_dim", None)
+    state_size, _ = _first_attr(
+        mix, ["ssm_state_size", "d_state", "state_size"]
+    )
 
     A_log = mix.A_log.detach().float()
     A_mag = torch.exp(A_log)  # [n_heads]
