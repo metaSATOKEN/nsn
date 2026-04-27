@@ -2,11 +2,11 @@
 # Licensed under the Apache License, Version 2.0
 
 # ============================================================
-# Phase C-1: SSM spectral baseline diagnostic on Zamba2-2.7B
+# Phase C-1: SSM spectral baseline diagnostic on Mamba-1 (HF)
 # ============================================================
 # Paper C kickoff probe. NOT for the NSN paper (Paper B).
 #
-# Goal. Compute, per (layer, head/group) of an SSM-bearing model,
+# Goal. Compute, per (layer, state-unit) of an SSM-bearing model,
 # the three quantities that the Paper C bit allocator needs:
 #
 #   rho_g    = E_t || A_bar_t,g ||_2          (forgetting / memory)
@@ -14,48 +14,60 @@
 #   R_g      = || Gamma_g || / (1 - rho_g + eps)
 #   b_g      = b_0 + ceil( log_2 R_g )+       (suggested bit budget)
 #
-# The intuition: long-memory groups (rho_g -> 1) and high-output-
-# coupling groups (large || Gamma_g ||) get more bits; aggressive-
-# forgetting low-coupling groups can be aggressively compressed.
+# The intuition: long-memory units (rho_g -> 1) and high-output-
+# coupling units (large || Gamma_g ||) get more bits; aggressive-
+# forgetting low-coupling units can be aggressively compressed.
 # This is the per-state-group analog of Paper B's per-channel
 # asymmetric quantisation, generalised to recurrent state.
 #
-# Model. We default to Zyphra/Zamba2-2.7B, an HF-native hybrid
-# Mamba2 + softmax-attention model. Initial attempt with
-# state-spaces/mamba2-2.7b failed because state-spaces ships
-# checkpoints in the original Mamba authors' format (no
-# `model_type` key in config.json), and the corresponding
-# mamba-ssm / causal-conv1d kernels do not build on Colab.
-# Zamba2 ships HF-native configs and uses HF transformers'
-# Mamba2Mixer reference implementation by default, which works
-# without those CUDA kernels.
+# Model. We default to state-spaces/mamba-2.8b-hf, the HF-native
+# port of the original Mamba (Mamba-1) at 2.8B parameters. We
+# arrived here after two infrastructure pivots:
 #
-# Bonus: Zamba2-2.7B is itself a hybrid model, which gives us a
-# *second* hybrid datapoint beyond the Phase 29 Qwen3.6-27B
-# experiments — directly relevant to the Paper-C-4 plan
-# (synchronisation-pulse hypothesis on a second hybrid).
+#   1. state-spaces/mamba2-2.7b (Mamba-2): config.json has no
+#      `model_type` key, and the corresponding mamba-ssm /
+#      causal-conv1d CUDA kernels reliably fail to build on Colab.
+#
+#   2. Zyphra/Zamba2-2.7B (hybrid Mamba2 + attention): HF-native
+#      config, but the current transformers `get_expanded_tied_
+#      weights_keys` machinery is not compatible with Zamba2's
+#      shared-transformer weight tying (^layers.12 ↔ ^layers.47
+#      adapter-list mismatch). Triggers a ValueError at model
+#      construction time even before forward.
+#
+# Mamba-1 HF is rock solid: HF-native config, the reference
+# Python forward path runs without any CUDA kernel package, and
+# the spectral concepts (rho_g, R_g, b_g) transfer identically
+# from Mamba-2 to Mamba-1 — only the A_log shape changes from
+# 1D [n_heads] to 2D [d_inner, d_state]. The Paper C bit
+# allocator math is shape-agnostic, so nothing is lost.
 #
 # Mixer detection is by A_log presence (the canonical Mamba A
 # parameter), so this same script also runs on:
-#   - state-spaces/mamba-2.8b-hf (Mamba-1 HF-native, fallback)
-#   - any HF-native Mamba / Mamba-2 / hybrid checkpoint
+#   - state-spaces/mamba-130m-hf, -370m-hf, -790m-hf (smaller)
+#   - state-spaces/mamba-1.4b-hf, -2.8b-hf (default)
+#   - Any future HF-native Mamba / Mamba-2 / hybrid checkpoint
+#     (the empirical track may need attribute aliases tweaked).
 #
 # Two-track diagnostic so the script always produces SOMETHING:
 #
 #   Static track: read A_log directly from each SSM mixer's
-#     parameters; report per-head static "forgetting tendency"
+#     parameters; report per-unit static "forgetting tendency"
 #     rho_static_g(dt) = exp( - dt * exp(A_log_g) ) at a typical
-#     dt = 0.1. Always works.
+#     dt = 0.1. Always works. For Mamba-1 the A_log tensor is
+#     2D [d_inner, d_state] and we flatten over both axes for
+#     the distribution.
 #
 #   Empirical track: register a forward pre-hook on each mixer,
 #     capture the input hidden_states of one 1024-token WikiText-2
 #     window, replay the dt computation manually using the mixer's
-#     own parameters and standard Mamba-2 formulae, and average
-#     over time. Best effort; if the module structure is not what
-#     we expect, the empirical track is skipped and only the
-#     static track is reported.
+#     own parameters, and average over time. Implemented for the
+#     Mamba-2 attribute layout; on Mamba-1 it currently skips
+#     (Mamba-1 mixers expose dt via dt_proj rather than the
+#     Mamba-2 in_proj-last-n_heads slice; a Phase C-1b will add
+#     Mamba-1 empirical support).
 #
-# Runtime ~10-15 min on A100 80 GB (download dominates; the
+# Runtime ~5-10 min on A100 80 GB (download dominates; the
 # spectral pass itself is one forward).
 # ============================================================
 
@@ -107,19 +119,19 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 # ─────────────────────────────────────────────────────────────
 # >>>>>  Adjust if you want a smaller / faster probe  <<<<<
-MODEL_ID    = "Zyphra/Zamba2-2.7B"
-MODEL_LABEL = "Zamba2-2.7B"
+MODEL_ID    = "state-spaces/mamba-2.8b-hf"
+MODEL_LABEL = "Mamba-2.8B-hf"
 # Alternatives that should also work with the same script:
-#   - "Zyphra/Zamba2-1.2B"           (smaller, faster iteration)
-#   - "state-spaces/mamba-2.8b-hf"   (Mamba-1 HF-native, static-only)
+#   - "state-spaces/mamba-130m-hf"    (250 MB, fast smoke test)
+#   - "state-spaces/mamba-370m-hf"
+#   - "state-spaces/mamba-790m-hf"
+#   - "state-spaces/mamba-1.4b-hf"
 # ─────────────────────────────────────────────────────────────
 
-# Zamba2 ships its own tokenizer; Mamba HF mirrors typically use
-# GPT-NeoX-20B's tokenizer as a fallback. Try the model id first,
-# fall back to known compatible alternatives.
+# state-spaces' HF Mamba-1 ports reuse the GPT-NeoX-20B tokenizer.
+# Try the model id first, fall back to known compatible alternatives.
 TOKENIZER_FALLBACKS = [
     MODEL_ID,
-    "Zyphra/Zamba2-2.7B",
     "EleutherAI/gpt-neox-20b",
 ]
 
@@ -180,15 +192,21 @@ if ssm_mixers:
     print(f"    A_log:    shape={tuple(mix0.A_log.shape)}  "
           f"dtype={mix0.A_log.dtype}")
 
-    # Probe a wide set of canonical Mamba-2 attribute names; this
-    # is also our diagnostic for whether the empirical track will
-    # work, and for spotting Zamba2's renamings if any.
+    # Probe a wide set of canonical attribute names (covers
+    # Mamba-1, Mamba-2, and common downstream renamings). This is
+    # both our diagnostic for whether the empirical track will
+    # work and our guide for what to alias in Phase C-1b.
     for attr in [
+        # scalars / small params (Mamba-2 + Mamba-1 + variants)
         "dt_bias", "D", "n_heads", "num_heads", "n_groups",
         "num_groups", "head_dim", "ssm_state_size", "d_state",
         "expand", "conv_kernel", "chunk_size",
-        # projection layers; HF / mamba-ssm name them differently
-        "in_proj", "xb_proj", "x_proj", "Wxbcdt",
+        # Mamba-1 specific
+        "intermediate_size", "time_step_rank", "dt_rank",
+        "use_bias", "use_conv_bias",
+        # projection layers; Mamba-1, Mamba-2, mamba-ssm,
+        # Zamba2 all name them differently
+        "in_proj", "xb_proj", "x_proj", "Wxbcdt", "dt_proj",
         "out_proj", "norm", "act", "conv1d",
     ]:
         if hasattr(mix0, attr):
@@ -204,12 +222,15 @@ if ssm_mixers:
                 print(f"    {attr}: {v}")
 
     # Also dump non-private attribute names that we did not list,
-    # so we can spot Zamba2-specific naming we did not anticipate.
+    # so we can spot architecture-specific naming we did not
+    # anticipate (e.g., Zamba2-specific renamings).
     expected = {
         "A_log", "dt_bias", "D", "n_heads", "num_heads", "n_groups",
         "num_groups", "head_dim", "ssm_state_size", "d_state",
         "expand", "conv_kernel", "chunk_size", "in_proj", "xb_proj",
         "x_proj", "Wxbcdt", "out_proj", "norm", "act", "conv1d",
+        "intermediate_size", "time_step_rank", "dt_rank",
+        "use_bias", "use_conv_bias", "dt_proj",
     }
     other = sorted([
         n for n in dir(mix0)
@@ -242,45 +263,57 @@ print(f"{'-' * 80}")
 DT_TYPICAL = 0.1  # canonical dt for Mamba-2 inference; refines in V4
 
 static_per_layer = []
-all_rho_static = []
+all_rho_static = []   # flat list across (layer, every A_log entry)
 
 for name, mix in ssm_mixers:
+    # A_log shape:
+    #   Mamba-1: [d_inner, d_state]   (e.g. [5120, 16])
+    #   Mamba-2: [n_heads]            (e.g. [80])
+    #   Both:   any other layout where every entry is one
+    #           independent forgetting parameter
     A_log = mix.A_log.detach().float().cpu()
-    A_mag = torch.exp(A_log)               # |A| per head, > 0
+    A_mag = torch.exp(A_log)
     rho_static = torch.exp(-DT_TYPICAL * A_mag)
+
+    flat_rho = rho_static.flatten()
+    n_units  = int(flat_rho.numel())
+
     info = {
-        "layer_name":          name,
-        "n_heads":             int(A_log.numel()),
-        "A_log_min":           float(A_log.min()),
-        "A_log_max":           float(A_log.max()),
-        "A_log_mean":          float(A_log.mean()),
-        "A_mag_mean":          float(A_mag.mean()),
-        "rho_static_min":      float(rho_static.min()),
-        "rho_static_max":      float(rho_static.max()),
-        "rho_static_mean":     float(rho_static.mean()),
-        "A_log_per_head":      A_log.tolist(),
-        "rho_static_per_head": rho_static.tolist(),
+        "layer_name":           name,
+        "A_log_shape":          list(A_log.shape),
+        "n_units":              n_units,
+        "A_log_min":            float(A_log.min()),
+        "A_log_max":            float(A_log.max()),
+        "A_log_mean":           float(A_log.mean()),
+        "A_mag_mean":           float(A_mag.mean()),
+        "rho_static_min":       float(rho_static.min()),
+        "rho_static_max":       float(rho_static.max()),
+        "rho_static_mean":      float(rho_static.mean()),
+        # Store flat (per-unit) lists so the JSON is shape-agnostic;
+        # consumers can reshape using A_log_shape if needed.
+        "A_log_flat":           A_log.flatten().tolist(),
+        "rho_static_flat":      flat_rho.tolist(),
     }
     static_per_layer.append(info)
-    all_rho_static.extend(rho_static.tolist())
+    all_rho_static.extend(flat_rho.tolist())
 
 # Aggregate readout
 all_rho_static_t = torch.tensor(all_rho_static)
-print(f"  Total heads across model: {len(all_rho_static)}")
+print(f"  Total state units across model: {len(all_rho_static)}")
 print(f"  rho_static  (dt={DT_TYPICAL}):")
 print(f"    min={all_rho_static_t.min().item():.4f}  "
       f"median={all_rho_static_t.median().item():.4f}  "
       f"max={all_rho_static_t.max().item():.4f}")
 
-# Coarse histogram of rho_static across heads
+# Coarse histogram of rho_static across all state units
 buckets_rho = [0.0, 0.50, 0.80, 0.95, 0.99, 0.999, 1.0]
-print(f"  Histogram of rho_static across heads:")
+print(f"  Histogram of rho_static across state units:")
 for lo, hi in zip(buckets_rho[:-1], buckets_rho[1:]):
     n = ((all_rho_static_t >= lo) & (all_rho_static_t < hi)).sum().item()
     if hi == 1.0:
         n += (all_rho_static_t == 1.0).sum().item()
     bar = "#" * int(40 * n / max(1, len(all_rho_static)))
-    print(f"    [{lo:.3f}, {hi:.3f})  n={n:>5d}  {bar}")
+    print(f"    [{lo:.3f}, {hi:.3f})  n={n:>6d}  {bar}")
 
 
 # =============================================================
