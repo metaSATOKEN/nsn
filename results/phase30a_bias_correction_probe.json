@@ -1,0 +1,65 @@
+{
+  "date": "2026-04-27T10:09:56",
+  "phase": "30a",
+  "purpose": "Bias-correction probe: tests whether adding per-(layer, head, channel) calibrated mean-error correction to the v0.3 recipe reduces ΔPPL on a standard transformer where errors do not accumulate across time. Paper-C scope (NSSD inspiration; not for the current NSN paper).",
+  "model": "Qwen/Qwen2.5-7B",
+  "label": "Qwen2.5-7B",
+  "protocol": {
+    "ctx_len": 1024,
+    "stride": 512,
+    "n_test_windows": 10,
+    "calib_tokens": 1024,
+    "calib_split": "WikiText-2 train",
+    "test_split": "WikiText-2 test",
+    "conditions": [
+      "1. FP16 baseline",
+      "2. asym INT3 (no bias)",
+      "3. asym INT3 + bias correction",
+      "4. asym INT8 (no bias, control)",
+      "5. asym INT8 + bias (control)"
+    ]
+  },
+  "fp16_baseline_ppl": 5.211838298197663,
+  "results": {
+    "1. FP16 baseline": {
+      "ppl": 5.211838298197663,
+      "delta_ppl": 0.0,
+      "pct_of_base": 0.0,
+      "n_windows": 10
+    },
+    "2. asym INT3 (no bias)": {
+      "ppl": 5.392918045892188,
+      "delta_ppl": 0.1810797476945245,
+      "pct_of_base": 3.4743930516252735,
+      "n_windows": 10
+    },
+    "3. asym INT3 + bias correction": {
+      "ppl": 5.460930127264473,
+      "delta_ppl": 0.24909182906680982,
+      "pct_of_base": 4.779346841074285,
+      "n_windows": 10
+    },
+    "4. asym INT8 (no bias, control)": {
+      "ppl": 5.212912946531087,
+      "delta_ppl": 0.0010746483334234114,
+      "pct_of_base": 0.02061937212816142,
+      "n_windows": 10
+    },
+    "5. asym INT8 + bias (control)": {
+      "ppl": 5.212994851338639,
+      "delta_ppl": 0.0011565531409756247,
+      "pct_of_base": 0.022190886877199917,
+      "n_windows": 10
+    }
+  },
+  "bias_norm_summary": {
+    "int3_mean_k_norm": 0.6097630645547595,
+    "int3_mean_v_norm": 0.2543122006048049,
+    "int8_mean_k_norm": 0.005938762715751571,
+    "int8_mean_v_norm": 0.0046530026052745855
+  },
+  "deltas": {
+    "int3_with_minus_without_bias_pct": 1.3049537894490117,
+    "int8_with_minus_without_bias_pct": 0.0015715147490384974
+  }
+}
