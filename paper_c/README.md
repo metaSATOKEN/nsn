@@ -36,11 +36,11 @@ For Mamba's *selective* SSM, $\bar A_t,\,\bar B_t,\,C_t$ are themselves input-de
 
 ---
 
-## Results so far (Phase C-1, 2026-04-27)
+## Results so far (Phase C-1 + C-1b, 2026-04-27)
 
-First Paper C empirical run. Static spectral track on **Mamba-2.8B-hf** (state-spaces' HF-native port of the original Mamba-1, 64 layers × 5,120 d_inner × 16 d_state = **5,242,880 state units**). Pivoted here after `state-spaces/mamba2-2.7b` failed with config + CUDA-kernel-build issues and `Zyphra/Zamba2-2.7B` failed with a transformers `tie_weights_keys` mismatch on its shared-transformer architecture; Mamba-1 HF runs cleanly on the reference Python forward path.
+First Paper C empirical runs on **Mamba-2.8B-hf** (state-spaces' HF-native port of the original Mamba-1, 64 layers × 5,120 d_inner × 16 d_state = **5,242,880 state units**). Pivoted here after `state-spaces/mamba2-2.7b` failed with config + CUDA-kernel-build issues and `Zyphra/Zamba2-2.7B` failed with a transformers `tie_weights_keys` mismatch on its shared-transformer architecture; Mamba-1 HF runs cleanly on the reference Python forward path.
 
-**Forgetting-rate distribution at $dt = 0.1$:**
+### Phase C-1: static spectral track ($dt = 0.1$ assumed)
 
 | $\rho_g$ range  | meaning            | n state units | fraction |
 |:---------------:|:-------------------|--------------:|---------:|
@@ -51,33 +51,87 @@ First Paper C empirical run. Static spectral track on **Mamba-2.8B-hf** (state-s
 | [0.990, 0.999)  | **very long memory** |          **12** | **2 × 10⁻⁶** |
 | [0.999, 1.000)  | (none)             |             0 |        0 |
 
-The model's recurrent state is **overwhelmingly short-memory**. Only 0.4 % of state units have $\rho_g > 0.95$, and only 12 units (across the entire 2.8B model) have $\rho_g > 0.99$. Long-memory representation is concentrated in a tiny minority.
+Read alone, the static track suggests Mamba's recurrent state is overwhelmingly short-memory: only 0.4 % of state units would carry $\rho_g > 0.95$, and only 12 units across the entire 2.8B model would land at $\rho_g > 0.99$. **This conclusion turns out to be wrong** — the actual selectivity mechanism in Mamba's input-dependent dt biases the empirical distribution very differently.
 
-**Bit-allocation implication**, applying $b_g = b_0 + \lceil \log_2 R_g \rceil_+$ with $b_0 = 3$ and $R_g \approx 1/(1 - \rho_g)$:
+### Phase C-1b: empirical spectral track (input-dependent dt, captured)
 
-| $\rho_g$ band | suggested $b_g$ | covers       |
-|:-------------:|:---------------:|:-------------|
-| 0.0 – 0.5     | INT3            | 58 % of units |
-| 0.5 – 0.8     | INT4 – 5        | 31 %          |
-| 0.8 – 0.95    | INT6 – 7        | 10 %          |
-| 0.95 – 0.99   | INT8 – 9        | 0.4 %         |
-| > 0.99        | INT12+          | 12 units      |
+The Mamba-1 forward path (`in_proj → chunk → conv1d → silu → x_proj → split[dt_rank, d_state, d_state] → dt_proj → softplus`) was replayed inside a forward pre-hook on every mixer, capturing the actual per-token dt under WikiText-2 input. With $A_\text{bar}_{t,c,s} = \exp(dt_{t,c} \cdot (-\exp(A_\log_{c,s})))$ averaged over the 1024-token window:
 
-A naive uniform-INT3 quantiser would over-spend on the 89 % of units that have $\rho_g < 0.95$ *and* under-spend on the 0.4 % of units that need INT8 or higher to survive their accumulated noise. **Direct empirical justification for the per-state-group bit allocator** in the prospectus.
+| $\rho_g$ range  | n state units | fraction | static fraction | shift |
+|:---------------:|--------------:|---------:|----------------:|:----- |
+| [0.000, 0.500)  |     1,644,688 |   31.4 % |    58.0 %       | shrunk by half |
+| [0.500, 0.800)  |     1,532,435 |   29.2 % |    31.3 %       | similar |
+| [0.800, 0.950)  |     1,092,442 |   20.8 % |    10.4 %       | doubled |
+| [0.950, 0.990)  |       508,316 |    9.7 % |     0.42 %      | **× 23** |
+| [0.990, 0.999)  |       299,183 |    5.7 % |   2 × 10⁻⁶      | **× 24,000** |
+| [0.999, 1.000]  |       165,816 |    3.2 % |     0           | **0 → 165,816** |
 
-**Empirical (input-dependent) track:** 0 / 64 layers reported, as expected. The Mamba-1 mixer exposes `dt_proj` + `x_proj` instead of Mamba-2's `in_proj` last-`n_heads` slice, so the canonical-attribute path skips. Phase C-1b adds Mamba-1 specific empirical capture using `dt_proj(x_proj(hidden_states)[..., :time_step_rank])` as the dt source.
+The empirical long-memory tail ($\rho > 0.95$) covers **18.6 % of state units** — fifty times larger than the 0.4 % the static analysis predicted. The very-long-memory tail ($\rho > 0.999$) goes from zero units (static) to **165,816 units (3.2 %)** in real input. The reason is straightforward: per-layer median dt observed empirically is in the 0.017 – 0.125 range, often well below the static assumption of 0.1, and small dt gives $A_\text{bar} = \exp(-dt \cdot |A|)$ much closer to 1.
 
-**Raw data:**
-- `results_c/phase_c1_ssm_spectral_baseline_summary.json` (35 KB, committed): per-layer aggregate statistics, distribution buckets, total counts.
-- `results_c/phase_c1_ssm_spectral_baseline.json` (257 MB, gitignored): full per-state-unit `A_log_flat` and `rho_static_flat` lists. Reproducible from the script; available locally on the author's machine.
+### Per-layer heterogeneity ($U$-shape across the 64 layers)
 
-**What this run rules in / out:**
+| layer | dt p50  | $\rho_g$ p50 | role         |
+|:-----:|--------:|-------------:|:-------------|
+|   0   | 0.0646  | 0.6025       | early abstraction |
+|   8   | 0.0467  | 0.7141       | ↓             |
+|  16   | 0.0492  | 0.6828       | ↓             |
+|  24   | 0.0588  | 0.6429       | ↓             |
+| **32** | **0.0168** | **0.8754** | **long-context core** |
+| **40** | **0.0175** | **0.8786** | **long-context core** |
+|  48   | 0.1021  | 0.4649       | output decode |
+|  56   | 0.1253  | 0.3910       | output decode |
 
-✅ Non-uniform bit allocation has real headroom on Mamba-1: the rho distribution spans 5 orders of magnitude (0.0001 to 0.998), a uniform allocator cannot match a 12-unit-aware allocator on the long-memory tail.
+Mamba-2.8B exhibits a clear **U-shape** in median ρ across layer depth: short memory at the input end, long memory in the middle (layers 32 – 40), short memory at the output end. The middle-layer long-context core sits at $\rho_g \approx 0.88$, while the bottom and top of the stack run at $\rho_g \approx 0.40$ – $0.71$. This is consistent with the Transformer literature finding that middle layers tend to encode the most abstract / long-range context.
 
-✅ The "long-memory minority" qualitative pattern from Paper B item #11 (3 of 16 attention layers individually safe in Qwen 3.6 27B) reappears here as a quantitative fact (12 of 5.24 M state units with $\rho > 0.99$). Cross-architecture echo of the synchronisation-pulse hypothesis.
+### Updated bit-allocation implication
 
-❌ Pure memory-saving as a Paper C selling point: at INT3 baseline most state units are already aggressive enough; the adaptive allocator is essentially a *quality* lever (protect the long-memory minority from saturation) rather than a *compression* lever. Paper C should pitch as "SSM-quality-preserving allocator" not "SSM-compression allocator".
+| $\rho_g$ band | suggested $b_g$ ($b_0 = 3$) | covers (empirical) | covers (static) |
+|:-------------:|:----------------------------:|:------------------:|:----------------|
+| 0.0 – 0.5     | INT3                         | 31 %               | 58 % |
+| 0.5 – 0.8     | INT4 – 5                     | 29 %               | 31 % |
+| 0.8 – 0.95    | INT6 – 7                     | 21 %               | 10 % |
+| 0.95 – 0.99   | INT8 – 9                     | 9.7 %              | 0.4 % |
+| > 0.99        | INT12+                       | 8.9 % (470 K units)| 12 units |
+
+The static-track allocator would compress 89 % of units to INT3 and reserve high precision for a handful of outliers; it would catastrophically under-protect the 470 K state units that empirically need INT12+. **The static / dt = 0.1 analysis is unsuitable as a Paper C bit-allocator input. Empirical (input-dependent) ρ is the correct input.**
+
+### Implications for the Paper C narrative
+
+Three structural updates from Phase C-1b that Paper C should now build on:
+
+1. **Calibration is required.** Unlike Paper B's calibration-free recipe, the Paper C bit allocator requires at least one input-dependent dt measurement (per layer, per state group). The static parameters alone systematically under-estimate long-memory needs by orders of magnitude. This is consistent with the SSDi8 line in the literature, which is explicitly calibration-based.
+
+2. **Per-layer allocation is more impactful than per-state-unit allocation.** The U-shape across layer depth (median ρ ranges 0.39 – 0.88) implies a large amount of the bit-budget difference comes from *which layer* a state unit sits in, not from intra-layer variation. A two-stage allocator — first per-layer baseline from layer-median ρ, then per-state-unit refinement — is the natural architecture.
+
+3. **Paper C is a quality lever, not a compression lever.** The original C-1 conclusion stands and is *reinforced* by C-1b: 9 % of state units need INT8+ and another 9 % need INT12+. A uniform INT3 allocator would saturate them, exactly the kind of long-memory-minority destruction Paper B item #11's synchronisation-pulse hypothesis predicts. The deliverable is "SSM-quality-preserving allocator" with calibration cost on the side, not "INT3 SSM compressor".
+
+### Cross-Paper-B echoes (synchronisation-pulse hypothesis)
+
+| Paper B finding (Qwen 3.6 27B) | Paper C echo (Mamba 2.8B)     |
+|:------------------------------|:------------------------------|
+| 3 of 16 attention layers individually safe (Phase 29f) | 31 % of state units have $\rho < 0.5$ (short memory, easy to compress) |
+| W-shaped fragility curve (single noisy layer worst, all-noisy somewhat absorbed) | not yet probed on SSM; planned for Phase C-3 with feedback rounding |
+| FIR / IIR distinction | Phase C-1b's per-layer dt heterogeneity makes the IIR side concrete: layers 32 – 40 are the strongest IIR contributors |
+| 0.2 % per-token-L2 noise tolerance on hybrid attention | layer 32 / 40 with $\rho \approx 0.88$ implies an effective error-amplification factor $1/(1-0.88) \approx 8.3$, so per-step noise tolerance there must be $\le 0.024$ to keep accumulated error inside that 0.2 % budget |
+
+### Raw data
+
+- `results_c/phase_c1_ssm_spectral_baseline_summary.json` (35 KB, committed): per-layer static aggregates.
+- `results_c/phase_c1_ssm_spectral_baseline.json` (257 MB, gitignored): full per-state-unit `A_log_flat` / `rho_static_flat` lists.
+- `results_c/phase_c1b_mamba1_empirical.json` (44 KB, committed): per-layer empirical buckets + dt p01/p50/p99 + per-layer rho summary. Streaming aggregation keeps it small even with 5.24 M state units.
+
+### What is open, what is closed
+
+✅ Static-track allocator is unsuitable; empirical-track allocator is the right input.
+✅ Long-memory minority is **18.6 % of state units**, not 0.4 %; per-layer median ρ ranges 0.39 – 0.88; layers 32 – 40 are the long-context core.
+✅ Cross-architecture echo of Paper B's "long-memory minority" pattern is now quantified.
+✅ Paper C's bit allocator must be two-stage (per-layer baseline + per-state-unit refinement).
+
+❌ Output-coupling Γ_g is not yet measured. Phase C-1c will extract C from x_proj's last d_state slice and complete the R_g formula.
+
+❌ The bit allocator has not yet been *tested* end-to-end against PPL. Phase C-2 will run static / empirical / uniform on WikiText-2 and report which keeps quality.
+
+❌ All numbers above are on Mamba-1 (state-spaces/mamba-2.8b-hf). The Mamba-2 / SSD-specific update-decomposition (prospectus block 3) is untested. Phase C-2 may target Mamba-2 once we have a working empirical bit allocator on Mamba-1.
 
 ---
 

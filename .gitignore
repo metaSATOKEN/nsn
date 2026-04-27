@@ -64,10 +64,11 @@ paper/*.log
 paper/*.out
 paper/*.toc
 
-# Paper C raw spectral dumps (per-state-unit lists are too large
-# for git; commit the *_summary.json instead, which drops the
-# 80K-element flat lists per layer and keeps aggregate stats only)
+# Paper C raw spectral dumps that exceed github's 100 MB-per-file
+# limit. Phase C-1's full JSON stores per-state-unit flat lists
+# (5.24 M floats each for A_log_flat and rho_static_flat), which
+# bloats to ~257 MB. We commit the abridged *_summary.json
+# instead. Other phases (C-1b onwards) use streaming aggregation
+# and are committed in full.
 paper_c/results_c/phase_c1_ssm_spectral_baseline.json
-paper_c/results_c/phase_c1b_*.json
-paper_c/results_c/phase_c1c_*.json
-!paper_c/results_c/*_summary.json
+!paper_c/results_c/phase_c1_ssm_spectral_baseline_summary.json
