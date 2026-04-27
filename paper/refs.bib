@@ -433,3 +433,34 @@
                   auto-selects per-layer bit widths under a mixed-
                   precision budget.},
 }
+
+@inproceedings{kim2026ssdi8,
+  author       = {Kim, Hyunwoo and Ko, Byoungchan and Kang, Minseok
+                  and Kim, Minwoo and Lee, Dongjin and Lee, Jaehoon
+                  and Yoon, Sungroh and Jung, Dahuin},
+  title        = {{SSDi8}: Accurate and Efficient 8-bit Quantization for
+                  State Space Duality},
+  booktitle    = {International Conference on Learning Representations
+                  ({ICLR}) Poster},
+  year         = {2026},
+  url          = {https://openreview.net/forum?id=pjMDZJd4rT},
+  note         = {First post-training quantisation framework specifically
+                  for the SSD architecture; INT8 path with 1.4x speedup
+                  via decoupled multiplications and dimensional
+                  decomposition. Targets the SSM recurrent state, which
+                  is out of scope for the present KV-cache paper.},
+}
+
+@misc{q_mamba_2025,
+  author       = {{Anonymous (Q-Mamba authors)}},
+  title        = {Towards More Efficient Mamba Models via Post-Training
+                  Quantization (Q-Mamba)},
+  year         = {2025},
+  howpublished = {\url{https://openreview.net/forum?id=AY1S52vr0a}},
+  note         = {Decoupled-scale state cache quantisation for Mamba 2:
+                  separates state-direction and channel-direction outliers,
+                  reports W8A8H4 with 50\% memory and 2.13\% mean accuracy
+                  drop on Mamba 2-2.7B. Targets SSM recurrent state, not
+                  KV cache; cited here only to anchor the SSM-side
+                  scope caveat in section 6.2.},
+}

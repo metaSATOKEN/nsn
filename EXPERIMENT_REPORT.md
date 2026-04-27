@@ -692,6 +692,100 @@ This is a **v0.3 research prototype** (April 2026). It works, the numbers are re
 
 ---
 
+## Future direction: Paper C scope (state-aware quantisation for SSM substrates)
+
+This is *not* part of the NSN paper; it is the kickoff brief for a follow-up that has been kept explicitly out of scope of paper B. We anchor it here so the empirical findings in items 11–12, the literature pointers in §6.2 of the paper, and an external review (GPT, 2026-04) all converge on the same prospectus.
+
+**Working title.** *From KV-Table Quantisation to State-Aware Quantisation: Why Norm Separation Works for Transformers but Must Become Lyapunov-Aware for SSMs.*
+
+**Core thesis.** modeq's recipe quantises a *static, per-token KV table* — each cache slot is read once at attention time and never fed back into a recurrence. Errors do not accumulate (FIR). On an SSM substrate the same per-element noise is fed back into the next state via $h_t = \bar A_t h_{t-1} + \bar B_t x_t$; the recursion error obeys
+$$
+e_t = \bar A_t \, e_{t-1} + \eta_t, \qquad \|e_t\| \;\lesssim\; \frac{\epsilon_q}{1 - \rho},\quad \rho = \mathbb{E}_t\,\|\bar A_t\|_2.
+$$
+The longer the model wants to remember (the closer $\rho$ approaches 1), the smaller the per-step quantisation noise budget $\epsilon_q$. Phase 30a's negative result on attention is exactly the *no-amplification* limit of this same equation; Phase 29e's $\sigma \approx 0.002$ threshold on hybrid attention layers is the *empirical* readout of how a single fragile attention layer interacts with three downstream SSM layers via this same mechanism.
+
+**Empirical evidence already collected (Phase 29 + 30 series).**
+
+| observation                            | source                  | role in Paper C        |
+|:-------------------------------------- |:------------------------|:-----------------------|
+| Hybrid 1-in-4 layer pattern (16 / 64) | Phase 29b layer breakdown | architectural baseline |
+| Sparse attention layers fragile at $\sigma \approx 0.002$ | Phase 29e Gaussian sweep | quantitative threshold |
+| Per-layer fragility heterogeneous (3 / 16 safe) | Phase 29f single-layer sweep | "synchronisation pulse" hypothesis |
+| W-shaped dilution curve (1 layer worse than all 16) | Phase 29g anchor test | non-additive coupling on hybrid |
+| Bias correction hurts on FIR (attention) | Phase 30a | confirms FIR/IIR distinction is real, not just rhetorical |
+
+**Four mathematical building blocks (GPT review, 2026-04).** A Paper-C-tier recipe should be assembled from at least the following components, each with empirical motivation already in the modeq repo:
+
+1. **Observability-Gramian-weighted reconstruction loss.** Replace per-token MSE with
+    $$
+    \mathcal{L}_q
+    \;=\;
+    \sum_{i}\;\mathrm{tr}\!\left( \Sigma_{\eta_i}\,G_i \right),\qquad
+    G_i \;=\; \sum_{t \ge i}\;\Phi(t,i)^\top\,C_t^\top\,W_t\,C_t\,\Phi(t,i),\quad
+    \Phi(t,i) \;=\; \bar A_t \bar A_{t-1}\cdots \bar A_{i+1}.
+    $$
+    $G_i$ measures how much a quantisation perturbation at time $i$ shows up at the model's output across all future steps. This replaces the FIR / per-token loss that v0.3 implicitly minimises.
+
+2. **Per-state-group bit allocation.** Per-group spectral and observability statistics can be estimated cheaply:
+    $$
+    \rho_g \;=\; \mathbb{E}_t\,\|\bar A_{t,g}\|_2,\qquad
+    \Gamma_g \;=\; \mathbb{E}_t\,\bigl[ C_{t,g}^\top C_{t,g} \bigr],\qquad
+    R_g \;=\; \frac{\|\Gamma_g\|}{1 - \rho_g + \epsilon}.
+    $$
+    Allocate $b_g = b_0 + \lceil \log_2 R_g \rceil_+$ bits to group $g$. Long-memory and high-output-coupling groups get more bits; aggressive-forgetting groups get fewer. This generalises Phase 29f's "some attention layers are fragile, others are not" into a principled allocator (and aligns with Quamba2's per-state-group quantisation and Q-Mamba's decoupled scale).
+
+3. **Update-decomposition for Gated DeltaNet / SSD.** Rather than quantising the recurrent matrix state $S_t$ directly, factor the *write*:
+    $$
+    U_t \;=\; \beta_t\,(v_t - S_{t-1} k_t)\,k_t^\top
+    \;=\; \beta_t \, n_t^r\, n_t^k\, d_t^r\,(d_t^k)^\top,
+    $$
+    where $r_t = v_t - S_{t-1} k_t$ and both $r_t$ and $k_t$ are norm-separated independently. The high-precision scalars $(\beta_t, n_t^r, n_t^k)$ are kept FP; the directions $d^r, d^k$ are low-bit. This carries the *spirit* of nsep+pchan over to the recurrent-write path without transplanting the per-token KV-table machinery onto a recurrent state where it does not belong.
+
+4. **Error-feedback quantisation with Lyapunov-stable rounding.** Because errors propagate through $\bar A_t$, naive rounding cannot be used: it injects a noise mean that compounds. Instead:
+    $$
+    s_t \;=\; \bar A_t\,\hat h_{t-1} + \bar B_t\,x_t + r_{t-1}, \qquad
+    \hat h_t \;=\; Q(s_t),\qquad
+    r_t \;=\; s_t - \hat h_t.
+    $$
+    Storing $r_t$ in full FP defeats the purpose, so use stochastic rounding (zero-mean noise per step, no accumulated bias), low-rank residual storage, or block residual at a coarser temporal granularity. Phase 30a's verdict — that *static* mean-error subtraction hurts even in the FIR case — is direct empirical evidence that the right mechanism is feedback rounding rather than open-loop bias subtraction.
+
+**Hybrid: synchronisation-pulse hypothesis.** A specific structural claim worth a Paper C section in its own right: in 1-in-$k$ hybrid stacks, the sparse full-attention layers act not as redundant attention slots but as *periodic synchronisation pulses* re-aligning the recurrent state of the surrounding $k-1$ SSM layers. This explains, mechanistically, the Phase 29f / 29g observations that:
+
+- single-layer compression of a "fragile" attention layer is *worse* than compressing all 16 (one perturbed pulse desynchronises $k-1$ recurrent layers; many perturbed pulses average back into a stationary noise regime that the recurrence absorbs);
+- only 3 of 16 attention layers (indices 1, 4, 9 within the 1-in-4 pattern) are individually safe;
+- compressing 4 layers in mid-positions (Q2 / Q3 quartile groups) is dramatically less harmful than compressing any single layer in those groups.
+
+A Paper C analysis could formalise this: linearise around the FP16 trajectory, derive the per-layer Jacobian product
+$$
+\delta z_{b+1} \;=\; J_\text{attn}\,J_\text{GDN}^{(k-1)}\,\delta z_b + J_\text{GDN}^{(k-1)}\,\eta_\text{attn} + \eta_\text{gdn},
+$$
+and define a *fragility index* $\chi_\ell = \|O_\ell^{1/2}\,J_\ell\,\Sigma_{q,\ell}\,J_\ell^\top\,O_\ell^{1/2}\|$ for each layer $\ell$. Allocate bits inversely to $\chi_\ell$. Phase 29f's per-layer r4 ranking is, retrospectively, a coarse empirical proxy for $\chi_\ell$.
+
+**Anchor citations.**
+
+- Mamba: Gu & Dao, 2023 ([arXiv:2312.00752](https://arxiv.org/abs/2312.00752))
+- SSD / Mamba-2: Dao & Gu, 2024 ([arXiv:2405.21060](https://arxiv.org/abs/2405.21060))
+- Quamba (SSM weight + activation): Chiang et al., 2024 ([arXiv:2410.13229](https://arxiv.org/abs/2410.13229))
+- Quamba2 (per-state-group): Chiang et al., 2025 ([arXiv:2503.22879](https://arxiv.org/abs/2503.22879))
+- MambaQuant (variance / outlier): 2025 ([arXiv:2501.13484](https://arxiv.org/html/2501.13484v1))
+- Q-Mamba (state-cache decoupled scale): [OpenReview AY1S52vr0a](https://openreview.net/forum?id=AY1S52vr0a)
+- SSDi8 (INT8 SSD bias-correction reformulation): Kim et al., ICLR 2026 Poster ([OpenReview pjMDZJd4rT](https://openreview.net/forum?id=pjMDZJd4rT))
+- Gated DeltaNet: 2024 ([arXiv:2412.06464](https://arxiv.org/abs/2412.06464))
+- KL Lens (forward-only sensitivity for hybrid SSM-Transformer): Kong et al., 2026 ([arXiv:2604.13440](https://arxiv.org/abs/2604.13440))
+- Nemotron 3 Super (deployed-scale hybrid Mamba + Transformer + LatentMoE): NVIDIA, 2026 ([arXiv:2604.12374](https://arxiv.org/abs/2604.12374))
+- KIVI / PolarQuant / TurboQuant: KV-table baselines for the FIR side of the eventual paper
+
+**What modeq itself contributes to a future Paper C.**
+
+- The empirical FIR-side null result (Phase 30a): bias correction does not help on attention K/V. Direct evidence that the FIR / IIR distinction is not just a rhetorical organising metaphor but an operational design constraint.
+- The hybrid fragility characterisation (Phase 29 series): per-layer ranking, $\sigma \approx 0.002$ threshold, W-shaped dilution curve — all of which feed the proposed $\chi_\ell$ fragility index.
+- The KV-cache-side recipe itself (`qa_nsep_pchan_asym`, INT3, 5.09× compression) as the established attention-side baseline against which an SSM-side recipe is compared.
+- The diagnostic Phase 23-style V-CV / K-CV protocol, which extends naturally to SSM as a per-state-group spectral-radius / observability-norm probe.
+
+The repository keeps the Phase 23 / 28 / 29 / 30 raw JSONs and scripts unchanged; a future Paper C would build on top of those without any reanalysis required.
+
+---
+
 ## Citing this work
 
 If you use modeq or its findings, please cite:

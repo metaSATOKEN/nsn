@@ -1609,11 +1609,25 @@ Qwen3.6-27B, a 1-in-4 hybrid of linear-attention and softmax-attention
 layers, and found that the recipe's per-element perturbation exceeds a
 fragility threshold at approximately \(0.2 \%\) of per-token L2 norm on
 the sparse attention layers of this architecture --- well below what any
-realistic bit budget of a per-element uniform quantiser can achieve.
-This is a concrete and measured instance of the scope caveat: modeq is
-the KV-cache INT3 tool; Quamba and ExpertsInt8 are the SSM-weight and
-MoE-weight tools; the three are complementary rather than competitive on
-a hybrid-model deployment.
+realistic bit budget of a per-element uniform quantiser can achieve. We
+also note explicitly that \textbf{the SSM-side state of this
+architecture was not reachable through the standard
+\texttt{past\_key\_values} interface} (the SSM layers carry a fixed-size
+recurrent state rather than a per-token K/V table; the 48 SSM layers in
+\texttt{past.layers} had \texttt{.keys\ =\ .values\ =\ None}), so we did
+not evaluate SSM-state compression in any form; that is a separate
+problem rather than an under-tested cell of the present recipe. The
+natural extension to SSM substrates is \emph{not} a transplant of
+\texttt{nsep+pchan+asym} onto the recurrent state --- quantisation noise
+on a recurrent state \(h_t = \bar A_t h_{t-1} + \bar B_t x_t\) is
+amplified along the spectral radius of \(\bar A_t\) and accumulates over
+time, so the right objective is a Lyapunov /
+observability-Gramian-weighted reconstruction loss rather than a
+per-token MSE. We leave that direction explicitly to future work and to
+dedicated SSM-quantisation lines (Quamba, SSDi8, Q-Mamba). Read
+together, modeq is the KV-cache INT3 tool; Quamba / SSDi8 / ExpertsInt8
+are the SSM-weight, SSM-state, and MoE-weight tools; the four are
+complementary rather than competitive on a hybrid-model deployment.
 
 \subsubsection{6.3 Limitations}\label{limitations}
 
