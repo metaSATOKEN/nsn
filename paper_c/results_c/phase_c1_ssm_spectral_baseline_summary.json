@@ -1,0 +1,1230 @@
+{
+  "date": "2026-04-27T11:36:02",
+  "phase": "C-1",
+  "purpose": "SSM spectral baseline: per-(layer, head) rho_g (forgetting), and a rho-based R_g proxy for the Paper C bit allocator. C-coupling Gamma_g is deferred to Phase C-1b (model-specific extraction).",
+  "model": "state-spaces/mamba-2.8b-hf",
+  "label": "Mamba-2.8B-hf",
+  "n_ssm_mixers": 64,
+  "static_dt_used": 0.1,
+  "static_track": [
+    {
+      "layer_name": "backbone.layers.0.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.4833984375,
+      "A_log_max": 6.1953125,
+      "A_log_mean": 2.0517148971557617,
+      "A_mag_mean": 10.080972671508789,
+      "rho_static_min": 5.014853145539838e-22,
+      "rho_static_max": 0.9775688648223877,
+      "rho_static_mean": 0.4341464638710022
+    },
+    {
+      "layer_name": "backbone.layers.1.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -2.283203125,
+      "A_log_max": 6.80078125,
+      "A_log_mean": 2.0976595878601074,
+      "A_mag_mean": 10.656963348388672,
+      "rho_static_min": 9.473506294037212e-40,
+      "rho_static_max": 0.9898560643196106,
+      "rho_static_mean": 0.4157656729221344
+    },
+    {
+      "layer_name": "backbone.layers.2.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.59375,
+      "A_log_max": 6.6953125,
+      "A_log_mean": 2.024857997894287,
+      "A_mag_mean": 9.949212074279785,
+      "rho_static_min": 7.632432301464747e-36,
+      "rho_static_max": 0.9798887372016907,
+      "rho_static_mean": 0.4413575232028961
+    },
+    {
+      "layer_name": "backbone.layers.3.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -0.927734375,
+      "A_log_max": 5.59375,
+      "A_log_mean": 2.041226863861084,
+      "A_mag_mean": 10.019498825073242,
+      "rho_static_min": 2.1315937296512155e-12,
+      "rho_static_max": 0.9612268209457397,
+      "rho_static_mean": 0.4375057816505432
+    },
+    {
+      "layer_name": "backbone.layers.4.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.1884765625,
+      "A_log_max": 6.21875,
+      "A_log_mean": 2.0244383811950684,
+      "A_mag_mean": 10.025074005126953,
+      "rho_static_min": 1.5672851175570772e-22,
+      "rho_static_max": 0.9699909687042236,
+      "rho_static_mean": 0.4423115849494934
+    },
+    {
+      "layer_name": "backbone.layers.5.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -0.88525390625,
+      "A_log_max": 6.24609375,
+      "A_log_mean": 2.02490234375,
+      "A_mag_mean": 10.01758861541748,
+      "rho_static_min": 3.8966850953335737e-23,
+      "rho_static_max": 0.9595786929130554,
+      "rho_static_mean": 0.4418453276157379
+    },
+    {
+      "layer_name": "backbone.layers.6.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -0.89453125,
+      "A_log_max": 6.16015625,
+      "A_log_mean": 2.028343439102173,
+      "A_mag_mean": 10.074955940246582,
+      "rho_static_min": 2.729401782618231e-21,
+      "rho_static_max": 0.9599443674087524,
+      "rho_static_mean": 0.4407488703727722
+    },
+    {
+      "layer_name": "backbone.layers.7.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -0.8134765625,
+      "A_log_max": 5.03515625,
+      "A_log_mean": 2.0328104496002197,
+      "A_mag_mean": 9.975564956665039,
+      "rho_static_min": 2.1079871714846377e-07,
+      "rho_static_max": 0.9566368460655212,
+      "rho_static_mean": 0.4417324960231781
+    },
+    {
+      "layer_name": "backbone.layers.8.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -0.95849609375,
+      "A_log_max": 6.2890625,
+      "A_log_mean": 2.034362554550171,
+      "A_mag_mean": 10.203807830810547,
+      "rho_static_min": 4.0439723683143025e-24,
+      "rho_static_max": 0.9623790383338928,
+      "rho_static_mean": 0.4402011036872864
+    },
+    {
+      "layer_name": "backbone.layers.9.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.0859375,
+      "A_log_max": 7.1015625,
+      "A_log_mean": 2.0208449363708496,
+      "A_mag_mean": 9.9357271194458,
+      "rho_static_min": 0.0,
+      "rho_static_max": 0.9668049216270447,
+      "rho_static_mean": 0.44456544518470764
+    },
+    {
+      "layer_name": "backbone.layers.10.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -0.94921875,
+      "A_log_max": 6.66796875,
+      "A_log_mean": 2.071686267852783,
+      "A_mag_mean": 10.871984481811523,
+      "rho_static_min": 6.759152784272507e-35,
+      "rho_static_max": 0.9620351195335388,
+      "rho_static_mean": 0.4232729971408844
+    },
+    {
+      "layer_name": "backbone.layers.11.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.740234375,
+      "A_log_max": 8.296875,
+      "A_log_mean": 2.011559247970581,
+      "A_mag_mean": 10.062849044799805,
+      "rho_static_min": 0.0,
+      "rho_static_max": 0.9826051592826843,
+      "rho_static_mean": 0.4491099715232849
+    },
+    {
+      "layer_name": "backbone.layers.12.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -0.89697265625,
+      "A_log_max": 5.8125,
+      "A_log_mean": 2.0045788288116455,
+      "A_mag_mean": 9.801663398742676,
+      "rho_static_min": 2.984264362183983e-15,
+      "rho_static_max": 0.9600400924682617,
+      "rho_static_mean": 0.4495101571083069
+    },
+    {
+      "layer_name": "backbone.layers.13.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.3974609375,
+      "A_log_max": 7.62890625,
+      "A_log_mean": 1.9909709692001343,
+      "A_mag_mean": 9.62642765045166,
+      "rho_static_min": 0.0,
+      "rho_static_max": 0.9755806922912598,
+      "rho_static_mean": 0.4543069005012512
+    },
+    {
+      "layer_name": "backbone.layers.14.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.0546875,
+      "A_log_max": 6.24609375,
+      "A_log_mean": 1.9715087413787842,
+      "A_mag_mean": 9.42926025390625,
+      "rho_static_min": 3.8966850953335737e-23,
+      "rho_static_max": 0.9657694697380066,
+      "rho_static_mean": 0.4586959481239319
+    },
+    {
+      "layer_name": "backbone.layers.15.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.0869140625,
+      "A_log_max": 5.62109375,
+      "A_log_mean": 1.9843734502792358,
+      "A_mag_mean": 9.944929122924805,
+      "rho_static_min": 1.0119610227912745e-12,
+      "rho_static_max": 0.9668368101119995,
+      "rho_static_mean": 0.4501137137413025
+    },
+    {
+      "layer_name": "backbone.layers.16.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.2802734375,
+      "A_log_max": 5.41796875,
+      "A_log_mean": 1.9820044040679932,
+      "A_mag_mean": 9.614376068115234,
+      "rho_static_min": 1.6221832210838727e-10,
+      "rho_static_max": 0.9725866317749023,
+      "rho_static_mean": 0.45589151978492737
+    },
+    {
+      "layer_name": "backbone.layers.17.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.7294921875,
+      "A_log_max": 5.25390625,
+      "A_log_mean": 1.9532209634780884,
+      "A_mag_mean": 9.47515869140625,
+      "rho_static_min": 4.913829787511759e-09,
+      "rho_static_max": 0.982418954372406,
+      "rho_static_mean": 0.4631579518318176
+    },
+    {
+      "layer_name": "backbone.layers.18.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.8349609375,
+      "A_log_max": 7.70703125,
+      "A_log_mean": 2.0158097743988037,
+      "A_mag_mean": 10.433025360107422,
+      "rho_static_min": 0.0,
+      "rho_static_max": 0.9841647148132324,
+      "rho_static_mean": 0.44230037927627563
+    },
+    {
+      "layer_name": "backbone.layers.19.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.431640625,
+      "A_log_max": 5.7109375,
+      "A_log_mean": 1.9571812152862549,
+      "A_mag_mean": 9.426471710205078,
+      "rho_static_min": 7.544128760280169e-14,
+      "rho_static_max": 0.9763914942741394,
+      "rho_static_mean": 0.4608023762702942
+    },
+    {
+      "layer_name": "backbone.layers.20.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -3.322265625,
+      "A_log_max": 7.53125,
+      "A_log_mean": 1.9822123050689697,
+      "A_mag_mean": 9.725565910339355,
+      "rho_static_min": 0.0,
+      "rho_static_max": 0.9963994026184082,
+      "rho_static_mean": 0.455418199300766
+    },
+    {
+      "layer_name": "backbone.layers.21.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.2001953125,
+      "A_log_max": 5.54296875,
+      "A_log_mean": 1.9653536081314087,
+      "A_mag_mean": 9.779764175415039,
+      "rho_static_min": 8.064737246071818e-12,
+      "rho_static_max": 0.9703353643417358,
+      "rho_static_mean": 0.45751553773880005
+    },
+    {
+      "layer_name": "backbone.layers.22.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.1298828125,
+      "A_log_max": 7.65625,
+      "A_log_mean": 1.9135076999664307,
+      "A_mag_mean": 9.995869636535645,
+      "rho_static_min": 0.0,
+      "rho_static_max": 0.9682092070579529,
+      "rho_static_mean": 0.47054505348205566
+    },
+    {
+      "layer_name": "backbone.layers.23.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.3154296875,
+      "A_log_max": 6.765625,
+      "A_log_mean": 2.00716495513916,
+      "A_mag_mean": 10.701522827148438,
+      "rho_static_min": 2.1115231892834964e-38,
+      "rho_static_max": 0.9735209941864014,
+      "rho_static_mean": 0.4435928463935852
+    },
+    {
+      "layer_name": "backbone.layers.24.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -4.04296875,
+      "A_log_max": 5.83984375,
+      "A_log_mean": 1.9885612726211548,
+      "A_mag_mean": 9.884186744689941,
+      "rho_static_min": 1.1808257618776442e-15,
+      "rho_static_max": 0.9982470273971558,
+      "rho_static_mean": 0.45509666204452515
+    },
+    {
+      "layer_name": "backbone.layers.25.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -3.5078125,
+      "A_log_max": 5.8125,
+      "A_log_mean": 1.92913019657135,
+      "A_mag_mean": 9.811716079711914,
+      "rho_static_min": 2.984264362183983e-15,
+      "rho_static_max": 0.9970082640647888,
+      "rho_static_mean": 0.46789154410362244
+    },
+    {
+      "layer_name": "backbone.layers.26.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -2.416015625,
+      "A_log_max": 5.4140625,
+      "A_log_mean": 1.9969046115875244,
+      "A_mag_mean": 10.051725387573242,
+      "rho_static_min": 1.7711974942269393e-10,
+      "rho_static_max": 0.9911120533943176,
+      "rho_static_mean": 0.4516525864601135
+    },
+    {
+      "layer_name": "backbone.layers.27.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.41796875,
+      "A_log_max": 5.84375,
+      "A_log_mean": 1.983420729637146,
+      "A_mag_mean": 9.978815078735352,
+      "rho_static_min": 1.0321922319417223e-15,
+      "rho_static_max": 0.9760704040527344,
+      "rho_static_mean": 0.4562820494174957
+    },
+    {
+      "layer_name": "backbone.layers.28.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.8388671875,
+      "A_log_max": 7.98828125,
+      "A_log_mean": 1.8396629095077515,
+      "A_mag_mean": 9.079748153686523,
+      "rho_static_min": 0.0,
+      "rho_static_max": 0.9842259883880615,
+      "rho_static_mean": 0.512750506401062
+    },
+    {
+      "layer_name": "backbone.layers.29.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -2.462890625,
+      "A_log_max": 5.71484375,
+      "A_log_mean": 1.9705146551132202,
+      "A_mag_mean": 9.90324592590332,
+      "rho_static_min": 6.702711302652986e-14,
+      "rho_static_max": 0.9915173649787903,
+      "rho_static_mean": 0.45814603567123413
+    },
+    {
+      "layer_name": "backbone.layers.30.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -0.43896484375,
+      "A_log_max": 8.1015625,
+      "A_log_mean": 1.8417026996612549,
+      "A_mag_mean": 8.400041580200195,
+      "rho_static_min": 0.0,
+      "rho_static_max": 0.9375638961791992,
+      "rho_static_mean": 0.5182228088378906
+    },
+    {
+      "layer_name": "backbone.layers.31.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.5537109375,
+      "A_log_max": 7.77734375,
+      "A_log_mean": 1.9401981830596924,
+      "A_mag_mean": 10.781414985656738,
+      "rho_static_min": 0.0,
+      "rho_static_max": 0.9790758490562439,
+      "rho_static_mean": 0.4670788645744324
+    },
+    {
+      "layer_name": "backbone.layers.32.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.7939453125,
+      "A_log_max": 6.7109375,
+      "A_log_mean": 1.960976243019104,
+      "A_mag_mean": 10.242387771606445,
+      "rho_static_min": 2.1362197350758894e-36,
+      "rho_static_max": 0.9835072159767151,
+      "rho_static_mean": 0.4614548683166504
+    },
+    {
+      "layer_name": "backbone.layers.33.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -0.89404296875,
+      "A_log_max": 6.45703125,
+      "A_log_mean": 1.9087495803833008,
+      "A_mag_mean": 9.521876335144043,
+      "rho_static_min": 2.1291422757980676e-28,
+      "rho_static_max": 0.9599252343177795,
+      "rho_static_mean": 0.49119091033935547
+    },
+    {
+      "layer_name": "backbone.layers.34.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.6396484375,
+      "A_log_max": 6.41015625,
+      "A_log_mean": 1.953065276145935,
+      "A_mag_mean": 9.64842414855957,
+      "rho_static_min": 3.939017078035738e-27,
+      "rho_static_max": 0.9807822108268738,
+      "rho_static_mean": 0.4626164436340332
+    },
+    {
+      "layer_name": "backbone.layers.35.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -2.4765625,
+      "A_log_max": 6.875,
+      "A_log_mean": 1.8799526691436768,
+      "A_mag_mean": 9.728347778320312,
+      "rho_static_min": 9.332647772403282e-43,
+      "rho_static_max": 0.9916320443153381,
+      "rho_static_mean": 0.49058860540390015
+    },
+    {
+      "layer_name": "backbone.layers.36.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.8759765625,
+      "A_log_max": 5.59375,
+      "A_log_mean": 1.9490110874176025,
+      "A_mag_mean": 9.781875610351562,
+      "rho_static_min": 2.1315937296512155e-12,
+      "rho_static_max": 0.9847962260246277,
+      "rho_static_mean": 0.4631146490573883
+    },
+    {
+      "layer_name": "backbone.layers.37.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -2.09765625,
+      "A_log_max": 7.59375,
+      "A_log_mean": 1.9941279888153076,
+      "A_mag_mean": 10.57573413848877,
+      "rho_static_min": 0.0,
+      "rho_static_max": 0.987800657749176,
+      "rho_static_mean": 0.44870901107788086
+    },
+    {
+      "layer_name": "backbone.layers.38.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.9931640625,
+      "A_log_max": 7.31640625,
+      "A_log_mean": 1.9645506143569946,
+      "A_mag_mean": 10.008874893188477,
+      "rho_static_min": 0.0,
+      "rho_static_max": 0.9864660501480103,
+      "rho_static_mean": 0.45948800444602966
+    },
+    {
+      "layer_name": "backbone.layers.39.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.94921875,
+      "A_log_max": 6.03515625,
+      "A_log_mean": 1.954549789428711,
+      "A_mag_mean": 9.836854934692383,
+      "rho_static_min": 7.118560221290737e-19,
+      "rho_static_max": 0.9858623743057251,
+      "rho_static_mean": 0.46165648102760315
+    },
+    {
+      "layer_name": "backbone.layers.40.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -2.5625,
+      "A_log_max": 6.6875,
+      "A_log_mean": 2.0783212184906006,
+      "A_mag_mean": 10.919105529785156,
+      "rho_static_min": 1.432009545676714e-35,
+      "rho_static_max": 0.9923185110092163,
+      "rho_static_mean": 0.4299088418483734
+    },
+    {
+      "layer_name": "backbone.layers.41.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -0.97705078125,
+      "A_log_max": 7.72265625,
+      "A_log_mean": 1.844642996788025,
+      "A_mag_mean": 8.11579418182373,
+      "rho_static_min": 0.0,
+      "rho_static_max": 0.9630576968193054,
+      "rho_static_mean": 0.510765016078949
+    },
+    {
+      "layer_name": "backbone.layers.42.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.8701171875,
+      "A_log_max": 5.8828125,
+      "A_log_mean": 2.0764503479003906,
+      "A_mag_mean": 11.208009719848633,
+      "rho_static_min": 2.6108162707668304e-16,
+      "rho_static_max": 0.9847075939178467,
+      "rho_static_mean": 0.4289482533931732
+    },
+    {
+      "layer_name": "backbone.layers.43.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.6884765625,
+      "A_log_max": 6.546875,
+      "A_log_mean": 2.003166913986206,
+      "A_mag_mean": 11.218690872192383,
+      "rho_static_min": 5.332885439878306e-31,
+      "rho_static_max": 0.9816896319389343,
+      "rho_static_mean": 0.4491867125034332
+    },
+    {
+      "layer_name": "backbone.layers.44.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.5654296875,
+      "A_log_max": 8.3125,
+      "A_log_mean": 1.9040930271148682,
+      "A_mag_mean": 11.049371719360352,
+      "rho_static_min": 0.0,
+      "rho_static_max": 0.9793170690536499,
+      "rho_static_mean": 0.48871731758117676
+    },
+    {
+      "layer_name": "backbone.layers.45.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.7841796875,
+      "A_log_max": 6.23046875,
+      "A_log_mean": 1.940519094467163,
+      "A_mag_mean": 9.794746398925781,
+      "rho_static_min": 8.671994000571448e-23,
+      "rho_static_max": 0.9833467602729797,
+      "rho_static_mean": 0.4645152688026428
+    },
+    {
+      "layer_name": "backbone.layers.46.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -2.0234375,
+      "A_log_max": 5.65625,
+      "A_log_mean": 1.9290950298309326,
+      "A_mag_mean": 9.405362129211426,
+      "rho_static_min": 3.7667801820392977e-13,
+      "rho_static_max": 0.9868669509887695,
+      "rho_static_mean": 0.46980538964271545
+    },
+    {
+      "layer_name": "backbone.layers.47.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -2.29296875,
+      "A_log_max": 6.625,
+      "A_log_mean": 1.9720127582550049,
+      "A_mag_mean": 10.026838302612305,
+      "rho_static_min": 1.8494451187540375e-33,
+      "rho_static_max": 0.9899541735649109,
+      "rho_static_mean": 0.45375949144363403
+    },
+    {
+      "layer_name": "backbone.layers.48.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.7509765625,
+      "A_log_max": 7.75390625,
+      "A_log_mean": 1.9416710138320923,
+      "A_mag_mean": 9.490851402282715,
+      "rho_static_min": 0.0,
+      "rho_static_max": 0.9827893972396851,
+      "rho_static_mean": 0.4615984857082367
+    },
+    {
+      "layer_name": "backbone.layers.49.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.5732421875,
+      "A_log_max": 5.734375,
+      "A_log_mean": 1.9373672008514404,
+      "A_mag_mean": 9.450222969055176,
+      "rho_static_min": 3.6848586112752865e-14,
+      "rho_static_max": 0.9794763326644897,
+      "rho_static_mean": 0.465810626745224
+    },
+    {
+      "layer_name": "backbone.layers.50.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.8408203125,
+      "A_log_max": 5.30859375,
+      "A_log_mean": 1.9347234964370728,
+      "A_mag_mean": 9.5209379196167,
+      "rho_static_min": 1.6764508670163991e-09,
+      "rho_static_max": 0.9842565059661865,
+      "rho_static_mean": 0.46718209981918335
+    },
+    {
+      "layer_name": "backbone.layers.51.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -2.146484375,
+      "A_log_max": 5.80859375,
+      "A_log_mean": 1.9309484958648682,
+      "A_mag_mean": 9.37991714477539,
+      "rho_static_min": 3.3999042764346152e-15,
+      "rho_static_max": 0.988378643989563,
+      "rho_static_mean": 0.46734076738357544
+    },
+    {
+      "layer_name": "backbone.layers.52.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.439453125,
+      "A_log_max": 7.3046875,
+      "A_log_mean": 1.9195106029510498,
+      "A_mag_mean": 9.216266632080078,
+      "rho_static_min": 0.0,
+      "rho_static_max": 0.9765730500221252,
+      "rho_static_mean": 0.4696548581123352
+    },
+    {
+      "layer_name": "backbone.layers.53.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -2.173828125,
+      "A_log_max": 5.61328125,
+      "A_log_mean": 1.9125677347183228,
+      "A_mag_mean": 9.172052383422852,
+      "rho_static_min": 1.2546106731639584e-12,
+      "rho_static_max": 0.9886903166770935,
+      "rho_static_mean": 0.47035104036331177
+    },
+    {
+      "layer_name": "backbone.layers.54.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.80078125,
+      "A_log_max": 5.9296875,
+      "A_log_mean": 1.9215888977050781,
+      "A_mag_mean": 9.260126113891602,
+      "rho_static_min": 4.665746655818835e-17,
+      "rho_static_max": 0.9836186766624451,
+      "rho_static_mean": 0.46779361367225647
+    },
+    {
+      "layer_name": "backbone.layers.55.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.78515625,
+      "A_log_max": 5.671875,
+      "A_log_mean": 1.9057490825653076,
+      "A_mag_mean": 8.993997573852539,
+      "rho_static_min": 2.4006033163929963e-13,
+      "rho_static_max": 0.9833628535270691,
+      "rho_static_mean": 0.472714364528656
+    },
+    {
+      "layer_name": "backbone.layers.56.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -2.212890625,
+      "A_log_max": 5.65234375,
+      "A_log_mean": 1.8993269205093384,
+      "A_mag_mean": 8.925788879394531,
+      "rho_static_min": 4.2112136260791244e-13,
+      "rho_static_max": 0.9891211986541748,
+      "rho_static_mean": 0.47468987107276917
+    },
+    {
+      "layer_name": "backbone.layers.57.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.8759765625,
+      "A_log_max": 5.359375,
+      "A_log_mean": 1.9238853454589844,
+      "A_mag_mean": 9.06104850769043,
+      "rho_static_min": 5.851195639117179e-10,
+      "rho_static_max": 0.9847962260246277,
+      "rho_static_mean": 0.4694533348083496
+    },
+    {
+      "layer_name": "backbone.layers.58.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.7548828125,
+      "A_log_max": 4.96875,
+      "A_log_mean": 1.913428544998169,
+      "A_mag_mean": 8.943249702453613,
+      "rho_static_min": 5.659857151840697e-07,
+      "rho_static_max": 0.9828559160232544,
+      "rho_static_mean": 0.47055894136428833
+    },
+    {
+      "layer_name": "backbone.layers.59.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.400390625,
+      "A_log_max": 6.0,
+      "A_log_mean": 1.8933970928192139,
+      "A_mag_mean": 8.853639602661133,
+      "rho_static_min": 3.015155637226735e-18,
+      "rho_static_max": 0.9756512641906738,
+      "rho_static_mean": 0.4753458499908447
+    },
+    {
+      "layer_name": "backbone.layers.60.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.888671875,
+      "A_log_max": 5.1953125,
+      "A_log_mean": 1.9116672277450562,
+      "A_mag_mean": 8.881694793701172,
+      "rho_static_min": 1.459696985506298e-08,
+      "rho_static_max": 0.9849866032600403,
+      "rho_static_mean": 0.47159990668296814
+    },
+    {
+      "layer_name": "backbone.layers.61.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -2.6171875,
+      "A_log_max": 6.5078125,
+      "A_log_mean": 1.9322932958602905,
+      "A_mag_mean": 9.001460075378418,
+      "rho_static_min": 7.703770935063091e-30,
+      "rho_static_max": 0.9927257895469666,
+      "rho_static_mean": 0.4663609564304352
+    },
+    {
+      "layer_name": "backbone.layers.62.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.677734375,
+      "A_log_max": 5.6484375,
+      "A_log_mean": 1.9352123737335205,
+      "A_mag_mean": 8.970888137817383,
+      "rho_static_min": 4.70603753448956e-13,
+      "rho_static_max": 0.9814937114715576,
+      "rho_static_mean": 0.46696776151657104
+    },
+    {
+      "layer_name": "backbone.layers.63.mixer",
+      "A_log_shape": [
+        5120,
+        16
+      ],
+      "n_units": 81920,
+      "A_log_min": -1.716796875,
+      "A_log_max": 5.48828125,
+      "A_log_mean": 1.956922173500061,
+      "A_mag_mean": 9.252199172973633,
+      "rho_static_min": 3.1402980910089084e-11,
+      "rho_static_max": 0.9821963310241699,
+      "rho_static_mean": 0.4615802764892578
+    }
+  ],
+  "empirical_track": [
+    {
+      "layer_name": "backbone.layers.0.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.1.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.2.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.3.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.4.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.5.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.6.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.7.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.8.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.9.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.10.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.11.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.12.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.13.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.14.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.15.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.16.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.17.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.18.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.19.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.20.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.21.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.22.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.23.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.24.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.25.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.26.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.27.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.28.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.29.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.30.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.31.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.32.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.33.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.34.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.35.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.36.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.37.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.38.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.39.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.40.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.41.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.42.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.43.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.44.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.45.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.46.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.47.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.48.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.49.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.50.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.51.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.52.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.53.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.54.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.55.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.56.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.57.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.58.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.59.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.60.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.61.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.62.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    },
+    {
+      "layer_name": "backbone.layers.63.mixer",
+      "status": "skipped (mixer attributes not as expected)"
+    }
+  ],
+  "n_empirical_ok": 0
+}

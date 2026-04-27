@@ -36,6 +36,51 @@ For Mamba's *selective* SSM, $\bar A_t,\,\bar B_t,\,C_t$ are themselves input-de
 
 ---
 
+## Results so far (Phase C-1, 2026-04-27)
+
+First Paper C empirical run. Static spectral track on **Mamba-2.8B-hf** (state-spaces' HF-native port of the original Mamba-1, 64 layers × 5,120 d_inner × 16 d_state = **5,242,880 state units**). Pivoted here after `state-spaces/mamba2-2.7b` failed with config + CUDA-kernel-build issues and `Zyphra/Zamba2-2.7B` failed with a transformers `tie_weights_keys` mismatch on its shared-transformer architecture; Mamba-1 HF runs cleanly on the reference Python forward path.
+
+**Forgetting-rate distribution at $dt = 0.1$:**
+
+| $\rho_g$ range  | meaning            | n state units | fraction |
+|:---------------:|:-------------------|--------------:|---------:|
+| [0.000, 0.500)  | aggressive forget  |     3,037,617 |   58.0 % |
+| [0.500, 0.800)  | medium             |     1,639,466 |   31.3 % |
+| [0.800, 0.950)  | longer-term        |       543,866 |   10.4 % |
+| [0.950, 0.990)  | long-memory        |        21,919 |    0.42 % |
+| [0.990, 0.999)  | **very long memory** |          **12** | **2 × 10⁻⁶** |
+| [0.999, 1.000)  | (none)             |             0 |        0 |
+
+The model's recurrent state is **overwhelmingly short-memory**. Only 0.4 % of state units have $\rho_g > 0.95$, and only 12 units (across the entire 2.8B model) have $\rho_g > 0.99$. Long-memory representation is concentrated in a tiny minority.
+
+**Bit-allocation implication**, applying $b_g = b_0 + \lceil \log_2 R_g \rceil_+$ with $b_0 = 3$ and $R_g \approx 1/(1 - \rho_g)$:
+
+| $\rho_g$ band | suggested $b_g$ | covers       |
+|:-------------:|:---------------:|:-------------|
+| 0.0 – 0.5     | INT3            | 58 % of units |
+| 0.5 – 0.8     | INT4 – 5        | 31 %          |
+| 0.8 – 0.95    | INT6 – 7        | 10 %          |
+| 0.95 – 0.99   | INT8 – 9        | 0.4 %         |
+| > 0.99        | INT12+          | 12 units      |
+
+A naive uniform-INT3 quantiser would over-spend on the 89 % of units that have $\rho_g < 0.95$ *and* under-spend on the 0.4 % of units that need INT8 or higher to survive their accumulated noise. **Direct empirical justification for the per-state-group bit allocator** in the prospectus.
+
+**Empirical (input-dependent) track:** 0 / 64 layers reported, as expected. The Mamba-1 mixer exposes `dt_proj` + `x_proj` instead of Mamba-2's `in_proj` last-`n_heads` slice, so the canonical-attribute path skips. Phase C-1b adds Mamba-1 specific empirical capture using `dt_proj(x_proj(hidden_states)[..., :time_step_rank])` as the dt source.
+
+**Raw data:**
+- `results_c/phase_c1_ssm_spectral_baseline_summary.json` (35 KB, committed): per-layer aggregate statistics, distribution buckets, total counts.
+- `results_c/phase_c1_ssm_spectral_baseline.json` (257 MB, gitignored): full per-state-unit `A_log_flat` and `rho_static_flat` lists. Reproducible from the script; available locally on the author's machine.
+
+**What this run rules in / out:**
+
+✅ Non-uniform bit allocation has real headroom on Mamba-1: the rho distribution spans 5 orders of magnitude (0.0001 to 0.998), a uniform allocator cannot match a 12-unit-aware allocator on the long-memory tail.
+
+✅ The "long-memory minority" qualitative pattern from Paper B item #11 (3 of 16 attention layers individually safe in Qwen 3.6 27B) reappears here as a quantitative fact (12 of 5.24 M state units with $\rho > 0.99$). Cross-architecture echo of the synchronisation-pulse hypothesis.
+
+❌ Pure memory-saving as a Paper C selling point: at INT3 baseline most state units are already aggressive enough; the adaptive allocator is essentially a *quality* lever (protect the long-memory minority from saturation) rather than a *compression* lever. Paper C should pitch as "SSM-quality-preserving allocator" not "SSM-compression allocator".
+
+---
+
 ## Empirical inheritance from Paper B
 
 Paper C does not start from zero. The Phase 23 / 28 / 29 / 30 raw JSONs and scripts in [`../results/`](../results/) and [`../experiments/`](../experiments/) already constitute Paper C's pilot data:
