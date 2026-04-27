@@ -146,6 +146,7 @@ Going to 4 bits costs 33 % more memory for a further quality gain; v0.3 at 3 bit
 - **[EXPERIMENT_REPORT.md](EXPERIMENT_REPORT.md)** — casual long-form writeup (~540 lines): full protocols, dead-ends (Walsh–Hadamard rotation, top-K mixed precision), MMLU downstream probe, Phase 23 mechanism math, all the gory details
 - **[paper/nsn.pdf](paper/nsn.pdf)** — formal paper (27 pages, Zenodo-ready): academic writeup with full citations, Fisher-exact analyses, confounder caveats, 6 appendices
 - **[docs/THEORY.md](docs/THEORY.md)** — two-failure-modes background and the v0.2 → v0.3 update
+- **[paper_c/README.md](paper_c/README.md)** — *future* Paper C kickoff brief: state-aware quantisation for hybrid Transformer + SSM substrates (Mamba, Gated DeltaNet, Jamba, Qwen 3.6, Nemotron-3 Super). Lyapunov-aware, observability-Gramian-weighted, and explicitly out of scope of Paper B
 
 ## Scope and honesty notes (quick)
 
