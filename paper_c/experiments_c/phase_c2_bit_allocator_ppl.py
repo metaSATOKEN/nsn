@@ -324,9 +324,17 @@ print(f"    anti-adaptive: {total_energy(anti_adaptive_sigma):>12.4e}")
 # === CELL V5 === Apply / restore A_log perturbation
 # =============================================================
 
-def perturb_A_log(mixers, sigma_dict, generator):
+def perturb_A_log(mixers, sigma_dict, seed):
     """Add Gaussian noise N(0, sigma) per A_log unit. Returns a
-    list of (mixer, original_A_log_data) pairs for restoration."""
+    list of (mixer, original_A_log_data) pairs for restoration.
+
+    Uses torch.manual_seed at entry to set both CPU and CUDA
+    default RNGs to a known state, so different conditions with
+    the same seed see the same underlying random draw (and the
+    only difference is the per-unit sigma profile)."""
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
     saved = []
     for name, mix in mixers:
         if name not in sigma_dict:
@@ -334,8 +342,11 @@ def perturb_A_log(mixers, sigma_dict, generator):
         sigma = sigma_dict[name].to(mix.A_log.device)
         saved.append((mix, mix.A_log.data.clone()))
         with torch.inference_mode():
+            # No explicit generator: the global generator on the
+            # right device (CUDA) is used. The seed is fixed above
+            # so this is reproducible across conditions.
             noise = torch.empty_like(mix.A_log.data, dtype=torch.float32)
-            noise.normal_(generator=generator)
+            noise.normal_()
             mix.A_log.data = (mix.A_log.data.float()
                               + (noise * sigma)).to(mix.A_log.dtype)
     return saved
@@ -404,8 +415,7 @@ for label, sigma_dict in CONDITIONS:
                                ctx_len=CTX_LEN, stride=STRIDE,
                                n_windows=N_WINDOWS)
     else:
-        gen   = torch.Generator(device="cpu").manual_seed(SEED)
-        saved = perturb_A_log(mixers, sigma_dict, gen)
+        saved = perturb_A_log(mixers, sigma_dict, SEED)
         try:
             ppl, n_win = ppl_with(mdl, test_ids,
                                    ctx_len=CTX_LEN, stride=STRIDE,
