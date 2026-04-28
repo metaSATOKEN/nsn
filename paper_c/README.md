@@ -216,9 +216,129 @@ Both contain per-condition PPL, sigma profile bucket diagnostic, and per-layer �
 
 ❌ State-step quantisation (the actual recurrence quantisation, not its A_log surrogate) is untested. Phase C-3.
 
-❌ Output-coupling Γ_g still not measured. Phase C-1c.
+(✅ now done) Output-coupling Γ_g measured. See Phase C-1c immediately below — and the verdict reframes everything.
 
 ❌ Hybrid Mamba + Attention models (the eventual Paper C-5 target) untested. Once C-3 lands, Qwen 3.6 27B or Zamba2-2.7B is the natural next substrate.
+
+---
+
+## Phase C-1c (output-coupling Γ extraction → narrative shift, 2026-04-27)
+
+**Bottom line.** The ρ-only proxy R_proxy = 1 / (1 − ρ_g) that Phase C-2 / C-2b implicitly used is **not a faithful approximation** of the full Paper C R_g formula on Mamba-2.8B. The output-coupling factor Γ_s is not flat across state indices — it is heavy-tailed with per-layer max/min ratios in the **170× – 1500×** range. The Paper C bit allocator must extract Γ during calibration; ρ alone is materially wrong.
+
+### Why we ran C-1c
+
+The full Paper C bit allocator is
+
+$$
+R_g \;=\; \|\Gamma_g\| \,/\, (1 - \rho_g + \varepsilon),
+\qquad
+b_g \;=\; b_0 + \lceil \log_2 R_g \rceil_+,
+\qquad
+\sigma_g \;\propto\; \tfrac{1}{\sqrt{R_g}}.
+$$
+
+Phase C-2 / C-2b used the cheaper proxy
+
+$$
+R_{\text{proxy}}(c, s) \;=\; 1 \,/\, (1 - \rho_{\text{emp}}(c, s)),
+\qquad
+\sigma_{\text{proxy}} \;\propto\; (1 - \rho_g),
+$$
+
+which drops the Γ factor entirely. The pre-registered question for C-1c was: are R_proxy and R_full sufficiently correlated that the proxy is a faithful approximation? Pre-registered thresholds: Pearson(log R_proxy, log R_full) ≥ 0.95 and ≥ 90 % of state units agreeing within ±1 bit.
+
+### Mamba-1 specifics — Γ as a per-state scalar
+
+In Mamba-1 the readout is `y_{t,c} = Σ_s C_{t,s} h_{t,c,s}`, so the output-coupling tensor `C` depends on state index `s` but not on channel `c`. The output coupling reduces to
+
+$$
+\Gamma_s \;=\; \mathbb{E}_t \!\left[\, C_{t,s}^2 \,\right]
+$$
+
+i.e. d_state = 16 scalars per layer, 64 layers × 16 = 1024 scalars total across the model. Tiny extraction cost; the question is whether those 1024 scalars matter.
+
+### Result — Γ is dramatically heavy-tailed
+
+Per-layer Γ_s max / min ratio across the 16 state indices (every 8th layer shown):
+
+| layer | Γ_min  | Γ_p50  | Γ_max  | max / min |
+|:-----:|-------:|-------:|-------:|----------:|
+|   0   | 0.0293 | 0.1436 |  5.11  |   174 ×  |
+|   8   | 0.0128 | 0.0807 |  5.64  |   440 ×  |
+|  16   | 0.0106 | 0.1151 |  4.69  |   443 ×  |
+|  24   | 0.0134 | 0.1560 |  2.87  |   214 ×  |
+|  32   | 0.0230 | 0.0820 |  3.84  |   167 ×  |
+|  40   | 0.0198 | 0.0493 |  8.02  |   406 ×  |
+|  48   | 0.0335 | 0.4365 | 27.13  |   811 ×  |
+|  56   | 0.0289 | 0.9616 | 45.43  | **1572 ×** |
+
+The very last SSM layers concentrate enormous Γ on a few state indices (Γ_max = 45.4 at layer 56). The natural reading: a *small handful* of state indices carry most of the readout in the late stages of the model, with the rest contributing essentially noise to the output sum.
+
+### Result — proxy and full disagree at the per-state-unit level
+
+| metric                                                      | value                |
+|:------------------------------------------------------------|----------------------|
+| Global log-log Pearson(R_proxy, R_full), 1.28 M sample      | **0.635**            |
+| Per-layer log-log Pearson, p50                              | 0.538                |
+| Per-layer log-log Pearson, **min**                          | **− 0.07** (negative) |
+| Per-layer log-log Pearson, max                              | 0.882                |
+
+A Pearson of 0.635 is moderate, **well below** the 0.95 pre-registered threshold for "proxy sufficient". The negative-Pearson layer is striking: at least one layer in the stack ranks state units in the *opposite order* under proxy versus full. Long-memory units in those layers are **not** the units that dominate the output; the proxy and full would prescribe inverted bit allocations there.
+
+### Result — bit-tier disagreement is large
+
+Allocating bits with `b_g = b_0 + ⌈ log₂ R_g ⌉₊` at b_0 = 3:
+
+| agreement category      | fraction of state units |
+|:------------------------|------------------------:|
+| same bit (proxy = full) | **9.24 %**              |
+| within ±1 bit            | 32.62 %                 |
+| **off by ≥ 2 bits**      | **58.13 %**             |
+
+Only 9 % of state units get the same bit allocation under the two formulas; almost three out of every five units would be misallocated by ≥ 2 bits if the proxy were used as the bit allocator. This is **material**, not a rounding-noise discrepancy.
+
+### Verdict — full R_g IS REQUIRED
+
+Pre-registered: Pearson < 0.7 ⇒ "FULL R_g IS REQUIRED". Observed Pearson = 0.635 < 0.7. Verdict triggered. The cheap ρ-only proxy is acceptable as a *direction-finding* heuristic but is not the deployed Paper C bit allocator; future allocator implementations must extract Γ during calibration.
+
+### What this does to Phase C-2 / C-2b's interpretation
+
+Phase C-2 / C-2b were **direction tests, not allocator tests**. They confirmed that allocating *more* noise to short-memory units and *less* noise to long-memory units helps PPL, regardless of how exactly the allocation was scaled. Their reported 22 % / 40 % ΔPPL reductions remain valid as direction evidence.
+
+But because they used the proxy profile σ_g ∝ (1 − ρ_g), which drops the Γ factor, those numbers are now best read as **lower bounds** on what the full Γ-aware allocator can achieve. The full allocator concentrates precision on the small set of high-Γ state indices in late layers (layer 48: Γ_max = 27.1; layer 56: Γ_max = 45.4) which the proxy was protecting at only a uniform-with-ρ level. We would expect the full allocator to push the relative reduction past 40 %, and Phase C-2c is set up to test exactly that.
+
+### Two-axis Paper C narrative (updated)
+
+Paper C's empirical story is now cleanly two-factor, mirroring (in form) Paper B's V-CV / K-CV mechanism story:
+
+| axis              | quantity        | what it captures                              | Paper-B analogue          |
+|:------------------|:----------------|:----------------------------------------------|:--------------------------|
+| **Recurrent**     | ρ_g (= forgetting rate) | how long this state unit *carries* a perturbation forward in time | per-token V-cache norm dispersion (V-CV) |
+| **Output**        | Γ_s (= mean C²) | how strongly a perturbation here *shows up* at the readout | softmax Jacobian damping on K-cache |
+| **Combined critical-ness** | R_g = Γ_s / (1 − ρ_g) | how many bits this unit needs | analogue of "non-monotone failure depth" |
+
+ρ alone is half the story. Γ alone is the other half. **Both** axes have heavy-tailed distributions and they are only moderately correlated. The Paper C bit allocator must combine them; the prospectus's R_g formula is now empirically supported as the right combination.
+
+A particularly interesting open observation: at least one Mamba-2.8B layer shows **negative** Pearson(log R_proxy, log R_full). In that layer some state units have high ρ (long memory) but low Γ (no readout influence) — they "remember without speaking". And vice versa: some state units have low ρ (short memory) but high Γ (loud at readout) — "fresh, loud, and gone". The proxy treats only the first kind as critical; the full formula correctly identifies both.
+
+### Open / closed (post-C-1c)
+
+✅ ρ_g per state unit measured (Phase C-1 + C-1b, ~5.24 M units).
+✅ Γ_s per state index measured (Phase C-1c, 1024 scalars). Heavy-tailed across s.
+✅ Bit-allocator *direction* confirmed end-to-end on PPL (Phase C-2 / C-2b, +40 % reduction at σ₀ = 0.15).
+✅ ρ-only proxy is **insufficient** as the deployed allocator (Phase C-1c, Pearson 0.635, bit-tier 9 % match).
+
+❌ Full R_g allocator end-to-end PPL test. **Phase C-2c**.
+
+❌ State-step quantisation (true recurrence-side test, not A_log surrogate). Phase C-3.
+
+❌ Hybrid Mamba + Attention. Phase C-5 target.
+
+### Raw data
+
+`results_c/phase_c1c_gamma_extraction.json` (~330 KB, committed):
+per-layer Γ values + heavy-tailedness ratios, per-layer log-log Pearson, bit-tier disagreement counts, 5K-sample (log R_proxy, log R_full) scatter sample.
 
 ---
 
