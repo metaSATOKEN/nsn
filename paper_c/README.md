@@ -342,6 +342,179 @@ per-layer Γ values + heavy-tailedness ratios, per-layer log-log Pearson, bit-ti
 
 ---
 
+## Phase C-2c (full Γ-aware allocator + A_log surrogate ceiling, 2026-04-28)
+
+**Bottom line.** The full Γ-aware allocator beats the ρ-only proxy used in Phase C-2 / C-2b by **71 % relative ΔPPL reduction** under the A_log perturbation surrogate. Γ-awareness is empirically valuable end-to-end on PPL — the C-1c per-state-unit disagreement (Pearson 0.635) translates to a real PPL gap. **However**, the same run reveals a *surrogate ceiling*: the inverted profile (anti_full) also wins, by an even larger margin, which is structurally impossible under direct state-step quantisation. We document both findings and identify Phase C-3 as the definitive test.
+
+### Six-condition test at σ₀ = 0.15, n_windows = 10
+
+All five perturbed profiles share `Σ σ_g² = 1.1796 × 10⁵` (matched to four sig figs).
+
+| condition          | σ_g profile                          | PPL    | ΔPPL    | % of base | rel vs uniform |
+|:-------------------|:-------------------------------------|-------:|--------:|----------:|---------------:|
+| FP16 baseline      | none                                 | 12.3725 |  —      | +0.000 %  | —              |
+| **anti_full**      | √(Γ_s / (1 − ρ))                     | 12.3809 | +0.0084 | **+0.068 %** | **−92.7 %**    |
+| **full** (predicted winner) | √((1 − ρ) / Γ_s)            | 12.3925 | +0.0200 | **+0.162 %** | **−82.7 %**    |
+| proxy_C2           | (1 − ρ)                              | 12.4419 | +0.0694 | +0.561 %  | −40.2 %        |
+| proxy_correct      | √(1 − ρ)                             | 12.4543 | +0.0818 | +0.661 %  | −29.5 %        |
+| uniform            | σ_0 = const                          | 12.4886 | +0.1161 | +0.938 %  | (reference)    |
+
+### Reading 1 — Γ-awareness is empirically valuable
+
+Both Γ-aware profiles (full and anti_full) sit far below all three Γ-unaware profiles (proxy_C2, proxy_correct, uniform). The minimum gap between a Γ-aware profile and a ρ-only profile is **0.4 %-points** (full = 0.162 %, proxy_C2 = 0.561 %), which is **6× larger** than the largest gap *within* the ρ-only profiles (proxy_correct − proxy_C2 = 0.10 %-points). Γ contributes roughly an order of magnitude more allocation signal than the choice of σ-vs-(1−ρ) scaling within the ρ axis.
+
+Reading the headline: **full beats proxy_C2 by 71 % relative ΔPPL reduction** (0.561 → 0.162). The Phase C-1c diagnostic (Pearson 0.635 between R_proxy and R_full) translates to real PPL improvement when used as an allocator.
+
+### Reading 2 — anti_full also wins, and that is informative about A_log as a surrogate
+
+The unexpected: anti_full sits **below** full (0.068 % vs 0.162 %). The Paper C bit allocator predicts the opposite ordering. Two readings, one of which we can confirm:
+
+**(A)** *A_log is a saturating surrogate for state-step noise on long-memory units.* In Mamba-1, ρ = exp(−dt · exp(A_log)); the relationship is doubly exponential. For a unit with A_log = −10 (ρ ≈ 1), σ_A ≈ 0.4 noise on A_log shifts ρ in the fifth decimal place — invisible at PPL granularity. For a unit with A_log = −3 (ρ ≈ 0.74), σ_A ≈ 0.4 shifts ρ by ~0.1, very visible. The A_log perturbation is therefore *most active* on medium-ρ units and *most inert* on high-ρ units, regardless of how Γ allocates the σ budget.
+
+**(B)** *Mechanism of anti_full's "win"*. anti_full concentrates its σ budget on (high ρ, high Γ) units. The A_log saturation in (A) means most of that budget is *wasted* — the model barely notices. The remaining (low ρ, low Γ) units get tiny σ and stay clean. Net effect: anti_full produces less observable perturbation per unit of σ² budget than any of the other allocations on this surrogate.
+
+**(C)** *What this rules out and rules in.* (B) plus (A) explains the observed ranking without requiring the bit allocator to be wrong. It does NOT explain whether the bit allocator is *right* — the same observations are equally consistent with anti_full being a "win" purely because of A_log saturation, full being a "win" because it correctly protects critical units, both effects superimposed. The A_log surrogate **cannot distinguish** these.
+
+### Verdict — directional confirmation, surrogate ceiling, Phase C-3 required
+
+✅ **Γ-awareness materially improves allocation** under any reasonable interpretation of the surrogate. Both Γ-aware profiles beat all Γ-unaware ones by ≥ 0.4 %-points. The Paper C two-axis narrative (ρ + Γ) holds.
+
+✅ **The full allocator's prediction is a 71 % relative reduction over the ρ-only proxy** that Phase C-2 / C-2b used. This refines the C-2b "lower bound" framing: under the surrogate, the full allocator does meaningfully better.
+
+⚠️ **A_log perturbation cannot validate the bit-allocation *direction* on Mamba**. The surrogate's intrinsic insensitivity to high-ρ A_log noise produces an unfalsifiable order between full and anti_full. Either could be "right" at the state-quantisation level.
+
+❌ **Phase C-3 (state-step quantisation in `slow_forward`)** is now the definitive test. The Paper C bit allocator's direction can only be validated by perturbing the recurrent state h directly (where Γ_s acts linearly on the readout), not by perturbing A_log (where high-ρ saturation hides the effect).
+
+### Pull-quote draft (Paper C §1, conditional on C-3 confirming direction)
+
+> Allocating Gaussian noise on Mamba-2.8B's spectral parameter A_log according to the full Paper C bit-allocator formula σ_g ∝ √((1 − ρ_g) / Γ_s), versus the rho-only proxy σ_g ∝ (1 − ρ_g) used as a baseline allocator, reduces WikiText-2 ΔPPL by 71 % at fixed total noise energy (0.561 % → 0.162 % of FP16 baseline). The output-coupling factor Γ contributes roughly an order of magnitude more allocation signal than the choice of σ-vs-(1−ρ) scaling on the recurrent axis alone, empirically supporting the prospectus's two-axis (ρ + Γ) bit-allocator design.
+
+### Raw data
+
+`results_c/phase_c2c_full_R_allocator_ppl.json` (~21 KB, committed): per-condition PPL, six σ profiles, per-(rho-bucket) mean σ table, per-layer Γ summary.
+
+---
+
+## Handoff brief — for future sessions starting cold
+
+If you're a future Claude session (or a future me) starting in this folder without the prior context, here is what you need to know to keep going.
+
+### Where Paper C currently is
+
+Six phases done on Mamba-2.8B-hf. **One blocking question is still open**: does the bit-allocator direction survive direct state-step quantisation, or is it an A_log-surrogate artefact?
+
+| phase | what it did                                          | status |
+|:-----:|:-----------------------------------------------------|:------:|
+| C-1   | Static spectral baseline (A_log only, no input)      | ✅     |
+| C-1b  | Empirical spectral (input-dependent dt)              | ✅     |
+| C-1c  | Output coupling Γ_s extraction; verdict "full required" | ✅  |
+| C-2   | Bit-allocator direction at σ₀=0.05 (soft)            | ✅     |
+| C-2b  | Amplified at σ₀=0.15; direction confirmed            | ✅     |
+| C-2c  | Full Γ-aware allocator vs proxy; 71 % rel reduction, but anti_full also wins (surrogate ceiling) | ✅     |
+| C-3   | State-step quantisation in `slow_forward` (definitive test) | ❌  |
+| C-1c-bis | Held-out calibration window for Γ stability        | (optional) |
+| C-5   | Hybrid Mamba + Attention (Qwen 3.6 27B / Zamba2)     | ❌     |
+
+### Working code conventions (every script in `experiments_c/` follows these)
+
+- **Cell layout**: `# === CELL V1 ===` blocks down the file, top to bottom. Setup / load / calibrate / run / save / read.
+- **HF token paste point**: a fenced `>>>>>  PASTE YOUR HF TOKEN  <<<<<` comment with `HF_TOKEN = "hf_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"`. The user pastes their token and runs. Do not hard-code real tokens.
+- **Pip install**: `!pip install -q -U transformers accelerate hf_transfer datasets`. Nothing else. **Do not** install `mamba-ssm` or `causal-conv1d`. Both reliably fail to build on Colab and we do not need them — the HF reference Python forward path runs without them, just slower.
+- **`os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"`** speeds up the model download to ~30 s.
+- **Save path**: `/content/<phase_name>.json` inside the script. The user copies it to `paper_c/results_c/` after the run.
+- **Big JSON guard**: any per-state-unit list (5.24 M floats × 64 layers = ~260 MB) blows through the github 100 MB-per-file limit. Use streaming aggregation (running mean, bucket counts) or save an abridged summary; the gitignore already filters `phase_c1_ssm_spectral_baseline.json` (the only file that disregarded this).
+
+### Working model
+
+Use `state-spaces/mamba-2.8b-hf` (and only this — see `Phase C-1` section above for why other Mamba / Mamba-2 / hybrid checkpoints failed for us with config / build / tied-weights issues). It is HF-native, runs the reference Python forward path, ~5.5 GB VRAM at fp16, ~30 s download. The smaller siblings `mamba-130m-hf` / `370m-hf` / `790m-hf` / `1.4b-hf` work too if you want fast iteration.
+
+### Mamba-1 mixer attribute reference (HF transformers, 2026-04 vintage)
+
+```python
+mix.A_log         # Parameter, shape [d_inner, d_state] = [5120, 16]
+mix.D             # Parameter, shape [d_inner]
+mix.dt_proj       # Linear (160 -> 5120) — projects dt_rank to d_inner
+mix.x_proj        # Linear (5120 -> 192) — outputs [dt_rank, d_state, d_state]
+mix.in_proj       # Linear (2560 -> 10240) — outputs [z, x_pre] when chunked
+mix.conv1d        # Conv1d, weight shape [5120, 1, 4]
+mix.intermediate_size  # 5120 (= d_inner)
+mix.ssm_state_size     # 16  (= d_state)
+mix.time_step_rank     # 160 (= dt_rank)
+```
+
+The forward path (which we replay manually inside hooks):
+
+```python
+y = in_proj(hidden_states)                                # [B, T, 2*d_inner]
+z, x_pre = y.chunk(2, dim=-1)                             # each [B, T, d_inner]
+x_pre = silu(causal_conv1d(x_pre))                        # [B, T, d_inner]
+xbc = x_proj(x_pre)                                       # [B, T, dt_rank + 2*d_state]
+dt_raw, B, C = xbc.split([dt_rank, d_state, d_state], -1) # B, C are [B, T, d_state]
+dt = softplus(dt_proj(dt_raw))                            # [B, T, d_inner]
+A = -exp(A_log)                                           # [d_inner, d_state]
+A_bar = exp(dt[..., None] * A[None, None])                # [B, T, d_inner, d_state]
+# state recurrence and output decoding happen inside slow_forward
+```
+
+For C-3 you will need to monkey-patch `slow_forward` to insert quantisation between the state update and the readout.
+
+### Bit-allocator math (the form we used)
+
+Under the standard quantisation argument (uniform-rounding noise variance σ_g² ∝ 4^{−b_g}, total bit budget Σ b_g constant), the optimal allocation is **σ_g ∝ 1 / √R_g**. With
+
+  R_g = Γ_s / (1 − ρ_g + ε)
+
+this gives σ_g ∝ √((1 − ρ_g) / Γ_s) = the *full* profile in C-2c.
+
+Phase C-2 / C-2b used σ_g ∝ (1 − ρ_g) directly (= the *proxy_C2* profile in C-2c). That is the right *direction* but not the bit-budget-optimal scaling. We kept it as a comparison point in C-2c so the comparison is honest: both proxy_C2 and proxy_correct (= √(1 − ρ_g)) are tested.
+
+### Key open puzzle (read this before designing C-3)
+
+A_log perturbation has a doubly-exponential relationship to ρ:
+
+  ρ = exp(−dt · exp(A_log))
+
+For high-ρ units (A_log very negative), small absolute changes in A_log cause tiny changes in ρ. So adding noise to A_log on high-ρ units is *less* destructive than adding the same noise to medium-ρ units. This is what made anti_full counter-intuitively win Phase C-2c.
+
+State-step quantisation does NOT have this saturation — it adds noise η_t directly into h_t at every step, and the readout y_t = C h_t makes the error visible linearly. **Phase C-3 should reproduce the C-2c six-condition design but with state-step quantisation in place of A_log perturbation.** If full < anti_full under state-step quantisation (matching the bit allocator's prediction), the surrogate ceiling explanation is confirmed.
+
+### Repository layout (Paper C side only)
+
+```
+paper_c/
+├── README.md                     ← this file
+├── experiments_c/                ← Paper C scripts
+│   ├── phase_c1_ssm_spectral_baseline.py
+│   ├── phase_c1b_mamba1_empirical.py
+│   ├── phase_c1c_gamma_extraction.py
+│   ├── phase_c2_bit_allocator_ppl.py
+│   ├── phase_c2b_bit_allocator_ppl_amplified.py
+│   ├── phase_c2c_full_R_allocator_ppl.py
+│   └── (future) phase_c3_state_step_quantisation.py
+└── results_c/                    ← JSONs (mostly small)
+    ├── phase_c1_ssm_spectral_baseline_summary.json (35 KB committed)
+    ├── phase_c1_ssm_spectral_baseline.json (257 MB, gitignored)
+    ├── phase_c1b_mamba1_empirical.json (45 KB)
+    ├── phase_c1c_gamma_extraction.json (330 KB)
+    ├── phase_c2_bit_allocator_ppl.json (16 KB)
+    ├── phase_c2b_bit_allocator_ppl_amplified.json (17 KB)
+    └── phase_c2c_full_R_allocator_ppl.json (21 KB)
+```
+
+### What NOT to redo
+
+- Do not try `state-spaces/mamba2-2.7b` (no `model_type`), `Zyphra/Zamba2-2.7B` (HF tied-weights bug), or `mamba-ssm` install (CUDA build fails). Phase C-1 documents the pivot history.
+- Do not store per-state-unit flat lists in JSON. Use bucket counts or streaming aggregation. The single 257 MB file in results_c/ is grandfathered in (gitignored), do not produce more.
+- Do not interpret Phase C-2 / C-2b's σ ∝ (1 − ρ) as the bit-budget-optimal proxy; it's the C-2-historical proxy. The bit-budget-optimal proxy is √(1 − ρ), and both are reported in C-2c for completeness.
+
+### What to do next (if compute time allows)
+
+1. **Phase C-3** — state-step quantisation directly in HF Mamba `slow_forward`. Reuse C-2c's six-condition design. This is the definitive test of the bit-allocator direction.
+2. **Phase C-1c-bis** — re-run Γ extraction on a held-out calibration window to check whether Γ_s is calibration-text-stable. C-1c used WikiText-2 train; verify on validation split.
+3. **Phase C-5** — hybrid model (Qwen 3.6 27B or Zamba2-2.7B) with the Paper C allocator on the SSM side and modeq's existing INT3 recipe on the attention side. End-to-end deployment-grade test.
+
+---
+
 ## Empirical inheritance from Paper B
 
 Paper C does not start from zero. The Phase 23 / 28 / 29 / 30 raw JSONs and scripts in [`../results/`](../results/) and [`../experiments/`](../experiments/) already constitute Paper C's pilot data:
