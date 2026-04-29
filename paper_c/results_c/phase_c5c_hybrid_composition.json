@@ -1,0 +1,64 @@
+{
+  "date": "2026-04-28T11:24:18",
+  "phase": "C-5c",
+  "purpose": "Composition diagnostic: does Paper B's modeq INT3 K/V attention quantisation compose additively with Paper C's `full` SSM bit allocator inside Zamba2-1.2B?",
+  "implementation": "Single-forward eval (use_cache=False). SSM patched at chunk-boundary states (C-5b path). Attention patched between post-RoPE K/V projection and attention computation, applying qa_nsep_pchan_asym with bits=3. The two patches are independently togglable.",
+  "transformers_version": "5.6.2",
+  "model": "Zyphra/Zamba2-1.2B",
+  "label": "Zamba2-1.2B",
+  "protocol": {
+    "ctx_len": 1024,
+    "stride": 512,
+    "n_windows": 5,
+    "ssm_b_0": 6,
+    "ssm_b_min": 2,
+    "ssm_range_k": 7.0,
+    "attn_bits": 3,
+    "attn_method": "qa_nsep_pchan_asym (modeq v0.3)",
+    "calib_split": "WikiText-2 train",
+    "test_split": "WikiText-2 test",
+    "conditions": [
+      "FP16",
+      "attn_only",
+      "SSM_only",
+      "both"
+    ]
+  },
+  "fp16_ppl": 6.82862553808825,
+  "results": {
+    "FP16": {
+      "ppl": 6.82862553808825,
+      "n_windows": 5,
+      "delta_ppl": 0.0,
+      "pct_of_base": 0.0
+    },
+    "attn_only": {
+      "ppl": 7.410548174903915,
+      "n_windows": 5,
+      "delta_ppl": 0.5819226368156647,
+      "pct_of_base": 8.521812091904229
+    },
+    "SSM_only": {
+      "ppl": 6.77744562513614,
+      "n_windows": 5,
+      "delta_ppl": -0.051179912952109774,
+      "pct_of_base": -0.7494906942347604
+    },
+    "both": {
+      "ppl": 7.334709898438056,
+      "n_windows": 5,
+      "delta_ppl": 0.5060843603498055,
+      "pct_of_base": 7.411218517211145
+    }
+  },
+  "additivity": {
+    "attn_only_pct": 8.521812091904229,
+    "ssm_only_pct": -0.7494906942347604,
+    "expected_pct": 7.772321397669469,
+    "observed_pct": 7.411218517211145,
+    "interaction_pp": -0.36110288045832384,
+    "abs_threshold_pp": 0.5
+  },
+  "verdict_class": "CLEAN_COMPOSITION",
+  "verdict": "|interaction| = 0.361 pp < 0.5 pp threshold. The two recipes compose additively in this hybrid context. Paper B's attention recipe and Paper C's SSM recipe can be combined deployment-side without cross-substrate amplification. C-6 (real packing + memory accounting) is unblocked."
+}

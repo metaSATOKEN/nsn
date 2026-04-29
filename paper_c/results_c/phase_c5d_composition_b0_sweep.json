@@ -1,0 +1,320 @@
+{
+  "date": "2026-04-28T11:44:07",
+  "phase": "C-5d",
+  "purpose": "Composition diagnostic with SSM b_0 swept ∈ {3, 4, 5, 6, 8}. Verifies that C-5c's CLEAN_COMPOSITION result at b_0=6 is robust across the deployment-relevant SSM bit range, including aggressive INT3.",
+  "model": "Zyphra/Zamba2-1.2B",
+  "label": "Zamba2-1.2B",
+  "transformers_version": "5.6.2",
+  "protocol": {
+    "ctx_len": 1024,
+    "stride": 512,
+    "n_windows": 20,
+    "b_0_list": [
+      3,
+      4,
+      5,
+      6,
+      8
+    ],
+    "b_min": 2,
+    "range_k": 7.0,
+    "attn_bits": 3,
+    "calib_split": "WikiText-2 train",
+    "test_split": "WikiText-2 test",
+    "ssm_method": "Paper C `full` chunk-boundary state quant",
+    "attn_method": "modeq qa_nsep_pchan_asym INT3"
+  },
+  "fp16_ppl": 8.284401223656584,
+  "attn_only_ppl": 8.768985631834303,
+  "attn_only_pct": 5.8493594780750175,
+  "sweep_results": {
+    "3": {
+      "b_0": 3,
+      "mean_b": 3.3319895267486572,
+      "std_b": 1.0222926139831543,
+      "ssm_only_ppl": 8.26267667267288,
+      "ssm_only_pct": -0.2622344137759546,
+      "both_ppl": 8.766515927185601,
+      "both_pct": 5.819547973513296,
+      "expected_pct": 5.587125064299063,
+      "interaction_pp": 0.23242290921423248
+    },
+    "4": {
+      "b_0": 4,
+      "mean_b": 4.331986427307129,
+      "std_b": 1.022254467010498,
+      "ssm_only_ppl": 8.241897658425614,
+      "ssm_only_pct": -0.5130553685593857,
+      "both_ppl": 8.768538112349367,
+      "both_pct": 5.8439575247792455,
+      "expected_pct": 5.336304109515632,
+      "interaction_pp": 0.5076534152636132
+    },
+    "5": {
+      "b_0": 5,
+      "mean_b": 5.3319573402404785,
+      "std_b": 1.0219385623931885,
+      "ssm_only_ppl": 8.236935278815222,
+      "ssm_only_pct": -0.5729556495383122,
+      "both_ppl": 8.879915009735615,
+      "both_pct": 7.18837451255388,
+      "expected_pct": 5.276403828536705,
+      "interaction_pp": 1.9119706840171746
+    },
+    "6": {
+      "b_0": 6,
+      "mean_b": 6.331890106201172,
+      "std_b": 1.021267056465149,
+      "ssm_only_ppl": 8.235439177931537,
+      "ssm_only_pct": -0.5910149014177685,
+      "both_ppl": 8.745810310747567,
+      "both_pct": 5.569612994761805,
+      "expected_pct": 5.258344576657249,
+      "interaction_pp": 0.3112684181045555
+    },
+    "8": {
+      "b_0": 8,
+      "mean_b": 8.331315040588379,
+      "std_b": 1.016448974609375,
+      "ssm_only_ppl": 8.236847459040666,
+      "ssm_only_pct": -0.5740157113603499,
+      "both_ppl": 8.9357275824527,
+      "both_pct": 7.862081292444114,
+      "expected_pct": 5.275343766714668,
+      "interaction_pp": 2.586737525729446
+    }
+  },
+  "abs_threshold_pp": 0.5,
+  "sweep_verdict": "REGIME_DEPENDENT",
+  "sweep_text": "Composition class varies across b_0. Identify the boundary at which interaction becomes meaningful and pin the deployment recommendation accordingly.",
+  "rho_gamma_rms_summary": [
+    {
+      "layer_name": "model.layers.0.mamba",
+      "rho_h_p50": 0.9077794551849365,
+      "gamma_p50": 0.07954186201095581,
+      "rms_h_p50": 0.0006637657643295825
+    },
+    {
+      "layer_name": "model.layers.1.mamba",
+      "rho_h_p50": 0.6243876218795776,
+      "gamma_p50": 0.06454144418239594,
+      "rms_h_p50": 0.00016952291480265558
+    },
+    {
+      "layer_name": "model.layers.2.mamba",
+      "rho_h_p50": 0.5430001616477966,
+      "gamma_p50": 0.06365977227687836,
+      "rms_h_p50": 0.0003268136642873287
+    },
+    {
+      "layer_name": "model.layers.3.mamba",
+      "rho_h_p50": 0.6848858594894409,
+      "gamma_p50": 0.13641518354415894,
+      "rms_h_p50": 0.0002581690496299416
+    },
+    {
+      "layer_name": "model.layers.4.mamba",
+      "rho_h_p50": 0.5698869228363037,
+      "gamma_p50": 0.025440329685807228,
+      "rms_h_p50": 0.00014849223953206092
+    },
+    {
+      "layer_name": "model.layers.5.mamba_decoder.mamba",
+      "rho_h_p50": 0.9895716905593872,
+      "gamma_p50": 0.06809026002883911,
+      "rms_h_p50": 0.00017305416986346245
+    },
+    {
+      "layer_name": "model.layers.6.mamba",
+      "rho_h_p50": 0.8274350762367249,
+      "gamma_p50": 0.051725834608078,
+      "rms_h_p50": 0.00019751902436837554
+    },
+    {
+      "layer_name": "model.layers.7.mamba",
+      "rho_h_p50": 0.8008319139480591,
+      "gamma_p50": 0.07669857144355774,
+      "rms_h_p50": 0.0003832950023934245
+    },
+    {
+      "layer_name": "model.layers.8.mamba",
+      "rho_h_p50": 0.6335231065750122,
+      "gamma_p50": 0.026967789977788925,
+      "rms_h_p50": 0.0003429714124649763
+    },
+    {
+      "layer_name": "model.layers.9.mamba",
+      "rho_h_p50": 0.6414147615432739,
+      "gamma_p50": 0.04236330837011337,
+      "rms_h_p50": 0.0004000128828920424
+    },
+    {
+      "layer_name": "model.layers.10.mamba",
+      "rho_h_p50": 0.7221845388412476,
+      "gamma_p50": 0.03712080419063568,
+      "rms_h_p50": 0.00015175179578363895
+    },
+    {
+      "layer_name": "model.layers.11.mamba_decoder.mamba",
+      "rho_h_p50": 0.8786953091621399,
+      "gamma_p50": 0.017894241958856583,
+      "rms_h_p50": 0.00018286131671629846
+    },
+    {
+      "layer_name": "model.layers.12.mamba",
+      "rho_h_p50": 0.744361937046051,
+      "gamma_p50": 0.03067135065793991,
+      "rms_h_p50": 0.0002277157618664205
+    },
+    {
+      "layer_name": "model.layers.13.mamba",
+      "rho_h_p50": 0.7594302892684937,
+      "gamma_p50": 0.040453679859638214,
+      "rms_h_p50": 0.00017576621030457318
+    },
+    {
+      "layer_name": "model.layers.14.mamba",
+      "rho_h_p50": 0.7896369695663452,
+      "gamma_p50": 0.006762808188796043,
+      "rms_h_p50": 0.0001676422543823719
+    },
+    {
+      "layer_name": "model.layers.15.mamba",
+      "rho_h_p50": 0.827014684677124,
+      "gamma_p50": 0.037757422775030136,
+      "rms_h_p50": 0.00015434517990797758
+    },
+    {
+      "layer_name": "model.layers.16.mamba",
+      "rho_h_p50": 0.8207101821899414,
+      "gamma_p50": 0.024153225123882294,
+      "rms_h_p50": 8.395953773288056e-05
+    },
+    {
+      "layer_name": "model.layers.17.mamba_decoder.mamba",
+      "rho_h_p50": 0.8985369801521301,
+      "gamma_p50": 0.03740185499191284,
+      "rms_h_p50": 0.00012170376430731267
+    },
+    {
+      "layer_name": "model.layers.18.mamba",
+      "rho_h_p50": 0.8292022943496704,
+      "gamma_p50": 0.03190465271472931,
+      "rms_h_p50": 0.00012864984455518425
+    },
+    {
+      "layer_name": "model.layers.19.mamba",
+      "rho_h_p50": 0.7941876649856567,
+      "gamma_p50": 0.01872253231704235,
+      "rms_h_p50": 0.00011805459507741034
+    },
+    {
+      "layer_name": "model.layers.20.mamba",
+      "rho_h_p50": 0.6923315525054932,
+      "gamma_p50": 0.04579208791255951,
+      "rms_h_p50": 0.0001490828290116042
+    },
+    {
+      "layer_name": "model.layers.21.mamba",
+      "rho_h_p50": 0.6610018014907837,
+      "gamma_p50": 0.047506183385849,
+      "rms_h_p50": 0.0002619746373966336
+    },
+    {
+      "layer_name": "model.layers.22.mamba",
+      "rho_h_p50": 0.6024675369262695,
+      "gamma_p50": 0.009801149368286133,
+      "rms_h_p50": 0.0002800435177050531
+    },
+    {
+      "layer_name": "model.layers.23.mamba_decoder.mamba",
+      "rho_h_p50": 0.618004322052002,
+      "gamma_p50": 0.007500553037971258,
+      "rms_h_p50": 0.0001769514783518389
+    },
+    {
+      "layer_name": "model.layers.24.mamba",
+      "rho_h_p50": 0.7406677007675171,
+      "gamma_p50": 0.05082087218761444,
+      "rms_h_p50": 0.00029003253439441323
+    },
+    {
+      "layer_name": "model.layers.25.mamba",
+      "rho_h_p50": 0.8393344879150391,
+      "gamma_p50": 0.03932667523622513,
+      "rms_h_p50": 0.00011248311056988314
+    },
+    {
+      "layer_name": "model.layers.26.mamba",
+      "rho_h_p50": 0.7493109703063965,
+      "gamma_p50": 0.038074035197496414,
+      "rms_h_p50": 0.00024169229436665773
+    },
+    {
+      "layer_name": "model.layers.27.mamba",
+      "rho_h_p50": 0.7171408534049988,
+      "gamma_p50": 0.012646840885281563,
+      "rms_h_p50": 0.00018549038213677704
+    },
+    {
+      "layer_name": "model.layers.28.mamba",
+      "rho_h_p50": 0.8424539566040039,
+      "gamma_p50": 0.0015826147282496095,
+      "rms_h_p50": 0.0002876522485166788
+    },
+    {
+      "layer_name": "model.layers.29.mamba_decoder.mamba",
+      "rho_h_p50": 0.880303144454956,
+      "gamma_p50": 0.021097883582115173,
+      "rms_h_p50": 0.00015768289449624717
+    },
+    {
+      "layer_name": "model.layers.30.mamba",
+      "rho_h_p50": 0.7284292578697205,
+      "gamma_p50": 0.012277275323867798,
+      "rms_h_p50": 0.0001661655551288277
+    },
+    {
+      "layer_name": "model.layers.31.mamba",
+      "rho_h_p50": 0.7122914791107178,
+      "gamma_p50": 0.030481431633234024,
+      "rms_h_p50": 0.00010480600758455694
+    },
+    {
+      "layer_name": "model.layers.32.mamba",
+      "rho_h_p50": 0.75924152135849,
+      "gamma_p50": 0.013804752379655838,
+      "rms_h_p50": 0.00015485788753721863
+    },
+    {
+      "layer_name": "model.layers.33.mamba",
+      "rho_h_p50": 0.8739160299301147,
+      "gamma_p50": 0.019047072157263756,
+      "rms_h_p50": 0.0001777015859261155
+    },
+    {
+      "layer_name": "model.layers.34.mamba",
+      "rho_h_p50": 0.9323705434799194,
+      "gamma_p50": 0.005507549270987511,
+      "rms_h_p50": 0.0001284768368350342
+    },
+    {
+      "layer_name": "model.layers.35.mamba_decoder.mamba",
+      "rho_h_p50": 0.9370726346969604,
+      "gamma_p50": 0.008138488978147507,
+      "rms_h_p50": 9.828461770666763e-05
+    },
+    {
+      "layer_name": "model.layers.36.mamba",
+      "rho_h_p50": 0.9453485608100891,
+      "gamma_p50": 0.0026300286408513784,
+      "rms_h_p50": 0.0001020037816488184
+    },
+    {
+      "layer_name": "model.layers.37.mamba",
+      "rho_h_p50": 0.9480872750282288,
+      "gamma_p50": 0.003122351597994566,
+      "rms_h_p50": 0.00010000666225096211
+    }
+  ]
+}
