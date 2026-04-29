@@ -1593,28 +1593,73 @@ paper_c/
 
 The single-model SSM-side validation (C-1 → C-4), hybrid composition diagnostic (C-5a → C-5d), Mamba family generalisation (C-8a → C-8d), real-packing deployment phase (C-6), and long-context validation (C-7) are **all closed**. **Paper C v1's empirical core is complete.** The remaining work is the manuscript draft itself.
 
-**C-7 generation quality** (deferred to v2). PG-19 PPL across 8K / 16K / 32K is in C-7. Generation-quality checks (drift, loop, repetition) on long prompts are not in v1; they require qualitative judgement and are best deferred to a v2 deployment paper or the supplementary material.
+### ✦ Paper C v1 scoping decision (2026-04-29, locked)
 
-**Drafting** — with C-1 → C-7 in hand the empirical core of Paper C is complete. Manuscript skeleton:
+After completing the empirical core, we explicitly decided to **decouple Paper C v1 from Paper B (modeq)** to make it a stand-alone "SSM state quantisation theory + validation" paper. Hybrid composition with attention quantisation moves to **Paper D**.
 
-- § Introduction — bit allocator pitch + universal claim teaser
-- § Theory — Lyapunov framing + R_g formula
-- § Single-architecture validation — C-1, C-1c, C-3, C-3b, C-1c-bis (Mamba-2.8B-hf)
-- § σ → b bridge — C-4 (deployment curve table is paper-ready)
-- § Generalisation — C-8a (scale), C-8b (Mamba-2), C-8c (cross-lineage), C-8d (hybrid+MoE) — eight-instance universal claim
-- § Hybrid composition — C-5a, C-5b, C-5c, C-5d (b_0 = 6 sweet spot story)
-- § Deployment & memory savings — C-6 (Pareto frontier + deployment recommendation table)
-- § Long context + numerical stabilisation — C-7 (`full` advantage grows + state quant stabilises FP16)
-- § Discussion — synchronisation-pulse hypothesis (from Paper B); open puzzles
+**Paper C v1 keeps** (purely SSM-substrate-only, no modeq dependency):
 
-Paper-ready blocks already drafted in this README:
+- C-1, C-1b, C-1c, C-1c-bis: spectral baseline + calibration robustness
+- C-2 / C-2b / C-2c: bit-allocator direction
+- C-3, C-3b: state-step quantisation + σ² scaling
+- C-4: σ → b bridge
+- **C-5b**: Mamba-2 architectural transfer in hybrid context (attention held at FP16 — no Paper B dependency; reframed as part of the C-8 generalisation chain rather than as composition diagnostic)
+- C-8a / C-8b / C-8c / C-8d: Mamba family generalisation (all SSM-only tests; Jamba C-8d holds attention + MoE at FP16)
+- C-6: real packing + memory accounting (SSM state only)
+- C-7: long-context validation (SSM-only, PG-19)
+
+**Paper D scope (deferred)**:
+
+- C-5a (hybrid model load) — preliminary infrastructure for composition diagnostic
+- C-5c (Paper B + Paper C composition diagnostic at b_0 = 6)
+- C-5d (b_0 sweep on composition; rounding-boundary resonance phenomenon)
+- Joint Paper B + Paper C compression claim (`5.09× attn + 2.5×-2.9× SSM`)
+- Synchronisation-pulse hypothesis (Paper B Phase 29 inheritance applied to hybrid quantisation)
+- Future: real packing of joint stack, generation quality, second-hybrid-model resonance characterisation
+
+Reasoning:
+
+1. Cleaner thesis: Paper C v1 has a single mathematical object ($R_g = \Gamma_s / (1 - \rho_g)$) and one main empirical chain (state-quant validation across 8 SSM instances). No "you must read Paper B first" reading burden.
+2. Stand-alone universal claim: 8 instances × 3 lineages × 2 architectures already establishes that SSM-substrate generalisation is independent of any composition with attention.
+3. Paper D becomes a fuller, independent contribution: composition diagnostic + real-packing on the joint stack + multi-hybrid resonance characterisation.
+4. Author portfolio: three independent contributions (Paper B / C / D) read more strongly than two with a tight dependency chain.
+
+The README sections for C-5a / C-5c / C-5d are kept in place as repository documentation (they describe real experiments that informed our understanding) but should NOT be incorporated into the Paper C v1 manuscript text. They are flagged here as "Paper D scope" so future drafting sessions don't accidentally pull them into Paper C v1.
+
+### Drafting plan
+
+**Generation quality** (deferred to v2 / Paper D). PG-19 PPL across 8K / 16K / 32K is in C-7. Generation-quality checks (drift, loop, repetition) on long prompts are not in v1; they require qualitative judgement and are best deferred to Paper D's supplementary material.
+
+**Drafting** — with C-1 → C-7 in hand the empirical core of Paper C is complete. Per the scoping decision above, the manuscript is **stand-alone (no modeq dependency)**:
+
+```
+§1 Introduction          - Lyapunov-aware SSM state quantisation pitch
+§2 Related work          - Quamba / Q-Mamba / MambaQuant / SSDi8 (no modeq)
+§3 Theory                - R_g = Γ_s / (1 - ρ_g), b_g formula, σ² scaling
+§4 Single-arch validation - C-1, C-1c, C-1c-bis, C-3, C-3b, C-4 (Mamba-2.8B-hf)
+§5 Generalisation        - C-8a (scale), C-5b/C-8b (Mamba-2), C-8c (lineage),
+                            C-8d (Jamba SSM-only) — eight instances, three lineages
+§6 Deployment            - C-6 (Pareto frontier, deployment table)
+§7 Long context + stab.  - C-7 (advantage growth + numerical stabilisation finding)
+§8 Discussion            - Limitations, future work (Paper D scope mentioned)
+```
+
+Sections explicitly **NOT** in Paper C v1 (deferred to Paper D):
+
+- Hybrid composition diagnostic (C-5a / C-5c / C-5d)
+- Joint Paper B + Paper C compression claim
+- Synchronisation-pulse hypothesis discussion
+- modeq-related related work entries
+
+Paper-ready blocks already drafted in this README (just merge into manuscript):
 
 - C-3b § scaling-exponent table — single-model σ²-scaling claim
 - C-4 § deployment-curve table — single-model 1 - 2 bit savings
-- C-5d § b_0 sweep table — composition variance characterisation
 - **C-8 § generalisation table** — eight-instance universal claim
 - **C-6 § deployment-recommendation table** — Pareto frontier headline
 - **C-7 § long-context table** — full advantage grows with ctx + stabilisation finding ✨
+
+Tomorrow's start: §1 Introduction first (top-down), then merge the paper-ready blocks for §3 - §7.
 
 Optional / supplementary (do not block C-6 / C-7):
 
