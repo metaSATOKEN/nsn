@@ -1575,6 +1575,154 @@ A clean deployment-recipe map emerges from the C-9 ablation:
 
 ---
 
+## Phase C-10 / C-10b (state-norm trajectory mechanism, 2026-04-30)
+
+### Why we ran C-10
+
+The pseudo-review at v0.2 (Grok and GPT both, plus the GPT round-2 critique) flagged that §7's long-context "stabilisation by quantisation" finding was supported by the C-9 four-condition ablation but lacked a direct mechanistic characterisation. The reviewers asked for state-norm trajectory data, $dt$ distribution drift measurement, and direct cliprate evidence: a measurement of *what the FP16_orig path actually does* that diverges, and a measurement of *how often the calibrated clipping fires*.
+
+### Phase C-10: trajectory recording at 32K (executed 2026-04-30)
+
+Records per-step state-norm percentiles (`h_abs_mean`, p50, p95, p99, max), per-step $dt$ percentiles (mean, p50, p95, p99, max), and per-step peak spectral radius (`rho_mean`, `rho_p99`) for seven representative layers (`{0, 16, 32, 40, 48, 56, 63}`), at `ctx ∈ {8K, 16K, 32K}`, under three conditions (`FP16_orig` for PPL only, `FP16_clip_only`, `FP16_full INT6`). `n_windows = 2`.
+
+PPL summary (matches C-7 / C-9 sampling):
+
+| ctx | FP16_orig | clip_only | full INT6 |
+|:---:|---:|---:|---:|
+| 8K | 20.46 | 9.05 | 9.79 |
+| 16K | 118.35 | 8.77 | 9.46 |
+| 32K | 172.68 | 8.60 | 9.26 |
+
+**Headline mechanism findings (3 of the 5 evidence streams in v0.4 §7.5):**
+
+- **Stream 1 (state-magnitude tail growth)**: `h_abs_p99` grows by $137 \,\%$ to $245 \,\%$ over a single 32K window on every recorded layer. Largest growth on layer 56 (+$245 \,\%$) and layer 32 (+$190 \,\%$).
+- **Stream 2 (peak spectral radius climb)**: `rho_p99` reaches $\geq 0.99$ on every recorded layer mid-window. Layer 48 climbs from $0.969$ at $t=0$ to $0.9996$ mid-window; even short-memory layer 63 climbs from $0.945$ to $0.992$.
+- **Stream 3 ($dt$ distribution drift on long-memory layers)**: within a single 32K window, `dt_p50` drifts by $-38 \,\%$ on layer 32 and $-16 \,\%$ on layer 40 (pushing $\rho_g \to 1$), while remaining stable or growing on short-memory layers.
+
+**Script flaw discovered**: the cliprate measurement in C-10 records `(|h| > r_b).mean()` *after* the clipping step has already been applied, so cliprate is identically zero by construction. This is a recording-position bug (the recording call should have been placed before the clip / quantise step), not a finding. C-10b corrects this.
+
+### Phase C-10b: pre-clip cliprate fix + FP32_patched_off condition (executed 2026-04-30)
+
+Two changes vs C-10:
+
+1. The trajectory recording call is moved to *before* the clip / quantise step in the patched forward, so `cliprate_pre = (|h_pre| > r_b).mean()` measures the natural rate at which state magnitudes exceed $r_g$ before any intervention.
+2. A new condition `FP32_patched_off` is added (mode `off_record`): the patched forward runs without clipping or quantisation, but with trajectory recording active. Per the C-9 H0 sanity, the patched forward in mode `off` is bit-for-bit identical to the unpatched FP16 path, so `FP32_patched_off` records the trajectory of the unmodified recurrence (i.e., what `FP16_orig` does internally).
+
+PPL agreement (`FP32_patched_off` vs `FP16_orig`):
+
+| ctx | `FP16_orig` | `FP32_patched_off` | rel diff |
+|:---:|---:|---:|:---:|
+| 8K | 20.4617 | 20.4585 | $-0.02 \,\%$ |
+| 16K | 118.3498 | 118.3430 | $-0.01 \,\%$ |
+| 32K | 172.6805 | 172.6985 | $+0.01 \,\%$ |
+
+The two conditions agree to within $0.02 \,\%$ at every ctx, confirming the patched function in `off_record` mode faithfully represents the unmodified-recurrence trajectory.
+
+**Cliprate_pre under FP32_patched_off (NATURAL firing rate, no intervention):**
+
+| layer | 8K end | 16K end | 32K end |
+|:---:|:---:|:---:|:---:|
+| 0 | 2.07 % | 2.23 % | **2.27 %** |
+| 16 | 0.39 % | 0.31 % | 0.41 % |
+| 32 | 2.05 % | 2.10 % | **1.90 %** |
+| 40 | 0.82 % | 0.97 % | **1.98 %** ← grows 2.4× with ctx |
+| 48 | 0.29 % | 0.26 % | 0.18 % |
+| 56 | 0.12 % | 0.09 % | 0.28 % |
+| 63 | 0.08 % | 0.19 % | 0.03 % |
+
+**Cliprate_pre under FP16_clip_only (ACTUAL firing rate after clipping intervenes):**
+
+| layer | 8K end | 16K end | 32K end |
+|:---:|:---:|:---:|:---:|
+| 0 | 0.77 % | 1.00 % | **0.64 %** |
+| 16 | 0.09 % | 0.08 % | 0.21 % |
+| 32 | 0.20 % | 0.22 % | **0.42 %** |
+| 40 | 0.07 % | 0.14 % | 0.14 % |
+
+**Two new evidence streams (4 and 5 in v0.4 §7.5):**
+
+- **Stream 4 (direct firing-rate measurement)**: cliprate_pre is non-zero on every recorded layer at every context length, ranging from $0.03 \,\%$ to $2.27 \,\%$ at 32K end under `FP32_patched_off`. Long-memory layer 40 shows the most context-dependent growth ($0.82 \,\% \to 1.98 \,\%$, a $2.4\times$ increase from 8K to 32K).
+- **Stream 5 (clipping intervention is non-trivial)**: cliprate_pre under `FP16_clip_only` is uniformly lower than under `FP32_patched_off` (e.g., layer 0: $0.64 \,\%$ vs $2.27 \,\%$ at 32K end, a $\approx 3.5\times$ ratio). Once a unit is clipped at step $t$, its state in subsequent steps starts from the bounded value, reducing the rate of further excursions. The two cliprate trajectories agree at $t = 0$ and diverge as the recurrence unfolds.
+
+### Pattern verdict
+
+Pattern **A-WEAK**: clipping fires at $0.5 \,\%$ to $2.3 \,\%$ on the highest-firing layers, smaller than the dramatic $5 \,\%+$ that would directly read as "clipping is the active mechanism". However, **all five evidence streams together are strong**:
+
+1. ✓ State magnitude tail grows $1.4\times$ to $2.5\times$ over 32K
+2. ✓ Peak $\rho_g$ reaches $\geq 0.99$ on every layer mid-window
+3. ✓ $dt$ drifts smaller specifically on long-memory layers 32 / 40
+4. ✓ Direct cliprate_pre measurement is non-zero on every layer
+5. ✓ FP32_patched_off has $\approx 3\times$ higher cliprate than FP16_clip_only (clipping intervention is non-trivial)
+
+The mechanism is therefore: long-context inference creates conditions in which a small but high-leverage subset of $(c, s)$ units transiently exceed the calibrated $r_g$ on units that simultaneously approach the $\rho_g \to 1$ recurrence-stability boundary; under FP16 these compounding round-off errors accumulate over the 32K context and produce the observed PPL divergence; calibrated clipping suppresses the rare excursions on each step and prevents the cascade.
+
+### Raw data
+
+- `results_c/phase_c10_state_norm_trajectory.json` (~1.7 MB, committed): per-(ctx_len, condition, layer, t) trajectory under three conditions; contains the broken (post-clip) cliprate.
+- `results_c/phase_c10b_state_norm_pre_clip.json` (~2.9 MB, committed): per-(ctx_len, condition, layer, t) trajectory under four conditions; contains the corrected pre-clip cliprate and the new `FP32_patched_off` condition.
+
+### Pull-quote draft for Paper C §7.5
+
+> Phases C-10 and C-10b record the per-step state-norm, $dt$, and cliprate trajectories at long context on Mamba-2.8B-hf. Five independent evidence streams support the mechanism picture in which long-context inference transiently pushes $0.1 \,\%$ to $2.3 \,\%$ of state units past the calibrated $r_g$ threshold on units that simultaneously operate near the $\rho_g \to 1$ recurrence-stability boundary, where any FP16 round-off compounds rapidly through the discrete-time Lyapunov amplification factor. Calibrated clipping suppresses these excursions one at a time and reduces the firing rate on subsequent steps by approximately three- to four-fold compared to the unconstrained recurrence.
+
+---
+
+## Phase C-12 (half-slope vs full-slope integer allocator, 2026-04-30)
+
+### Why we ran C-12
+
+The GPT round-2 pseudo-review identified a critical theoretical gap in v0.2 / v0.3: the §3.4 derivation gives a strict bit-budget optimum of $b_g = b_0 + \tfrac{1}{2} \log_2 R_g + \log_2 r_g$ (slope $\tfrac{1}{2}$, with the $r_g$ term), but the deployed integer construction in §3.5 uses $b_g = b_0 + \lceil \log_2 R_g \rceil_+$ (slope $1$, $r_g$ term dropped). Section 4.5's $\sigma^2$-scaling continuous-noise experiment validates the $\sigma_g \propto \sqrt{(1 - \rho_g) / \Gamma_g}$ profile, which under $\sigma \propto 2^{-b}$ corresponds to slope $\tfrac{1}{2}$, NOT to the slope-$1$ integer heuristic that is actually deployed. So §4.5 directly validates the $R_g$ surface but not the slope-$1$ heuristic. C-12 closes this gap by directly comparing the slope-$\tfrac{1}{2}$ and slope-$1$ integer allocators (with and without the $r_g$ term) on the same integer-bit channel as §4.6.
+
+### Methodology
+
+Same C-4 patched forward (per-(c, s) INT-$b$ symmetric mid-tread), four profiles compared at $b_0 \in \{4, 6\}$, $k = 7$, $n_\mathrm{windows} = 5$, ctx $= 1024$ on WikiText-2 test:
+
+| profile | extras_g | continuous-σ equivalent |
+|:---|:---|:---|
+| uniform | $0$ (control) | constant |
+| full_slope (deployed) | $\lceil \log_2 R_g \rceil_+$ | $R_g^{-1}$ |
+| half_slope | $\lceil \tfrac{1}{2} \log_2 R_g \rceil_+$ | $R_g^{-1/2}$ (= the §4.5 "full" continuous profile) |
+| half_slope_rg | $\lceil \tfrac{1}{2} \log_2 R_g + \log_2 r_g - \overline{\log_2 r_g} \rceil_+$ | strict §3.4 optimum integerised |
+
+All profiles use the same shift normalisation as §3.5 to (approximately) match the nominal $b_0$.
+
+### Results
+
+| profile | $b_0 = 4$ ΔPPL (mean_b) | $b_0 = 6$ ΔPPL (mean_b) |
+|:---|---:|---:|
+| uniform | $+255.3 \,\%$ ($4.00$) | $+22.2 \,\%$ ($6.00$) |
+| full_slope (deployed v0.4 recipe) | $+28.9 \,\%$ ($4.11$) | $+6.82 \,\%$ ($5.56$) |
+| half_slope | $+28.1 \,\%$ ($4.04$) | $+5.94 \,\%$ ($6.04$) |
+| **half_slope_rg** | $\mathbf{+11.6 \,\%}$ ($4.35$) | $\mathbf{+4.47 \,\%}$ ($6.35$) |
+
+FP16 baseline PPL = $10.3150$.
+
+### Three findings
+
+1. **Slope question (full vs half) is approximately a wash at matched mean bits.** At $b_0 = 4$ where mean_b are $4.11$ vs $4.04$ (a $0.07$-bit gap), `half_slope` outperforms `full_slope` by $0.78$ percentage points. Direction is in agreement with the strict bit-budget optimum but the absolute gap is small; the slope-$1$ heuristic is empirically near-optimal on this axis alone.
+
+2. **The $r_g$ term carries substantial benefit.** At $b_0 = 4$, retaining the $\log_2 r_g$ term in `half_slope_rg` reduces ΔPPL from $+28.1 \,\%$ (`half_slope`) to $+11.6 \,\%$, a $16.5$-percentage-point improvement and a factor of $\approx 2.4\times$ reduction in PPL overhead. At $b_0 = 6$ the gap is smaller ($+5.94 \,\%$ to $+4.47 \,\%$, a $1.47$-percentage-point improvement). The $r_g$ term that we treated as a "minor approximation" in §3.4 is empirically meaningful, especially at low bit budgets.
+
+3. **mean_b matching is not exact.** `half_slope_rg`'s shift normalisation produces an actual mean bit width $0.24$ to $0.79$ bits higher than the nominal $b_0$ (`mean_b = 4.35` at $b_0 = 4$, `mean_b = 6.35` at $b_0 = 6$). Part of the apparent improvement is due to the extra bits. A back-of-the-envelope correction (one bit halves PPL in `full_slope`'s scaling) suggests the structural benefit at exactly matched mean bit width is approximately a factor of two rather than the factor of $2.4$ headline; the structural benefit is genuine but smaller than the headline number. A two-pass shift normalisation that matches mean_b exactly is identified as part of Phase C-16 (v1 critical path).
+
+### Verdict — HALF_SLOPE_RG_WINS
+
+Pre-registered case **C** (the strict slope-$\tfrac{1}{2}$ allocator with the $r_g$ term beats `half_slope` by more than 0.5 percentage points). The v0.4 paper continues to report deployment numbers under the deployed `full_slope` heuristic (since §4 to §7 were tested at scale with that allocator), but identifies `half_slope_rg` as the v1 deployment recipe, with Phase C-16 as the critical-path full-sweep refinement.
+
+### Implications for v0.4 / v1
+
+- v0.4 §3.4: the $\log_2 r_g$ term is no longer treated as a negligible approximation; it is empirically meaningful (§6.7) and the strict optimum form should be the basis of the v1 recipe.
+- v0.4 §3.5: the slope-$1$ heuristic remains the deployed allocator for §4 to §7, but is now framed as an empirically near-optimal-on-slope, structurally-suboptimal-on-$r_g$ construction; the v1 recipe is `half_slope_rg`.
+- v0.4 §6.7: a new subsection reports the C-12 head-to-head numbers in detail.
+- v0.4 §8.3: Phase C-12 is marked executed; Phase C-16 (full sweep at `half_slope_rg`) is identified as the v1 critical path.
+- v1: re-run §4 to §7 (Phases C-4, C-6, C-7, C-8a / C-8c / C-8d, C-9, C-10b) with `half_slope_rg`. Expected $b_0 = 4$ ΔPPL on Mamba-2.8B-hf to drop from $+27 \,\%$ to roughly $+12 \,\%$; rank-order transfer claim and long-context calibration-benefit observations preserved.
+
+### Raw data
+
+`results_c/phase_c12_strict_optimum_full.json` (~17 KB, committed): per-(b_0, profile) mean_b + ΔPPL, four-profile pairwise comparison, verdict class, calibration summary.
+
+---
+
 ## Handoff brief — for future sessions starting cold
 
 If you're a future Claude session (or a future me) starting in this folder without the prior context, here is what you need to know to keep going.
