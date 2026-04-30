@@ -80,25 +80,25 @@ A line of recent work compresses the per-token key-value cache of transformer la
 
 ### 2.2 SSM Weight and Activation Quantisation
 
-The first wave of post-training quantisation (PTQ) work on Mamba focused on weights and activations rather than the recurrent state. Mamba-PTQ [Pierro & Abreu, 2024] is among the earliest, identifying outlier channels in the recurrent LLM as the primary obstacle to naive transplants of transformer PTQ recipes. Quamba [Chiang et al., 2024] proposes a static 8-bit per-tensor quantisation scheme for the selective SSM, suppressing the maximum values of the input activations and quantising the output activations in an outlier-free space via a Hadamard transform; it reports a $1.72\times$ generation-latency reduction on Mamba-2.8B with $0.9 \,\%$ accuracy drop. MambaQuant [Xu et al., 2025] addresses outlier-driven accuracy loss with Karhunen-Loève transform-enhanced rotation and a smooth-fused rotation that equalises channel variances, achieving W8A8 with under $1 \,\%$ accuracy loss. OuroMamba [Akhauri et al., 2025] presents a data-free PTQ for vision Mamba models, using channel-wise static weight quantisation and per-time-step dynamic activation quantisation. LightMamba [Wei et al., 2025] co-designs a 4-bit rotation-based PTQ with FPGA acceleration. Bi-Mamba [Tang et al., 2024] takes the alternative quantisation-aware-training (QAT) route to 1-bit weights, training Mamba models from scratch with autoregressive distillation. None of these methods quantise the recurrent state $h_t$ at per-(channel, state-unit) granularity with bit widths driven by spectral or output-coupling statistics, which is the focus of the present paper.
+The first wave of post-training quantisation (PTQ) work on Mamba focused on weights and activations rather than the recurrent state. Mamba-PTQ [Pierro & Abreu, 2024] is among the earliest, identifying outlier channels in the recurrent LLM as the primary obstacle to naive transplants of transformer PTQ recipes. Quamba [Chiang et al., 2024] proposes a static 8-bit per-tensor quantisation scheme for the selective SSM, suppressing the maximum values of the input activations and quantising the output activations in an outlier-free space via a Hadamard transform; it reports a $1.72\times$ generation-latency reduction on Mamba-2.8B with $0.9 \,\%$ accuracy drop. MambaQuant [Xu et al., 2025] addresses outlier-driven accuracy loss with Karhunen-Loève transform-enhanced rotation and a smooth-fused rotation that equalises channel variances, achieving W8A8 with under $1 \,\%$ accuracy loss. OuroMamba [Ramachandran et al., 2025] presents a data-free PTQ for vision Mamba models, using channel-wise static weight quantisation and per-time-step dynamic activation quantisation. LightMamba [Wei et al., 2025] co-designs a 4-bit rotation-based PTQ with FPGA acceleration. Bi-Mamba [Tang et al., 2024] takes the alternative quantisation-aware-training (QAT) route to 1-bit weights, training Mamba models from scratch with autoregressive distillation. None of these methods quantise the recurrent state $h_t$ at per-(channel, state-unit) granularity with bit widths driven by spectral or output-coupling statistics, which is the focus of the present paper.
 
 ### 2.3 Per-Group and Heterogeneous Bit Allocation in SSMs
 
-A smaller body of recent work allocates bits non-uniformly across SSM components, and is the closest in spirit to our approach. Quamba2 [Chiang et al., 2025] extends Quamba to W8A8, W4A8, and W4A16 across both Mamba-1 and Mamba-2 backbones, with per-state-group quantisation for the input-dependent parameters $B_t$ and $C_t$. Quamba2's groups are channel-wise (eight groups of 128 channels each), and within a group the quantisation is uniform 8-bit; cached SSM states are quantised at uniform 8-bit as well. The grouping is based on activation magnitude clustering and a Hadamard-style compute-invariance constraint, not on the recurrence's spectral radius or output coupling. The recent edge-AI study of [Vandevenne et al., 2025] (Quantizing Small-Scale State-Space Models for Edge AI) reports a heterogeneous bit allocation in which the weight matrices $\bar B$, $\bar C$, $\bar D$ are quantised at 4 bits, activations other than the state at 6 bits, and the state $x$ and transition matrix $\bar A$ at 6 to 16 bits depending on ablation; their grouping is per-head (one group per parallel SSM head), their calibration uses a 99.999-percentile range estimate, and the bit allocation is determined by ablation rather than by a closed-form formula. Q-S5 [Abreu & Pierro, 2024] and QS4D [Siegel et al., 2025] explore quantisation of S5 and S4D structured SSMs respectively, primarily in the QAT regime. The present paper is the first to allocate per-(channel, state-unit) integer bit widths in closed form from a discrete-time Lyapunov bound on accumulated quantisation noise, with the bit width determined by the per-group importance weight $R_g = \Gamma_g / (1 - \rho_g)$ rather than by activation magnitude statistics or by ablation.
+A smaller body of recent work allocates bits non-uniformly across SSM components, and is the closest in spirit to our approach. Quamba2 [Chiang et al., 2025] extends Quamba to W8A8, W4A8, and W4A16 across both Mamba-1 and Mamba-2 backbones, with per-state-group quantisation for the input-dependent parameters $B_t$ and $C_t$. Quamba2's groups are channel-wise (eight groups of 128 channels each), and within a group the quantisation is uniform 8-bit; cached SSM states are quantised at uniform 8-bit as well. The grouping is based on activation magnitude clustering and a Hadamard-style compute-invariance constraint, not on the recurrence's spectral radius or output coupling. The recent edge-AI study of [Zhao et al., 2025] (Quantizing Small-Scale State-Space Models for Edge AI) reports a heterogeneous bit allocation in which the weight matrices $\bar B$, $\bar C$, $\bar D$ are quantised at 4 bits, activations other than the state at 6 bits, and the state $x$ and transition matrix $\bar A$ at 6 to 16 bits depending on ablation; their grouping is per-head (one group per parallel SSM head), their calibration uses a 99.999-percentile range estimate, and the bit allocation is determined by ablation rather than by a closed-form formula. Q-S5 [Abreu & Pierro, 2024] and QS4D [Siegel et al., 2025] explore quantisation of S5 and S4D structured SSMs respectively, primarily in the QAT regime. The present paper is the first to allocate per-(channel, state-unit) integer bit widths in closed form from a discrete-time Lyapunov bound on accumulated quantisation noise, with the bit width determined by the per-group importance weight $R_g = \Gamma_g / (1 - \rho_g)$ rather than by activation magnitude statistics or by ablation.
 
 ### 2.4 Lyapunov Analyses of SSM Dynamics (Non-Quantisation)
 
-Two recent works analyse SSM dynamics through a Lyapunov-style lens but in non-quantisation contexts. Mamba State-Space Models Are Lyapunov-Stable Learners [Yu et al., 2024] characterises the training-time stability of Mamba's selective recurrence using a Lyapunov function on the parameter trajectories, addressing the question of whether Mamba's training is convergent rather than the question of how to allocate quantisation noise across state groups. Spectral State Space Models [Agarwal et al., 2023] proposes a new SSM family based on spectral filtering of linear dynamical systems, again concerned with model design rather than compression. The discrete-time Lyapunov bound on accumulated quantisation noise that drives our bit allocator (§3.2) is an instance of a more general fact about contraction maps, but to our knowledge no prior work has translated this bound into a per-state-group bit-allocation rule.
+Two recent works analyse SSM dynamics through a Lyapunov-style lens but in non-quantisation contexts. Mamba State-Space Models Are Lyapunov-Stable Learners [Halloran et al., 2024] characterises the training-time stability of Mamba's selective recurrence using a Lyapunov function on the parameter trajectories, addressing the question of whether Mamba's training is convergent rather than the question of how to allocate quantisation noise across state groups. Spectral State Space Models [Agarwal et al., 2023] proposes a new SSM family based on spectral filtering of linear dynamical systems, again concerned with model design rather than compression. The discrete-time Lyapunov bound on accumulated quantisation noise that drives our bit allocator (§3.2) is an instance of a more general fact about contraction maps, but to our knowledge no prior work has translated this bound into a per-state-group bit-allocation rule.
 
 ### 2.5 Position of the Present Work
 
 We summarise our position relative to the four literatures along five axes.
 
-First, our bit-allocation rule is closed-form ($b_g = b_0 + \lceil \log_2 R_g \rceil_+$), driven by two calibrated scalars per state group, and obtained without ablation search. Existing work either uses uniform bits within groups (Quamba2 [Chiang et al., 2025]) or determines heterogeneous bits via empirical ablation (Vandevenne et al., 2025).
+First, our bit-allocation rule is closed-form ($b_g = b_0 + \lceil \log_2 R_g \rceil_+$), driven by two calibrated scalars per state group, and obtained without ablation search. Existing work either uses uniform bits within groups (Quamba2 [Chiang et al., 2025]) or determines heterogeneous bits via empirical ablation (Zhao et al., 2025).
 
-Second, our granularity is per-(channel, state-unit), which on Mamba-2.8B-hf produces $5{,}242{,}880$ distinct bit widths. Existing work operates at per-tensor (Quamba [Chiang et al., 2024]), per-channel-group (Quamba2 [Chiang et al., 2025]), or per-head (Vandevenne et al., 2025) granularity, none of which exposes the per-state-unit structure that our $R_g$ formula targets.
+Second, our granularity is per-(channel, state-unit), which on Mamba-2.8B-hf produces $5{,}242{,}880$ distinct bit widths. Existing work operates at per-tensor (Quamba [Chiang et al., 2024]), per-channel-group (Quamba2 [Chiang et al., 2025]), or per-head (Zhao et al., 2025) granularity, none of which exposes the per-state-unit structure that our $R_g$ formula targets.
 
-Third, our derivation is a discrete-time Lyapunov bound on accumulated quantisation noise (§3.2), with $(1 - \rho_g)^{-1}$ as the per-group amplification factor. No prior SSM-quantisation work uses spectral radius for bit allocation; the existing Lyapunov-themed work [Yu et al., 2024] addresses training stability rather than compression.
+Third, our derivation is a discrete-time Lyapunov bound on accumulated quantisation noise (§3.2), with $(1 - \rho_g)^{-1}$ as the per-group amplification factor. No prior SSM-quantisation work uses spectral radius for bit allocation; the existing Lyapunov-themed work [Halloran et al., 2024] addresses training stability rather than compression.
 
 Fourth, our importance weight combines spectral radius with output coupling, $R_g = \Gamma_g / (1 - \rho_g)$. The output-coupling factor $\Gamma_g = \mathbb{E}_t [(C_t^{(s)})^2]$ is, to our knowledge, not used in prior SSM quantisation literature as an input to bit allocation.
 
@@ -635,15 +635,13 @@ This paper develops a single closed-form bit-allocation rule for SSM state quant
 
 ## References
 
-*Citations are listed alphabetically by first-author surname. arXiv preprint identifiers are given for all preprints; venue is given where known. Author lists and venues should be verified against the source PDFs before final submission.*
+*Citations are listed alphabetically by first-author surname. arXiv preprint identifiers are given for all preprints; venue is given where known. All author lists were cross-checked against the arXiv abstract pages on 2026-04-30.*
 
-Abreu, S. and Pierro, A. 2024. Q-S5: Towards Quantized State Space Models. *arXiv:2406.09477*.
+Abreu, S., Pedersen, J. E., Heckel, K. M., and Pierro, A. 2024. Q-S5: Towards Quantized State Space Models. *arXiv:2406.09477*.
 
 Agarwal, N., Suo, D., Chen, X., and Hazan, E. 2023. Spectral State Space Models. *arXiv:2312.06837*.
 
-Akhauri, Y., Hu, B., Hubara, I., Zhao, B., and Hoffer, E. 2025. OuroMamba: A Data-Free Quantization Framework for Vision Mamba Models. *arXiv:2503.10959*.
-
-Chang, C.-C., Lin, W.-C., Lin, C.-Y., Chen, C.-Y., Hu, Y.-F., Wang, P.-S., Huang, N.-C., Ceze, L., et al. 2024. Palu: Compressing KV-Cache with Low-Rank Projection. *arXiv:2407.21118*.
+Chang, C.-C., Lin, W.-C., Lin, C.-Y., Chen, C.-Y., Hu, Y.-F., Wang, P.-S., Huang, N.-C., Ceze, L., Abdelfattah, M. S., and Wu, K.-C. 2024. Palu: Compressing KV-Cache with Low-Rank Projection. *arXiv:2407.21118*.
 
 Chiang, H.-Y., Chang, C.-C., Frumkin, N., Wu, K.-C., and Marculescu, D. 2024. Quamba: A Post-Training Quantization Recipe for Selective State Space Models. *arXiv:2410.13229*.
 
@@ -654,6 +652,8 @@ Dao, T. and Gu, A. 2024. Transformers are SSMs: Generalized Models and Efficient
 Glorioso, P., Anthony, Q., Tokpanov, Y., Whittington, J., Pilault, J., Ibrahim, A., and Millidge, B. 2024. Zamba: A Compact 7B SSM Hybrid Model. *arXiv:2405.16712*. (Zamba2 release notes: Zyphra Technologies, 2024.)
 
 Gu, A. and Dao, T. 2023. Mamba: Linear-Time Sequence Modeling with Selective State Spaces. *arXiv:2312.00752*.
+
+Halloran, J. T., Gulati, M., and Roysdon, P. F. 2024. Mamba State-Space Models Are Lyapunov-Stable Learners. *arXiv:2406.00209*.
 
 He, Y., Zhang, L., Wu, W., Liu, J., Zhou, H., and Zhuang, B. 2024. ZipCache: Accurate and Efficient KV Cache Quantization with Salient Token Identification. *arXiv:2405.14256*.
 
@@ -669,17 +669,17 @@ Pierro, A. and Abreu, S. 2024. Mamba-PTQ: Outlier Channels in Recurrent Large La
 
 Rae, J. W., Potapenko, A., Jayakumar, S. M., Hillier, C., and Lillicrap, T. P. 2020. Compressive Transformers for Long-Range Sequence Modelling. *International Conference on Learning Representations (ICLR 2020)*. *arXiv:1911.05507*. (PG-19 introduction.)
 
-Siegel, F. M., Khoram, S., Lien, P., Linnander, B., Henry, M. B., and Yu, T. 2025. QS4D: Quantization-Aware Training for Efficient Hardware Deployment of Structured State-Space Sequential Models. *Advanced Intelligent Systems*, Wiley.
+Ramachandran, A., Lee, M., Xu, H., Kundu, S., and Krishna, T. 2025. OuroMamba: A Data-Free Quantization Framework for Vision Mamba. *arXiv:2503.10959*.
+
+Siegel, S., Yang, M.-J., Bouhadjar, Y., Fabre, M., Neftci, E., and Strachan, J. P. 2025. QS4D: Quantization-Aware Training for Efficient Hardware Deployment of Structured State-Space Sequential Models. *arXiv:2507.06079*. (Published in *Advanced Intelligent Systems*, Wiley, 2026.)
 
 Tang, S., Ma, L., Li, H., Sun, M., and Shen, Z. 2024. Bi-Mamba: Towards Accurate 1-Bit State Space Models. *arXiv:2411.11843*.
 
-Vandevenne, T., Verhelst, M., et al. 2025. Quantizing Small-Scale State-Space Models for Edge AI. *arXiv:2506.12480*.
-
 Wei, R., Xu, S., Zhong, L., Yang, Z., Guo, Q., Wang, Y., Wang, R., and Li, M. 2025. LightMamba: Efficient Mamba Acceleration on FPGA with Quantization and Hardware Co-design. *arXiv:2502.15260*.
 
-Xu, Z., Yue, Y., Hu, X., Yuan, Z., Jiang, Z., Chen, Z., Yu, J., Xu, C., et al. 2025. MambaQuant: Quantizing the Mamba Family with Variance Aligned Rotation Methods. *arXiv:2501.13484*.
+Xu, Z., Yue, Y., Hu, X., Yuan, Z., Jiang, Z., Chen, Z., Yu, J., Xu, C., Zhou, S., and Yang, D. 2025. MambaQuant: Quantizing the Mamba Family with Variance Aligned Rotation Methods. *arXiv:2501.13484*.
 
-Yu, J., Park, S., Choi, J., Kim, B., and Pajot, A. 2024. Mamba State-Space Models Are Lyapunov-Stable Learners. *arXiv:2406.00209*.
+Zhao, L., Torchet, T., Payvand, M., Kriener, L., and Moro, F. 2025. Quantizing Small-Scale State-Space Models for Edge AI. *arXiv:2506.12480*.
 
 Zuo, J., Velikanov, M., Rhaiem, D. E., Chahed, I., Belkada, Y., Kunsch, G., and Hacid, H. 2024. Falcon-Mamba: The First Competitive Attention-Free 7B Language Model. *Technology Innovation Institute (TII) Technical Report*. *arXiv:2410.05355*.
 
