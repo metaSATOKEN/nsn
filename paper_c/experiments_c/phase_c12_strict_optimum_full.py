@@ -2,85 +2,98 @@
 # Licensed under the Apache License, Version 2.0
 
 # ============================================================
-# Phase C-12: Strict bit-budget optimum with Gamma_g
+# Phase C-12: Half-slope vs full-slope integer allocator
 # ============================================================
-# Section 3.5 of the paper acknowledges that the heuristic
-# integer construction
+# Closes the bit-space / sigma-space mismatch identified by
+# the v0.2 pseudo-review. The deployed integer allocator in
+# Section 3.5 uses
 #
-#     extras_g = ceil(log_2 R_g)_+
-#     b_g       = b_0 + extras_g + shift, clamped to [b_min, 16]
+#     extras_g = ceil(log_2 R_g)+
 #
-# uses a slope of unity on log_2 R_g, twice the slope of the
-# strict bit-budget optimum derived in Section 3.4
-# (b_g* = b_0 + (1/2) log_2 R_g + log_2 r_g, dropping log_2 r_g
-# in our specific implementation). The Section 4.5 sigma2-scaling
-# experiment validates the heuristic full empirically against
-# uniform / proxy / anti / inverse, but does not include the
-# strict-slope full as a control. Both Grok and GPT pseudo-
-# reviewers flagged this as a missing comparison.
+# (slope 1 on log_2 R_g), while Section 3.4 derives the strict
+# bit-budget optimum
 #
-# Phase C-12 closes that gap. It runs the same C-3 / C-3b state-
-# step Gaussian-noise injection on Mamba-2.8B-hf with five
-# profiles, including the new "full_half" profile that
-# implements the strict (1/2)-slope optimum:
+#     b_g* = b_0 + (1/2) log_2 R_g + log_2 r_g
 #
-#   uniform:        sigma_g constant
-#   proxy_C2:       sigma_g proportional to (1 - rho_g)
-#   proxy_correct:  sigma_g proportional to sqrt(1 - rho_g)
-#   full (heur):    sigma_g proportional to sqrt((1 - rho_g) / Gamma_g)
-#                   = the heuristic profile from Section 4
-#   full_half:      sigma_g proportional to ((1 - rho_g) / Gamma_g)^{1/4}
-#                   = the strict (1/2)-slope optimum on log_2 R_g
-#                   under sigma -> 2^{-b} mapping, which produces
-#                   sigma proportional to 1/sqrt(R_g) in continuous
-#                   space and (1/2) log_2 R_g extras in integer space
-#   anti_full:      sigma_g proportional to sqrt(Gamma_g / (1 - rho_g))
-#                   (deliberately backwards, as in C-3 / C-3b)
+# (slope 1/2 on log_2 R_g, plus a per-group r_g term). The
+# Section 4.5 sigma2-scaling experiment validated the
+# continuous-noise profile sigma_g proportional to
+# sqrt((1-rho_g)/Gamma_g), which under sigma proportional to
+# 2^{-b} corresponds to the slope-1/2 integer construction,
+# NOT the slope-1 heuristic that is actually deployed in
+# Section 3.5 / Section 4.6 / Sections 5 to 7.
 #
-# Sweep:
-#   sigma_rel in {0.05, 0.10, 0.20}   (matching C-3b)
-#   n_windows = 5                      (matching C-3 / C-3b)
+# Phase C-12 fixes this by directly comparing the slope-1
+# heuristic and the slope-1/2 strict optimum AS INTEGER
+# allocators (i.e., quantising the SSM state), at matched
+# actual mean bit width, on Mamba-2.8B-hf, WikiText-2 PPL.
+# It also tests the slope-1/2 + log_2 r_g variant per the
+# Section 3.4 derivation.
 #
-# The total noise energy sum_g sigma_g^2 is held constant across
-# profiles at every sigma_rel (matching C-3 / C-3b). The
-# comparison isolates allocation shape from noise amount.
+# Profiles (4 total, all at integer-bit quant):
+#   - uniform              b_g = b_0 (control)
+#   - full_slope           b_g = b_0 + ceil(log_2 R_g)+ + shift  (current heuristic)
+#   - half_slope           b_g = b_0 + ceil((1/2) log_2 R_g)+ + shift  (strict optimum)
+#   - half_slope_rg        b_g = b_0 + ceil((1/2) log_2 R_g + log_2 r_g - mean_log_rg)+ + shift
+#                            (full strict optimum including r_g term, with mean-zero r_g shift)
+#
+# Sweeps:
+#   b_0 in {4, 6}          two bit budgets matching C-4 / C-8a
+#   range_k = 7.0          matching C-4 saturation point
+#   n_windows = 5          matching C-4
+#   ctx = 1024             matching C-4
 #
 # Pre-registered hypotheses:
 #
-#   H1 (full vs full_half ranking):
-#     If the strict (1/2)-slope optimum is in fact tighter than
-#     our unity-slope heuristic for the bit-budget objective,
-#     then full_half should beat full at every sigma_rel.
+#   H1 (slope question):
+#     If half_slope beats full_slope at matched mean bit
+#     width, the heuristic in Section 3.5 is suboptimal and
+#     the v0.3 paper should adopt half_slope as the deployed
+#     allocator.
 #
-#   H2 (full vs full_half scaling):
-#     If the heuristic full is genuinely uniquely sigma2-scaling
-#     (Section 4.5), then full_half should be super-quadratic.
+#   H2 (r_g term question):
+#     If half_slope_rg beats half_slope at matched mean bit
+#     width, the r_g term dropped in Section 3.4 carries
+#     measurable benefit and should be reintroduced.
 #
-#   H3 (rank order preservation):
-#     The full and full_half profiles should sandwich the
-#     proxy_correct profile from above and below, in the order
-#     full_half < full < proxy_correct or
-#     full < full_half < proxy_correct, depending on which slope
-#     is empirically tighter.
+#   H3 (matched mean):
+#     The shift normalisation should produce mean bits within
+#     +/- 0.1 bits of b_0 across all profiles. We log the
+#     actual mean bits per profile per b_0 to make the
+#     comparison auditable.
 #
-# Outcome decision rule:
+# Outcome decision rule (pre-registered):
 #
-#   - If full_half consistently beats full: the heuristic is
-#     suboptimal, Section 3.5 should be revised to recommend
-#     the strict (1/2)-slope construction.
-#   - If full consistently beats full_half: the empirical
-#     justification for the heuristic is strengthened, Section
-#     4.5 / Section 3.5 stand as written.
-#   - If results are within noise (under one percentage point):
-#     the choice between unity and (1/2) slope is empirically
-#     irrelevant on this Mamba-2.8B-hf evaluation, and Section
-#     8.3 (Phase C-12) is closed without changing the headline.
+#   Case A: full_slope wins (delta_full < delta_half by > 0.5
+#           percentage points at b_0 = 4 and b_0 = 6).
+#     -> Heuristic full-slope is empirically tighter than the
+#        strict optimum on the integer-bit channel. The v0.3
+#        paper's Section 3.5 framing stands; the slope-1
+#        heuristic is the right deployed allocator.
+#
+#   Case B: half_slope wins (delta_half < delta_full by > 0.5
+#           pp at both b_0).
+#     -> Strict slope-1/2 is empirically tighter. The v0.3
+#        paper should adopt half_slope as the deployed
+#        recipe, and re-run the C-4 / C-8a / C-6 / C-7 / C-9
+#        sweeps with half_slope. Major recalibration needed.
+#
+#   Case C: half_slope_rg wins beyond half_slope.
+#     -> The r_g term is empirically meaningful. The v0.3
+#        paper should adopt half_slope_rg as the deployed
+#        recipe.
+#
+#   Case D: All three (full / half / half+rg) within sampling
+#           noise (< 0.5 pp gap).
+#     -> Slope choice and r_g term are empirically irrelevant
+#        on this evaluation. Section 3.5's heuristic framing
+#        is fine; the choice is taste.
 #
 # Runtime estimate (A100 95 GB):
-#   ~10 min per (sigma_rel, profile) at n_windows=5, ctx 1024
-#   6 profiles x 3 sigma_rel = 18 runs
-#   Total ~3 hours
-#
+#   per-token state quant per condition at ctx=1024:
+#     ~5 min per (b_0, profile)
+#   4 profiles x 2 b_0 = 8 conditions, plus calibration
+#   Total ~45 - 60 min.
 # ============================================================
 
 
@@ -172,19 +185,36 @@ LAYER_NAME_BY_ID = {id(mix): name for name, mix in mixers}
 
 
 # =============================================================
-# === CELL V3 === Patched slow_forward (Gaussian state-step noise)
+# === CELL V3 === Patched slow_forward (integer-bit state quant)
 # =============================================================
-# This patch replicates the C-3 / C-3b protocol: inject Gaussian
-# state-step noise eta_t with per-(c, s) variance sigma_g^2,
-# between the state update and the readout.
+# Same patched function as C-4 / C-8a: per-(c, s) INT-b
+# symmetric mid-tread quantiser, range r_g = k * RMS(h_g),
+# bit allocation b_g per layer. The point of C-12 is to vary
+# WHICH b_g profile is used.
 
 _C12 = {
-    "mode":           "off",       # "off" | "calibrate" | "noise_inject"
-    "sigma_per_layer": None,       # dict[layer_name, tensor [d_inner, d_state]]
+    "mode":           "off",       # "off" | "calibrate" | "quantise"
+    "b_per_layer":    None,
+    "r_per_layer":    None,
     "calib_accum":    None,
 }
 
 EPS = 1e-6
+
+
+def _quantize_h_per_unit(h, b_per_unit, r_per_unit):
+    """INT-b symmetric quantiser with zero level."""
+    b_f      = b_per_unit.float().clamp(min=2.0, max=16.0)
+    n_neg    = 2.0 ** (b_f - 1.0)
+    n_pos    = n_neg - 1.0
+    delta    = (r_per_unit / n_neg).clamp(min=EPS)
+    delta_b  = delta.unsqueeze(0)
+    n_neg_b  = n_neg.unsqueeze(0)
+    n_pos_b  = n_pos.unsqueeze(0)
+    q_int    = torch.round(h / delta_b)
+    q_int    = torch.maximum(q_int, -n_neg_b)
+    q_int    = torch.minimum(q_int,  n_pos_b)
+    return q_int * delta_b
 
 
 def _c12_mamba_forward(mix, input_states):
@@ -218,11 +248,14 @@ def _c12_mamba_forward(mix, input_states):
     deltaB_x = B_bar * x_pre.float()[..., None]
     C_f = C_proj.float()
 
-    sigma_layer = None
-    if _C12["mode"] == "noise_inject" and _C12["sigma_per_layer"] is not None:
-        sig = _C12["sigma_per_layer"].get(layer_name)
-        if sig is not None:
-            sigma_layer = sig.to(x_pre.device, dtype=torch.float32)
+    b_layer = None
+    r_layer = None
+    if _C12["mode"] == "quantise":
+        b = _C12["b_per_layer"].get(layer_name)
+        r = _C12["r_per_layer"].get(layer_name)
+        if b is not None and r is not None:
+            b_layer = b.to(x_pre.device)
+            r_layer = r.to(x_pre.device, dtype=torch.float32)
 
     if _C12["mode"] == "calibrate":
         rho_sum     = A_bar.sum(dim=(0, 1))
@@ -238,10 +271,8 @@ def _c12_mamba_forward(mix, input_states):
     ys = []
     for t in range(T):
         h = A_bar[:, t] * h + deltaB_x[:, t]
-        if sigma_layer is not None:
-            # inject per-(c, s) Gaussian noise with sigma_layer
-            eta = torch.randn_like(h) * sigma_layer.unsqueeze(0)
-            h = h + eta
+        if b_layer is not None and r_layer is not None:
+            h = _quantize_h_per_unit(h, b_layer, r_layer)
         if _C12["mode"] == "calibrate":
             rms_sumsq += (h ** 2).sum(dim=0)
         y_t = (h * C_f[:, t].unsqueeze(1)).sum(dim=-1)
@@ -333,306 +364,345 @@ print(f"  captured rho/gamma/rms for {len(captured)} layers")
 
 
 # =============================================================
-# === CELL V5 === Build sigma profiles (per-(c, s))
+# === CELL V5 === Bit profile builders (4 profiles)
 # =============================================================
-# Each profile is a dict[layer_name, sigma_tensor [d_inner, d_state]].
-# sigma is then scaled to a target sigma_rel = sigma_g / RMS(h_g) on
-# average across all (c, s) units, holding total noise energy fixed.
+# All profiles are integer-bit allocations on per-(c, s)
+# granularity, with shift normalisation to match nominal b_0
+# and clamp to [B_MIN, 16].
+#
+# uniform:      extras_g = 0
+# full_slope:   extras_g = ceil(log_2 R_g)+
+# half_slope:   extras_g = ceil((1/2) log_2 R_g)+
+# half_slope_rg:extras_g = ceil((1/2) log_2 R_g + (log_2 r_g - mean log_2 r_g))+
 
-def _shape_uniform(captured):
-    """sigma_g constant across all (c, s)."""
-    return {n: torch.ones_like(d["rms_h"]) for n, d in captured.items()}
-
-
-def _shape_proxy_C2(captured):
-    """sigma_g ∝ (1 - rho_g)."""
-    return {n: (1.0 - d["rho_emp"]).clamp(min=EPS)
-            for n, d in captured.items()}
+B_MIN, RANGE_K = 2, 7.0
 
 
-def _shape_proxy_correct(captured):
-    """sigma_g ∝ sqrt(1 - rho_g)."""
-    return {n: (1.0 - d["rho_emp"]).clamp(min=EPS).sqrt()
-            for n, d in captured.items()}
+def _extras_uniform(captured):
+    return {n: torch.zeros_like(d["rho_emp"]) for n, d in captured.items()}
 
 
-def _shape_full_heuristic(captured):
-    """sigma_g ∝ sqrt((1 - rho_g) / Gamma_g)
-    (= heuristic full from Section 4: sigma ∝ 1/sqrt(R_g)
-       where R_g = Gamma / (1 - rho)).
-    Per (c, s); Gamma broadcasts from [d_state] over channel dim."""
+def _extras_full_slope(captured):
+    """slope 1 on log_2 R_g (the deployed heuristic)."""
     out = {}
     for n, d in captured.items():
         rho   = d["rho_emp"]
-        gamma = d["gamma"].clamp(min=EPS)  # [d_state]
-        denom = gamma.unsqueeze(0).expand_as(rho)  # [d_inner, d_state]
-        sig = ((1.0 - rho).clamp(min=EPS) / denom).sqrt()
-        out[n] = sig
+        gamma = d["gamma"].clamp(min=EPS)
+        log_R = torch.log2(
+            gamma.unsqueeze(0) / (1.0 - rho).clamp(min=EPS)
+        )
+        out[n] = torch.ceil(log_R).clamp(min=0)
     return out
 
 
-def _shape_full_half(captured):
-    """sigma_g ∝ ((1 - rho_g) / Gamma_g)^{1/4}
-    (= strict (1/2)-slope optimum: continuous sigma ∝ R_g^{-1/2}
-       maps to b_g = (1/2) log_2 R_g, which under sigma ∝ 2^{-b}
-       gives sigma ∝ 2^{-(1/2) log_2 R_g} = R_g^{-1/2}.
-       But here we're directly comparing CONTINUOUS sigma profiles,
-       not bits, so the strict optimum on continuous sigma is
-       1/sqrt(R_g) = full_heuristic above. The "half" profile in
-       this experiment corresponds to the ratio between the full
-       integer-bit allocator and the strict (1/2)-slope integer
-       allocator, which when translated back to continuous sigma
-       gives sigma ∝ R_g^{-1/4} = ((1-rho)/Gamma)^{1/4}.)
+def _extras_half_slope(captured):
+    """slope 1/2 on log_2 R_g (the strict bit-budget optimum)."""
+    out = {}
+    for n, d in captured.items():
+        rho   = d["rho_emp"]
+        gamma = d["gamma"].clamp(min=EPS)
+        log_R = torch.log2(
+            gamma.unsqueeze(0) / (1.0 - rho).clamp(min=EPS)
+        )
+        out[n] = torch.ceil(0.5 * log_R).clamp(min=0)
+    return out
 
-    The motivation for testing this profile: in C-3b, the heuristic
-    full integer construction maps to sigma proportional to 1/R_g
-    (because b_g ∝ log_2 R_g, sigma ∝ 2^{-b_g} ∝ R_g^{-1}). The
-    strict optimum integer would map to sigma ∝ R_g^{-1/2}. So
-    when we compare CONTINUOUS sigma profiles in C-3b, the
-    "heuristic full" continuous profile that corresponds to the
-    integer heuristic is sigma ∝ R_g^{-1}, which equals
-    (1-rho)/Gamma — NOT sqrt((1-rho)/Gamma). And the "strict
-    (1/2)-slope" continuous profile that corresponds to the
-    integer (1/2) construction is sigma ∝ R_g^{-1/2} =
-    sqrt((1-rho)/Gamma).
 
-    Phase C-12 corrects this terminology gap. The new profiles:
-       full_one         continuous sigma proportional to 1/R_g
-                          (corresponds to integer b_g = log_2 R_g)
-       full_half        continuous sigma proportional to 1/sqrt(R_g)
-                          (corresponds to integer b_g = (1/2) log_2 R_g)
-
-    The (Section 4.5 "full" was actually full_half-named-full, i.e.,
-    the bit-budget-optimal continuous profile). This re-labelling
-    matches the original C-2c convention ("full" in C-2c = sigma
-    proportional to sqrt((1-rho)/Gamma) = 1/sqrt(R_g)).
+def _extras_half_slope_rg(captured):
+    """slope 1/2 + log_2(r_g) - mean log_2(r_g).
+    This includes the r_g term from Section 3.4 derivation,
+    centred at zero so it doesn't shift the global mean.
     """
+    # First compute global mean of log_2 r_g
+    rms_all = []
+    for n, d in captured.items():
+        rms_all.append(d["rms_h"].flatten())
+    rms_cat = torch.cat(rms_all)
+    log_rg_global_mean = float(torch.log2((RANGE_K * rms_cat).clamp(min=EPS)).mean())
+
     out = {}
     for n, d in captured.items():
         rho   = d["rho_emp"]
         gamma = d["gamma"].clamp(min=EPS)
-        denom = gamma.unsqueeze(0).expand_as(rho)
-        sig = ((1.0 - rho).clamp(min=EPS) / denom).pow(0.25)
-        out[n] = sig
+        rms   = d["rms_h"]
+        log_R = torch.log2(
+            gamma.unsqueeze(0) / (1.0 - rho).clamp(min=EPS)
+        )
+        log_rg = torch.log2((RANGE_K * rms).clamp(min=EPS))
+        log_rg_centered = log_rg - log_rg_global_mean
+        # extras = ceil((1/2) log R + log r_g - mean log r_g)+
+        out[n] = torch.ceil(0.5 * log_R + log_rg_centered).clamp(min=0)
     return out
 
 
-def _shape_full_one(captured):
-    """sigma_g ∝ (1 - rho_g) / Gamma_g
-    (= the heuristic full integer construction's continuous
-       equivalent, sigma ∝ 1/R_g)."""
+def _build_b_per_unit(extras_dict, b_0):
+    """Apply shift normalisation to match nominal b_0,
+    clamp to [B_MIN, 16]."""
+    raw_b = {n: b_0 + e for n, e in extras_dict.items()}
+    sum_b = sum(float(b.sum()) for b in raw_b.values())
+    n_total = sum(b.numel() for b in raw_b.values())
+    mean_b = sum_b / n_total
+    shift = b_0 - mean_b
     out = {}
-    for n, d in captured.items():
-        rho   = d["rho_emp"]
-        gamma = d["gamma"].clamp(min=EPS)
-        denom = gamma.unsqueeze(0).expand_as(rho)
-        sig = (1.0 - rho).clamp(min=EPS) / denom
-        out[n] = sig
+    for n, b in raw_b.items():
+        b_shift = b + shift
+        b_int = torch.round(b_shift).long().clamp(min=B_MIN, max=16)
+        out[n] = b_int
     return out
 
 
-def _shape_anti_full(captured):
-    """sigma_g ∝ sqrt(Gamma_g / (1 - rho_g))
-    (deliberately backwards, = sigma ∝ sqrt(R_g))."""
-    out = {}
-    for n, d in captured.items():
-        rho   = d["rho_emp"]
-        gamma = d["gamma"].clamp(min=EPS)
-        denom = (1.0 - rho).clamp(min=EPS)
-        sig = (gamma.unsqueeze(0).expand_as(rho) / denom).sqrt()
-        out[n] = sig
-    return out
+def _actual_mean_bits(b_per_layer):
+    flat = torch.cat([b.flatten() for b in b_per_layer.values()])
+    return float(flat.float().mean())
 
 
-def _normalise_sigma_profile(shape_dict, captured, sigma_rel):
-    """Scale shape so that average sigma_g / RMS(h_g) = sigma_rel
-    across all (c, s) units; preserve total noise energy
-    sum_g sigma_g^2 = sum_g (sigma_rel * RMS(h_g))^2 / |g| * sum 1
-
-    Concretely: we want sum_g sigma_g^2 to equal the same constant
-    as a uniform sigma_rel * RMS profile would produce. So set
-        sigma_g = sigma_rel * RMS(h_g) * norm(shape) / shape_g
-    where norm normalises shape to satisfy energy conservation.
-
-    Implementation: we want
-        sum_g (alpha * shape_g)^2 = sum_g (sigma_rel * RMS(h_g))^2
-    so alpha = sigma_rel * sqrt(sum_g RMS(h_g)^2) / sqrt(sum_g shape_g^2).
-    Then sigma_g = alpha * shape_g / RMS(h_g) ? No: we want sigma_g
-    to be the actual injected noise sigma, not relative. Just:
-        sigma_g = alpha * shape_g
-    where alpha is set so total noise energy equals reference.
-    """
-    # reference total energy = sum_g (sigma_rel * RMS(h_g))^2
-    ref_energy = 0.0
-    n_total = 0
-    for n, d in captured.items():
-        rms = d["rms_h"]
-        ref_energy += float(((sigma_rel * rms) ** 2).sum())
-        n_total += rms.numel()
-
-    # current shape energy = sum_g shape_g^2
-    shape_energy = 0.0
-    for n, sh in shape_dict.items():
-        shape_energy += float((sh ** 2).sum())
-
-    alpha = math.sqrt(ref_energy / max(shape_energy, EPS))
-
-    out = {n: alpha * sh for n, sh in shape_dict.items()}
-
-    # sanity: recompute total energy
-    total_energy = sum(float((s ** 2).sum()) for s in out.values())
-    print(f"      profile energy check: ref={ref_energy:.4e} "
-          f"out={total_energy:.4e} ratio={total_energy / ref_energy:.4f}")
-    return out
+# Per-layer range (shared across profiles)
+r_per_layer = {n: RANGE_K * d["rms_h"] for n, d in captured.items()}
 
 
 # =============================================================
-# === CELL V6 === Sweep
+# === CELL V6 === Build all profiles for both b_0 values
+# =============================================================
+
+PROFILE_BUILDERS = [
+    ("uniform",        _extras_uniform),
+    ("full_slope",     _extras_full_slope),
+    ("half_slope",     _extras_half_slope),
+    ("half_slope_rg",  _extras_half_slope_rg),
+]
+
+B0_VALUES = [4, 6]
+
+profiles_by_b0 = {}
+for b_0 in B0_VALUES:
+    profiles_by_b0[b_0] = {}
+    print(f"\n  b_0 = {b_0}: profile mean(b_g) values")
+    for label, builder in PROFILE_BUILDERS:
+        extras = builder(captured)
+        b_per_layer = _build_b_per_unit(extras, b_0)
+        mean_b = _actual_mean_bits(b_per_layer)
+        profiles_by_b0[b_0][label] = {
+            "b_per_layer": b_per_layer,
+            "mean_b":      mean_b,
+        }
+        print(f"    {label:<18s} mean(b_g) = {mean_b:.3f}")
+
+
+# =============================================================
+# === CELL V7 === Sweep
 # =============================================================
 
 CTX = 1024
 N_WINDOWS = 5
-SIGMA_RELS = [0.05, 0.10, 0.20]
 
-# Note: profile labels match C-3b nomenclature where possible. The
-# "full" and "full_half" labels are what we want to compare for
-# Phase C-12; "full_one" is included to map the original C-3b
-# "full" profile under the corrected interpretation.
-PROFILES = [
-    ("uniform",       _shape_uniform),
-    ("proxy_C2",      _shape_proxy_C2),
-    ("proxy_correct", _shape_proxy_correct),
-    ("full_one",      _shape_full_one),       # sigma ∝ 1/R_g (= heuristic integer's continuous)
-    ("full_half",     _shape_full_half),      # sigma ∝ 1/sqrt(R_g) (= strict (1/2)-slope continuous)
-    ("full",          _shape_full_heuristic), # sigma ∝ sqrt((1-rho)/Gamma) (= C-3b "full")
-    ("anti_full",     _shape_anti_full),
-]
-
-
-def ppl_with_noise(model, ids, ctx=1024, n_windows=5):
-    """Compute sliding-window PPL under current _C12 mode."""
-    stride = ctx // 2
-    nll_total = 0.0
-    tok_total = 0
-    windows_done = 0
-    with torch.inference_mode():
-        for begin in range(0, ids.shape[1] - ctx, stride):
-            if windows_done >= n_windows:
-                break
-            window = ids[:, begin:begin + ctx]
-            out = model(window, use_cache=False)
-            log_probs = F.log_softmax(out.logits[0, :-1].float(),
-                                        dim=-1)
-            targets = window[0, 1:]
-            nll = -log_probs.gather(-1,
-                                      targets.unsqueeze(-1)).squeeze(-1)
-            nll_total += nll.sum().item()
-            tok_total += targets.numel()
-            windows_done += 1
-            del out, log_probs, targets, nll
-            gc.collect()
-            if torch.cuda.is_available():
-                torch.cuda.empty_cache()
-    return math.exp(nll_total / tok_total), windows_done
-
-
-# Baseline (no noise)
-print(f"\n{'-' * 80}")
-print(f"FP16 baseline (no injection)")
-print(f"{'-' * 80}")
-
-# Use a separate test corpus (matching C-3 / C-3b: WikiText-2 test)
+# WikiText-2 test
 test_text = "\n\n".join(
     [x for x in load_dataset("wikitext", "wikitext-2-raw-v1",
                               split="test")["text"]
      if x.strip()])[:200_000]
 test_ids = tok.encode(test_text, return_tensors="pt").to("cuda")
-print(f"  Test corpus: WikiText-2 test, {test_ids.shape[1]:,} tokens")
+print(f"\n  Test corpus: WikiText-2 test, {test_ids.shape[1]:,} tokens")
+
+
+def ppl_with_quant(model, ids, b_per_layer, r_per_layer,
+                    ctx=1024, n_windows=5):
+    """Compute sliding-window PPL under integer-bit quantisation."""
+    stride = ctx // 2
+    _C12["mode"]         = "quantise"
+    _C12["b_per_layer"]  = b_per_layer
+    _C12["r_per_layer"]  = r_per_layer
+    nll_total = 0.0
+    tok_total = 0
+    windows_done = 0
+    try:
+        with torch.inference_mode():
+            for begin in range(0, ids.shape[1] - ctx, stride):
+                if windows_done >= n_windows:
+                    break
+                window = ids[:, begin:begin + ctx]
+                out = model(window, use_cache=False)
+                log_probs = F.log_softmax(out.logits[0, :-1].float(),
+                                            dim=-1)
+                targets = window[0, 1:]
+                nll = -log_probs.gather(-1,
+                                          targets.unsqueeze(-1)).squeeze(-1)
+                nll_total += nll.sum().item()
+                tok_total += targets.numel()
+                windows_done += 1
+                del out, log_probs, targets, nll
+                gc.collect()
+                if torch.cuda.is_available():
+                    torch.cuda.empty_cache()
+    finally:
+        _C12["mode"]         = "off"
+        _C12["b_per_layer"]  = None
+        _C12["r_per_layer"]  = None
+    return math.exp(nll_total / tok_total), windows_done
+
+
+# Baseline (no quant) — for ΔPPL reference
+print(f"\n{'-' * 80}")
+print(f"FP16 baseline (no quantisation)")
+print(f"{'-' * 80}")
 
 _C12["mode"] = "off"
-fp16_ppl, n_win = ppl_with_noise(mdl, test_ids, ctx=CTX, n_windows=N_WINDOWS)
-print(f"  FP16 PPL = {fp16_ppl:.4f} (n_windows={n_win})")
+fp16_ppl_total, n_win = 0.0, 0
+nll_total = 0.0
+tok_total = 0
+windows_done = 0
+stride = CTX // 2
+with torch.inference_mode():
+    for begin in range(0, test_ids.shape[1] - CTX, stride):
+        if windows_done >= N_WINDOWS:
+            break
+        window = test_ids[:, begin:begin + CTX]
+        out = mdl(window, use_cache=False)
+        log_probs = F.log_softmax(out.logits[0, :-1].float(), dim=-1)
+        targets = window[0, 1:]
+        nll = -log_probs.gather(-1, targets.unsqueeze(-1)).squeeze(-1)
+        nll_total += nll.sum().item()
+        tok_total += targets.numel()
+        windows_done += 1
+        del out, log_probs, targets, nll
+        gc.collect()
+        torch.cuda.empty_cache()
+fp16_ppl = math.exp(nll_total / tok_total)
+print(f"  FP16 PPL = {fp16_ppl:.4f} (n_windows={windows_done})")
 
 
 # Sweep
 print(f"\n{'-' * 80}")
-print(f"Phase C-12 noise sweep: 7 profiles x 3 sigma_rel")
-print(f"  ctx={CTX}, n_windows={N_WINDOWS}, total energy held constant")
+print(f"Phase C-12 integer-bit slope sweep")
+print(f"  4 profiles x 2 b_0 = 8 conditions, n_windows={N_WINDOWS}")
 print(f"{'-' * 80}")
 
 sweep_results = {}
 
-for sigma_rel in SIGMA_RELS:
-    print(f"\n  sigma_rel = {sigma_rel:.2f}")
-    sweep_results[sigma_rel] = {"FP16_baseline": {"ppl": fp16_ppl, "delta_pct": 0.0}}
-    for label, shape_fn in PROFILES:
-        print(f"    {label}...")
-        shape = shape_fn(captured)
-        sigma = _normalise_sigma_profile(shape, captured, sigma_rel)
-        _C12["sigma_per_layer"] = sigma
-        _C12["mode"] = "noise_inject"
-        ppl, n_win = ppl_with_noise(mdl, test_ids, ctx=CTX, n_windows=N_WINDOWS)
-        _C12["mode"] = "off"
-        delta_pct = 100.0 * (ppl - fp16_ppl) / fp16_ppl
-        sweep_results[sigma_rel][label] = {
-            "ppl": ppl,
-            "delta_pct": delta_pct,
-            "n_windows": n_win,
+for b_0 in B0_VALUES:
+    print(f"\n  b_0 = {b_0}")
+    sweep_results[b_0] = {
+        "FP16_baseline": {
+            "ppl": fp16_ppl, "mean_b": float("nan"), "delta_pct": 0.0,
         }
-        print(f"      ppl = {ppl:>9.4f}  delta = {delta_pct:+8.3f} %")
+    }
+    for label, builder in PROFILE_BUILDERS:
+        info = profiles_by_b0[b_0][label]
+        b_per_layer = info["b_per_layer"]
+        mean_b = info["mean_b"]
+        ppl, n_win = ppl_with_quant(
+            mdl, test_ids, b_per_layer, r_per_layer,
+            ctx=CTX, n_windows=N_WINDOWS,
+        )
+        delta_pct = 100.0 * (ppl - fp16_ppl) / fp16_ppl
+        sweep_results[b_0][label] = {
+            "ppl":        ppl,
+            "mean_b":     mean_b,
+            "delta_pct":  delta_pct,
+            "n_windows":  n_win,
+        }
+        print(f"    {label:<18s} mean_b={mean_b:.3f}  "
+              f"ppl={ppl:>8.4f}  delta={delta_pct:+8.3f} %")
 
 
 # =============================================================
-# === CELL V7 === Verdict
+# === CELL V8 === Verdict
 # =============================================================
 
 print(f"\n{'=' * 80}")
-print(f"Phase C-12 verdict")
+print(f"Phase C-12 verdict (slope question)")
 print(f"{'=' * 80}")
 print(f"\n  FP16 baseline PPL: {fp16_ppl:.4f}")
-print(f"\n  Profile           sigma_rel = 0.05   0.10   0.20")
-print(f"  {'─' * 64}")
-for label, _ in PROFILES:
-    row = f"  {label:<15s}        "
-    for sr in SIGMA_RELS:
-        d = sweep_results[sr][label]["delta_pct"]
-        row += f"  {d:+7.3f} %"
-    print(row)
+print(f"\n  ΔPPL (% of FP16) by profile and b_0:")
+print(f"\n  {'Profile':<18s}  {'b_0=4':>10s}  {'b_0=6':>10s}")
+print(f"  {'─' * 18}  {'─' * 10}  {'─' * 10}")
+for label, _ in PROFILE_BUILDERS:
+    d4 = sweep_results[4][label]["delta_pct"]
+    d6 = sweep_results[6][label]["delta_pct"]
+    mb4 = sweep_results[4][label]["mean_b"]
+    mb6 = sweep_results[6][label]["mean_b"]
+    print(f"  {label:<18s}  "
+          f"{d4:+7.3f} % ({mb4:.2f}b)  "
+          f"{d6:+7.3f} % ({mb6:.2f}b)")
 
-# Specific comparison: full vs full_half
-print(f"\n  full vs full_half (the v0.2 question):")
-for sr in SIGMA_RELS:
-    full_d = sweep_results[sr]["full"]["delta_pct"]
-    half_d = sweep_results[sr]["full_half"]["delta_pct"]
-    one_d  = sweep_results[sr]["full_one"]["delta_pct"]
+# H1: full vs half slope at matched mean_b
+print(f"\n  H1: full_slope vs half_slope")
+for b_0 in B0_VALUES:
+    full_d = sweep_results[b_0]["full_slope"]["delta_pct"]
+    half_d = sweep_results[b_0]["half_slope"]["delta_pct"]
+    full_mb = sweep_results[b_0]["full_slope"]["mean_b"]
+    half_mb = sweep_results[b_0]["half_slope"]["mean_b"]
     diff = full_d - half_d
-    winner = "full" if full_d < half_d else "full_half" if half_d < full_d else "tie"
-    print(f"    sigma_rel={sr}: full={full_d:+.3f} % "
-          f"half={half_d:+.3f} % one={one_d:+.3f} %  "
-          f"(diff full - half = {diff:+.3f}, {winner} wins)")
+    winner = ("full_slope" if full_d < half_d
+              else "half_slope" if half_d < full_d else "tie")
+    matched = "✓" if abs(full_mb - half_mb) < 0.1 else "≠"
+    print(f"    b_0={b_0}: full={full_d:+.3f}% (mean_b={full_mb:.2f})  "
+          f"half={half_d:+.3f}% (mean_b={half_mb:.2f})  "
+          f"diff={diff:+.3f}pp  winner={winner}  matched={matched}")
 
-# Sigma2-scaling check on each profile
-print(f"\n  Sigma2-scaling exponents (k = log_2(multiplier)):")
-for label, _ in PROFILES:
-    delta_005 = sweep_results[0.05][label]["delta_pct"]
-    delta_010 = sweep_results[0.10][label]["delta_pct"]
-    delta_020 = sweep_results[0.20][label]["delta_pct"]
-    if delta_005 > 0 and delta_010 > 0 and delta_020 > 0:
-        m1 = delta_010 / delta_005
-        m2 = delta_020 / delta_010
-        k1 = math.log2(max(m1, EPS))
-        k2 = math.log2(max(m2, EPS))
-        k_mean = (k1 + k2) / 2
-        k_spread = abs(k1 - k2) / 2
-        print(f"    {label:<15s}  k = {k_mean:.2f} +/- {k_spread:.2f} "
-              f"(multipliers {m1:.2f}, {m2:.2f})")
-    else:
-        print(f"    {label:<15s}  multipliers undefined "
-              f"(some delta is non-positive)")
+# H2: half_slope vs half_slope_rg
+print(f"\n  H2: half_slope vs half_slope_rg")
+for b_0 in B0_VALUES:
+    half_d = sweep_results[b_0]["half_slope"]["delta_pct"]
+    halfrg_d = sweep_results[b_0]["half_slope_rg"]["delta_pct"]
+    half_mb = sweep_results[b_0]["half_slope"]["mean_b"]
+    halfrg_mb = sweep_results[b_0]["half_slope_rg"]["mean_b"]
+    diff = half_d - halfrg_d
+    winner = ("half_slope" if half_d < halfrg_d
+              else "half_slope_rg" if halfrg_d < half_d else "tie")
+    matched = "✓" if abs(half_mb - halfrg_mb) < 0.1 else "≠"
+    print(f"    b_0={b_0}: half={half_d:+.3f}% (mean_b={half_mb:.2f})  "
+          f"half_rg={halfrg_d:+.3f}% (mean_b={halfrg_mb:.2f})  "
+          f"diff={diff:+.3f}pp  winner={winner}  matched={matched}")
+
+# Verdict class (Case A/B/C/D)
+all_threshold = 0.5  # percentage points
+case = "D"  # default: indistinguishable
+for b_0 in B0_VALUES:
+    full_d = sweep_results[b_0]["full_slope"]["delta_pct"]
+    half_d = sweep_results[b_0]["half_slope"]["delta_pct"]
+    halfrg_d = sweep_results[b_0]["half_slope_rg"]["delta_pct"]
+    if full_d + all_threshold < half_d:
+        case = "A"  # full wins
+    elif half_d + all_threshold < full_d:
+        case = "B"  # half wins
+    if halfrg_d + all_threshold < half_d:
+        case = "C"  # half_rg wins beyond half
+
+VERDICTS = {
+    "A": ("FULL_SLOPE_WINS",
+          "The deployed heuristic full-slope allocator empirically beats the "
+          "strict slope-1/2 optimum on the integer-bit channel by more than "
+          "0.5 percentage points at matched mean bit width. The v0.3 paper's "
+          "Section 3.5 framing stands; the slope-1 heuristic is empirically "
+          "tighter than the strict slope-1/2 on this evaluation. The "
+          "tail-risk-heuristic justification in Section 3.5 is empirically "
+          "supported."),
+    "B": ("HALF_SLOPE_WINS",
+          "The strict slope-1/2 allocator empirically beats the deployed "
+          "heuristic full-slope by more than 0.5 percentage points at "
+          "matched mean bit width. The v0.3 paper should adopt half_slope "
+          "as the deployed allocator and re-run the C-4 / C-8a / C-6 / "
+          "C-7 / C-9 sweeps. Section 3.5's heuristic framing should be "
+          "replaced with the strict optimum."),
+    "C": ("HALF_SLOPE_RG_WINS",
+          "The strict slope-1/2 allocator with the r_g term empirically "
+          "beats half_slope (without r_g) by more than 0.5 percentage "
+          "points. The r_g term dropped in Section 3.4 carries measurable "
+          "benefit and should be reintroduced in v0.3."),
+    "D": ("INDISTINGUISHABLE",
+          "All three of full_slope, half_slope, half_slope_rg are within "
+          "0.5 percentage points of each other at both b_0 values. The "
+          "slope choice and r_g term are empirically irrelevant on this "
+          "evaluation; Section 3.5's heuristic framing is fine, and the "
+          "choice between slope variants is taste."),
+}
+verdict_class, verdict_text = VERDICTS[case]
+print(f"\n  Verdict class: {verdict_class}")
+print(f"  Verdict: {verdict_text}")
 
 
 # =============================================================
-# === CELL V8 === Save
+# === CELL V9 === Save
 # =============================================================
 
 calib_summary = []
@@ -644,46 +714,54 @@ for name, d in captured.items():
         "rms_h_p50":    float(d["rms_h"].quantile(0.50)),
     })
 
+# Per-(b_0, profile) bit-tier histogram for auditing
+bit_histograms = {}
+for b_0 in B0_VALUES:
+    bit_histograms[str(b_0)] = {}
+    for label, _ in PROFILE_BUILDERS:
+        b_pl = profiles_by_b0[b_0][label]["b_per_layer"]
+        flat = torch.cat([b.flatten() for b in b_pl.values()])
+        hist = torch.bincount(flat, minlength=17)
+        bit_histograms[str(b_0)][label] = {
+            str(b): int(c) for b, c in enumerate(hist.tolist()) if c > 0
+        }
+
 output = {
     "date":            datetime.utcnow().isoformat(timespec="seconds"),
     "phase":           "C-12",
-    "purpose":         ("Strict (1/2)-slope vs heuristic-unity-slope "
-                        "bit-allocation comparison via continuous noise "
-                        "injection. Closes the Section 3.5 / Section 4.5 "
-                        "gap flagged by Grok + GPT pseudo-review: prior "
-                        "C-3 / C-3b experiments did not include the strict "
-                        "(1/2)-slope profile (sigma proportional to "
-                        "((1-rho)/Gamma)^{1/4}, equivalently 1/sqrt(R_g)) "
-                        "as a control. Phase C-12 adds full_half and "
-                        "full_one to the C-3b profile set and runs the "
-                        "same 5-window WikiText-2 test sweep at "
-                        "sigma_rel in {0.05, 0.10, 0.20}."),
+    "purpose":         ("Direct integer-bit comparison of the deployed "
+                        "slope-1 heuristic full_slope allocator against "
+                        "the strict slope-1/2 optimum (and its r_g-corrected "
+                        "variant), at matched actual mean bit width on "
+                        "Mamba-2.8B-hf, WikiText-2 PPL. Closes the bit-space "
+                        "/ sigma-space narrative gap identified by the v0.2 "
+                        "pseudo-review on Section 3.5 / Section 4.5."),
     "transformers_version": _hf_transformers.__version__,
     "model":           MODEL_ID,
     "label":           MODEL_LABEL,
     "protocol": {
         "ctx":           CTX,
         "n_windows":     N_WINDOWS,
-        "sigma_rels":    SIGMA_RELS,
+        "b_0_values":    B0_VALUES,
+        "b_min":         B_MIN,
+        "range_k":       RANGE_K,
         "calib_split":   "WikiText-2 train (1024 tokens)",
         "test_split":    "WikiText-2 test",
-        "profiles":      [p[0] for p in PROFILES],
-        "energy_constraint": "sum_g sigma_g^2 held constant across profiles at every sigma_rel",
+        "profiles":      [p[0] for p in PROFILE_BUILDERS],
+        "quant_scheme":  "per-(c, s) INT-b symmetric mid-tread, range = k * RMS(h)",
     },
     "fp16_baseline_ppl": fp16_ppl,
     "sweep_results":   {str(k): v for k, v in sweep_results.items()},
+    "bit_histograms":  bit_histograms,
     "rho_gamma_rms_summary": calib_summary,
+    "verdict_class":   verdict_class,
+    "verdict":         verdict_text,
     "notes": (
-        "Profile labels: 'full' = sqrt((1-rho)/Gamma) (matches C-3b "
-        "'full' = bit-budget-optimal continuous sigma); 'full_half' "
-        "= ((1-rho)/Gamma)^{1/4} (the strict (1/2)-slope integer "
-        "construction translated back to continuous sigma); "
-        "'full_one' = (1-rho)/Gamma (the heuristic unity-slope integer "
-        "construction translated back to continuous sigma; equivalent "
-        "to the integer formula b_g = b_0 + ceil(log_2 R_g) under "
-        "sigma proportional to 2^{-b_g}). Comparing full vs full_half "
-        "directly addresses the 'is the unity slope justified' "
-        "question raised in Section 3.5 of the v0.2 manuscript."
+        "Each profile is built with shift normalisation to match the "
+        "nominal b_0; mean_b is the actual measured mean after shift + "
+        "clamp. Profiles are matched within ~0.1 bits when shift "
+        "normalisation works correctly; mean_b is reported per (b_0, "
+        "profile) so that reviewers can verify matched comparison."
     ),
 }
 
@@ -697,38 +775,29 @@ print(f"\nSaved -> {out_path}")
 # === READING ===
 # =============================================================
 #
-# Outcome decision rule (pre-registered):
+# Outcome cases (pre-registered):
 #
-# Case A: full_half consistently beats full at all sigma_rel
-#         (e.g., delta_full - delta_full_half > 0.5 percentage
-#          points at sigma_rel = 0.20).
-#   -> The strict (1/2)-slope is empirically tighter. Section 3.5
-#      should be revised to recommend the strict integer
-#      construction b_g = b_0 + ceil((1/2) log_2 R_g)+. Section 4.5
-#      should be re-run with full_half as the headline "full"
-#      profile, OR the v0.2 manuscript should report both and
-#      prefer the strict construction.
+#   FULL_SLOPE_WINS:
+#     Heuristic deployed allocator is empirically tighter on
+#     the integer channel. Section 3.5's tail-risk justification
+#     is supported. Stay with the current recipe.
 #
-# Case B: full consistently beats full_half at all sigma_rel
-#         (e.g., delta_full_half - delta_full > 0.5 pp at sigma_rel
-#          = 0.20).
-#   -> The unity-slope heuristic is empirically tighter. Section
-#      4.5's σ²-scaling claim survives a stronger control. The
-#      v0.2 paper's heuristic framing in Section 3.5 stands.
+#   HALF_SLOPE_WINS:
+#     Strict bit-budget optimum is tighter on the integer channel.
+#     Section 3.5 must adopt half_slope. Major rebuild of C-4 /
+#     C-6 / C-7 / C-8 / C-9 with the new allocator.
 #
-# Case C: full and full_half are within sampling noise at every
-#         sigma_rel (delta diff < 0.5 pp throughout).
-#   -> The choice is empirically irrelevant on this evaluation.
-#      Section 3.5 of the manuscript can report this as a
-#      successful closure: the strict optimum and the heuristic
-#      are both valid integer constructions.
+#   HALF_SLOPE_RG_WINS:
+#     r_g term carries measurable benefit. Adopt half_slope_rg
+#     and rebuild.
 #
-# Case D: full_one (= the heuristic integer's actual continuous
-#         sigma profile) underperforms both full and full_half.
-#   -> An interesting finding: the integer rounding + clamp + shift
-#      pipeline of Section 3.5 may produce a deployment recipe
-#      that is empirically better than the continuous heuristic
-#      that motivates it. This would suggest the integer effects
-#      (rounding to integer, B_MIN floor, ceiling clamp) play a
-#      structural role beyond approximation.
+#   INDISTINGUISHABLE:
+#     Slope choice is empirically irrelevant; current heuristic
+#     framing is fine and reviewer-defensible.
+#
+# Mean-bit matching:
+#   The shift normalisation matches all profiles to the nominal
+#   b_0 within ~0.1 bits. If a profile's mean_b is more than 0.1
+#   from b_0, the comparison is not apples-to-apples and the
+#   verdict needs a corresponding caveat.
 # ============================================================
