@@ -26,7 +26,7 @@ CONDITIONS = [
     ("FP16_orig",        "FP16 unquantised"),
     ("BF16_orig",        "BF16 unquantised"),
     ("FP16_clip_only",   r"FP16 clip-only (calibrated $r_g$ clamp, no quant)"),
-    ("FP16_full",        r"FP16 full INT6 (the §6 recipe)"),
+    ("FP16_full",        r"FP16 full_slope INT6 (Realisation-B proxy)"),
 ]
 
 
