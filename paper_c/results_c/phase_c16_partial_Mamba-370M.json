@@ -1,0 +1,394 @@
+{
+  "model_id": "state-spaces/mamba-370m-hf",
+  "model_label": "Mamba-370M",
+  "n_mixers": 48,
+  "fp16_baseline_ppl": 15.710788034472403,
+  "sweep": {
+    "FP16_baseline": {
+      "ppl": 15.710788034472403,
+      "n_windows": 5,
+      "achieved_mean": null,
+      "shift": null,
+      "delta_pct": 0.0
+    },
+    "b4_uniform": {
+      "b_0": 4,
+      "profile": "uniform",
+      "ppl": 36.359504698771715,
+      "delta_pct": 131.4301779070036,
+      "n_windows": 5,
+      "achieved_mean": 4.0,
+      "shift": 0.0,
+      "iterations": 1,
+      "diff_target": 0.0
+    },
+    "b4_full_slope": {
+      "b_0": 4,
+      "profile": "full_slope",
+      "ppl": 19.786871128788945,
+      "delta_pct": 25.944485313994786,
+      "n_windows": 5,
+      "achieved_mean": 3.9321231842041016,
+      "shift": -2.5000003576278687,
+      "iterations": 80,
+      "diff_target": 0.06787681579589844
+    },
+    "b4_half_slope": {
+      "b_0": 4,
+      "profile": "half_slope",
+      "ppl": 19.647281740193204,
+      "delta_pct": 25.055991444117247,
+      "n_windows": 5,
+      "achieved_mean": 4.199141979217529,
+      "shift": -1.4999998211860657,
+      "iterations": 80,
+      "diff_target": 0.1991419792175293
+    },
+    "b4_half_slope_rg": {
+      "b_0": 4,
+      "profile": "half_slope_rg",
+      "ppl": 17.003478813408034,
+      "delta_pct": 8.228045443037141,
+      "n_windows": 5,
+      "achieved_mean": 4.034116744995117,
+      "shift": -1.5000002980232239,
+      "iterations": 80,
+      "diff_target": 0.03411674499511719
+    },
+    "b6_uniform": {
+      "b_0": 6,
+      "profile": "uniform",
+      "ppl": 19.148076702812247,
+      "delta_pct": 21.878524876013802,
+      "n_windows": 5,
+      "achieved_mean": 6.0,
+      "shift": 0.0,
+      "iterations": 1,
+      "diff_target": 0.0
+    },
+    "b6_full_slope": {
+      "b_0": 6,
+      "profile": "full_slope",
+      "ppl": 16.389687695895386,
+      "delta_pct": 4.321232390974601,
+      "n_windows": 5,
+      "achieved_mean": 6.124095916748047,
+      "shift": -2.5000001192092896,
+      "iterations": 80,
+      "diff_target": 0.12409591674804688
+    },
+    "b6_half_slope": {
+      "b_0": 6,
+      "profile": "half_slope",
+      "ppl": 16.65651794413924,
+      "delta_pct": 6.019621088335787,
+      "n_windows": 5,
+      "achieved_mean": 5.802359104156494,
+      "shift": -1.4999997019767761,
+      "iterations": 80,
+      "diff_target": 0.19764089584350586
+    },
+    "b6_half_slope_rg": {
+      "b_0": 6,
+      "profile": "half_slope_rg",
+      "ppl": 16.267690563259983,
+      "delta_pct": 3.5447141643412907,
+      "n_windows": 5,
+      "achieved_mean": 6.163175106048584,
+      "shift": -1.5000002980232239,
+      "iterations": 80,
+      "diff_target": 0.16317510604858398
+    }
+  },
+  "calib_summary": [
+    {
+      "layer_name": "backbone.layers.0.mixer",
+      "rho_p50": 0.29222723841667175,
+      "gamma_p50": 0.17333197593688965,
+      "rms_h_p50": 0.0037430671509355307
+    },
+    {
+      "layer_name": "backbone.layers.1.mixer",
+      "rho_p50": 0.2540494203567505,
+      "gamma_p50": 0.20046710968017578,
+      "rms_h_p50": 0.0033617783337831497
+    },
+    {
+      "layer_name": "backbone.layers.2.mixer",
+      "rho_p50": 0.32864218950271606,
+      "gamma_p50": 0.23843497037887573,
+      "rms_h_p50": 0.0032103238627314568
+    },
+    {
+      "layer_name": "backbone.layers.3.mixer",
+      "rho_p50": 0.7699945569038391,
+      "gamma_p50": 0.23250502347946167,
+      "rms_h_p50": 0.0016110970173031092
+    },
+    {
+      "layer_name": "backbone.layers.4.mixer",
+      "rho_p50": 0.3995295763015747,
+      "gamma_p50": 0.11950471252202988,
+      "rms_h_p50": 0.001970310229808092
+    },
+    {
+      "layer_name": "backbone.layers.5.mixer",
+      "rho_p50": 0.4125041365623474,
+      "gamma_p50": 0.2291046530008316,
+      "rms_h_p50": 0.002101144753396511
+    },
+    {
+      "layer_name": "backbone.layers.6.mixer",
+      "rho_p50": 0.5391461849212646,
+      "gamma_p50": 0.30373111367225647,
+      "rms_h_p50": 0.002577494829893112
+    },
+    {
+      "layer_name": "backbone.layers.7.mixer",
+      "rho_p50": 0.4543165862560272,
+      "gamma_p50": 0.19432103633880615,
+      "rms_h_p50": 0.002827524207532406
+    },
+    {
+      "layer_name": "backbone.layers.8.mixer",
+      "rho_p50": 0.5427622199058533,
+      "gamma_p50": 0.1683582365512848,
+      "rms_h_p50": 0.002434940543025732
+    },
+    {
+      "layer_name": "backbone.layers.9.mixer",
+      "rho_p50": 0.49763166904449463,
+      "gamma_p50": 0.20881645381450653,
+      "rms_h_p50": 0.002980343997478485
+    },
+    {
+      "layer_name": "backbone.layers.10.mixer",
+      "rho_p50": 0.4996757507324219,
+      "gamma_p50": 0.15778130292892456,
+      "rms_h_p50": 0.0033221403136849403
+    },
+    {
+      "layer_name": "backbone.layers.11.mixer",
+      "rho_p50": 0.627508282661438,
+      "gamma_p50": 0.20295105874538422,
+      "rms_h_p50": 0.0033609168604016304
+    },
+    {
+      "layer_name": "backbone.layers.12.mixer",
+      "rho_p50": 0.5242075324058533,
+      "gamma_p50": 0.21844351291656494,
+      "rms_h_p50": 0.003644687356427312
+    },
+    {
+      "layer_name": "backbone.layers.13.mixer",
+      "rho_p50": 0.5666735172271729,
+      "gamma_p50": 0.18486183881759644,
+      "rms_h_p50": 0.004814590327441692
+    },
+    {
+      "layer_name": "backbone.layers.14.mixer",
+      "rho_p50": 0.5832557082176208,
+      "gamma_p50": 0.17457126080989838,
+      "rms_h_p50": 0.004840273410081863
+    },
+    {
+      "layer_name": "backbone.layers.15.mixer",
+      "rho_p50": 0.5951521396636963,
+      "gamma_p50": 0.2853116989135742,
+      "rms_h_p50": 0.0044346461072564125
+    },
+    {
+      "layer_name": "backbone.layers.16.mixer",
+      "rho_p50": 0.6925230026245117,
+      "gamma_p50": 0.2179657220840454,
+      "rms_h_p50": 0.007027503568679094
+    },
+    {
+      "layer_name": "backbone.layers.17.mixer",
+      "rho_p50": 0.7715466022491455,
+      "gamma_p50": 0.13957728445529938,
+      "rms_h_p50": 0.0048851873725652695
+    },
+    {
+      "layer_name": "backbone.layers.18.mixer",
+      "rho_p50": 0.5702041387557983,
+      "gamma_p50": 0.25298967957496643,
+      "rms_h_p50": 0.006825371645390987
+    },
+    {
+      "layer_name": "backbone.layers.19.mixer",
+      "rho_p50": 0.6141971349716187,
+      "gamma_p50": 0.2474525421857834,
+      "rms_h_p50": 0.0032236971892416477
+    },
+    {
+      "layer_name": "backbone.layers.20.mixer",
+      "rho_p50": 0.9444117546081543,
+      "gamma_p50": 0.35227513313293457,
+      "rms_h_p50": 0.004818016663193703
+    },
+    {
+      "layer_name": "backbone.layers.21.mixer",
+      "rho_p50": 0.6489399671554565,
+      "gamma_p50": 0.411857932806015,
+      "rms_h_p50": 0.009825451299548149
+    },
+    {
+      "layer_name": "backbone.layers.22.mixer",
+      "rho_p50": 0.6657580137252808,
+      "gamma_p50": 0.41069793701171875,
+      "rms_h_p50": 0.009189930744469166
+    },
+    {
+      "layer_name": "backbone.layers.23.mixer",
+      "rho_p50": 0.8971706032752991,
+      "gamma_p50": 0.37279289960861206,
+      "rms_h_p50": 0.008411416783928871
+    },
+    {
+      "layer_name": "backbone.layers.24.mixer",
+      "rho_p50": 0.7643272876739502,
+      "gamma_p50": 0.38450586795806885,
+      "rms_h_p50": 0.012243623845279217
+    },
+    {
+      "layer_name": "backbone.layers.25.mixer",
+      "rho_p50": 0.9947049617767334,
+      "gamma_p50": 0.5871529579162598,
+      "rms_h_p50": 0.0038473140448331833
+    },
+    {
+      "layer_name": "backbone.layers.26.mixer",
+      "rho_p50": 0.7452487349510193,
+      "gamma_p50": 0.6254136562347412,
+      "rms_h_p50": 0.010766698978841305
+    },
+    {
+      "layer_name": "backbone.layers.27.mixer",
+      "rho_p50": 0.8433173894882202,
+      "gamma_p50": 0.5038554072380066,
+      "rms_h_p50": 0.010397209785878658
+    },
+    {
+      "layer_name": "backbone.layers.28.mixer",
+      "rho_p50": 0.9871704578399658,
+      "gamma_p50": 0.6166989803314209,
+      "rms_h_p50": 0.004654279910027981
+    },
+    {
+      "layer_name": "backbone.layers.29.mixer",
+      "rho_p50": 0.7502890229225159,
+      "gamma_p50": 0.5775525569915771,
+      "rms_h_p50": 0.012568565085530281
+    },
+    {
+      "layer_name": "backbone.layers.30.mixer",
+      "rho_p50": 0.9519366025924683,
+      "gamma_p50": 0.38058093190193176,
+      "rms_h_p50": 0.004764885175973177
+    },
+    {
+      "layer_name": "backbone.layers.31.mixer",
+      "rho_p50": 0.9989864230155945,
+      "gamma_p50": 1.0358448028564453,
+      "rms_h_p50": 0.003249740693718195
+    },
+    {
+      "layer_name": "backbone.layers.32.mixer",
+      "rho_p50": 0.9975773692131042,
+      "gamma_p50": 0.5600609183311462,
+      "rms_h_p50": 0.004679459612816572
+    },
+    {
+      "layer_name": "backbone.layers.33.mixer",
+      "rho_p50": 0.585708498954773,
+      "gamma_p50": 0.5335764288902283,
+      "rms_h_p50": 0.011852407827973366
+    },
+    {
+      "layer_name": "backbone.layers.34.mixer",
+      "rho_p50": 0.9990180730819702,
+      "gamma_p50": 0.6418118476867676,
+      "rms_h_p50": 0.0039949482306838036
+    },
+    {
+      "layer_name": "backbone.layers.35.mixer",
+      "rho_p50": 0.7972327470779419,
+      "gamma_p50": 0.5337748527526855,
+      "rms_h_p50": 0.005392594262957573
+    },
+    {
+      "layer_name": "backbone.layers.36.mixer",
+      "rho_p50": 0.6490583419799805,
+      "gamma_p50": 0.4657536745071411,
+      "rms_h_p50": 0.005532513838261366
+    },
+    {
+      "layer_name": "backbone.layers.37.mixer",
+      "rho_p50": 0.5958179235458374,
+      "gamma_p50": 0.6121035814285278,
+      "rms_h_p50": 0.015184449031949043
+    },
+    {
+      "layer_name": "backbone.layers.38.mixer",
+      "rho_p50": 0.5618076920509338,
+      "gamma_p50": 0.5127654671669006,
+      "rms_h_p50": 0.012636478990316391
+    },
+    {
+      "layer_name": "backbone.layers.39.mixer",
+      "rho_p50": 0.9945260286331177,
+      "gamma_p50": 1.2583823204040527,
+      "rms_h_p50": 0.001469514798372984
+    },
+    {
+      "layer_name": "backbone.layers.40.mixer",
+      "rho_p50": 0.4201470613479614,
+      "gamma_p50": 0.7222956418991089,
+      "rms_h_p50": 0.013993864879012108
+    },
+    {
+      "layer_name": "backbone.layers.41.mixer",
+      "rho_p50": 0.24140247702598572,
+      "gamma_p50": 0.48403096199035645,
+      "rms_h_p50": 0.01720292866230011
+    },
+    {
+      "layer_name": "backbone.layers.42.mixer",
+      "rho_p50": 0.15281721949577332,
+      "gamma_p50": 0.5930993556976318,
+      "rms_h_p50": 0.013683106750249863
+    },
+    {
+      "layer_name": "backbone.layers.43.mixer",
+      "rho_p50": 0.22306111454963684,
+      "gamma_p50": 0.5678203105926514,
+      "rms_h_p50": 0.014300767332315445
+    },
+    {
+      "layer_name": "backbone.layers.44.mixer",
+      "rho_p50": 0.27064764499664307,
+      "gamma_p50": 0.6320346593856812,
+      "rms_h_p50": 0.016953924670815468
+    },
+    {
+      "layer_name": "backbone.layers.45.mixer",
+      "rho_p50": 0.27376532554626465,
+      "gamma_p50": 0.9622565507888794,
+      "rms_h_p50": 0.016184967011213303
+    },
+    {
+      "layer_name": "backbone.layers.46.mixer",
+      "rho_p50": 0.2592718005180359,
+      "gamma_p50": 1.0522176027297974,
+      "rms_h_p50": 0.01914224401116371
+    },
+    {
+      "layer_name": "backbone.layers.47.mixer",
+      "rho_p50": 0.2371951937675476,
+      "gamma_p50": 0.4679046869277954,
+      "rms_h_p50": 0.024432988837361336
+    }
+  ],
+  "date": "2026-05-01T03:04:09"
+}
