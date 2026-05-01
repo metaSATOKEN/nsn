@@ -1,10 +1,10 @@
-# Lyapunov-Aware Bit Allocation for State-Space Model Quantisation
+---
+title: "Lyapunov-Aware Bit Allocation for State-Space Model Quantisation"
+author: "Kentaro Sato`\\\\`{=latex} `\\texttt{info@metaclan.jp}`{=latex}"
+date: "2026-05-01"
+---
 
-**Kentaro Sato**
-Independent Researcher
-`info@metaclan.jp` · `@RecyncAI`
-
-*Draft v0.9.3 · 2026-05-01*
+*Preprint, draft v0.9.4 (Zenodo-first release; arXiv posting pending endorsement).*
 
 ---
 
@@ -889,4 +889,4 @@ Zuo, J., Velikanov, M., Rhaiem, D. E., Chahed, I., Belkada, Y., Kunsch, G., and 
 
 ---
 
-*End of manuscript draft v0.9.3, 2026-05-01. Eight numbered sections plus references, six figures (Fig 1 to Fig 6) embedded inline. The Lyapunov-vs-range factorisation on Mamba-2.8B-hf (§6.8) is the closing experiment of the present manuscript. The long-context PG-19 re-evaluation under the recommended recipe and the cross-lineage re-evaluation are identified as refinement directions in §8.3. Figure scripts and source JSONs are committed under `paper_c/figures_c/` and `paper_c/results_c/` respectively, so each figure is fully reproducible from the recorded data. The PDF in `paper_c/paper_c.pdf` is built from this markdown via Pandoc + xelatex with STIX Two fonts; `make pdf` from `paper_c/` regenerates it.*
+*End of manuscript draft v0.9.4, 2026-05-01. Eight numbered sections plus references, six figures (Fig 1 to Fig 6) embedded inline. The Lyapunov-vs-range factorisation on Mamba-2.8B-hf (§6.8) is the closing experiment of the present manuscript. The long-context PG-19 re-evaluation under the recommended recipe and the cross-lineage re-evaluation are identified as refinement directions in §8.3. Figure scripts and source JSONs are committed under `paper_c/figures_c/` and `paper_c/results_c/` respectively, so each figure is fully reproducible from the recorded data. The PDF in `paper_c/paper_c.pdf` is built from this markdown via Pandoc + xelatex; `make pdf` from `paper_c/` regenerates it.*

@@ -8,19 +8,21 @@
 #   make clean      # remove build artefacts (paper_c.pdf only)
 #   make distclean  # also wipe rendered figure PDF/PNG
 #
+# Style is matched to paper/nsn.pdf (the modeq Paper B preprint):
+# Times New Roman body, Menlo monospace, 0.9 in margins, no TOC.
+#
 # Requirements:
 #   pandoc      (Homebrew: brew install pandoc)
 #   xelatex     (TinyTex: ~/Library/TinyTeX/bin/universal-darwin/xelatex,
 #                or full TeX Live)
-#   STIX Two Text + STIX Two Math (preinstalled on macOS Sonoma+ /
-#                Ventura, otherwise install via Font Book)
+#   Times New Roman + Menlo (preinstalled on macOS)
 #   python3 + matplotlib + numpy   (for figures, see figures_c/Makefile)
 
 PANDOC      := pandoc
 PDF_ENGINE  := xelatex
-MAINFONT    := STIX Two Text
-MATHFONT    := STIX Two Math
+MAINFONT    := Times New Roman
 MONOFONT    := Menlo
+MARGIN      := 0.9in
 
 PAPER_MD    := paper_c.md
 PAPER_PDF   := paper_c.pdf
@@ -36,11 +38,9 @@ $(PAPER_PDF): $(PAPER_MD) $(wildcard $(FIG_DIR)/*.pdf)
 	$(PANDOC) $(PAPER_MD) -o $(PAPER_PDF) \
 	    --pdf-engine=$(PDF_ENGINE) \
 	    --resource-path=. \
-	    -V geometry:margin=1in \
+	    -V geometry:margin=$(MARGIN) \
 	    -V mainfont="$(MAINFONT)" \
-	    -V mathfont="$(MATHFONT)" \
-	    -V monofont="$(MONOFONT)" \
-	    --toc
+	    -V monofont="$(MONOFONT)"
 
 figures:
 	$(MAKE) -C $(FIG_DIR) all
