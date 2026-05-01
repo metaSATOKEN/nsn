@@ -58,6 +58,7 @@ htmlcov/
 !paper/*.pdf
 !figures/*.pdf
 !paper_c/figures_c/*.pdf
+!paper_c/paper_c.pdf
 
 # pandoc latex build artifacts (keep .tex, drop aux / log)
 paper/*.aux
