@@ -4,7 +4,7 @@
 Independent Researcher
 `info@metaclan.jp` · `@RecyncAI`
 
-*Draft v0.9.1 · 2026-05-01*
+*Draft v0.9.2 · 2026-05-01*
 
 ---
 
@@ -311,7 +311,9 @@ The empirical long-memory tail ($\rho_g > 0.95$) covers $18.6 \,\%$ of the 5,242
 
 The empirical $\rho_g$ distribution also exhibits strong per-layer heterogeneity. Median $\rho_g$ across the 64 layers traces a U-shape: short-memory layers at the input end ($\rho_g$ p50 $\approx 0.60$ at layer 0), a long-memory core in the middle ($\rho_g$ p50 $\approx 0.88$ at layers 32 and 40), and short-memory layers again at the output end ($\rho_g$ p50 $\approx 0.39$ at layer 56). We do not in this paper attempt to interpret what each layer encodes in linguistic terms; we report the U-shape as an empirical structural fact and note that it motivates a per-layer baseline term in the bit allocator, which the shift normalisation of §3.5 implicitly provides.
 
-The conclusion of §4.1 is that the empirical, input-dependent $\rho_g$ is the right input to the bit allocator, and that the long-memory minority is sufficiently large (in the hundreds of thousands of state units, not a handful) that protecting it with extra bits is the central design challenge.
+The conclusion of §4.1 is that the empirical, input-dependent $\rho_g$ is the right input to the bit allocator, and that the long-memory minority is sufficiently large (in the hundreds of thousands of state units, not a handful) that protecting it with extra bits is the central design challenge. Figure 1(a) summarises the empirical $\rho_g$ distribution; Figure 1(b) anticipates the output-coupling heterogeneity discussed next.
+
+![**Figure 1.** Why a uniform bit budget is the wrong default for SSM state quantisation, on Mamba-2.8B-hf calibrated from 1024 tokens of WikiText-2 train. **(a)** Empirical $\rho_g$ distribution across all 5,242,880 per-$(c, s)$ state units, in six $\rho_g$ buckets. The two right-most buckets contain the long-memory tail ($\rho_g \geq 0.99$, $8.87 \,\%$ of state units) where the $(1 - \rho_g)^{-1}$ amplification factor is at least two orders of magnitude. **(b)** Per-layer output-coupling heterogeneity: each bar is the within-layer $\Gamma_\mathrm{max} / \Gamma_\mathrm{min}$ ratio for one of the 64 Mamba mixers, sorted by ratio. The median is $478\times$; the right-tail layers reach $9{,}144\times$. The combined per-$(c, s)$ surface $R_g = \Gamma_g / (1 - \rho_g)$ inherits both heavy tails and motivates the per-$(c, s)$ variable bit width of §3.](figures_c/fig01_R_distribution.pdf){#fig:R_distribution width=100%}
 
 ### 4.2 Output-Coupling Extraction and the $R_g$ Surface
 
@@ -373,7 +375,9 @@ The strict ordering full < proxy_correct < proxy_C2 < anti_full < uniform holds 
 
 The uniform allocator is already $4.7\times$ worse than anti_full at $\sigma_\mathrm{rel} = 0.05$, where total relative noise is mild. The IIR-accumulation pathology is therefore constitutional, not amplitude-driven: uniform allocation corrupts long-memory pathways in concert at any noise level, and the FIR baseline (uniform allocation works fine on transformer attention) does not transfer to IIR substrates.
 
-The $\sigma^2$-scaling test is the strongest theoretical-side confirmation of the $R_g$ surface we offer. The bit-budget argument of §3.4 implies that the strict bit-budget-optimal profile $\sigma_g \propto R_g^{-1/2}$ should produce $\sigma^2$-linear noise; §4.5 verifies this empirically on Mamba-2.8B-hf, while every plausible alternative profile fails the test in a structurally consistent direction. The deployed integer construction of §3.5 is a slope-$1$ heuristic on the same $R_g$ surface; §4.5 does not directly validate the integer heuristic, only the underlying $R_g$ form, and we are explicit about this distinction in §3.5.
+The $\sigma^2$-scaling test is the strongest theoretical-side confirmation of the $R_g$ surface we offer. The bit-budget argument of §3.4 implies that the strict bit-budget-optimal profile $\sigma_g \propto R_g^{-1/2}$ should produce $\sigma^2$-linear noise; §4.5 verifies this empirically on Mamba-2.8B-hf, while every plausible alternative profile fails the test in a structurally consistent direction. The deployed integer construction of §3.5 is a slope-$1$ heuristic on the same $R_g$ surface; §4.5 does not directly validate the integer heuristic, only the underlying $R_g$ form, and we are explicit about this distinction in §3.5. Figure 2 plots the five profiles on a log-log axis against the slope-$2$ reference line.
+
+![**Figure 2.** $\sigma^2$-scaling test on Mamba-2.8B-hf under controlled per-step state-update noise injection (Phase C-3b, $n_\mathrm{windows} = 10$ on WikiText-2 test). The strict-optimum profile $\sigma_g \propto R_g^{-1/2}$ (`full`) is the only allocator that traces the slope-$2$ reference line (empirical fit: slope $= 1.94$); every control profile is super-quadratic, with `uniform` reaching slope $\approx 3.07$. The strict ordering `full` $<$ `proxy_correct` $<$ `proxy_C2` $<$ `anti` $<$ `uniform` holds at every $\sigma_\mathrm{rel}$.](figures_c/fig02_sigma_scaling.pdf){#fig:sigma_scaling width=70%}
 
 ### 4.6 The $\sigma \to b$ Bridge: Real INT-$b$ Quantisation
 
@@ -615,6 +619,10 @@ $b_0 = 6$:
 | Mamba-1.4B | $+22.5 \,\%$ ($6.00$) | $+7.6 \,\%$ ($5.86$) | $+6.9 \,\%$ ($6.04$) | $\mathbf{+5.2 \,\%}$ ($6.16$) |
 | Mamba-2.8B | $+22.2 \,\%$ ($6.00$) | $+5.3 \,\%$ ($5.99$) | $+6.8 \,\%$ ($5.98$) | $\mathbf{+4.7 \,\%}$ ($6.23$) |
 
+Figure 3 plots the same data, with the recommended-recipe bars highlighted by a thicker edge.
+
+![**Figure 3.** Matched-mean head-to-head across the five state-spaces Mamba-1 sizes (130M to 2.8B), four profiles, two bit budgets. Mean bit width is matched across profiles via binary-search shift normalisation (achieved within $\pm 0.3$ bits of the nominal target). At $b_0 = 4$ (left) `half_slope_rg` (green, thicker edge) wins by an average of $24$ percentage points over `full_slope`; at $b_0 = 6$ (right) the average improvement is $1.3$ percentage points. The recommended recipe wins on every cell at both bit budgets. WikiText-2 test, ctx $=1024$, $n_\mathrm{windows} = 5$.](figures_c/fig03_matched_mean_5sizes.pdf){#fig:matched_mean_5sizes width=100%}
+
 Three findings emerge.
 
 First, **`half_slope_rg` wins on every $(model, b_0)$ cell**. At $b_0 = 4$ the average improvement over `full_slope` is $24$ percentage points (range: $12.9$ pp on Mamba-790M to $40.2$ pp on Mamba-1.4B); at $b_0 = 6$ the average improvement is $1.3$ percentage points. The advantage of Realisation A over Realisation B is therefore consistent across the five sizes and both bit budgets.
@@ -649,6 +657,10 @@ The two shuffles use independent permutations seeded from a fixed seed (`SHUFFLE
 | `range_only` (r-only, no R) | $+124.2 \,\%$ ($3.88$) | $+40.2 \,\%$ ($5.38$) |
 | `shuffled_R_plus_r` (R-shuffled + r) | $+90.0 \,\%$ ($3.96$) | $+22.7 \,\%$ ($6.24$) |
 | `R_plus_shuffled_r` (R + r-shuffled) | $+98.8 \,\%$ ($3.96$) | $+13.8 \,\%$ ($6.24$) |
+
+Figure 4 plots the same six profiles, with the achieved mean bit width annotated above each bar and the recommended-recipe bar highlighted with a thicker edge. The vertical bands group the three reference profiles on the left from the three factorisation profiles on the right.
+
+![**Figure 4.** Lyapunov-vs-range factorisation on Mamba-2.8B-hf at matched mean bit width. Three reference profiles (left band: `uniform`, `full_slope`, `half_slope_rg`) plus three factorisation profiles (right band: `range_only`, `shuffled_R_plus_r`, `R_plus_shuffled_r`). At $b_0 = 4$ (left panel) the reference recipe at $+19 \,\%$ ΔPPL is the only allocator that combines an $R_g$-aware backbone with the $r_g$ refinement; both `range_only` and the two shuffles collapse to $+90 \,\%$ to $+124 \,\%$ at near-identical mean bit width. At $b_0 = 6$ (right panel) the cleanest matched-mean evidence is the two shuffles at $\overline{b} = 6.24$ bits, both well behind the reference at $\overline{b} = 6.23$. The y-axis is symlog. The strong range-aware-only hypothesis is empirically rejected.](figures_c/fig04_factorisation.pdf){#fig:factorisation width=100%}
 
 Four findings emerge.
 
@@ -712,6 +724,10 @@ Phase C-9 disambiguates these via a four-condition ablation: $\mathrm{FP16\_orig
 | 16K | $117.70$ | $116.42$ | $8.59$ | $9.23$ |
 | 32K | $196.94$ | $192.83$ | $10.51$ | $11.34$ |
 
+Figure 5 plots the four conditions on a log-log axis.
+
+![**Figure 5.** Long-context behaviour on PG-19 for Mamba-2.8B-hf at sliding-window context lengths $\{8\mathrm{K}, 16\mathrm{K}, 32\mathrm{K}\}$. The unquantised FP16 and BF16 paths overlap and both diverge to PPL $\approx 197$ at 32K (the precision-independent finding of §7.3). The calibrated-clipping path (`FP16_clip_only`, no quantisation) and the §6 full INT6 recipe (`FP16_full`) both stay near PPL $\approx 11$ across all three context lengths. The shaded band marks the short-context baseline regime.](figures_c/fig05_long_context.pdf){#fig:long_context width=80%}
+
 Three readings disambiguate the three hypotheses. First, $\mathrm{BF16\_orig}$ is within $0.3 \,\%$ to $2.1 \,\%$ of $\mathrm{FP16\_orig}$ at every context length, so BF16's wider dynamic range does not fix the divergence: hypothesis (a), the precision artefact, is rejected. Second, $\mathrm{FP16\_clip\_only}$ stabilises across all three context lengths at PPL $\approx 8.6$ to $10.5$, essentially indistinguishable from $\mathrm{FP16\_full}$'s $\approx 9.2$ to $11.3$, so the calibrated clipping alone is sufficient: hypothesis (b) is confirmed. Third, $\mathrm{FP16\_clip\_only}$ is uniformly $7 \,\%$ to $8 \,\%$ better in PPL than $\mathrm{FP16\_full}$ at every context length, so the quantisation rounding does not contribute to the stabilisation: hypothesis (c) is rejected.
 
 The active ingredient of the stabilisation is the calibrated clipping at $r_g = k \cdot \mathrm{RMS}(h_g)$, not the quantisation grid. The quantisation rounding adds a small $7 \,\%$ to $8 \,\%$ PPL cost at long context relative to the clipping-only path, in exchange for the $2.5\times$ to $2.9\times$ memory compression measured in §6.
@@ -738,7 +754,9 @@ The §7.3 ablation shows that the long-context FP16 divergence is precision-inde
 
 **Stream 5: Clipping intervention is non-trivial.** The pre-clip firing rate under `FP16_clip_only` is uniformly lower than under `FP32_patched_off` at every $(layer, ctx)$ cell: layer 0 has $0.64 \,\%$ firing under `clip_only` versus $2.27 \,\%$ under `off` at $32\mathrm{K}$ end; layer 32 has $0.42 \,\%$ versus $1.90 \,\%$. This $\approx 3\times$ to $4\times$ ratio between the two conditions is the direct consequence of the clipping intervention: once a unit is clipped at step $t$, its state in subsequent steps starts from the bounded value, reducing the rate of subsequent excursions. The two cliprate trajectories agree at $t = 0$ and diverge as the recurrence unfolds, providing direct evidence that the calibrated clipping is engaging with the natural state-magnitude dynamics rather than firing on noise.
 
-The five streams together establish the following picture. Long-context inference creates conditions in which a small but non-trivial fraction of $(c, s)$ units (between $0.1 \,\%$ and $2.3 \,\%$ at the end of the $32\mathrm{K}$ window, layer-dependent) transiently exceed the calibrated $r_g$ and operate near the $\rho_g \to 1$ recurrence-stability boundary, where rare excursions compound through the recurrence's geometric series. Under the unmodified recurrence (`FP16_orig`), these compounding excursions accumulate over the $32\mathrm{K}$ context and produce the perplexity divergence reported in §7.2. The calibrated clipping at $r_g$ in `FP16_clip_only` engages with this dynamics directly, suppressing the rare excursions and reducing the firing rate on subsequent steps. The mechanism is therefore not a uniform clamp on the bulk of the state distribution but a targeted suppression of the heavy-tail events that dominate long-context recurrence numerics.
+The five streams together establish the following picture. Long-context inference creates conditions in which a small but non-trivial fraction of $(c, s)$ units (between $0.1 \,\%$ and $2.3 \,\%$ at the end of the $32\mathrm{K}$ window, layer-dependent) transiently exceed the calibrated $r_g$ and operate near the $\rho_g \to 1$ recurrence-stability boundary, where rare excursions compound through the recurrence's geometric series. Under the unmodified recurrence (`FP16_orig`), these compounding excursions accumulate over the $32\mathrm{K}$ context and produce the perplexity divergence reported in §7.2. The calibrated clipping at $r_g$ in `FP16_clip_only` engages with this dynamics directly, suppressing the rare excursions and reducing the firing rate on subsequent steps. The mechanism is therefore not a uniform clamp on the bulk of the state distribution but a targeted suppression of the heavy-tail events that dominate long-context recurrence numerics. Figure 6 shows the three streams that vary continuously with token position over the $32\mathrm{K}$ window.
+
+![**Figure 6.** Long-context state-norm and clipping dynamics on Mamba-2.8B-hf at $32\mathrm{K}$ context (PG-19, `FP32_patched_off`, the unmodified recurrence). Trajectories are shown for seven representative layers spanning the §4.1 U-shape, with layer depth encoded by viridis (dark = early layers, light = late layers). **(a)** State-norm $|h_t|$ p99 across $(B, c, s)$ units, growing $137 \,\%$ to $245 \,\%$ over the window on every layer. **(b)** Peak spectral radius $\rho_{p99}$ per chunk; multiple layers approach the recurrence-stability boundary $\rho_g \to 1$ during long-context inference. **(c)** Pre-clip cliprate, the fraction of $(c, s)$ units with $|h_t| > r_g$ on the unmodified recurrence; non-zero on every recorded layer at long context, with peak rates of $0.1 \,\%$ to $2.3 \,\%$ depending on the layer.](figures_c/fig06_state_norm_trajectory.pdf){#fig:state_norm_trajectory width=85%}
 
 We caveat what we have *not* established. We have not isolated the precise origin of the per-step perturbation on the high-$\rho$ units that drives the divergence. Candidates include (i) accumulated FP16 round-off in the `out_proj` cast, (ii) input-driven excursions in the recurrence itself amplified by transient $\rho_g \to 1$ regardless of arithmetic precision, and (iii) interactions between the two. The C-9 four-condition ablation rules out a pure-precision artefact (BF16 alone does not fix the divergence) but does not distinguish between the remaining candidates. A direct measurement of the per-step round-off magnitude, paired with the Lyapunov bound on amplified state-norm error, is identified as the closing analytical experiment in §8.2.
 
@@ -871,4 +889,4 @@ Zuo, J., Velikanov, M., Rhaiem, D. E., Chahed, I., Belkada, Y., Kunsch, G., and 
 
 ---
 
-*End of manuscript draft v0.9.1, 2026-05-01. Eight numbered sections plus references. The Lyapunov-vs-range factorisation on Mamba-2.8B-hf (§6.8) is the closing experiment of the present manuscript. The long-context PG-19 re-evaluation under the recommended recipe and the cross-lineage re-evaluation are identified as refinement directions in §8.3.*
+*End of manuscript draft v0.9.2, 2026-05-01. Eight numbered sections plus references, six figures (Fig 1 to Fig 6) embedded inline. The Lyapunov-vs-range factorisation on Mamba-2.8B-hf (§6.8) is the closing experiment of the present manuscript. The long-context PG-19 re-evaluation under the recommended recipe and the cross-lineage re-evaluation are identified as refinement directions in §8.3. Figure scripts and source JSONs are committed under `paper_c/figures_c/` and `paper_c/results_c/` respectively, so each figure is fully reproducible from the recorded data.*
