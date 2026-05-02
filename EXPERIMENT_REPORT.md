@@ -692,13 +692,13 @@ This is a **v0.3 research prototype** (April 2026). It works, the numbers are re
 
 ---
 
-## Future direction: Paper C scope (state-aware quantisation for SSM substrates)
+## Companion paper: Paper C (LAB), state-aware quantisation for SSM substrates
 
-The Phase 29 + 30 empirical work in items 11–12 above forms the pilot data for a follow-up paper on hybrid Transformer + SSM quantisation, kept explicitly out of scope of Paper B. The kickoff brief — working title, FIR vs IIR core thesis, four mathematical building blocks (observability-Gramian-weighted loss, per-state-group bit allocation, update-decomposition for Gated DeltaNet, error-feedback rounding), the synchronisation-pulse hypothesis for hybrid attention layers, the open phase plan, and the anchor citations — has been moved to its own folder:
+The Phase 29 + 30 pilot empirical work in items 11–12 above grew into a full follow-up preprint on Mamba-family SSM state quantisation, kept explicitly out of scope of Paper B. Paper C derives a per-state-group bit allocation rule from a discrete-time Lyapunov bound on accumulated quantisation noise, validated on eight Mamba SSM instances spanning three release lineages and two architectures (Mamba-1 selective SSM, Mamba-2 SSD).
 
-→ **[`paper_c/README.md`](paper_c/README.md)**
+→ **[`paper_c/`](paper_c/)** — folder containing the LAB preprint, figures, source JSONs, and a full 16-phase research log. The summary lives at [`paper_c/README.md`](paper_c/README.md); the long-form research log (the original kickoff brief plus all subsequent phase notes) is at [`paper_c/EXPERIMENT_REPORT.md`](paper_c/EXPERIMENT_REPORT.md).
 
-This avoids duplicating ~110 lines of forward-looking material inside an EXPERIMENT_REPORT whose remit is past experiments. Phase 29 / 30 raw JSONs and scripts stay in [`results/`](results/) and [`experiments/`](experiments/) as Paper-C pilot data and will be migrated to `paper_c/` only when a manuscript begins.
+The Phase 29 / 30 raw JSONs and scripts that fed the kickoff brief remain in this repository's [`results/`](results/) and [`experiments/`](experiments/) folders; the LAB main-experiment data and scripts live under [`paper_c/results_c/`](paper_c/results_c/) and [`paper_c/experiments_c/`](paper_c/experiments_c/).
 
 ---
 
