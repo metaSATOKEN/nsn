@@ -146,7 +146,7 @@ Going to 4 bits costs 33 % more memory for a further quality gain; v0.3 at 3 bit
 - **[EXPERIMENT_REPORT.md](EXPERIMENT_REPORT.md)** — casual long-form writeup (~540 lines): full protocols, dead-ends (Walsh–Hadamard rotation, top-K mixed precision), MMLU downstream probe, Phase 23 mechanism math, all the gory details
 - **[paper/nsn.pdf](paper/nsn.pdf)** — formal paper (27 pages, Zenodo-ready): academic writeup with full citations, Fisher-exact analyses, confounder caveats, 6 appendices
 - **[docs/THEORY.md](docs/THEORY.md)** — two-failure-modes background and the v0.2 → v0.3 update
-- **[paper_c/](paper_c/)** — Paper C (LAB): a Lyapunov-aware bit allocator for state-space model state quantisation. Closed-form per-state-group bit allocation driven by spectral radius and output coupling; 2.6× state-cache compression at +2.5–5.2% PPL on the state-spaces Mamba-1 family. See [paper_c/README.md](paper_c/README.md) for the summary, [paper_c/paper_c.pdf](paper_c/paper_c.pdf) for the preprint, and [paper_c/EXPERIMENT_REPORT.md](paper_c/EXPERIMENT_REPORT.md) for the full 16-phase research log
+- **[metaSATOKEN/lab-ssm](https://github.com/metaSATOKEN/lab-ssm)** — companion paper LAB (Lyapunov-Aware Bit-allocation): a Lyapunov-aware bit allocator for state-space model state quantisation. Closed-form per-state-group bit allocation driven by spectral radius and output coupling; 2.6× state-cache compression at +2.5–5.2% PPL on the state-spaces Mamba-1 family. Started here as `paper_c/` and migrated to its own repository at v1.0.0 once it became content-complete
 
 ## Scope and honesty notes (quick)
 
