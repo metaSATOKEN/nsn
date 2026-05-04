@@ -696,7 +696,7 @@ This is a **v0.3 research prototype** (April 2026). It works, the numbers are re
 
 The Phase 29 + 30 pilot empirical work in items 11–12 above grew into a full follow-up preprint on Mamba-family SSM state quantisation, kept explicitly out of scope of Paper B. The LAB preprint (Lyapunov-Aware Bit-allocation) derives a per-state-group bit allocation rule from a discrete-time Lyapunov bound on accumulated quantisation noise, validated on eight Mamba SSM instances spanning three release lineages and two architectures (Mamba-1 selective SSM, Mamba-2 SSD).
 
-→ **[github.com/metaSATOKEN/lab-ssm](https://github.com/metaSATOKEN/lab-ssm)** — standalone repository with the LAB preprint, figures, source JSONs, and a full 16-phase research log. LAB started inside this repository as `paper_c/` and was migrated to its own repository at v1.0.0 once it became content-complete; the historical commits up through v0.9.8 live in `lab-ssm`'s git history under their original commit messages.
+→ **[github.com/metaSATOKEN/lab-ssm](https://github.com/metaSATOKEN/lab-ssm)** — standalone repository with the LAB preprint, figures, source JSONs, and a full 16-phase research log. Zenodo DOI [10.5281/zenodo.20017854](https://doi.org/10.5281/zenodo.20017854). LAB started inside this repository as `paper_c/` and was migrated to its own repository at v1.0.0 once it became content-complete; the historical commits up through v0.9.8 live in `lab-ssm`'s git history under their original commit messages.
 
 The Phase 29 / 30 raw JSONs and scripts that fed the LAB kickoff brief remain in this repository's [`results/`](results/) and [`experiments/`](experiments/) folders. LAB's main-experiment data and scripts live in the lab-ssm repository under `results/` and `experiments/`.
 
