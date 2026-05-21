@@ -31,8 +31,8 @@ Constraints:
   generalized random orthogonal matrix; we do not implement that
   fallback in v0.3.
 
-This module is used by :func:`modeq.quantize.qa_nsep_pchan_rotated`
-and by :func:`modeq.mode_aware.select_quantizer` when the caller
+This module is used by :func:`nsn.quantize.qa_nsep_pchan_rotated`
+and by :func:`nsn.mode_aware.select_quantizer` when the caller
 supplies ``layer_idx`` and the mode is Mode 1 (rotate-when-needed
 policy; see :func:`should_rotate`).
 """
@@ -180,7 +180,7 @@ def should_rotate(mode: Optional[str], layer_idx: Optional[int]) -> bool:
     Parameters
     ----------
     mode : str, optional
-        Output of :func:`modeq.detect.classify_mode` or a manual
+        Output of :func:`nsn.detect.classify_mode` or a manual
         label. Case- and whitespace-insensitive. None returns False
         (no rotation) - caller must opt in by providing a mode.
     layer_idx : int, optional

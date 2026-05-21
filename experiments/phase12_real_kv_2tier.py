@@ -59,7 +59,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 # =============================================================
 # === CELL V2 === Inline quantizers (plain INT3 + 2-tier)
 # =============================================================
-# Self-contained: does NOT depend on `pip install modeq`.
+# Self-contained: does NOT depend on `pip install nsn`.
 
 def qa_nsep_pchan(x, bits):
     """Plain norm-separated per-channel INT quantization."""

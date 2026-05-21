@@ -5,7 +5,7 @@
 Mode-aware quantizer dispatch (v0.3).
 
 Given a model's measured K outlier profile (from
-:func:`modeq.detect.measure_kv_outlier_ratio`), return the best
+:func:`nsn.detect.measure_kv_outlier_ratio`), return the best
 `nsep+pchan` variant for the requested bit budget.
 
 v0.3 empirical basis (Phases 10-15, April 2026):
@@ -66,7 +66,7 @@ def select_quantizer(
     Return the recommended quantizer for the given mode and bit budget.
 
     Either ``mode`` (explicit) or ``outlier_stats`` (from
-    :func:`modeq.detect.measure_kv_outlier_ratio`, auto-classified) must
+    :func:`nsn.detect.measure_kv_outlier_ratio`, auto-classified) must
     be provided.
 
     Parameters

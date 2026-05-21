@@ -1,5 +1,5 @@
 """
-modeq: Mode-aware KV cache quantization for Pre-LN Transformers.
+nsn: Mode-aware KV cache quantization for Pre-LN Transformers.
 
 Two empirically separable failure modes of naive INT KV quantization:
 

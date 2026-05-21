@@ -32,8 +32,8 @@
 #
 # The Int3AsymNsepPchanCache and pack_int3_unsigned /
 # unpack_int3_unsigned definitions are INLINED below (copy-verbatim
-# from src/modeq/cache.py and src/modeq/pack.py at commit dbafe03)
-# so this script runs standalone on Colab without needing the modeq
+# from src/nsn/cache.py and src/nsn/pack.py at commit dbafe03)
+# so this script runs standalone on Colab without needing the nsn
 # repository to be pip-installable (the repo is private at the time
 # of this run). If the inlined code ever drifts from the shipped
 # module, the Stage-1 sanity check against qa_nsep_pchan_asym will
@@ -90,7 +90,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 # =============================================================
 # === CELL V2 === Inlined: pack_int3_unsigned / unpack_int3_unsigned
-# === (verbatim copy of src/modeq/pack.py at commit dbafe03)
+# === (verbatim copy of src/nsn/pack.py at commit dbafe03)
 # =============================================================
 
 def pack_int3_unsigned(x_int8, strict=True):
@@ -144,7 +144,7 @@ def unpack_int3_unsigned(bytes_in, N):
 
 # =============================================================
 # === CELL V3 === Inlined: Int3AsymNsepPchanCache
-# === (verbatim copy of src/modeq/cache.py at commit dbafe03)
+# === (verbatim copy of src/nsn/cache.py at commit dbafe03)
 # =============================================================
 
 class Int3AsymNsepPchanCache:
@@ -463,7 +463,7 @@ combined = {
         "text_chars":    48000,
         "methods":       [m[0] for m in METHODS],
         "models":        [m[1] for m in MODELS],
-        "modeq_source":  ("inlined copy of src/modeq/cache.py and pack.py "
+        "nsn_source":  ("inlined copy of src/nsn/cache.py and pack.py "
                           "at commit dbafe03 (repository was private at run "
                           "time; pip install git+... would fail)"),
     },

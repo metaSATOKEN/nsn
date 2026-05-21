@@ -11,7 +11,7 @@
 # "NSSD" (Norm-Separated State Duality) recipe for hybrid SSM +
 # Transformer architectures. Of NSSD's three components --
 #
-#   (i)   nsep on input projections (already what modeq does on
+#   (i)   nsep on input projections (already what nsn does on
 #         attention K/V)
 #   (ii)  per-channel bias correction on the recursive state to
 #         counter accumulated drift, modelled on SSDi8 (Kim et al.,
@@ -19,7 +19,7 @@
 #   (iii) hybrid filtering (attention's softmax as a low-pass on
 #         SSM-side noise)
 #
-# -- only (i) is already in modeq's shipped recipe, and (iii) is
+# -- only (i) is already in nsn's shipped recipe, and (iii) is
 # not directly implementable in our cache-only framework. (ii),
 # however, IS implementable as a calibration step on top of the
 # v0.3 attention K/V quantiser. Phase 30a tests just (ii) on a

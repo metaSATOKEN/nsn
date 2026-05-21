@@ -68,7 +68,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 # =============================================================
 # v0.3 candidate mechanism: deterministic Walsh-Hadamard
 # rotation before nsep+pchan INT3. Self-contained -- does NOT
-# depend on installing the modeq package.
+# depend on installing the nsn package.
 
 def hadamard_matrix(d, dtype=torch.float32, device=None):
     """dxd orthonormal Walsh-Hadamard. d must be a power of 2."""

@@ -16,7 +16,7 @@
 #
 # For INT4 variants, we report THEORETICAL bytes (no packed
 # implementation in v0.3 since INT4 is not the SOTA tier for
-# modeq; the published INT4 results come from vendor kernels).
+# nsn; the published INT4 results come from vendor kernels).
 #
 # Target configs (realistic full-model KV cache):
 #   Qwen2-7B  : 28 layers, 4 KV heads, 2048 ctx, head_dim=128
@@ -41,8 +41,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 import torch
 
-from modeq.cache import Int3NsepPchanCache, Int3AsymNsepPchanCache
-from modeq.quantize import qa_nsep_pchan, qa_nsep_pchan_asym
+from nsn.cache import Int3NsepPchanCache, Int3AsymNsepPchanCache
+from nsn.quantize import qa_nsep_pchan, qa_nsep_pchan_asym
 
 
 # ---------------------------------------------------------------------------
@@ -100,7 +100,7 @@ def fp16_bytes(T, D, n_heads, n_layers):
 
 
 # ---------------------------------------------------------------------------
-# Real packed measurement (using the modeq Cache classes)
+# Real packed measurement (using the nsn Cache classes)
 # ---------------------------------------------------------------------------
 
 def real_sym_bytes_one_slice(T, D):

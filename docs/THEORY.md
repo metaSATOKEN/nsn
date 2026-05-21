@@ -1,6 +1,6 @@
 # Theory: Two Failure Modes of KV Cache INT Quantization
 
-This document describes the theoretical framework that `modeq` is built on. The companion [paper](https://github.com/metaSATOKEN/norm-separated-quantization) has the full treatment with 7 appendices.
+This document describes the theoretical framework that the `nsn` package is built on. The companion [NSN preprint](../paper/nsn.pdf) has the full treatment with 7 appendices.
 
 ## The INT4 valley of death
 
@@ -86,7 +86,7 @@ Going below INT4 with `nsep+pchan`:
 
 INT3 works because per-channel scaling with 7 levels (symmetric: −3 to +3, total 7; or asymmetric: 0 to 7, total 8) is enough to preserve direction up to acceptable quantization error, while the norm is stored exactly. INT2 (symmetric: 3 levels −1, 0, +1) cannot represent arbitrary directions with enough resolution, and the method collapses. The "bit floor" for direction quantization is INT3.
 
-Empirically, **4 of 7 models achieved our usability threshold (ΔPPL < 5% of WikiText-2 baseline) at INT3 symmetric `nsep+pchan`** (the v0.2 default). One (Phi-3-medium at 5.2%) sat at the borderline; one was acceptable; one (Pythia-6.9B, a base model without instruction tuning, at 22%) was research-only. This was the main pragmatic contribution of `modeq` v0.2: 5.33× theoretical / 5.08× measured KV cache compression with a drop-in preprocessing step handling both catastrophic and common failure modes on a majority of tested models.
+Empirically, **4 of 7 models achieved our usability threshold (ΔPPL < 5% of WikiText-2 baseline) at INT3 symmetric `nsep+pchan`** (the v0.2 default). One (Phi-3-medium at 5.2%) sat at the borderline; one was acceptable; one (Pythia-6.9B, a base model without instruction tuning, at 22%) was research-only. This was the main pragmatic contribution of `nsn` v0.2: 5.33× theoretical / 5.08× measured KV cache compression with a drop-in preprocessing step handling both catastrophic and common failure modes on a majority of tested models.
 
 ## v0.3 update: asymmetric per-channel is the new default (2026-04)
 
@@ -111,12 +111,12 @@ Rotation (Walsh–Hadamard, similar to KVLinC / QuaRot style) was also tested in
 
 ## v0.3 ablation: why each component is necessary (Phase 18 + 19)
 
-After v0.3 shipped, we ran a four-method INT3 ablation on all 8 benchmarked models to answer a structural question: is modeq's v0.3 (D = `nsep + pchan + asym`) the *simplest* thing that works, or is one of the three components dispensable? The four methods were:
+After v0.3 shipped, we ran a four-method INT3 ablation on all 8 benchmarked models to answer a structural question: is the NSN v0.3 recipe (D = `nsep + pchan + asym`) the *simplest* thing that works, or is one of the three components dispensable? The four methods were:
 
 - **(A) naive per-row symmetric INT3** — no `pchan`, no `nsep`, no `asym`. Industry baseline.
 - **(B) asym per-channel INT3, NO `nsep`** — `pchan` and `asym`, but not `nsep`. This is the "weight-quantization-style" recipe applied naively to KV cache.
-- **(C) `nsep+pchan` symmetric INT3** — `nsep` and `pchan`, but not `asym`. This is modeq **v0.2**.
-- **(D) `nsep+pchan` asymmetric INT3** — all three. This is modeq **v0.3**.
+- **(C) `nsep+pchan` symmetric INT3** — `nsep` and `pchan`, but not `asym`. This is NSN **v0.2**.
+- **(D) `nsep+pchan` asymmetric INT3** — all three. This is NSN **v0.3**.
 
 Usability-tier coverage (< 5 % baseline ΔPPL on WikiText-2) across 8 models. Table 2b / Appendix E of `paper/nsn.md` is the authoritative version; the row-year split here is a quick readable aggregate.
 

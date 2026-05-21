@@ -4,9 +4,9 @@
 # ============================================================
 # Phase 18: Ablation -- what baseline is v0.3 actually beating?
 # ============================================================
-# Phases 14/16/17 compared modeq's "symmetric INT3" to modeq's
+# Phases 14/16/17 compared nsn's "symmetric INT3" to nsn's
 # "asymmetric INT3" and reported 58-96% ΔPPL reductions. But
-# BOTH of those are already modeq's nsep+pchan pipeline with
+# BOTH of those are already nsn's nsep+pchan pipeline with
 # different quantization windows -- neither is the naive
 # industry baseline a reader might assume when they see
 # "symmetric INT3".
@@ -25,8 +25,8 @@
 # Methods (each applied to the full KV cache):
 #   (A) naive  per-row   symmetric  INT3  -- industry baseline
 #   (B)        per-ch    asymmetric INT3  -- asym WITHOUT nsep
-#   (C) nsep + per-ch    symmetric  INT3  -- modeq v0.2 default
-#   (D) nsep + per-ch    asymmetric INT3  -- modeq v0.3 default
+#   (C) nsep + per-ch    symmetric  INT3  -- nsn v0.2 default
+#   (D) nsep + per-ch    asymmetric INT3  -- nsn v0.3 default
 #
 # Models (chosen for maximum mechanistic diversity within a
 # reasonable runtime):
@@ -112,7 +112,7 @@ def qa_asym_pchan_no_nsep(x, bits):
 
 
 def qa_nsep_pchan_sym(x, bits):
-    """(C) modeq v0.2 default: nsep + per-channel absmax (symmetric)."""
+    """(C) nsn v0.2 default: nsep + per-channel absmax (symmetric)."""
     dtype = x.dtype
     xf = x.float()
     n = xf.norm(dim=-1, keepdim=True).clamp(min=1e-12)
@@ -125,7 +125,7 @@ def qa_nsep_pchan_sym(x, bits):
 
 
 def qa_nsep_pchan_asym(x, bits):
-    """(D) modeq v0.3 default: nsep + per-channel min/max (asymmetric)."""
+    """(D) nsn v0.3 default: nsep + per-channel min/max (asymmetric)."""
     dtype = x.dtype
     xf = x.float()
     n = xf.norm(dim=-1, keepdim=True).clamp(min=1e-12)
@@ -371,8 +371,8 @@ combined = {
     "method_legend": {
         "A": "naive per-row symmetric INT3 (industry baseline)",
         "B": "asymmetric per-channel INT3, no norm separation",
-        "C": "nsep+pchan symmetric INT3 (modeq v0.2 default)",
-        "D": "nsep+pchan asymmetric INT3 (modeq v0.3 default)",
+        "C": "nsep+pchan symmetric INT3 (nsn v0.2 default)",
+        "D": "nsep+pchan asymmetric INT3 (nsn v0.3 default)",
     },
     "ablation_questions": {
         "Q1_pchan_gain":      "does per-channel absmax help over naive? (A -> C)",

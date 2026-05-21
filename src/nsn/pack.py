@@ -6,7 +6,7 @@ Real 3-bit packing for INT3 tensors.
 
 Eight 3-bit values are packed into 24 bits = 3 uint8 bytes,
 giving exact 3 bits/value storage. Combined with nsep+pchan
-quantization (see `modeq.cache`), this delivers 5.33x
+quantization (see `nsn.cache`), this delivers 5.33x
 compression vs FP16 in theory, measured at 5.08x on
 Llama-3.1-8B and Qwen2-7B (overhead ~5% from FP16 storage of
 per-token norms and per-channel scales).

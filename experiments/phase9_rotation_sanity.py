@@ -44,8 +44,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 import json
 import torch
 
-from modeq.quantize import qa_nsep_pchan, qa_nsep_pchan_rotated
-from modeq.rotate import rotate
+from nsn.quantize import qa_nsep_pchan, qa_nsep_pchan_rotated
+from nsn.rotate import rotate
 
 
 def _gen_gaussian(T, D, seed):

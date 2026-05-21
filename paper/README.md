@@ -1,7 +1,7 @@
 # Paper: Norm Separation is Necessary (NSN)
 
-This folder contains the formal preprint for the modeq v0.3 INT3 KV cache
-quantization recipe.
+This folder contains the formal preprint for the NSN v1.0.0 INT3 KV cache
+quantization recipe (reference implementation: the `nsn` Python package).
 
 **Zenodo DOI:** [10.5281/zenodo.19724817](https://doi.org/10.5281/zenodo.19724817)
 

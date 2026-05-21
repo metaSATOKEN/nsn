@@ -7,8 +7,8 @@ Core quantization primitives: naive absmax and nsep+pchan.
 All functions take a tensor `x` with last dim = head_dim and
 return a same-shape, same-dtype tensor quantized to INT-`bits`
 precision via simulated quantization (quantize then dequantize
-in place). For true bit-packing, see `modeq.pack` and
-`modeq.cache`.
+in place). For true bit-packing, see `nsn.pack` and
+`nsn.cache`.
 """
 
 import torch
@@ -413,7 +413,7 @@ def qa_nsep_pchan_rotated(x, bits):
     input is Mode 1.
 
     Empirically the rotation is worth its cost only for Layer 0 of
-    Mode 1 models (see :func:`modeq.rotate.should_rotate` for the
+    Mode 1 models (see :func:`nsn.rotate.should_rotate` for the
     dispatch policy). Mode 2 models gain essentially nothing
     because their per-channel scales are already well-balanced.
 

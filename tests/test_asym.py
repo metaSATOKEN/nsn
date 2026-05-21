@@ -6,7 +6,7 @@
 import pytest
 import torch
 
-from modeq.quantize import qa_nsep_pchan, qa_nsep_pchan_asym
+from nsn.quantize import qa_nsep_pchan, qa_nsep_pchan_asym
 
 
 # ---------------------------------------------------------------------------
@@ -113,7 +113,7 @@ def test_asym_ties_on_symmetric_gaussian():
 # ---------------------------------------------------------------------------
 
 def test_apply_method_dispatch_asym():
-    from modeq.quantize import apply_method
+    from nsn.quantize import apply_method
     torch.manual_seed(0)
     x = torch.randn(32, 128, dtype=torch.float32)
     y = apply_method(x, "nsep+pchan+asym", bits=3)

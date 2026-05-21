@@ -6,11 +6,11 @@
 import pytest
 import torch
 
-from modeq.pack import (
+from nsn.pack import (
     pack_int3_unsigned,
     unpack_int3_unsigned,
 )
-from modeq.cache import Int3AsymNsepPchanCache
+from nsn.cache import Int3AsymNsepPchanCache
 
 
 # ---------------------------------------------------------------------------
@@ -92,7 +92,7 @@ def test_asym_cache_roundtrip_4d():
 def test_asym_cache_matches_simulated():
     """Real-packed cache reconstruction should match simulated
     qa_nsep_pchan_asym reconstruction within 1e-3."""
-    from modeq.quantize import qa_nsep_pchan_asym
+    from nsn.quantize import qa_nsep_pchan_asym
 
     torch.manual_seed(0)
     x = torch.randn(1, 4, 32, 128, dtype=torch.float16)

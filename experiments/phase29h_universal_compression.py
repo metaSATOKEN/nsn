@@ -3,7 +3,7 @@
 
 # ============================================================
 # Phase 29h: Two-track universal compression on Qwen3.6-27B
-#            -- attention K/V via modeq, SSM state via naive
+#            -- attention K/V via nsn, SSM state via naive
 #            uniform quantizer. Tests the hypothesis that
 #            "attention-only compression creates an asymmetric
 #            noise distribution; uniformly compressing both
@@ -28,17 +28,17 @@
 #       diagnostic on the first SSM layer)
 #
 #   Q2. Does adding naive uniform quantization to SSM state
-#       (matching modeq's attention compression) reduce the
+#       (matching nsn's attention compression) reduce the
 #       attention-only fragility, or compound it?
 #
 # Conditions on wiki_0 prefix:
 #
 #   1. FP16                      reference
-#   2. attn modeq INT3           (Phase 29b reference; r4 ~ 0.52)
+#   2. attn nsn INT3           (Phase 29b reference; r4 ~ 0.52)
 #   3. ssm  naive INT8           (control: SSM-only perturbation)
 #   4. ssm  naive INT4           (control: stronger SSM-only)
-#   5. attn modeq INT3 + ssm naive INT8     <-- hypothesis main test
-#   6. attn modeq INT3 + ssm naive INT4     <-- stronger uniform noise
+#   5. attn nsn INT3 + ssm naive INT8     <-- hypothesis main test
+#   6. attn nsn INT3 + ssm naive INT4     <-- stronger uniform noise
 #
 # Predictions:
 #
@@ -179,7 +179,7 @@ def compress_cache_universal(past, attn_method, ssm_method,
     """
     Two-track compression on a hybrid cache:
       - Layers passing the transformer K/V shape guard ->
-        attn_method (typically modeq asym INT3 on a [T, D] slice
+        attn_method (typically nsn asym INT3 on a [T, D] slice
         per head; iterated with the per-head loop our other
         scripts use).
       - All other layers (SSM-like; shape != [B, H, T, D] or
@@ -336,7 +336,7 @@ PROBES = [
     ("1. FP16 baseline",
      None,
      None),
-    ("2. attn modeq INT3 only (29b ref)",
+    ("2. attn nsn INT3 only (29b ref)",
      lambda x: qa_nsep_pchan_asym(x, 3),
      None),
     ("3. ssm naive INT8 only (control)",
@@ -345,10 +345,10 @@ PROBES = [
     ("4. ssm naive INT4 only (control)",
      None,
      lambda x: qa_naive_perrow_sym(x, 4)),
-    ("5. attn modeq INT3 + ssm naive INT8",
+    ("5. attn nsn INT3 + ssm naive INT8",
      lambda x: qa_nsep_pchan_asym(x, 3),
      lambda x: qa_naive_perrow_sym(x, 8)),
-    ("6. attn modeq INT3 + ssm naive INT4",
+    ("6. attn nsn INT3 + ssm naive INT4",
      lambda x: qa_nsep_pchan_asym(x, 3),
      lambda x: qa_naive_perrow_sym(x, 4)),
 ]
@@ -423,14 +423,14 @@ print(f"Universal-compression hypothesis readout on {MODEL_LABEL}")
 print(f"{'=' * 80}")
 print(f"  FP16 baseline r4 = {fp16_r4:.3f}")
 
-attn_only      = per_probe["2. attn modeq INT3 only (29b ref)"]["repetition_4gram"]
+attn_only      = per_probe["2. attn nsn INT3 only (29b ref)"]["repetition_4gram"]
 ssm_only_int8  = per_probe["3. ssm naive INT8 only (control)"]["repetition_4gram"]
 ssm_only_int4  = per_probe["4. ssm naive INT4 only (control)"]["repetition_4gram"]
-both_int8      = per_probe["5. attn modeq INT3 + ssm naive INT8"]["repetition_4gram"]
-both_int4      = per_probe["6. attn modeq INT3 + ssm naive INT4"]["repetition_4gram"]
+both_int8      = per_probe["5. attn nsn INT3 + ssm naive INT8"]["repetition_4gram"]
+both_int4      = per_probe["6. attn nsn INT3 + ssm naive INT4"]["repetition_4gram"]
 
 print(f"\n  Reference rows:")
-print(f"    attn modeq INT3 only             r4 = {attn_only:.3f}")
+print(f"    attn nsn INT3 only             r4 = {attn_only:.3f}")
 print(f"    ssm  naive INT8 only             r4 = {ssm_only_int8:.3f}")
 print(f"    ssm  naive INT4 only             r4 = {ssm_only_int4:.3f}")
 print(f"  Hypothesis test rows:")
@@ -483,7 +483,7 @@ if max(ssm_only_int8 - fp16_r4, ssm_only_int4 - fp16_r4) > 0.15:
 output = {
     "date":           datetime.utcnow().isoformat(timespec="seconds"),
     "phase":          "29h",
-    "purpose":        ("Two-track compression: attn modeq INT3 + "
+    "purpose":        ("Two-track compression: attn nsn INT3 + "
                        "ssm naive sym INT8/INT4 on Qwen3.6-27B. "
                        "Tests whether uniformly perturbing both "
                        "attention and SSM dilutes the attention-"
@@ -529,6 +529,6 @@ print(f"\nSaved -> {out_path}")
 #       direction at all. If condition 5 reduces r4 well below
 #       attention-only (condition 2 ~ 0.52), it strengthens the
 #       Phase 29g dilution-curve interpretation and points at a
-#       concrete recipe space (modeq attn + Quamba-style SSM)
+#       concrete recipe space (nsn attn + Quamba-style SSM)
 #       that could be worth a real implementation.
 # ============================================================

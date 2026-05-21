@@ -98,7 +98,7 @@ def qa_asym_pchan_no_nsep(x, bits):
 
 
 def qa_nsep_pchan_asym(x, bits):
-    """(D) nsep + per-channel asym (modeq v0.3)."""
+    """(D) nsep + per-channel asym (nsn v0.3)."""
     dtype = x.dtype
     xf = x.float()
     n = xf.norm(dim=-1, keepdim=True).clamp(min=1e-12)

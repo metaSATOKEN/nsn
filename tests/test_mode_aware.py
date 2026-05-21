@@ -1,12 +1,12 @@
 # Copyright 2026 Kentaro Sato
 # Licensed under the Apache License, Version 2.0
 
-"""Tests for modeq.mode_aware dispatch logic."""
+"""Tests for nsn.mode_aware dispatch logic."""
 
 import pytest
 import torch
 
-from modeq.mode_aware import select_quantizer, describe_selection
+from nsn.mode_aware import select_quantizer, describe_selection
 
 
 def _fake_outlier_stats(layer_0_k, k_max=None, n_layers=32):

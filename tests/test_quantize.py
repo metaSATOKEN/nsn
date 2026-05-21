@@ -1,12 +1,12 @@
 # Copyright 2026 Kentaro Sato
 # Licensed under the Apache License, Version 2.0
 
-"""Unit tests for modeq.quantize (core quantization primitives)."""
+"""Unit tests for nsn.quantize (core quantization primitives)."""
 
 import pytest
 import torch
 
-from modeq.quantize import qa_perrow, qa_perchan, qa_nsep_pchan, apply_method
+from nsn.quantize import qa_perrow, qa_perchan, qa_nsep_pchan, apply_method
 
 
 def test_qa_perrow_shape_and_dtype():
@@ -103,7 +103,7 @@ def test_qa_nsep_pchan_2d_and_4d_produce_consistent_quantization():
 
 def test_qa_perchan_4d_nontrivial():
     """Direct qa_perchan test on 4D input."""
-    from modeq.quantize import qa_perchan
+    from nsn.quantize import qa_perchan
     torch.manual_seed(0)
     x = torch.randn(1, 4, 32, 96, dtype=torch.float32)
     y = qa_perchan(x, bits=4)

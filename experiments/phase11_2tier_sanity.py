@@ -32,7 +32,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 import torch
 
-from modeq.quantize import qa_nsep_pchan, qa_nsep_pchan_2tier
+from nsn.quantize import qa_nsep_pchan, qa_nsep_pchan_2tier
 
 
 def _gen_gaussian(T, D, seed):

@@ -1,12 +1,12 @@
 # Copyright 2026 Kentaro Sato
 # Licensed under the Apache License, Version 2.0
 
-"""Unit tests for modeq.pack (INT3 bit-packing primitives)."""
+"""Unit tests for nsn.pack (INT3 bit-packing primitives)."""
 
 import pytest
 import torch
 
-from modeq.pack import pack_int3_signed, unpack_int3_signed
+from nsn.pack import pack_int3_signed, unpack_int3_signed
 
 
 def test_roundtrip_random():

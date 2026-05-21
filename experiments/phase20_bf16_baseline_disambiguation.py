@@ -112,7 +112,7 @@ def qa_asym_pchan_no_nsep(x, bits):
 
 
 def qa_nsep_pchan_sym(x, bits):
-    """(C) nsep + per-channel absmax (symmetric) = modeq v0.2."""
+    """(C) nsep + per-channel absmax (symmetric) = nsn v0.2."""
     dtype = x.dtype
     xf = x.float()
     n = xf.norm(dim=-1, keepdim=True).clamp(min=1e-12)
@@ -125,7 +125,7 @@ def qa_nsep_pchan_sym(x, bits):
 
 
 def qa_nsep_pchan_asym(x, bits):
-    """(D) nsep + per-channel min/max (asymmetric) = modeq v0.3."""
+    """(D) nsep + per-channel min/max (asymmetric) = nsn v0.3."""
     dtype = x.dtype
     xf = x.float()
     n = xf.norm(dim=-1, keepdim=True).clamp(min=1e-12)

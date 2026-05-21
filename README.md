@@ -1,7 +1,7 @@
-# modeq
+# NSN
 
-**Mode-aware KV cache quantization for Transformers.**
-Drop-in INT3, calibration-free, ~10 lines of Python, **5.09× memory reduction** at < 5 % ΔPPL on 8 of 8 open-weight models we tested (2021–2026).
+**Norm-Separated KV cache quantization for Transformers.**
+Drop-in INT3, calibration-free, ~10 lines of Python, **5.09× memory reduction** at < 5 % ΔPPL on 8 of 8 open-weight models we tested (2021–2026). The reference implementation ships as the `nsn` Python package; the recipe is documented in the [NSN preprint](paper/nsn.pdf) (*Norm Separation is Necessary*).
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.9+-green.svg)](#install)
@@ -12,7 +12,7 @@ Drop-in INT3, calibration-free, ~10 lines of Python, **5.09× memory reduction**
 ## Install
 
 ```bash
-pip install git+https://github.com/metaSATOKEN/modeq.git
+pip install git+https://github.com/metaSATOKEN/nsn.git
 ```
 
 Requires Python 3.9+ and PyTorch 2.0+. *PyPI registration is pending — tracked for the v0.5 / Zenodo-paper release. See [EXPERIMENT_REPORT.md](EXPERIMENT_REPORT.md#installation) for the git-clone + editable-install path if you plan to run experiments locally.*
@@ -45,7 +45,7 @@ Closed-form arithmetic on the input's own statistics. No training, no calibratio
 ## Use the real bit-packed cache
 
 ```python
-from modeq import Int3AsymNsepPchanCache
+from nsn import Int3AsymNsepPchanCache
 
 cached = Int3AsymNsepPchanCache.from_fp16(k)  # pack to 3-bit storage
 k_recon = cached.to_fp16()                    # reconstruct for attention
@@ -73,7 +73,7 @@ Low-bit KV cache quantization *usually* scales smoothly with bit width — excep
 
 ![Naive INT quantization ΔPPL vs bit width on 7 models (log y-axis). Qwen2-7B spikes at INT4 (+1382 ΔPPL); the other 6 models scale monotonically.](figures/fig01_int4_valley.png)
 
-modeq's v0.3 recipe handles the valley and the common case under the same bit budget at **3 bits/value with no calibration data** and no model-specific configuration.
+The NSN recipe handles the valley and the common case under the same bit budget at **3 bits/value with no calibration data** and no model-specific configuration.
 
 ---
 
@@ -146,14 +146,15 @@ Going to 4 bits costs 33 % more memory for a further quality gain; v0.3 at 3 bit
 - **[EXPERIMENT_REPORT.md](EXPERIMENT_REPORT.md)** — casual long-form writeup (~540 lines): full protocols, dead-ends (Walsh–Hadamard rotation, top-K mixed precision), MMLU downstream probe, Phase 23 mechanism math, all the gory details
 - **[paper/nsn.pdf](paper/nsn.pdf)** — formal paper (27 pages, Zenodo-ready): academic writeup with full citations, Fisher-exact analyses, confounder caveats, 6 appendices
 - **[docs/THEORY.md](docs/THEORY.md)** — two-failure-modes background and the v0.2 → v0.3 update
-- **[metaSATOKEN/lab-ssm](https://github.com/metaSATOKEN/lab-ssm)** — companion paper LAB (Lyapunov-Aware Bit-allocation): a Lyapunov-aware bit allocator for state-space model state quantisation. Closed-form per-state-group bit allocation driven by spectral radius and output coupling; 2.6× state-cache compression at +2.5–5.2% PPL on the state-spaces Mamba-1 family. Zenodo DOI [10.5281/zenodo.20017854](https://doi.org/10.5281/zenodo.20017854). Started here as `paper_c/` and migrated to its own repository at v1.0.0 once it became content-complete
+- **[metaSATOKEN/lab-ssm](https://github.com/metaSATOKEN/lab-ssm)** — companion paper **LAB** (Lyapunov-Aware Bit-allocation, v2.0.0): closed-form per-state-group bit allocation for state-space model recurrent-state quantisation, derived from a discrete-time Lyapunov bound. ~2.6× state-cache compression at +3.4 – 4.0% PPL on the state-spaces Mamba-1 family (130M – 2.8B). Zenodo DOI [10.5281/zenodo.20017854](https://doi.org/10.5281/zenodo.20017854).
+- **[metaSATOKEN/Substrate-Aware-Diagnostic-and-Prescription](https://github.com/metaSATOKEN/Substrate-Aware-Diagnostic-and-Prescription)** — companion paper **sadp** (v1.0.0): a per-substrate compiler for mixed-precision quantization of hybrid LLMs that composes NSN (K substrate) and LAB (S substrate) under a deterministic three-branch decision tree.
 
 ## Scope and honesty notes (quick)
 
 - Primary quality metric is **WikiText-2 sliding-window perplexity**. Two bounded downstream probes (MMLU 5-shot on 2 models, NIH on 3 models at 8K/32K) show no degradation; reasoning / code / instruction-following / LongBench are *not* yet measured.
 - **Throughput**: measured. `Int3AsymNsepPchanCache.to_fp16_compiled()` (v0.3.12) adds **+2.4 % (Qwen2-7B) / +4.2 % (Llama-3.1-8B)** per-token decode overhead vs FP16 baseline on A100 Colab (Phase 27). A naive per-head Python loop is much slower (+146 / +354 %); the `torch.compile` inside `.to_fp16_compiled()` fuses the small kernels into 1-2 compiled kernels and removes essentially all overhead. No hand-written CUDA kernel required.
 - **Non-monotone naive-quantization failures**: characterized in detail on four Qwen checkpoints (Qwen2-7B INT4 valley, Qwen2.5-1.5B INT3 spike, Qwen2.5-3B INT3 valley, Qwen2.5-7B three-peak INT2 / INT4 / INT6). All rescued by the v0.3 recipe. Non-Qwen families have not been probed at the same bit-width granularity; we don't claim the pattern generalizes beyond Qwen.
-- **`usable` label**: a modeq-internal threshold (< 5 % of baseline WikiText-2 ΔPPL), **not** a deployment certification.
+- **`usable` label**: an NSN-internal threshold (< 5 % of baseline WikiText-2 ΔPPL), **not** a deployment certification.
 
 ## Citation
 

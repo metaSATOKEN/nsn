@@ -18,10 +18,10 @@ v0.3 exports two cache classes:
   for backwards compatibility and for benchmarks that need the
   original per-channel absmax quantizer.
 
-Typical usage (illustrative; see `modeq.integrations.*` for
+Typical usage (illustrative; see `nsn.integrations.*` for
 drop-in HF Transformers hooks when they land):
 
-    from modeq import Int3AsymNsepPchanCache
+    from nsn import Int3AsymNsepPchanCache
 
     # Compress a Key or Value tensor [B, H, T, D] from an FP16 cache
     cached = Int3AsymNsepPchanCache.from_fp16(k)

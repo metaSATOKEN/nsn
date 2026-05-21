@@ -1,12 +1,12 @@
 # Copyright 2026 Kentaro Sato
 # Licensed under the Apache License, Version 2.0
 
-"""Tests for modeq's v0.2 residual correction variants."""
+"""Tests for nsn's v0.2 residual correction variants."""
 
 import pytest
 import torch
 
-from modeq.quantize import (
+from nsn.quantize import (
     qa_nsep_pchan,
     qa_nsep_pchan_resid_rms,
     qa_nsep_pchan_resid_fixed,

@@ -6,7 +6,7 @@
 import pytest
 import torch
 
-from modeq.quantize import qa_nsep_pchan, qa_nsep_pchan_2tier
+from nsn.quantize import qa_nsep_pchan, qa_nsep_pchan_2tier
 
 
 # ---------------------------------------------------------------------------
@@ -167,7 +167,7 @@ def test_2tier_k_near_d():
 # ---------------------------------------------------------------------------
 
 def test_apply_method_dispatch_2tier():
-    from modeq.quantize import apply_method
+    from nsn.quantize import apply_method
     torch.manual_seed(0)
     x = torch.randn(32, 128, dtype=torch.float32)
     y = apply_method(x, "nsep+pchan+2tier", bits=3)

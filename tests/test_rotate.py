@@ -1,7 +1,7 @@
 # Copyright 2026 Kentaro Sato
 # Licensed under the Apache License, Version 2.0
 
-"""Unit tests for modeq.rotate (Walsh-Hadamard helpers) and the
+"""Unit tests for nsn.rotate (Walsh-Hadamard helpers) and the
 qa_nsep_pchan_rotated quantizer."""
 
 import math
@@ -9,14 +9,14 @@ import math
 import pytest
 import torch
 
-from modeq.rotate import (
+from nsn.rotate import (
     hadamard_matrix,
     rotate,
     unrotate,
     should_rotate,
     cached_hadamard,
 )
-from modeq.quantize import qa_nsep_pchan, qa_nsep_pchan_rotated
+from nsn.quantize import qa_nsep_pchan, qa_nsep_pchan_rotated
 
 
 # ---------------------------------------------------------------------------
@@ -225,8 +225,8 @@ def test_select_quantizer_int3_always_returns_asym_in_v03():
     """In v0.3, select_quantizer at target_bits=3 always returns the
     asymmetric variant (regardless of mode or layer_idx). Rotation was
     removed from the dispatcher after Phase 10."""
-    from modeq.mode_aware import select_quantizer
-    from modeq.quantize import qa_nsep_pchan_asym
+    from nsn.mode_aware import select_quantizer
+    from nsn.quantize import qa_nsep_pchan_asym
 
     torch.manual_seed(0)
     x = torch.randn(16, 128, dtype=torch.float32)
@@ -250,7 +250,7 @@ def test_select_quantizer_int3_always_returns_asym_in_v03():
 def test_describe_selection_int3_mentions_asym():
     """describe_selection at target_bits=3 should identify the v0.3
     asymmetric default in the method string."""
-    from modeq.mode_aware import describe_selection
+    from nsn.mode_aware import describe_selection
     for mode in ["Mode 1", "Mode 2", "borderline", "unknown"]:
         desc = describe_selection(mode=mode, target_bits=3)
         method_lower = desc["method"].lower()

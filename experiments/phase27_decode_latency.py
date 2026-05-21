@@ -8,7 +8,7 @@
 # Int3AsymNsepPchanCache adds roughly "+21 % decode latency on
 # 7B-class models", and that a fused CUDA kernel would remove
 # most of that overhead. This "+21 %" figure is a rough estimate
-# carried over from the src/modeq/pack.py docstring; it has not
+# carried over from the src/nsn/pack.py docstring; it has not
 # been directly measured on the full decode pipeline. A human
 # reviewer reasonably flagged this as a weak spot -- without a
 # measured number, the 21 % is just a hand-wave.
@@ -52,9 +52,9 @@
 #     on the 8-model benchmark set.
 #
 # The Int3AsymNsepPchanCache and pack / unpack primitives are
-# INLINED below (verbatim copy of src/modeq/cache.py and
-# src/modeq/pack.py at commit f089e7a) so this script runs
-# standalone on Colab without needing the modeq repository to
+# INLINED below (verbatim copy of src/nsn/cache.py and
+# src/nsn/pack.py at commit f089e7a) so this script runs
+# standalone on Colab without needing the nsn repository to
 # be pip-installable (the repo is private at the time of this
 # run).
 #
@@ -98,7 +98,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
 # =============================================================
-# === CELL V2 === Inlined pack / unpack (verbatim from modeq)
+# === CELL V2 === Inlined pack / unpack (verbatim from nsn)
 # =============================================================
 
 def pack_int3_unsigned(x_int8, strict=True):
