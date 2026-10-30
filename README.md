@@ -58,7 +58,9 @@ Acquisition-time source identifiers in original records are resolved through [so
 
 ## Availability, attribution, and license
 
-The integrated v1.0 package is being staged at [https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn) on 30 October 2026. **The repository remains private during migration.** The 17 companion evidence ZIPs (6.30 GB total) are prepared for a separate Release and have not yet been attached. Their filenames and SHA-256 hashes are listed in [release-assets.json](metadata/release-assets.json). A repository-only checkout therefore does not include all raw arrays. No integrated-paper DOI has been assigned.
+The integrated v1.0 package is hosted at [https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn), with **17 evidence ZIPs and SHA256SUMS in the [integrated-v1.0 Release](https://github.com/metaSATOKEN/nsn/releases/tag/integrated-v1.0)**. The ZIPs total 6.30 GB and remain outside Git history. Download all 17 ZIPs into one directory without renaming them, then follow [REPRODUCIBILITY.md](REPRODUCIBILITY.md). Filenames, sizes, hashes and download URLs are listed in [release-assets.json](metadata/release-assets.json). GitHub's automatic source archives do not include these companion arrays.
+
+**The repository remains private pending the author's public-access decision.** Authorized repository users can access its Release assets. No integrated-paper DOI has been assigned.
 
 The earlier public NSN paper is [*Norm Separation is Necessary*, v1.0.0](https://doi.org/10.5281/zenodo.19724817). The integrated paper combines its reanalysis with subsequent implementation and looped-model evaluations. See [publication provenance](papers/nsn-integrated/publication-provenance-v0.1-2026-10-03.md).
 

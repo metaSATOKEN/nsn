@@ -63,8 +63,6 @@
     "compressed_executable_payload_assignments": 0
   },
   "remaining_publication_steps": [
-    "Attach all 17 evidence ZIPs and SHA256SUMS to an integrated Release",
-    "Verify attachment metadata and record URLs",
     "Author decides public visibility",
     "Re-export corrected PDFs if included",
     "Assign integrated archive DOI if desired"
@@ -110,8 +108,11 @@
     "legacy_library_source_files_byte_identical": 7,
     "library_version": "0.3.12",
     "integrated_edition": "1.0",
-    "assets": "pending attachment",
+    "assets": "17 ZIPs and SHA256SUMS uploaded; sizes and GitHub SHA-256 digests match",
     "new_model_calls": 0,
-    "scientific_reanalysis": false
+    "scientific_reanalysis": false,
+    "release_tag": "integrated-v1.0",
+    "release_id": 428694000,
+    "release_url": "https://github.com/metaSATOKEN/nsn/releases/tag/integrated-v1.0"
   }
 }

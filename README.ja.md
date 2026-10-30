@@ -49,6 +49,6 @@ LLMは、それまで読んだ情報をattention用の「KVキャッシュ」に
 
 GitHub本体には原稿・図・コード・集計と読めるログを置き、保存配列と大きなログは別配布ZIPへ分けています。元の入力や結果を変更する処理ではありません。
 
-2026-10-30に[https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn)への統合版移行を準備しています。**移行中はプライベートを維持します。** 17本の別配布ZIP（計約6.30 GB）は準備済みで、Releaseへの添付はまだ完了していません。Gitの取得だけでは全保存配列は揃いません。[旧版とライブラリの案内](LEGACY.md)。コードはApache-2.0、著者作成の論文・図・データはCC BY 4.0、第三者資料は元の条件を保持します。[利用条件](LICENSES.md)。現在のPDFは表紙の旧メールアドレス訂正後に追加するため、今回は訂正済みMDを収録しています。
+統合版は[https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn)に収録し、**17本のデータZIPとSHA256SUMS（ZIP計約6.30 GB）を[integrated-v1.0 Release](https://github.com/metaSATOKEN/nsn/releases/tag/integrated-v1.0)に添付**しています。ZIPはすべて同じディレクトリへ、改名せず取得してください。GitHubが自動生成するソースアーカイブには、この別配布データは入りません。[再現手順](REPRODUCIBILITY.md)から照合・復元できます。**著者の公開判断まではリポジトリをプライベートに保つため、閲覧権限が必要です。** [旧版とライブラリの案内](LEGACY.md)。コードはApache-2.0、著者作成の論文・図・データはCC BY 4.0、第三者資料は元の条件を保持します。[利用条件](LICENSES.md)。現在のPDFは表紙の旧メールアドレス訂正後に追加するため、今回は訂正済みMDを収録しています。
 
 内部の台帳・運用履歴は公開対象から除外しました。論文に必要な実験条件は `plans/prespecified/`、数値検証は [data/validation](data/validation/README.md) に収録しています。

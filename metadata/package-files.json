@@ -13,8 +13,8 @@
     },
     {
       "path": "CITATION.cff",
-      "bytes": 1302,
-      "sha256": "0690d4cfe90c99cc5ab0edf8a74aa01b5ebd246e6990f8c8534b35aa277cb772"
+      "bytes": 1331,
+      "sha256": "2381a451319692d6633900f2ce6bd447680e3c066988fcc1cd72be0b4971c435"
     },
     {
       "path": "DATA_COVERAGE.md",
@@ -58,18 +58,18 @@
     },
     {
       "path": "PUBLISHING.md",
-      "bytes": 2033,
-      "sha256": "a5c88a312d12fedb402de649b8bf14a1a9ba79094df48b11279c86c9a7605c8e"
+      "bytes": 1900,
+      "sha256": "1f086f0744ffc78ce7249094fbfd84484095e2fd206e457e8d1ee75edf0eea9c"
     },
     {
       "path": "README.ja.md",
-      "bytes": 5143,
-      "sha256": "fbce40438c4ce4b7a3dfebe0c4b23fefcb401e13f1fc84aa43459612a0cd4dce"
+      "bytes": 5435,
+      "sha256": "168b88dede53f6e24d4336504add216a8dd151e25ce284a68070584385a86146"
     },
     {
       "path": "README.md",
-      "bytes": 6872,
-      "sha256": "1298167916afab435c9b9cad01547a22aed537eee4a90f0cd7527860ba1b8edf"
+      "bytes": 7143,
+      "sha256": "1af5ad1ea7c38007861e86688d8bf3473da010d9ba17f377052101587210ea25"
     },
     {
       "path": "RELEASE_NOTES.md",
@@ -78,8 +78,8 @@
     },
     {
       "path": "REPRODUCIBILITY.md",
-      "bytes": 6288,
-      "sha256": "ec44542b680521ffdecbbe234451741bf48eb1dab436a0024c7b84bd3db4422f"
+      "bytes": 6656,
+      "sha256": "90789ff86fab29b54cebfe0a039f00efce3dda7feba3008e741b1f57884ef232"
     },
     {
       "path": "RUNNING.md",
@@ -1608,8 +1608,8 @@
     },
     {
       "path": "metadata/publication-validation.json",
-      "bytes": 4675,
-      "sha256": "7f96376eeca901bf042a47e84f900680c83219d3a633a7e07de3d9d72627cb60"
+      "bytes": 4756,
+      "sha256": "d90df9fc137ac66254b49169b9d6650a1d30008daa4a4e68dda23eb7f8f3ae20"
     },
     {
       "path": "metadata/readable-source-conversion.json",
@@ -1618,8 +1618,8 @@
     },
     {
       "path": "metadata/release-assets.json",
-      "bytes": 431399,
-      "sha256": "d4771a24e477d03d07aa71fe8da367b10695c38ccd8a0ab26e969fee6c64c3cb"
+      "bytes": 435963,
+      "sha256": "c7bb0501a01c97c1c956cbe0e2dc38199982705f68e9f3a6e0ffe9cffff98b69"
     },
     {
       "path": "metadata/reproduction-20261029.json",
@@ -1653,8 +1653,8 @@
     },
     {
       "path": "metadata/source-files.json",
-      "bytes": 1756495,
-      "sha256": "cdac27a149be15f1393d599582a257771f02340f77ed18732c7b2cd735210533"
+      "bytes": 1757200,
+      "sha256": "8fb3f0bd9531dded87c706b5282891a15db5c2494279b98f9f98c23b2eace358"
     },
     {
       "path": "metadata/source-layout.json",

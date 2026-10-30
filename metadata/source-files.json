@@ -43529,5 +43529,27 @@
     "source": "publication preparation 2026-10-29",
     "copy": "new publication support file",
     "location": "repository"
+  },
+  {
+    "path": "pyproject.toml",
+    "bytes": 1466,
+    "sha256": "fa83af38694b1f2354f14e258a74a832944860c551d19474bcdeeacbc3b11d4b",
+    "roles": [
+      "GitHub migration support"
+    ],
+    "source": "https://github.com/metaSATOKEN/nsn/blob/dc6b52a0b8698c4d1971273fac309bf8e0cbdd6d/pyproject.toml",
+    "copy": "Library packaging retained with neutral description",
+    "location": "repository"
+  },
+  {
+    "path": "LEGACY.md",
+    "bytes": 2214,
+    "sha256": "84e61dd71cde4b507e64ecccebce41ed65a7027cfc0266d057566efbe382e1b2",
+    "roles": [
+      "GitHub migration support"
+    ],
+    "source": "GitHub migration 2026-10-30",
+    "copy": "New legacy navigation",
+    "location": "repository"
   }
 ]

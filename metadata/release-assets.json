@@ -1,7 +1,7 @@
 {
   "version": 1,
   "date": "2026-10-29",
-  "status": "local preparation; not uploaded",
+  "status": "Uploaded to the private integrated-v1.0 Release; author controls public visibility",
   "assets": [
     {
       "filename": "nsn-ac08-evidence-01-20261029.zip",
@@ -270,7 +270,10 @@
           "sha256": "c2737802b1632a22adef1a863c0dc443082b14c5d2deac177f0e39a01ae755a9"
         }
       ],
-      "url": null
+      "url": null,
+      "download_url": "https://github.com/metaSATOKEN/nsn/releases/download/integrated-v1.0/nsn-ac08-evidence-01-20261029.zip",
+      "github_asset_id": 691106310,
+      "github_sha256": "220fe1d8afc16a156953fcdfc9dacad942476ed562440022d640d2231727dd9c"
     },
     {
       "filename": "nsn-ac08-evidence-02-20261029.zip",
@@ -1034,7 +1037,10 @@
           "sha256": "17c2c1653a11859f8c86c84748b424a5e8e62cc6b5f954d0c16890088f55cae6"
         }
       ],
-      "url": null
+      "url": null,
+      "download_url": "https://github.com/metaSATOKEN/nsn/releases/download/integrated-v1.0/nsn-ac08-evidence-02-20261029.zip",
+      "github_asset_id": 691098818,
+      "github_sha256": "ba4e6155deabb6054745c9ac7bae7e4f0f97448237e763155db49f646b2bf795"
     },
     {
       "filename": "nsn-ac08-evidence-03-20261029.zip",
@@ -1518,7 +1524,10 @@
           "sha256": "0f091802bc01a91b51518dc98585f9640fed285138e14b7a045dcc426b47a452"
         }
       ],
-      "url": null
+      "url": null,
+      "download_url": "https://github.com/metaSATOKEN/nsn/releases/download/integrated-v1.0/nsn-ac08-evidence-03-20261029.zip",
+      "github_asset_id": 691104201,
+      "github_sha256": "386637b46b6a2812ee99d4b19e9c9fb1c6e6aba563281497da8eee3f541d6ede"
     },
     {
       "filename": "nsn-ac08-evidence-04-20261029.zip",
@@ -1667,7 +1676,10 @@
           "sha256": "b3ed359e21c30fb8dc89857b1e5238a1380cea04cb3624796da9cbbb537cd212"
         }
       ],
-      "url": null
+      "url": null,
+      "download_url": "https://github.com/metaSATOKEN/nsn/releases/download/integrated-v1.0/nsn-ac08-evidence-04-20261029.zip",
+      "github_asset_id": 691102558,
+      "github_sha256": "b603ba7cc5da1a2d6c749abddb6db6d83a68e3460425d4c958f84bf797dcc61e"
     },
     {
       "filename": "nsn-ac08-evidence-05-20261029.zip",
@@ -1816,7 +1828,10 @@
           "sha256": "da80c4ecdf26b0a4743ad856c85a7d18aad92ba37ace3e65a730d04b186f6290"
         }
       ],
-      "url": null
+      "url": null,
+      "download_url": "https://github.com/metaSATOKEN/nsn/releases/download/integrated-v1.0/nsn-ac08-evidence-05-20261029.zip",
+      "github_asset_id": 691100770,
+      "github_sha256": "face4b2f94718e5976e8105ea82f7bf7dad61b1fdd3f6f105df3688a2b22b564"
     },
     {
       "filename": "nsn-ac08-evidence-06-20261029.zip",
@@ -1970,7 +1985,10 @@
           "sha256": "cb0e507e30e3f77e2db22b514c37fcdee2f9009b0f53b9a495a02a6c39d3c978"
         }
       ],
-      "url": null
+      "url": null,
+      "download_url": "https://github.com/metaSATOKEN/nsn/releases/download/integrated-v1.0/nsn-ac08-evidence-06-20261029.zip",
+      "github_asset_id": 691107905,
+      "github_sha256": "d37337292732443c5cccf385c5bffd46f7e584d14c2c52d28c53c83c0dbe184f"
     },
     {
       "filename": "nsn-ac08-evidence-07-20261029.zip",
@@ -2124,7 +2142,10 @@
           "sha256": "5ea9082cce822bf41272caaccbd1f9aa3d7c15c76e915b428ddd28d4e660a3c8"
         }
       ],
-      "url": null
+      "url": null,
+      "download_url": "https://github.com/metaSATOKEN/nsn/releases/download/integrated-v1.0/nsn-ac08-evidence-07-20261029.zip",
+      "github_asset_id": 691111716,
+      "github_sha256": "f706c3ce5ff3b0daadf7048c938f268e8800a7d90e464bc5387dcc8de5203e77"
     },
     {
       "filename": "nsn-ac08-evidence-08-20261029.zip",
@@ -2273,7 +2294,10 @@
           "sha256": "2e230ba2a5e179f459426f28128d9cebe4a74ca70e33bb6538cb914a5f5ba4d0"
         }
       ],
-      "url": null
+      "url": null,
+      "download_url": "https://github.com/metaSATOKEN/nsn/releases/download/integrated-v1.0/nsn-ac08-evidence-08-20261029.zip",
+      "github_asset_id": 691094635,
+      "github_sha256": "471b099e26dde01c5e6810d179728b79c3a967d065414358ee1f19fe78758749"
     },
     {
       "filename": "nsn-ac08-evidence-09-20261029.zip",
@@ -2422,7 +2446,10 @@
           "sha256": "438edfc6aa51565bda4dc6a7d280e227b73a99aecfad3d6c0bfe8bd164e39501"
         }
       ],
-      "url": null
+      "url": null,
+      "download_url": "https://github.com/metaSATOKEN/nsn/releases/download/integrated-v1.0/nsn-ac08-evidence-09-20261029.zip",
+      "github_asset_id": 691092028,
+      "github_sha256": "3cd01c1a42ce232f8e507457ca1f0433d0ea65b84e6d9f2396aa733f667b39bd"
     },
     {
       "filename": "nsn-ac08-evidence-10-20261029.zip",
@@ -2886,7 +2913,10 @@
           "sha256": "cfab4f685950e75e8180dc834176c277871d4a1863c53abdd8e0dcd83a312761"
         }
       ],
-      "url": null
+      "url": null,
+      "download_url": "https://github.com/metaSATOKEN/nsn/releases/download/integrated-v1.0/nsn-ac08-evidence-10-20261029.zip",
+      "github_asset_id": 691096922,
+      "github_sha256": "f87bba6621b6d5470b316523d79e341e16a86ba5cff9d3c47f809671c09c33d2"
     },
     {
       "filename": "nsn-ac08-evidence-11-20261029.zip",
@@ -2915,7 +2945,10 @@
           "sha256": "a3a8256a53a07123532cf06356954c33fa8a132f04b9abd6ac8b157449581f13"
         }
       ],
-      "url": null
+      "url": null,
+      "download_url": "https://github.com/metaSATOKEN/nsn/releases/download/integrated-v1.0/nsn-ac08-evidence-11-20261029.zip",
+      "github_asset_id": 691106067,
+      "github_sha256": "38f5634a79ae3ab183701e12cd83cf14336ef8ffca12fb64aabddfd41c5b5a25"
     },
     {
       "filename": "nsn-iv01-evidence-01-20261029.zip",
@@ -3874,7 +3907,10 @@
           "sha256": "b646bdd1e04159828f3b92f099175b833f9751f31d135fd7f2f210c4c94fbd58"
         }
       ],
-      "url": null
+      "url": null,
+      "download_url": "https://github.com/metaSATOKEN/nsn/releases/download/integrated-v1.0/nsn-iv01-evidence-01-20261029.zip",
+      "github_asset_id": 691111038,
+      "github_sha256": "74f96f626c1d7b0a75bca732e1a11a80debcb683e3ee751c64b33f788fb7d59c"
     },
     {
       "filename": "nsn-kv01-evidence-01-20261029.zip",
@@ -4048,7 +4084,10 @@
           "sha256": "c301f7e88997366fac0e1e1d44470308c9f9eb2b92f93d383cfacba79b00faaf"
         }
       ],
-      "url": null
+      "url": null,
+      "download_url": "https://github.com/metaSATOKEN/nsn/releases/download/integrated-v1.0/nsn-kv01-evidence-01-20261029.zip",
+      "github_asset_id": 691090465,
+      "github_sha256": "c72ebaf6567887592335cdbecf603afd6f936f7e370527a215a468f72c264eb5"
     },
     {
       "filename": "nsn-nb05-evidence-01-20261029.zip",
@@ -4377,7 +4416,10 @@
           "sha256": "163989236943d03d00f543c869a0a86a6ff6acdd9b73b03d58aa3039626c7d76"
         }
       ],
-      "url": null
+      "url": null,
+      "download_url": "https://github.com/metaSATOKEN/nsn/releases/download/integrated-v1.0/nsn-nb05-evidence-01-20261029.zip",
+      "github_asset_id": 691113181,
+      "github_sha256": "8b1c64d390742f030b74b2e726fb8e996aa0c4d2b758b49b225b7da37f333eed"
     },
     {
       "filename": "nsn-nb06-evidence-01-20261029.zip",
@@ -4786,7 +4828,10 @@
           "sha256": "d373d969821aabf88a4f7619686784926d9a4fed78577d11135e2aa6a05d023b"
         }
       ],
-      "url": null
+      "url": null,
+      "download_url": "https://github.com/metaSATOKEN/nsn/releases/download/integrated-v1.0/nsn-nb06-evidence-01-20261029.zip",
+      "github_asset_id": 691093657,
+      "github_sha256": "b631739ef4c4ce958d34f7aeeeb501756adb37176d58444e2d2e8fdbef299392"
     },
     {
       "filename": "nsn-vf01-evidence-01-20261029.zip",
@@ -4950,7 +4995,10 @@
           "sha256": "dafdd1a477086486245da437f47ac62606e34bb57ad8b57985d7837b7f81c479"
         }
       ],
-      "url": null
+      "url": null,
+      "download_url": "https://github.com/metaSATOKEN/nsn/releases/download/integrated-v1.0/nsn-vf01-evidence-01-20261029.zip",
+      "github_asset_id": 691090559,
+      "github_sha256": "404f346b2609612059a00264de2c40cfeb91fe7ecdd5657ed90a9044cd07a16f"
     },
     {
       "filename": "nsn-vf01-evidence-02-20261029.zip",
@@ -8519,7 +8567,13 @@
           "sha256": "b8be984ad556efabbd587219fb0ef3c964a7b63a4e02a21088eb926ce605bbaa"
         }
       ],
-      "url": null
+      "url": null,
+      "download_url": "https://github.com/metaSATOKEN/nsn/releases/download/integrated-v1.0/nsn-vf01-evidence-02-20261029.zip",
+      "github_asset_id": 691114230,
+      "github_sha256": "861bfc6f2df8352acca3d042cdc970001ceb30ec572ab42ad5ab5d610b62d9fb"
     }
-  ]
+  ],
+  "repository_url": "https://github.com/metaSATOKEN/nsn",
+  "release_url": "https://github.com/metaSATOKEN/nsn/releases/tag/integrated-v1.0",
+  "release_tag": "integrated-v1.0"
 }

@@ -9,7 +9,7 @@ authors:
     email: info@metaclan.jp
 version: "1.0"
 repository-code: "https://github.com/metaSATOKEN/nsn"
-url: "https://github.com/metaSATOKEN/nsn"
+url: "https://github.com/metaSATOKEN/nsn/releases/tag/integrated-v1.0"
 license:
   - Apache-2.0
   - CC-BY-4.0

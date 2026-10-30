@@ -1,5 +1,7 @@
 # Reproduction guide
 
+Obtain the 17 companion ZIPs and `SHA256SUMS` from the [integrated-v1.0 Release](https://github.com/metaSATOKEN/nsn/releases/tag/integrated-v1.0). Put them together in `../github-release-assets/` (or pass another directory with `--assets-dir`). The repository and Release currently require authorized access. GitHub's source ZIP/tarball contains the repository only.
+
 Use the research root's `.venv/bin/python`, as described in [RUNNING.md](RUNNING.md). The three operations below have different effects: hash checking reads files, restoration creates a new copy, and scientific reproduction calculates values and writes new outputs.
 
 ## 1. Check the repository and companion ZIPs
