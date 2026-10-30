@@ -1,0 +1,14 @@
+def _iv01_shape_qk(g, tail, q):
+    t = w.torch
+    w.require(tail.ndim == 4 and tail.shape[0] == 1 and (tail.shape[-1] == 128) and (tail.dtype == t.bfloat16) and tail.is_contiguous(), 'Tail shape/type')
+    h = tail.shape[1]
+    w.require(h > 0 and tuple(q.shape) == (1, h, 1, 128) and (q.dtype == t.bfloat16) and q.is_contiguous(), 'Query shape/type')
+    w.require(q.device == tail.device and tail.device.type == 'cuda', 'CUDA only; no fallback')
+    compressed = 0
+    if g is not None:
+        b, gh, blocks = ref.shape_check(g, t.bfloat16)
+        w.require(b == 1 and gh == h and (g['codes'].device == tail.device), 'Packed head/device mismatch')
+        compressed = blocks * 64
+    w.require(tail.shape[-2] + compressed > 0, 'Empty sequence')
+    values = [q, tail] + ([] if g is None else list(g['metas']))
+    return (h, compressed, compressed + tail.shape[-2])

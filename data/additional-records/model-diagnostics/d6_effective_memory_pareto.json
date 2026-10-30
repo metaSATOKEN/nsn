@@ -1,0 +1,168 @@
+{
+  "Zamba2-1.2B": {
+    "rows": [
+      {
+        "policy_id": "pi_Z4_K_INT3_L17_INT4_S_LAB_b3",
+        "K": "INT3 except L17 INT4",
+        "S": "LAB b3",
+        "delta_pct": 2.6019858607366815,
+        "source": "D-5 NEW",
+        "b_K_eff": 3.1666666666666665,
+        "b_S_eff": 3.33,
+        "b_total_eff": 3.21289
+      },
+      {
+        "policy_id": "pi_Z1_K_INT4_S_LAB_b3",
+        "K": "INT4 all",
+        "S": "LAB b3",
+        "delta_pct": -0.16464848796184245,
+        "source": "D-5 NEW",
+        "b_K_eff": 4.0,
+        "b_S_eff": 3.33,
+        "b_total_eff": 3.81039
+      },
+      {
+        "policy_id": "pi_Z6_K_INT3_S_LAB_b6",
+        "K": "INT3 all",
+        "S": "LAB b6",
+        "delta_pct": 2.159,
+        "source": "D-2 v0.2 C7",
+        "b_K_eff": 3.0,
+        "b_S_eff": 6.33,
+        "b_total_eff": 3.9423899999999996
+      },
+      {
+        "policy_id": "pi_Z5_global_INT4",
+        "K": "INT4 all (uniform)",
+        "S": "uniform b4",
+        "delta_pct": 0.822,
+        "source": "D-2 v0.2 C5",
+        "b_K_eff": 4.0,
+        "b_S_eff": 4.0,
+        "b_total_eff": 4.0
+      },
+      {
+        "policy_id": "pi_Z3_K_INT3_L17_INT4_S_LAB_b6",
+        "K": "INT3 except L17 INT4",
+        "S": "LAB b6",
+        "delta_pct": 1.92,
+        "source": "D-3b C10",
+        "b_K_eff": 3.1666666666666665,
+        "b_S_eff": 6.33,
+        "b_total_eff": 4.06189
+      },
+      {
+        "policy_id": "pi_Z2_K_INT4_S_LAB_b4",
+        "K": "INT4 all",
+        "S": "LAB b4",
+        "delta_pct": -0.25441733983466797,
+        "source": "D-5 NEW",
+        "b_K_eff": 4.0,
+        "b_S_eff": 4.33,
+        "b_total_eff": 4.093389999999999
+      },
+      {
+        "policy_id": "pi_Z0_FP16",
+        "K": "FP16",
+        "S": "FP16",
+        "delta_pct": 0.0,
+        "source": "D-5 NEW",
+        "b_K_eff": 16.0,
+        "b_S_eff": 16.0,
+        "b_total_eff": 16.0
+      }
+    ],
+    "pareto_front": [
+      "pi_Z4_K_INT3_L17_INT4_S_LAB_b3",
+      "pi_Z1_K_INT4_S_LAB_b3",
+      "pi_Z2_K_INT4_S_LAB_b4"
+    ],
+    "naive_dominated": [
+      "pi_Z5_global_INT4"
+    ],
+    "geometry": "within_layer_coupled"
+  },
+  "Jamba-1.5-Mini": {
+    "rows": [
+      {
+        "policy_id": "pi_J6_K_INT3_S_LAB_b5",
+        "K": "INT3 all",
+        "S": "LAB b5",
+        "delta_pct": 5.431386524661576,
+        "source": "D-5 NEW",
+        "b_K_eff": 3.0,
+        "b_S_eff": 5.18,
+        "b_total_eff": 3.66272
+      },
+      {
+        "policy_id": "pi_J1_K_INT3_S_LAB_b6",
+        "K": "INT3 all",
+        "S": "LAB b6",
+        "delta_pct": 0.283,
+        "source": "D-2 v0.2 C7",
+        "b_K_eff": 3.0,
+        "b_S_eff": 6.18,
+        "b_total_eff": 3.96672
+      },
+      {
+        "policy_id": "pi_J5_global_INT4",
+        "K": "INT4 all (uniform)",
+        "S": "uniform b4",
+        "delta_pct": 39.443,
+        "source": "D-2 v0.2 C5",
+        "b_K_eff": 4.0,
+        "b_S_eff": 4.0,
+        "b_total_eff": 4.0
+      },
+      {
+        "policy_id": "pi_J2_K_INT4_S_LAB_b6",
+        "K": "INT4 all",
+        "S": "LAB b6",
+        "delta_pct": 2.8465407078534697,
+        "source": "D-5 NEW",
+        "b_K_eff": 4.0,
+        "b_S_eff": 6.18,
+        "b_total_eff": 4.66272
+      },
+      {
+        "policy_id": "pi_J4_K_partial_S_LAB_b6",
+        "K": "{L4,L12} INT3 only",
+        "S": "LAB b6",
+        "delta_pct": 0.533,
+        "source": "D-3a C8.4+12",
+        "b_K_eff": 9.5,
+        "b_S_eff": 6.18,
+        "b_total_eff": 8.49072
+      },
+      {
+        "policy_id": "pi_J3_K_FP16_S_LAB_b6",
+        "K": "FP16",
+        "S": "LAB b6",
+        "delta_pct": 4.556,
+        "source": "D-2 v0.2 C3",
+        "b_K_eff": 16.0,
+        "b_S_eff": 6.18,
+        "b_total_eff": 13.014719999999999
+      },
+      {
+        "policy_id": "pi_J0_FP16",
+        "K": "FP16",
+        "S": "FP16",
+        "delta_pct": 0.0,
+        "source": "D-5 NEW",
+        "b_K_eff": 16.0,
+        "b_S_eff": 16.0,
+        "b_total_eff": 16.0
+      }
+    ],
+    "pareto_front": [
+      "pi_J6_K_INT3_S_LAB_b5",
+      "pi_J1_K_INT3_S_LAB_b6",
+      "pi_J0_FP16"
+    ],
+    "naive_dominated": [
+      "pi_J5_global_INT4"
+    ],
+    "geometry": "between_layer_coupled"
+  }
+}

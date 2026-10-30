@@ -1,0 +1,68 @@
+{
+  "phase": "D-14b",
+  "title": "N_WINDOWS=5 protocol sanity check",
+  "timestamp_utc": "2026-05-06T14:10:30.789174+00:00",
+  "model": {
+    "id": "google/gemma-4-26B-A4B",
+    "label": "Gemma4-26B-A4B-base"
+  },
+  "protocol": {
+    "ctx": 1024,
+    "stride": 512,
+    "n_windows": 5,
+    "transformers_version": "5.8.0"
+  },
+  "d10c_reference": {
+    "fp16_ppl": 8.367825181251177,
+    "hero_delta_pct": 0.029,
+    "hero_recipe": "3-tier selective K + E=FP16",
+    "n_windows": 5
+  },
+  "results": {
+    "fp16": {
+      "ppl": 8.367825181251177,
+      "drift_vs_d10c": 0.0,
+      "status": "MATCH",
+      "vram_peak_gb": 53.770843136
+    },
+    "hero_3tier": {
+      "ppl": 8.370267862813472,
+      "delta_pct": 0.02919135509388885,
+      "abs_delta": 0.0024426815622948794,
+      "drift_vs_d10c_pp": 0.00019135509388884878,
+      "status": "MATCH",
+      "vram_peak_gb": 53.770843136,
+      "mask": {
+        "0": 3,
+        "1": 4,
+        "2": 3,
+        "3": 3,
+        "4": 3,
+        "6": 4,
+        "7": 3,
+        "8": 16,
+        "9": 3,
+        "10": 16,
+        "12": 4,
+        "13": 4,
+        "14": 4,
+        "15": 4,
+        "16": 4,
+        "18": 4,
+        "19": 4,
+        "20": 4,
+        "21": 4,
+        "22": 4,
+        "24": 4,
+        "25": 4,
+        "26": 4,
+        "27": 4,
+        "28": 4
+      }
+    }
+  },
+  "diagnosis": {
+    "outcome": "A",
+    "interpretation": "Outcome A: protocol drift was purely N_WINDOWS. D-14 round-4 numbers (N=3) are valid in-harness comparisons; D-10c historical (N=5) is reproduced when the protocol is matched. Adopt N=3 in section 7.6 with this cell as a convergence sanity check."
+  }
+}

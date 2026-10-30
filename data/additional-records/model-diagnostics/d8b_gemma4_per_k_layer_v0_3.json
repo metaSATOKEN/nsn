@@ -1,0 +1,269 @@
+{
+  "schema_version": "0.1.0",
+  "generated_at": "2026-05-14T09:21:50+00:00",
+  "generator": "phase_d8b_gemma4_per_k_layer.py",
+  "transformers_version": "5.8.1",
+  "model_id": "google/gemma-4-26B-A4B",
+  "model_label": "Gemma4-26B-A4B-base",
+  "purpose": "Paper D Phase D-8b — per-K-layer probe on Gemma4-26B-A4B base. Tests F14 (localisation rejection) transferability to a within-layer K+E hybrid where F27 (a) cancellation regime is active. K substrate is alone-quantised at INT3 layer-by-layer; E weights are FP16. F14 transfers if per-layer ΔPPL spread < 1 pp; otherwise per-layer K-fallback policy is worth implementing for cancellation-regime hybrids too.",
+  "protocol": {
+    "ctx": 1024,
+    "n_windows": 5,
+    "kv_recipe": "qa_nsep_pchan_asym (NSN v0.3 hero)",
+    "calib_corpus": "WikiText-2 test (model's own tokenizer)"
+  },
+  "fp16_baseline_ppl_thisrun": 8.367825181251177,
+  "fp16_baseline_ppl_reference": 8.3678,
+  "fp16_drift": 2.51812511766758e-05,
+  "n_attn_layers_full": 25,
+  "n_attn_layers_sliding": 5,
+  "attn_layers_full": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    6,
+    7,
+    8,
+    9,
+    10,
+    12,
+    13,
+    14,
+    15,
+    16,
+    18,
+    19,
+    20,
+    21,
+    22,
+    24,
+    25,
+    26,
+    27,
+    28
+  ],
+  "attn_layers_sliding": [
+    5,
+    11,
+    17,
+    23,
+    29
+  ],
+  "forward_path_selected": "direct",
+  "forward_sanity_ppl": 5.451431027592869,
+  "results": {
+    "C0_FP16": {
+      "ppl": 8.367825181251177,
+      "delta_pct": 0.0,
+      "target": []
+    },
+    "C8_L0_K_INT3": {
+      "ppl": 8.162075194692301,
+      "delta_pct": -2.458822717996985,
+      "target": [
+        0
+      ]
+    },
+    "C8_L1_K_INT3": {
+      "ppl": 8.354970821029585,
+      "delta_pct": -0.15361650062184995,
+      "target": [
+        1
+      ]
+    },
+    "C8_L2_K_INT3": {
+      "ppl": 8.318811258638636,
+      "delta_pct": -0.5857426697006207,
+      "target": [
+        2
+      ]
+    },
+    "C8_L3_K_INT3": {
+      "ppl": 8.21574036851517,
+      "delta_pct": -1.817495101077945,
+      "target": [
+        3
+      ]
+    },
+    "C8_L4_K_INT3": {
+      "ppl": 8.295396712778718,
+      "delta_pct": -0.8655590539193094,
+      "target": [
+        4
+      ]
+    },
+    "C8_L6_K_INT3": {
+      "ppl": 8.399779048359742,
+      "delta_pct": 0.38186585422649044,
+      "target": [
+        6
+      ]
+    },
+    "C8_L7_K_INT3": {
+      "ppl": 8.28321579833404,
+      "delta_pct": -1.0111275162238225,
+      "target": [
+        7
+      ]
+    },
+    "C8_L8_K_INT3": {
+      "ppl": 8.495457776153202,
+      "delta_pct": 1.5252779800896938,
+      "target": [
+        8
+      ]
+    },
+    "C8_L9_K_INT3": {
+      "ppl": 8.240107935214827,
+      "delta_pct": -1.5262896065576543,
+      "target": [
+        9
+      ]
+    },
+    "C8_L10_K_INT3": {
+      "ppl": 8.479357623460842,
+      "delta_pct": 1.3328725181730943,
+      "target": [
+        10
+      ]
+    },
+    "C8_L12_K_INT3": {
+      "ppl": 8.353889783500286,
+      "delta_pct": -0.16653547904078173,
+      "target": [
+        12
+      ]
+    },
+    "C8_L13_K_INT3": {
+      "ppl": 8.425151692571536,
+      "delta_pct": 0.6850825642103898,
+      "target": [
+        13
+      ]
+    },
+    "C8_L14_K_INT3": {
+      "ppl": 8.434152866167185,
+      "delta_pct": 0.7926514175346363,
+      "target": [
+        14
+      ]
+    },
+    "C8_L15_K_INT3": {
+      "ppl": 8.397307313453993,
+      "delta_pct": 0.35232729609209346,
+      "target": [
+        15
+      ]
+    },
+    "C8_L16_K_INT3": {
+      "ppl": 8.407416315562244,
+      "delta_pct": 0.47313529445828006,
+      "target": [
+        16
+      ]
+    },
+    "C8_L18_K_INT3": {
+      "ppl": 8.40845150357641,
+      "delta_pct": 0.4855063465744899,
+      "target": [
+        18
+      ]
+    },
+    "C8_L19_K_INT3": {
+      "ppl": 8.391759383528843,
+      "delta_pct": 0.28602655719065473,
+      "target": [
+        19
+      ]
+    },
+    "C8_L20_K_INT3": {
+      "ppl": 8.381886642505767,
+      "delta_pct": 0.1680420055392153,
+      "target": [
+        20
+      ]
+    },
+    "C8_L21_K_INT3": {
+      "ppl": 8.388469180366751,
+      "delta_pct": 0.24670686430960162,
+      "target": [
+        21
+      ]
+    },
+    "C8_L22_K_INT3": {
+      "ppl": 8.391931618108378,
+      "delta_pct": 0.28808485281472346,
+      "target": [
+        22
+      ]
+    },
+    "C8_L24_K_INT3": {
+      "ppl": 8.37845714245215,
+      "delta_pct": 0.12705764007588144,
+      "target": [
+        24
+      ]
+    },
+    "C8_L25_K_INT3": {
+      "ppl": 8.39246997409768,
+      "delta_pct": 0.2945184956985051,
+      "target": [
+        25
+      ]
+    },
+    "C8_L26_K_INT3": {
+      "ppl": 8.372442708862382,
+      "delta_pct": 0.05518193211720192,
+      "target": [
+        26
+      ]
+    },
+    "C8_L27_K_INT3": {
+      "ppl": 8.384094920751442,
+      "delta_pct": 0.19443211524923612,
+      "target": [
+        27
+      ]
+    },
+    "C8_L28_K_INT3": {
+      "ppl": 8.382564188762835,
+      "delta_pct": 0.17613904679416073,
+      "target": [
+        28
+      ]
+    }
+  },
+  "per_layer_deltas": {
+    "0": -2.458822717996985,
+    "1": -0.15361650062184995,
+    "2": -0.5857426697006207,
+    "3": -1.817495101077945,
+    "4": -0.8655590539193094,
+    "6": 0.38186585422649044,
+    "7": -1.0111275162238225,
+    "8": 1.5252779800896938,
+    "9": -1.5262896065576543,
+    "10": 1.3328725181730943,
+    "12": -0.16653547904078173,
+    "13": 0.6850825642103898,
+    "14": 0.7926514175346363,
+    "15": 0.35232729609209346,
+    "16": 0.47313529445828006,
+    "18": 0.4855063465744899,
+    "19": 0.28602655719065473,
+    "20": 0.1680420055392153,
+    "21": 0.24670686430960162,
+    "22": 0.28808485281472346,
+    "24": 0.12705764007588144,
+    "25": 0.2945184956985051,
+    "26": 0.05518193211720192,
+    "27": 0.19443211524923612,
+    "28": 0.17613904679416073
+  },
+  "spread_pp": 3.984100698086679,
+  "argmax_layer": 8,
+  "argmin_layer": 0,
+  "f14_transferability": "fails"
+}

@@ -1,0 +1,92 @@
+{
+  "phase": "W-1c Gemma4-12B extreme-context NSN-INT5 robustness boundary",
+  "generator": "phase_w1c_gemma12b_extreme_ctx.py",
+  "model_id": "google/gemma-4-12B",
+  "model_label": "Gemma4-12B",
+  "transformers_version": "5.12.1",
+  "n_attn_layers": 40,
+  "RECONSTRUCTED_FROM_STDOUT": "Live /content JSON lost to a runtime disconnect; marginal cell means+CIs recovered from stdout. Per-window arrays and paired CIs NOT recovered. ctx=131072 OOMed (100.44 GB peak > 94.97 GB GPU; infeasible).",
+  "knobs": {
+    "n_windows": 30,
+    "n_bootstrap": 5000,
+    "seed": 20260510,
+    "clean_band_pp": 0.5
+  },
+  "by_ctx": {
+    "32768": {
+      "fp16": 6.0591,
+      "vram": 58.54,
+      "cells": {
+        "nsn_int4": {
+          "mean": 1.627,
+          "ci_lo": 1.003,
+          "ci_hi": 2.269,
+          "band": "OUT"
+        },
+        "nsn_int5": {
+          "mean": 0.3861,
+          "ci_lo": -0.063,
+          "ci_hi": 0.837,
+          "band": "edge"
+        },
+        "nsn_int6": {
+          "mean": -0.0822,
+          "ci_lo": -0.537,
+          "ci_hi": 0.364,
+          "band": "in"
+        },
+        "plain_asym_int5": {
+          "mean": 2.8337,
+          "ci_lo": 2.432,
+          "ci_hi": 3.277,
+          "band": "OUT"
+        }
+      },
+      "verdicts": {
+        "Q1_nsn_int5_exits_band": false,
+        "Q1_nsn_int5_in_band": false,
+        "Q2_family_separates": true
+      }
+    },
+    "65536": {
+      "fp16": 6.066,
+      "vram": 93.15,
+      "cells": {
+        "nsn_int4": {
+          "mean": 1.5511,
+          "ci_lo": 1.039,
+          "ci_hi": 2.076,
+          "band": "OUT"
+        },
+        "nsn_int5": {
+          "mean": 0.407,
+          "ci_lo": -0.168,
+          "ci_hi": 1.014,
+          "band": "edge"
+        },
+        "nsn_int6": {
+          "mean": -0.0694,
+          "ci_lo": -0.44,
+          "ci_hi": 0.349,
+          "band": "in"
+        },
+        "plain_asym_int5": {
+          "mean": 2.6274,
+          "ci_lo": 2.01,
+          "ci_hi": 3.316,
+          "band": "OUT"
+        }
+      },
+      "verdicts": {
+        "Q1_nsn_int5_exits_band": false,
+        "Q1_nsn_int5_in_band": false,
+        "Q2_family_separates": true
+      }
+    }
+  },
+  "ctx_131072": {
+    "status": "OOM",
+    "vram_peak_gb": 100.44,
+    "note": "infeasible on 94GB GPU"
+  }
+}

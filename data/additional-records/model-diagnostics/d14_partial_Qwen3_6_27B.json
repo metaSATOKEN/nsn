@@ -1,0 +1,458 @@
+{
+  "phase": "D-14",
+  "round": "round-4",
+  "model_so_far": "Qwen3.6-27B",
+  "timestamp_utc": "2026-05-06T13:34:53.447359+00:00",
+  "results_so_far": {
+    "Gemma4_26B_A4B_base__ctx1024__FP16": {
+      "model_label": "Gemma4-26B-A4B-base",
+      "ctx": 1024,
+      "baseline": "FP16",
+      "ppl": 6.814766248870202,
+      "fp16_ppl": 6.814766248870202,
+      "delta_pct": 0.0,
+      "abs_delta": 0.0,
+      "vram_peak_gb": 53.770843136,
+      "memory_accounting": {
+        "bpw_W": 16.0,
+        "bpv_K": 16.0,
+        "bpv_V": 16.0,
+        "compression_W_only": 1.0,
+        "compression_KV_only": 1.0
+      }
+    },
+    "Gemma4_26B_A4B_base__ctx8192__FP16": {
+      "model_label": "Gemma4-26B-A4B-base",
+      "ctx": 8192,
+      "baseline": "FP16",
+      "ppl": 4.67674974004223,
+      "fp16_ppl": 4.67674974004223,
+      "delta_pct": 0.0,
+      "abs_delta": 0.0,
+      "vram_peak_gb": 68.803286016,
+      "memory_accounting": {
+        "bpw_W": 16.0,
+        "bpv_K": 16.0,
+        "bpv_V": 16.0,
+        "compression_W_only": 1.0,
+        "compression_KV_only": 1.0
+      }
+    },
+    "Gemma4_26B_A4B_base__ctx1024__IDENTITY_TQ_SANITY": {
+      "model_label": "Gemma4-26B-A4B-base",
+      "ctx": 1024,
+      "baseline": "IDENTITY_TQ_SANITY",
+      "ppl": 6.814766248870202,
+      "fp16_ppl": 6.814766248870202,
+      "delta_pct": 0.0,
+      "abs_delta": 0.0,
+      "vram_peak_gb": 53.770843136,
+      "memory_accounting": {
+        "bpw_W": 16.0,
+        "bpv_K": 16.0,
+        "bpv_V": 16.0,
+        "compression_W_only": 1.0,
+        "compression_KV_only": 1.0
+      },
+      "sanity_drift": 0.0
+    },
+    "Gemma4_26B_A4B_base__ctx1024__AWQ_STYLE_W4_RTN": {
+      "model_label": "Gemma4-26B-A4B-base",
+      "ctx": 1024,
+      "baseline": "AWQ_STYLE_W4_RTN",
+      "ppl": 8.152721194514465,
+      "fp16_ppl": 6.814766248870202,
+      "delta_pct": 19.633174444773914,
+      "abs_delta": 1.3379549456442623,
+      "vram_peak_gb": 53.770843136,
+      "memory_accounting": {
+        "bpw_W": 4.25,
+        "bpv_K": 16.0,
+        "bpv_V": 16.0,
+        "compression_W_only": 3.764705882352941,
+        "compression_KV_only": 1.0
+      }
+    },
+    "Gemma4_26B_A4B_base__ctx8192__AWQ_STYLE_W4_RTN": {
+      "model_label": "Gemma4-26B-A4B-base",
+      "ctx": 8192,
+      "baseline": "AWQ_STYLE_W4_RTN",
+      "ppl": 5.308447434659501,
+      "fp16_ppl": 4.67674974004223,
+      "delta_pct": 13.507194734169529,
+      "abs_delta": 0.6316976946172712,
+      "vram_peak_gb": 68.803286016,
+      "memory_accounting": {
+        "bpw_W": 4.25,
+        "bpv_K": 16.0,
+        "bpv_V": 16.0,
+        "compression_W_only": 3.764705882352941,
+        "compression_KV_only": 1.0
+      }
+    },
+    "Gemma4_26B_A4B_base__ctx1024__KIVI_EQUIV_K4V4_SIM": {
+      "model_label": "Gemma4-26B-A4B-base",
+      "ctx": 1024,
+      "baseline": "KIVI_EQUIV_K4V4_SIM",
+      "ppl": 7.78665522410779,
+      "fp16_ppl": 6.814766248870202,
+      "delta_pct": 14.261515945594079,
+      "abs_delta": 0.9718889752375874,
+      "vram_peak_gb": 53.770843136,
+      "memory_accounting": {
+        "bpw_W": 16.0,
+        "bpv_K": 4.03125,
+        "bpv_V": 4.125,
+        "compression_W_only": 1.0,
+        "compression_KV_only": 3.9233716475095783
+      }
+    },
+    "Gemma4_26B_A4B_base__ctx8192__KIVI_EQUIV_K4V4_SIM": {
+      "model_label": "Gemma4-26B-A4B-base",
+      "ctx": 8192,
+      "baseline": "KIVI_EQUIV_K4V4_SIM",
+      "ppl": 5.105195796553154,
+      "fp16_ppl": 4.67674974004223,
+      "delta_pct": 9.161192715585745,
+      "abs_delta": 0.42844605651092404,
+      "vram_peak_gb": 68.803286016,
+      "memory_accounting": {
+        "bpw_W": 16.0,
+        "bpv_K": 4.00390625,
+        "bpv_V": 4.125,
+        "compression_W_only": 1.0,
+        "compression_KV_only": 3.9365689572321
+      }
+    },
+    "Gemma4_26B_A4B_base__ctx1024__TURBOQUANT_K3V4": {
+      "model_label": "Gemma4-26B-A4B-base",
+      "ctx": 1024,
+      "baseline": "TURBOQUANT_K3V4",
+      "ppl": 7.645047516379735,
+      "fp16_ppl": 6.814766248870202,
+      "delta_pct": 12.183561947516287,
+      "abs_delta": 0.830281267509533,
+      "vram_peak_gb": 53.770843136,
+      "memory_accounting": {
+        "bpw_W": 16.0,
+        "bpv_K": 3.0625,
+        "bpv_V": 4.125,
+        "compression_W_only": 1.0,
+        "compression_KV_only": 4.452173913043478
+      }
+    },
+    "Gemma4_26B_A4B_base__ctx8192__TURBOQUANT_K3V4": {
+      "model_label": "Gemma4-26B-A4B-base",
+      "ctx": 8192,
+      "baseline": "TURBOQUANT_K3V4",
+      "ppl": 5.041537681664901,
+      "fp16_ppl": 4.67674974004223,
+      "delta_pct": 7.800031258875468,
+      "abs_delta": 0.36478794162267114,
+      "vram_peak_gb": 68.803286016,
+      "memory_accounting": {
+        "bpw_W": 16.0,
+        "bpv_K": 3.0625,
+        "bpv_V": 4.125,
+        "compression_W_only": 1.0,
+        "compression_KV_only": 4.452173913043478
+      }
+    },
+    "Gemma4_26B_A4B_base__ctx1024__TURBOQUANT_K3V2_AGGRESSIVE": {
+      "model_label": "Gemma4-26B-A4B-base",
+      "ctx": 1024,
+      "baseline": "TURBOQUANT_K3V2_AGGRESSIVE",
+      "ppl": 32.06971650074623,
+      "fp16_ppl": 6.814766248870202,
+      "delta_pct": 370.5915849434009,
+      "abs_delta": 25.25495025187603,
+      "vram_peak_gb": 53.770843136,
+      "memory_accounting": {
+        "bpw_W": 16.0,
+        "bpv_K": 3.0625,
+        "bpv_V": 2.125,
+        "compression_W_only": 1.0,
+        "compression_KV_only": 6.168674698795181
+      }
+    },
+    "Gemma4_26B_A4B_base__ctx8192__TURBOQUANT_K3V2_AGGRESSIVE": {
+      "model_label": "Gemma4-26B-A4B-base",
+      "ctx": 8192,
+      "baseline": "TURBOQUANT_K3V2_AGGRESSIVE",
+      "ppl": 20.113075388401093,
+      "fp16_ppl": 4.67674974004223,
+      "delta_pct": 330.06524843938894,
+      "abs_delta": 15.436325648358864,
+      "vram_peak_gb": 68.803286016,
+      "memory_accounting": {
+        "bpw_W": 16.0,
+        "bpv_K": 3.0625,
+        "bpv_V": 2.125,
+        "compression_W_only": 1.0,
+        "compression_KV_only": 6.168674698795181
+      }
+    },
+    "Gemma4_26B_A4B_base__ctx1024__PAPER_D_HERO_INHARNESS": {
+      "model_label": "Gemma4-26B-A4B-base",
+      "ctx": 1024,
+      "baseline": "PAPER_D_HERO_INHARNESS",
+      "ppl": 7.027077565354956,
+      "fp16_ppl": 6.814766248870202,
+      "delta_pct": 3.115459998645618,
+      "abs_delta": 0.21231131648475365,
+      "vram_peak_gb": 53.770843136,
+      "memory_accounting": {
+        "bpw_W": null,
+        "bpw_M": 16.0,
+        "bpv_K": 4.75125,
+        "bpv_V": 4.75125,
+        "compression_W_only": 1.0,
+        "compression_KV_only": 3.3675348592475665
+      },
+      "recipe_name": "3-tier selective K + E=FP16",
+      "recipe_K": "gemma4_3tier",
+      "recipe_M_bits": null,
+      "delta_pct_old_protocol": 0.029,
+      "src_old": "D-10c (n_windows=5)"
+    },
+    "Gemma4_26B_A4B_base__ctx8192__PAPER_D_HERO_INHARNESS": {
+      "model_label": "Gemma4-26B-A4B-base",
+      "ctx": 8192,
+      "baseline": "PAPER_D_HERO_INHARNESS",
+      "ppl": 4.697188320160833,
+      "fp16_ppl": 4.67674974004223,
+      "delta_pct": 0.4370253114809151,
+      "abs_delta": 0.020438580118602445,
+      "vram_peak_gb": 68.803286016,
+      "memory_accounting": {
+        "bpw_W": null,
+        "bpw_M": 16.0,
+        "bpv_K": 5.00390625,
+        "bpv_V": 5.00390625,
+        "compression_W_only": 1.0,
+        "compression_KV_only": 3.1975019516003123
+      },
+      "recipe_name": "K-INT5 uniform",
+      "recipe_K": "gemma4_kint5_uniform",
+      "recipe_M_bits": null,
+      "delta_pct_old_protocol": 0.437,
+      "src_old": "D-16"
+    },
+    "Qwen3_6_27B__ctx1024__FP16": {
+      "model_label": "Qwen3.6-27B",
+      "ctx": 1024,
+      "baseline": "FP16",
+      "ppl": 6.5840378253180925,
+      "fp16_ppl": 6.5840378253180925,
+      "delta_pct": 0.0,
+      "abs_delta": 0.0,
+      "vram_peak_gb": 55.835643904,
+      "memory_accounting": {
+        "bpw_W": 16.0,
+        "bpv_K": 16.0,
+        "bpv_V": 16.0,
+        "compression_W_only": 1.0,
+        "compression_KV_only": 1.0
+      }
+    },
+    "Qwen3_6_27B__ctx8192__FP16": {
+      "model_label": "Qwen3.6-27B",
+      "ctx": 8192,
+      "baseline": "FP16",
+      "ppl": 7.477277041708244,
+      "fp16_ppl": 7.477277041708244,
+      "delta_pct": 0.0,
+      "abs_delta": 0.0,
+      "vram_peak_gb": 70.075363328,
+      "memory_accounting": {
+        "bpw_W": 16.0,
+        "bpv_K": 16.0,
+        "bpv_V": 16.0,
+        "compression_W_only": 1.0,
+        "compression_KV_only": 1.0
+      }
+    },
+    "Qwen3_6_27B__ctx1024__AWQ_STYLE_W4_RTN": {
+      "model_label": "Qwen3.6-27B",
+      "ctx": 1024,
+      "baseline": "AWQ_STYLE_W4_RTN",
+      "ppl": 6.713942801892175,
+      "fp16_ppl": 6.5840378253180925,
+      "delta_pct": 1.9730290138150395,
+      "abs_delta": 0.12990497657408273,
+      "vram_peak_gb": 55.835643904,
+      "memory_accounting": {
+        "bpw_W": 4.25,
+        "bpv_K": 16.0,
+        "bpv_V": 16.0,
+        "compression_W_only": 3.764705882352941,
+        "compression_KV_only": 1.0
+      }
+    },
+    "Qwen3_6_27B__ctx8192__AWQ_STYLE_W4_RTN": {
+      "model_label": "Qwen3.6-27B",
+      "ctx": 8192,
+      "baseline": "AWQ_STYLE_W4_RTN",
+      "ppl": 7.140931877994855,
+      "fp16_ppl": 7.477277041708244,
+      "delta_pct": -4.498230597010866,
+      "abs_delta": -0.3363451637133892,
+      "vram_peak_gb": 70.075363328,
+      "memory_accounting": {
+        "bpw_W": 4.25,
+        "bpv_K": 16.0,
+        "bpv_V": 16.0,
+        "compression_W_only": 3.764705882352941,
+        "compression_KV_only": 1.0
+      }
+    },
+    "Qwen3_6_27B__ctx1024__KIVI_EQUIV_K4V4_SIM": {
+      "model_label": "Qwen3.6-27B",
+      "ctx": 1024,
+      "baseline": "KIVI_EQUIV_K4V4_SIM",
+      "ppl": 6.528100512030402,
+      "fp16_ppl": 6.5840378253180925,
+      "delta_pct": -0.8495897923397434,
+      "abs_delta": -0.05593731328769014,
+      "vram_peak_gb": 55.835643904,
+      "memory_accounting": {
+        "bpw_W": 16.0,
+        "bpv_K": 4.03125,
+        "bpv_V": 4.125,
+        "compression_W_only": 1.0,
+        "compression_KV_only": 3.9233716475095783
+      }
+    },
+    "Qwen3_6_27B__ctx8192__KIVI_EQUIV_K4V4_SIM": {
+      "model_label": "Qwen3.6-27B",
+      "ctx": 8192,
+      "baseline": "KIVI_EQUIV_K4V4_SIM",
+      "ppl": 7.447966655896504,
+      "fp16_ppl": 7.477277041708244,
+      "delta_pct": -0.3919927755551427,
+      "abs_delta": -0.029310385811739614,
+      "vram_peak_gb": 70.075363328,
+      "memory_accounting": {
+        "bpw_W": 16.0,
+        "bpv_K": 4.00390625,
+        "bpv_V": 4.125,
+        "compression_W_only": 1.0,
+        "compression_KV_only": 3.9365689572321
+      }
+    },
+    "Qwen3_6_27B__ctx1024__TURBOQUANT_K3V4": {
+      "model_label": "Qwen3.6-27B",
+      "ctx": 1024,
+      "baseline": "TURBOQUANT_K3V4",
+      "ppl": 6.5436623573982144,
+      "fp16_ppl": 6.5840378253180925,
+      "delta_pct": -0.6132326239776328,
+      "abs_delta": -0.040375467919878005,
+      "vram_peak_gb": 55.835643904,
+      "memory_accounting": {
+        "bpw_W": 16.0,
+        "bpv_K": 3.0625,
+        "bpv_V": 4.125,
+        "compression_W_only": 1.0,
+        "compression_KV_only": 4.452173913043478
+      }
+    },
+    "Qwen3_6_27B__ctx8192__TURBOQUANT_K3V4": {
+      "model_label": "Qwen3.6-27B",
+      "ctx": 8192,
+      "baseline": "TURBOQUANT_K3V4",
+      "ppl": 7.436963011749184,
+      "fp16_ppl": 7.477277041708244,
+      "delta_pct": -0.5391538889650339,
+      "abs_delta": -0.04031402995905964,
+      "vram_peak_gb": 70.075363328,
+      "memory_accounting": {
+        "bpw_W": 16.0,
+        "bpv_K": 3.0625,
+        "bpv_V": 4.125,
+        "compression_W_only": 1.0,
+        "compression_KV_only": 4.452173913043478
+      }
+    },
+    "Qwen3_6_27B__ctx1024__TURBOQUANT_K3V2_AGGRESSIVE": {
+      "model_label": "Qwen3.6-27B",
+      "ctx": 1024,
+      "baseline": "TURBOQUANT_K3V2_AGGRESSIVE",
+      "ppl": 7.764959214953273,
+      "fp16_ppl": 6.5840378253180925,
+      "delta_pct": 17.936127054041144,
+      "abs_delta": 1.1809213896351807,
+      "vram_peak_gb": 55.835643904,
+      "memory_accounting": {
+        "bpw_W": 16.0,
+        "bpv_K": 3.0625,
+        "bpv_V": 2.125,
+        "compression_W_only": 1.0,
+        "compression_KV_only": 6.168674698795181
+      }
+    },
+    "Qwen3_6_27B__ctx8192__TURBOQUANT_K3V2_AGGRESSIVE": {
+      "model_label": "Qwen3.6-27B",
+      "ctx": 8192,
+      "baseline": "TURBOQUANT_K3V2_AGGRESSIVE",
+      "ppl": 8.446179339324475,
+      "fp16_ppl": 7.477277041708244,
+      "delta_pct": 12.957956381871304,
+      "abs_delta": 0.9689022976162311,
+      "vram_peak_gb": 70.075363328,
+      "memory_accounting": {
+        "bpw_W": 16.0,
+        "bpv_K": 3.0625,
+        "bpv_V": 2.125,
+        "compression_W_only": 1.0,
+        "compression_KV_only": 6.168674698795181
+      }
+    },
+    "Qwen3_6_27B__ctx1024__PAPER_D_HERO_INHARNESS": {
+      "model_label": "Qwen3.6-27B",
+      "ctx": 1024,
+      "baseline": "PAPER_D_HERO_INHARNESS",
+      "ppl": 6.527119861283524,
+      "fp16_ppl": 6.5840378253180925,
+      "delta_pct": -0.8644841591841583,
+      "abs_delta": -0.05691796403456806,
+      "vram_peak_gb": 55.835643904,
+      "memory_accounting": {
+        "bpw_W": null,
+        "bpw_M": 5.125,
+        "bpv_K": 4.03125,
+        "bpv_V": 4.03125,
+        "compression_W_only": 3.1219512195121952,
+        "compression_KV_only": 3.9689922480620154
+      },
+      "recipe_name": "K-INT4 + M-INT5",
+      "recipe_K": "qwen36_kint4_uniform",
+      "recipe_M_bits": 5,
+      "delta_pct_old_protocol": -0.282,
+      "src_old": "D-10b"
+    },
+    "Qwen3_6_27B__ctx8192__PAPER_D_HERO_INHARNESS": {
+      "model_label": "Qwen3.6-27B",
+      "ctx": 8192,
+      "baseline": "PAPER_D_HERO_INHARNESS",
+      "ppl": 7.317054582562336,
+      "fp16_ppl": 7.477277041708244,
+      "delta_pct": -2.1427915302881964,
+      "abs_delta": -0.16022245914590805,
+      "vram_peak_gb": 70.075363328,
+      "memory_accounting": {
+        "bpw_W": null,
+        "bpw_M": 5.125,
+        "bpv_K": 4.00390625,
+        "bpv_V": 4.00390625,
+        "compression_W_only": 3.1219512195121952,
+        "compression_KV_only": 3.9960975609756098
+      },
+      "recipe_name": "K-INT4 + M-INT5",
+      "recipe_K": "qwen36_kint4_uniform",
+      "recipe_M_bits": 5,
+      "delta_pct_old_protocol": -3.787,
+      "src_old": "D-12c"
+    }
+  }
+}

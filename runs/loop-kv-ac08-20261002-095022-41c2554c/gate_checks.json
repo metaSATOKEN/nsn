@@ -1,0 +1,18 @@
+[
+  {
+    "left": "OFFICIAL",
+    "right": "OFFICIAL_REPEAT",
+    "logits_bitwise": true,
+    "cache_bitwise": true,
+    "nll_equal": true,
+    "pass": true
+  },
+  {
+    "left": "OFFICIAL",
+    "right": "NATIVE",
+    "logits_bitwise": true,
+    "cache_bitwise": true,
+    "nll_equal": true,
+    "pass": true
+  }
+]

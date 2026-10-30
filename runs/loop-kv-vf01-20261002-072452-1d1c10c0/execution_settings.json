@@ -1,0 +1,11 @@
+{
+  "flash": true,
+  "efficient": true,
+  "math": true,
+  "cudnn": true,
+  "gemm_bf16_reduced": true,
+  "math_sdp_reduced": false,
+  "matmul_tf32": false,
+  "cudnn_tf32": false,
+  "float32_matmul_precision": "highest"
+}

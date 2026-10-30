@@ -1,0 +1,17 @@
+{
+  "block": 1024,
+  "num_warps": 4,
+  "autotune": false,
+  "finite_fields": [
+    "q",
+    "tail",
+    "meta0",
+    "meta1",
+    "meta2",
+    "v"
+  ],
+  "host_decisions": 1,
+  "kernels": 1,
+  "flag_reduction": "torch_any",
+  "enable_fp_fusion": false
+}

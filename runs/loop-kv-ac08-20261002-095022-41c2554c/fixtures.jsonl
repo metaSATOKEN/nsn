@@ -1,0 +1,16 @@
+{"id": "finish-T17-uniform", "kind": "finish", "length": 17, "pattern": "uniform", "file": "fixture_arrays/finish-T17-uniform.npz", "sha256": "56a83f1815078be0ef490cb442d0e9bf254de2bbdfc9b64fbf2a2d3a73e42546"}
+{"id": "finish-T17-dominant", "kind": "finish", "length": 17, "pattern": "dominant", "file": "fixture_arrays/finish-T17-dominant.npz", "sha256": "5e3d589b9bae9c2e00847c6e7acc962176adc2284af91db30cc3293a301db11c"}
+{"id": "finish-T17-cancel", "kind": "finish", "length": 17, "pattern": "cancel", "file": "fixture_arrays/finish-T17-cancel.npz", "sha256": "5bd669cd9ab67c7f968ceaf39f03bb5f432e087ee6f908a841abc5aa77a690c8"}
+{"id": "finish-T17-zero", "kind": "finish", "length": 17, "pattern": "zero", "file": "fixture_arrays/finish-T17-zero.npz", "sha256": "7f0bce4602ced29d73fcba6875a875f78d7c60d2f6bbce963e495e95cca7726c"}
+{"id": "finish-T769-uniform", "kind": "finish", "length": 769, "pattern": "uniform", "file": "fixture_arrays/finish-T769-uniform.npz", "sha256": "8bc8e65ce83117c7e9e331a0950d2af0797a4ea3f5b8a1c426ddbc18c669ade0"}
+{"id": "finish-T769-dominant", "kind": "finish", "length": 769, "pattern": "dominant", "file": "fixture_arrays/finish-T769-dominant.npz", "sha256": "e5da9cd8c6236ee4d67cfa96c45d4916c7be53101cfafce8a60dbf2c8095536c"}
+{"id": "finish-T769-cancel", "kind": "finish", "length": 769, "pattern": "cancel", "file": "fixture_arrays/finish-T769-cancel.npz", "sha256": "86ca48266546085bcaaa73adf75f05c7833af28a0deb0c2425b335c55e4a2e0f"}
+{"id": "finish-T769-zero", "kind": "finish", "length": 769, "pattern": "zero", "file": "fixture_arrays/finish-T769-zero.npz", "sha256": "b8533a84508c53d9d675373b25aa7a9093a9ed6305357fe2d44dac9bdc634bfa"}
+{"id": "finish-T833-uniform", "kind": "finish", "length": 833, "pattern": "uniform", "file": "fixture_arrays/finish-T833-uniform.npz", "sha256": "fa91fc1c53ca1a94d991d40dbabd43724c3137956e87ddfa5543b60fcf49d66d"}
+{"id": "finish-T833-dominant", "kind": "finish", "length": 833, "pattern": "dominant", "file": "fixture_arrays/finish-T833-dominant.npz", "sha256": "f4300329976f53d063137b2dcd24735354d0fc8fb8fe1948b466e64af5f4be7c"}
+{"id": "finish-T833-cancel", "kind": "finish", "length": 833, "pattern": "cancel", "file": "fixture_arrays/finish-T833-cancel.npz", "sha256": "95def59616510dfcaa8afd35133d9da1da03a5c3302062e67343a83404113b47"}
+{"id": "finish-T833-zero", "kind": "finish", "length": 833, "pattern": "zero", "file": "fixture_arrays/finish-T833-zero.npz", "sha256": "f88e40cde2af9c56e7315b2cc66d2e7f3a5252243f3e86d75b472f00feba6ae8"}
+{"id": "full-T17", "kind": "full", "length": 17, "pattern": "native", "file": "fixture_arrays/full-T17.npz", "sha256": "6c1c0b567279b58be320b47dcdaf9d1b56fe8dc5d79a2f72a282b2a25c7b07ce"}
+{"id": "full-T65", "kind": "full", "length": 65, "pattern": "native", "file": "fixture_arrays/full-T65.npz", "sha256": "92ccae5dbc9576a60504778a8b1fa465ed9c0277b42ac92bade7b44fbe07f8dc"}
+{"id": "full-T769", "kind": "full", "length": 769, "pattern": "native", "file": "fixture_arrays/full-T769.npz", "sha256": "6d796ee69cc6671d80f1007629dd430f8eaa4e2f0260a246ce2c36ab7ac1450c"}
+{"id": "full-T833", "kind": "full", "length": 833, "pattern": "native", "file": "fixture_arrays/full-T833.npz", "sha256": "8acc3b99efc47500e943a3227df4f5b0a2b05ac0e9de96213016fadef54234d3"}

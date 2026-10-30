@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "date": "2026-10-29",
+  "scope": "Integrated publication layout; no scientific evidence rewritten and no GPU/network model calls",
+  "relocated_files": 160,
+  "result_jsons": 135,
+  "selected_reaggregated_jsons": 20,
+  "catalogue_only_jsons": 115,
+  "excluded_document_copies": 4,
+  "source_rows_hash_checked": 2046,
+  "new_source_resolver_checks": {
+    "unsafe_path_cases_rejected": 5,
+    "excluded_document_identifiers_rejected": 4,
+    "all_mapped_hashes_match": true,
+    "all_135_original_catalogue_identifiers_retained": true
+  },
+  "current_manuscripts_link_only_edits": 4,
+  "current_documents_link_checked": 19,
+  "broken_links": [],
+  "science": "reproduction-integrated-layout-20261029.json",
+  "scientific_check_count": {
+    "historical": 1732,
+    "current": 1730,
+    "difference": "Two removed manuscript-hash checks only"
+  },
+  "original_research_environment": "Unchanged standard-library-and-pip-only root environment",
+  "asset_zip_files": 17,
+  "asset_zip_bytes": 6302337365
+}

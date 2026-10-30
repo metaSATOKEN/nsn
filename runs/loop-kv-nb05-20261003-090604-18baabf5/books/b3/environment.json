@@ -1,0 +1,8 @@
+{
+  "torch": "2.11.0+cu128",
+  "numpy": "2.1.3",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "model_loaded": true,
+  "tf32": false,
+  "sdpa_policy": "PyTorch default; copied official repeat_kv; checked native baseline"
+}

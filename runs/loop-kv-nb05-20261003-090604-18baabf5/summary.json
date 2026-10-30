@@ -1,0 +1,4115 @@
+{
+  "experiment": "LOOP-KV-NB05",
+  "version": "0.1.0",
+  "status": "PASS_MODEL_CONNECTION",
+  "sources_checked": 31,
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "triton": "3.6.0",
+    "transformers": "4.45.1",
+    "huggingface-hub": "0.36.2",
+    "accelerate": "1.14.0",
+    "tokenizers": "0.20.3",
+    "safetensors": "0.8.0",
+    "numpy": "2.1.3",
+    "sentencepiece": "0.2.2"
+  },
+  "completed_forward_calls": 540,
+  "material_count": 4,
+  "trajectories": 60,
+  "raw_logit_trajectories": 48,
+  "actual_q_captures": 16,
+  "raw_logit_float32_bytes": 287096832,
+  "raw_array_bytes": 320963072,
+  "books": [
+    {
+      "selected_book_rank": 0,
+      "book_id": "9667",
+      "experiment": "LOOP-KV-NB05",
+      "version": "0.1.0",
+      "status": "PASS_MODEL_CONNECTION",
+      "completed_forward_calls": 135,
+      "material_count": 1,
+      "main_repetitions_per_arm": 3,
+      "official_native_equal": true,
+      "prefill_equal": true,
+      "packed_initial_equal": true,
+      "repeat_stable": {
+        "NATIVE": true,
+        "PACKED_SDPA": true,
+        "GQA_FUSED": true
+      },
+      "numerical_pass": true,
+      "actual_q": [
+        {
+          "slot": 0,
+          "step": 1,
+          "model_replay_equal": true,
+          "pass_all": true,
+          "trace_normal_equal": {
+            "TORCH_SDPA": true,
+            "TILE_SDPA": true,
+            "GQA_FUSED": true
+          },
+          "tile_fused_restore_equal": {
+            "k": true,
+            "v": true
+          },
+          "restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 1,
+              "elements": 132096,
+              "max_abs": 0.015625,
+              "rmse": 4.299076691043085e-05,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "torch_cpu_restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "score": {
+            "pass_budget": true,
+            "max_abs": 3.5216028919649034e-06,
+            "rmse": 3.9563123334449124e-07,
+            "element_exceed": 0,
+            "head_exceed": 0,
+            "elements": 6192
+          },
+          "context": {
+            "pass_budget": true,
+            "elements": 6144,
+            "exceed": 0,
+            "max_abs": 2.0934340216882674e-07,
+            "rmse": 1.579182581931139e-08
+          },
+          "output_rounding_equal": true,
+          "sdpa": {
+            "TORCH_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.004898513085672684,
+              "element_exceed": 0,
+              "head_exceed": 0
+            },
+            "TILE_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.0048985077259939835,
+              "element_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "fused_vs_sdpa": {
+            "TORCH_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.0078125,
+              "rmse": 0.00023085134678236854
+            },
+            "TILE_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.0078125,
+              "rmse": 0.00023085134678236854
+            }
+          }
+        },
+        {
+          "slot": 43,
+          "step": 1,
+          "model_replay_equal": true,
+          "pass_all": true,
+          "trace_normal_equal": {
+            "TORCH_SDPA": true,
+            "TILE_SDPA": true,
+            "GQA_FUSED": true
+          },
+          "tile_fused_restore_equal": {
+            "k": true,
+            "v": true
+          },
+          "restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 1,
+              "elements": 132096,
+              "max_abs": 0.001953125,
+              "rmse": 5.3738458638038564e-06,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "torch_cpu_restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "score": {
+            "pass_budget": true,
+            "max_abs": 1.499877289035112e-06,
+            "rmse": 2.626272927059909e-07,
+            "element_exceed": 0,
+            "head_exceed": 0,
+            "elements": 6192
+          },
+          "context": {
+            "pass_budget": true,
+            "elements": 6144,
+            "exceed": 0,
+            "max_abs": 2.2265276733435257e-06,
+            "rmse": 8.620179156302106e-08
+          },
+          "output_rounding_equal": true,
+          "sdpa": {
+            "TORCH_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.039519999127122674,
+              "element_exceed": 0,
+              "head_exceed": 0
+            },
+            "TILE_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.039519999127122674,
+              "element_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "fused_vs_sdpa": {
+            "TORCH_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.0625,
+              "rmse": 0.001876174206357765
+            },
+            "TILE_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.0625,
+              "rmse": 0.001876174206357765
+            }
+          }
+        },
+        {
+          "slot": 0,
+          "step": 8,
+          "model_replay_equal": true,
+          "pass_all": true,
+          "trace_normal_equal": {
+            "TORCH_SDPA": true,
+            "TILE_SDPA": true,
+            "GQA_FUSED": true
+          },
+          "tile_fused_restore_equal": {
+            "k": true,
+            "v": true
+          },
+          "restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 1,
+              "elements": 139264,
+              "max_abs": 0.015625,
+              "rmse": 4.1869771763307824e-05,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "torch_cpu_restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "score": {
+            "pass_budget": true,
+            "max_abs": 2.1827759262293966e-06,
+            "rmse": 3.236429127511293e-07,
+            "element_exceed": 0,
+            "head_exceed": 0,
+            "elements": 6528
+          },
+          "context": {
+            "pass_budget": true,
+            "elements": 6144,
+            "exceed": 0,
+            "max_abs": 2.7550099468420797e-07,
+            "rmse": 1.191118735201893e-08
+          },
+          "output_rounding_equal": true,
+          "sdpa": {
+            "TORCH_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.004492601475045488,
+              "element_exceed": 0,
+              "head_exceed": 0
+            },
+            "TILE_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.004492601475045488,
+              "element_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "fused_vs_sdpa": {
+            "TORCH_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.0078125,
+              "rmse": 0.00016289627318505484
+            },
+            "TILE_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.0078125,
+              "rmse": 0.00016289627318505484
+            }
+          }
+        },
+        {
+          "slot": 43,
+          "step": 8,
+          "model_replay_equal": true,
+          "pass_all": true,
+          "trace_normal_equal": {
+            "TORCH_SDPA": true,
+            "TILE_SDPA": true,
+            "GQA_FUSED": true
+          },
+          "tile_fused_restore_equal": {
+            "k": true,
+            "v": true
+          },
+          "restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 1,
+              "elements": 139264,
+              "max_abs": 0.001953125,
+              "rmse": 5.233721470413478e-06,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "torch_cpu_restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "score": {
+            "pass_budget": true,
+            "max_abs": 1.3995117367215926e-06,
+            "rmse": 2.561392309394305e-07,
+            "element_exceed": 0,
+            "head_exceed": 0,
+            "elements": 6528
+          },
+          "context": {
+            "pass_budget": true,
+            "elements": 6144,
+            "exceed": 0,
+            "max_abs": 1.4870647646603175e-06,
+            "rmse": 9.92265296503115e-08
+          },
+          "output_rounding_equal": true,
+          "sdpa": {
+            "TORCH_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.0657809991509346,
+              "element_exceed": 0,
+              "head_exceed": 0
+            },
+            "TILE_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.0657809991509346,
+              "element_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "fused_vs_sdpa": {
+            "TORCH_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.125,
+              "rmse": 0.0022114665604015637
+            },
+            "TILE_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.125,
+              "rmse": 0.0022114665604015637
+            }
+          }
+        }
+      ],
+      "codec_pass": true,
+      "route_errors": [],
+      "storage_errors": [],
+      "prefix_errors": [],
+      "raw_array_bytes": 80240768,
+      "timing_prepared": true,
+      "timing_interpretation": "prepared checked-model decode timing",
+      "quality": {
+        "post_compression_8": {
+          "positions": [
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135,
+            136
+          ],
+          "mean_nll_by_round": {
+            "NATIVE": [
+              0.5515073582582155,
+              0.5515073582582155,
+              0.5515073582582155
+            ],
+            "PACKED_SDPA": [
+              0.5647234166968871,
+              0.5647234166968871,
+              0.5647234166968871
+            ],
+            "GQA_FUSED": [
+              0.5589100029453644,
+              0.5589100029453644,
+              0.5589100029453644
+            ]
+          },
+          "median_mean_nll": {
+            "NATIVE": 0.5515073582582155,
+            "PACKED_SDPA": 0.5647234166968871,
+            "GQA_FUSED": 0.5589100029453644
+          },
+          "ppl": {
+            "NATIVE": 1.7358676211943533,
+            "PACKED_SDPA": 1.7589612161336141,
+            "GQA_FUSED": 1.7487653120307693
+          },
+          "contrasts": {
+            "PACKED_SDPA_vs_NATIVE": {
+              "delta_nll": 0.013216058438671574,
+              "relative_ppl_percent": 1.330377654222922,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            },
+            "GQA_FUSED_vs_NATIVE": {
+              "delta_nll": 0.007402644687148907,
+              "relative_ppl_percent": 0.7430111996409998,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            },
+            "GQA_FUSED_vs_PACKED_SDPA": {
+              "delta_nll": -0.005813413751522667,
+              "relative_ppl_percent": -0.5796548559073131,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            }
+          }
+        },
+        "all_9": {
+          "positions": [
+            128,
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135,
+            136
+          ],
+          "mean_nll_by_round": {
+            "NATIVE": [
+              0.9922616707757181,
+              0.9922616707757181,
+              0.9922616707757181
+            ],
+            "PACKED_SDPA": [
+              1.0040092782767596,
+              1.0040092782767596,
+              1.0040092782767596
+            ],
+            "GQA_FUSED": [
+              0.9988417993865172,
+              0.9988417993865172,
+              0.9988417993865172
+            ]
+          },
+          "median_mean_nll": {
+            "NATIVE": 0.9922616707757181,
+            "PACKED_SDPA": 1.0040092782767596,
+            "GQA_FUSED": 0.9988417993865172
+          },
+          "ppl": {
+            "NATIVE": 2.697328046938299,
+            "PACKED_SDPA": 2.729202053226043,
+            "GQA_FUSED": 2.7151353352646117
+          },
+          "contrasts": {
+            "PACKED_SDPA_vs_NATIVE": {
+              "delta_nll": 0.011747607501041424,
+              "relative_ppl_percent": 1.1816881644753368,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            },
+            "GQA_FUSED_vs_NATIVE": {
+              "delta_nll": 0.006580128610799041,
+              "relative_ppl_percent": 0.6601825219785729,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            },
+            "GQA_FUSED_vs_PACKED_SDPA": {
+              "delta_nll": -0.005167478890242383,
+              "relative_ppl_percent": -0.5154150439247795,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            }
+          }
+        }
+      },
+      "timing": {
+        "cuda_ms": {
+          "phase_sum_fused_vs": {
+            "NATIVE": {
+              "ratios_by_round": [
+                1.150712605601748,
+                1.1467455625002205,
+                1.1493110299660019
+              ],
+              "median_ratio": 1.1493110299660019
+            },
+            "PACKED_SDPA": {
+              "ratios_by_round": [
+                0.6350841751440144,
+                0.6342889370725949,
+                0.6335294543823083
+              ],
+              "median_ratio": 0.6342889370725949
+            }
+          },
+          "by_arm": {
+            "NATIVE": [
+              {
+                "round": 0,
+                "prefill_ms": 29.933311462402344,
+                "compression_ms": 0.0,
+                "decode_ms": 286.3620796203613,
+                "phase_sum_ms": 316.2953910827637
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.119199752807617,
+                "compression_ms": 0.0,
+                "decode_ms": 287.0743980407715,
+                "phase_sum_ms": 317.1935977935791
+              },
+              {
+                "round": 2,
+                "prefill_ms": 29.773632049560547,
+                "compression_ms": 0.0,
+                "decode_ms": 285.2050590515137,
+                "phase_sum_ms": 314.9786911010742
+              }
+            ],
+            "PACKED_SDPA": [
+              {
+                "round": 0,
+                "prefill_ms": 30.0347843170166,
+                "compression_ms": 55.44099044799805,
+                "decode_ms": 487.62163162231445,
+                "phase_sum_ms": 573.0974063873291
+              },
+              {
+                "round": 1,
+                "prefill_ms": 29.891263961791992,
+                "compression_ms": 55.332767486572266,
+                "decode_ms": 488.2375717163086,
+                "phase_sum_ms": 573.4616031646729
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.276575088500977,
+                "compression_ms": 55.266143798828125,
+                "decode_ms": 485.87267684936523,
+                "phase_sum_ms": 571.4153957366943
+              }
+            ],
+            "GQA_FUSED": [
+              {
+                "round": 0,
+                "prefill_ms": 30.053312301635742,
+                "compression_ms": 55.22758483886719,
+                "decode_ms": 278.68419647216797,
+                "phase_sum_ms": 363.9650936126709
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.392255783081055,
+                "compression_ms": 55.453086853027344,
+                "decode_ms": 277.8950080871582,
+                "phase_sum_ms": 363.7403507232666
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.075519561767578,
+                "compression_ms": 55.00204849243164,
+                "decode_ms": 276.93091583251953,
+                "phase_sum_ms": 362.00848388671875
+              }
+            ]
+          },
+          "median_decode_ms": {
+            "NATIVE": 286.3620796203613,
+            "PACKED_SDPA": 487.62163162231445,
+            "GQA_FUSED": 277.8950080871582
+          },
+          "fused_vs": {
+            "NATIVE": {
+              "ratios_by_round": [
+                0.9731881988063079,
+                0.9680243518186892,
+                0.9709887922517543
+              ],
+              "median_ratio": 0.9709887922517543,
+              "shorter_rounds": 3,
+              "rounds": 3
+            },
+            "PACKED_SDPA": {
+              "ratios_by_round": [
+                0.5715172961974373,
+                0.5691798914824803,
+                0.5699660199628311
+              ],
+              "median_ratio": 0.5699660199628311,
+              "shorter_rounds": 3,
+              "rounds": 3
+            }
+          }
+        },
+        "wall_ms": {
+          "phase_sum_fused_vs": {
+            "NATIVE": {
+              "ratios_by_round": [
+                1.1506595866022518,
+                1.1466769500878438,
+                1.149275575179287
+              ],
+              "median_ratio": 1.149275575179287
+            },
+            "PACKED_SDPA": {
+              "ratios_by_round": [
+                0.6352551062250333,
+                0.634461637078886,
+                0.6337036663619897
+              ],
+              "median_ratio": 0.634461637078886
+            }
+          },
+          "by_arm": {
+            "NATIVE": [
+              {
+                "round": 0,
+                "prefill_ms": 29.969101999995473,
+                "compression_ms": 0.0,
+                "decode_ms": 286.56529899990346,
+                "phase_sum_ms": 316.53440099989893
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.156992999991417,
+                "compression_ms": 0.0,
+                "decode_ms": 287.2834090001106,
+                "phase_sum_ms": 317.44040200010204
+              },
+              {
+                "round": 2,
+                "prefill_ms": 29.810151999981827,
+                "compression_ms": 0.0,
+                "decode_ms": 285.4077189997497,
+                "phase_sum_ms": 315.21787099973153
+              }
+            ],
+            "PACKED_SDPA": [
+              {
+                "round": 0,
+                "prefill_ms": 30.071711999994477,
+                "compression_ms": 55.459692999988874,
+                "decode_ms": 487.81832399993164,
+                "phase_sum_ms": 573.349728999915
+              },
+              {
+                "round": 1,
+                "prefill_ms": 29.927343000053952,
+                "compression_ms": 55.35266300000785,
+                "decode_ms": 488.43725400013227,
+                "phase_sum_ms": 573.7172600001941
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.313011999965056,
+                "compression_ms": 55.29132300000583,
+                "decode_ms": 486.07012299987673,
+                "phase_sum_ms": 571.6744579998476
+              }
+            ],
+            "GQA_FUSED": [
+              {
+                "round": 0,
+                "prefill_ms": 30.09037200001785,
+                "compression_ms": 55.24678300002961,
+                "decode_ms": 278.8861879998876,
+                "phase_sum_ms": 364.2233429999351
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.430373000058353,
+                "compression_ms": 55.47501299997748,
+                "decode_ms": 278.0962060001002,
+                "phase_sum_ms": 364.00159200013604
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.1106819999859,
+                "compression_ms": 55.02501299997675,
+                "decode_ms": 277.13650500004405,
+                "phase_sum_ms": 362.2722000000067
+              }
+            ]
+          },
+          "median_decode_ms": {
+            "NATIVE": 286.56529899990346,
+            "PACKED_SDPA": 487.81832399993164,
+            "GQA_FUSED": 278.0962060001002
+          },
+          "fused_vs": {
+            "NATIVE": {
+              "ratios_by_round": [
+                0.9732029278254712,
+                0.9680204191673077,
+                0.9710196555696067
+              ],
+              "median_ratio": 0.9710196555696067,
+              "shorter_rounds": 3,
+              "rounds": 3
+            },
+            "PACKED_SDPA": {
+              "ratios_by_round": [
+                0.5717009269211599,
+                0.5693591218167501,
+                0.5701574564789993
+              ],
+              "median_ratio": 0.5701574564789993,
+              "shorter_rounds": 3,
+              "rounds": 3
+            }
+          }
+        }
+      },
+      "memory_peak_bytes": {
+        "NATIVE": {
+          "allocated": {
+            "prefill": [
+              8595795968,
+              8595795968,
+              8595795968
+            ],
+            "decode": [
+              8472228352,
+              8472228352,
+              8472228352
+            ]
+          },
+          "reserved": {
+            "prefill": [
+              8640266240,
+              8640266240,
+              8640266240
+            ],
+            "decode": [
+              8646557696,
+              8646557696,
+              8646557696
+            ]
+          }
+        },
+        "PACKED_SDPA": {
+          "allocated": {
+            "prefill": [
+              8595795968,
+              8595795968,
+              8595795968
+            ],
+            "decode": [
+              8463909376,
+              8463909376,
+              8463909376
+            ]
+          },
+          "reserved": {
+            "prefill": [
+              8640266240,
+              8640266240,
+              8640266240
+            ],
+            "decode": [
+              8640266240,
+              8640266240,
+              8640266240
+            ]
+          }
+        },
+        "GQA_FUSED": {
+          "allocated": {
+            "prefill": [
+              8595795968,
+              8595795968,
+              8595795968
+            ],
+            "decode": [
+              8460061696,
+              8460061696,
+              8460061696
+            ]
+          },
+          "reserved": {
+            "prefill": [
+              8640266240,
+              8640266240,
+              8640266240
+            ],
+            "decode": [
+              8640266240,
+              8640266240,
+              8640266240
+            ]
+          }
+        }
+      },
+      "terminal_kv_bytes": {
+        "NATIVE": 24510464,
+        "PACKED_SDPA": 15597824,
+        "GQA_FUSED": 15597824
+      },
+      "scope": "One of four selected new passages; 8 post-compression predictions, 4 actual-Q points, 3 technical repetitions. Checked native baseline; setup and evidence IO excluded from timing."
+    },
+    {
+      "selected_book_rank": 1,
+      "book_id": "26438",
+      "experiment": "LOOP-KV-NB05",
+      "version": "0.1.0",
+      "status": "PASS_MODEL_CONNECTION",
+      "completed_forward_calls": 135,
+      "material_count": 1,
+      "main_repetitions_per_arm": 3,
+      "official_native_equal": true,
+      "prefill_equal": true,
+      "packed_initial_equal": true,
+      "repeat_stable": {
+        "NATIVE": true,
+        "PACKED_SDPA": true,
+        "GQA_FUSED": true
+      },
+      "numerical_pass": true,
+      "actual_q": [
+        {
+          "slot": 0,
+          "step": 1,
+          "model_replay_equal": true,
+          "pass_all": true,
+          "trace_normal_equal": {
+            "TORCH_SDPA": true,
+            "TILE_SDPA": true,
+            "GQA_FUSED": true
+          },
+          "tile_fused_restore_equal": {
+            "k": true,
+            "v": true
+          },
+          "restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "torch_cpu_restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "score": {
+            "pass_budget": true,
+            "max_abs": 2.1306643720464535e-06,
+            "rmse": 3.2815787054776143e-07,
+            "element_exceed": 0,
+            "head_exceed": 0,
+            "elements": 6192
+          },
+          "context": {
+            "pass_budget": true,
+            "elements": 6144,
+            "exceed": 0,
+            "max_abs": 1.6969861293958388e-07,
+            "rmse": 9.633431676289516e-09
+          },
+          "output_rounding_equal": true,
+          "sdpa": {
+            "TORCH_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.0038735384335115697,
+              "element_exceed": 0,
+              "head_exceed": 0
+            },
+            "TILE_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.0038735384335115697,
+              "element_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "fused_vs_sdpa": {
+            "TORCH_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.001953125,
+              "rmse": 0.00015583945241926303
+            },
+            "TILE_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.001953125,
+              "rmse": 0.00015583945241926303
+            }
+          }
+        },
+        {
+          "slot": 43,
+          "step": 1,
+          "model_replay_equal": true,
+          "pass_all": true,
+          "trace_normal_equal": {
+            "TORCH_SDPA": true,
+            "TILE_SDPA": true,
+            "GQA_FUSED": true
+          },
+          "tile_fused_restore_equal": {
+            "k": true,
+            "v": true
+          },
+          "restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 1,
+              "elements": 132096,
+              "max_abs": 0.0078125,
+              "rmse": 2.1495383455215426e-05,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "torch_cpu_restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 1,
+              "elements": 132096,
+              "max_abs": 0.0078125,
+              "rmse": 2.1495383455215426e-05,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "score": {
+            "pass_budget": true,
+            "max_abs": 1.7369588327653673e-06,
+            "rmse": 3.260925602275021e-07,
+            "element_exceed": 0,
+            "head_exceed": 0,
+            "elements": 6192
+          },
+          "context": {
+            "pass_budget": true,
+            "elements": 6144,
+            "exceed": 0,
+            "max_abs": 1.0604367393085568e-06,
+            "rmse": 7.150777967617878e-08
+          },
+          "output_rounding_equal": true,
+          "sdpa": {
+            "TORCH_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.016917565646854982,
+              "element_exceed": 0,
+              "head_exceed": 0
+            },
+            "TILE_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.016917565646854982,
+              "element_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "fused_vs_sdpa": {
+            "TORCH_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.03125,
+              "rmse": 0.0010930439248902138
+            },
+            "TILE_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.03125,
+              "rmse": 0.0010930439248902138
+            }
+          }
+        },
+        {
+          "slot": 0,
+          "step": 8,
+          "model_replay_equal": true,
+          "pass_all": true,
+          "trace_normal_equal": {
+            "TORCH_SDPA": true,
+            "TILE_SDPA": true,
+            "GQA_FUSED": true
+          },
+          "tile_fused_restore_equal": {
+            "k": true,
+            "v": true
+          },
+          "restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "torch_cpu_restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "score": {
+            "pass_budget": true,
+            "max_abs": 1.483356857789886e-06,
+            "rmse": 2.66815538130472e-07,
+            "element_exceed": 0,
+            "head_exceed": 0,
+            "elements": 6528
+          },
+          "context": {
+            "pass_budget": true,
+            "elements": 6144,
+            "exceed": 0,
+            "max_abs": 2.4840696832839626e-07,
+            "rmse": 7.108294373819574e-09
+          },
+          "output_rounding_equal": true,
+          "sdpa": {
+            "TORCH_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.004104255826443914,
+              "element_exceed": 0,
+              "head_exceed": 0
+            },
+            "TILE_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.004104255826443914,
+              "element_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "fused_vs_sdpa": {
+            "TORCH_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.0078125,
+              "rmse": 0.00012109833435222023
+            },
+            "TILE_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.0078125,
+              "rmse": 0.00012109833435222023
+            }
+          }
+        },
+        {
+          "slot": 43,
+          "step": 8,
+          "model_replay_equal": true,
+          "pass_all": true,
+          "trace_normal_equal": {
+            "TORCH_SDPA": true,
+            "TILE_SDPA": true,
+            "GQA_FUSED": true
+          },
+          "tile_fused_restore_equal": {
+            "k": true,
+            "v": true
+          },
+          "restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 1,
+              "elements": 139264,
+              "max_abs": 0.0078125,
+              "rmse": 2.0934885881653912e-05,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "torch_cpu_restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 1,
+              "elements": 139264,
+              "max_abs": 0.0078125,
+              "rmse": 2.0934885881653912e-05,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "score": {
+            "pass_budget": true,
+            "max_abs": 1.3863337553488009e-06,
+            "rmse": 2.709790898163638e-07,
+            "element_exceed": 0,
+            "head_exceed": 0,
+            "elements": 6528
+          },
+          "context": {
+            "pass_budget": true,
+            "elements": 6144,
+            "exceed": 0,
+            "max_abs": 1.2448124433461771e-06,
+            "rmse": 8.134522078025504e-08
+          },
+          "output_rounding_equal": true,
+          "sdpa": {
+            "TORCH_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.0501535548920522,
+              "element_exceed": 0,
+              "head_exceed": 0
+            },
+            "TILE_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.0501535548920522,
+              "element_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "fused_vs_sdpa": {
+            "TORCH_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.03125,
+              "rmse": 0.0013504440183965702
+            },
+            "TILE_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.03125,
+              "rmse": 0.0013504440183965702
+            }
+          }
+        }
+      ],
+      "codec_pass": true,
+      "route_errors": [],
+      "storage_errors": [],
+      "prefix_errors": [],
+      "raw_array_bytes": 80240768,
+      "timing_prepared": true,
+      "timing_interpretation": "prepared checked-model decode timing",
+      "quality": {
+        "post_compression_8": {
+          "positions": [
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135,
+            136
+          ],
+          "mean_nll_by_round": {
+            "NATIVE": [
+              0.39233631935530466,
+              0.39233631935530466,
+              0.39233631935530466
+            ],
+            "PACKED_SDPA": [
+              0.39838881902111023,
+              0.39838881902111023,
+              0.39838881902111023
+            ],
+            "GQA_FUSED": [
+              0.39382283612128965,
+              0.39382283612128965,
+              0.39382283612128965
+            ]
+          },
+          "median_mean_nll": {
+            "NATIVE": 0.39233631935530466,
+            "PACKED_SDPA": 0.39838881902111023,
+            "GQA_FUSED": 0.39382283612128965
+          },
+          "ppl": {
+            "NATIVE": 1.480435526807064,
+            "PACKED_SDPA": 1.489423033342052,
+            "GQA_FUSED": 1.4826378555323634
+          },
+          "contrasts": {
+            "PACKED_SDPA_vs_NATIVE": {
+              "delta_nll": 0.006052499665805566,
+              "relative_ppl_percent": 0.6070853051177293,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            },
+            "GQA_FUSED_vs_NATIVE": {
+              "delta_nll": 0.001486516765984991,
+              "relative_ppl_percent": 0.1487622179703585,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            },
+            "GQA_FUSED_vs_PACKED_SDPA": {
+              "delta_nll": -0.004565982899820575,
+              "relative_ppl_percent": -0.4555574647226726,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            }
+          }
+        },
+        "all_9": {
+          "positions": [
+            128,
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135,
+            136
+          ],
+          "mean_nll_by_round": {
+            "NATIVE": [
+              0.4384529398607506,
+              0.4384529398607506,
+              0.4384529398607506
+            ],
+            "PACKED_SDPA": [
+              0.4438329395636889,
+              0.4438329395636889,
+              0.4438329395636889
+            ],
+            "GQA_FUSED": [
+              0.4397742880971818,
+              0.4397742880971818,
+              0.4397742880971818
+            ]
+          },
+          "median_mean_nll": {
+            "NATIVE": 0.4384529398607506,
+            "PACKED_SDPA": 0.4438329395636889,
+            "GQA_FUSED": 0.4397742880971818
+          },
+          "ppl": {
+            "NATIVE": 1.550306944228719,
+            "PACKED_SDPA": 1.5586700717678403,
+            "GQA_FUSED": 1.5523567935595552
+          },
+          "contrasts": {
+            "PACKED_SDPA_vs_NATIVE": {
+              "delta_nll": 0.005379999702938287,
+              "relative_ppl_percent": 0.5394497889759478,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            },
+            "GQA_FUSED_vs_NATIVE": {
+              "delta_nll": 0.0013213482364311524,
+              "relative_ppl_percent": 0.13222216016429456,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            },
+            "GQA_FUSED_vs_PACKED_SDPA": {
+              "delta_nll": -0.004058651466507135,
+              "relative_ppl_percent": -0.40504262721388534,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            }
+          }
+        }
+      },
+      "timing": {
+        "cuda_ms": {
+          "phase_sum_fused_vs": {
+            "NATIVE": {
+              "ratios_by_round": [
+                1.1431121542680878,
+                1.1459279130419258,
+                1.1471069318396119
+              ],
+              "median_ratio": 1.1459279130419258
+            },
+            "PACKED_SDPA": {
+              "ratios_by_round": [
+                0.6328984627604068,
+                0.634278128949807,
+                0.6331147792835453
+              ],
+              "median_ratio": 0.6331147792835453
+            }
+          },
+          "by_arm": {
+            "NATIVE": [
+              {
+                "round": 0,
+                "prefill_ms": 30.262399673461914,
+                "compression_ms": 0.0,
+                "decode_ms": 285.9404830932617,
+                "phase_sum_ms": 316.20288276672363
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.102399826049805,
+                "compression_ms": 0.0,
+                "decode_ms": 285.3914566040039,
+                "phase_sum_ms": 315.4938564300537
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.146175384521484,
+                "compression_ms": 0.0,
+                "decode_ms": 285.3317451477051,
+                "phase_sum_ms": 315.47792053222656
+              }
+            ],
+            "PACKED_SDPA": [
+              {
+                "round": 0,
+                "prefill_ms": 30.09231948852539,
+                "compression_ms": 55.008033752441406,
+                "decode_ms": 486.01078033447266,
+                "phase_sum_ms": 571.1111335754395
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.17683219909668,
+                "compression_ms": 54.851295471191406,
+                "decode_ms": 484.9634895324707,
+                "phase_sum_ms": 569.9916172027588
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.074752807617188,
+                "compression_ms": 54.956417083740234,
+                "decode_ms": 486.566463470459,
+                "phase_sum_ms": 571.5976333618164
+              }
+            ],
+            "GQA_FUSED": [
+              {
+                "round": 0,
+                "prefill_ms": 29.95961570739746,
+                "compression_ms": 54.84128189086914,
+                "decode_ms": 276.6544609069824,
+                "phase_sum_ms": 361.455358505249
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.01897621154785,
+                "compression_ms": 54.95008087158203,
+                "decode_ms": 276.56415939331055,
+                "phase_sum_ms": 361.53321647644043
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.179264068603516,
+                "compression_ms": 54.88947296142578,
+                "decode_ms": 276.818172454834,
+                "phase_sum_ms": 361.8869094848633
+              }
+            ]
+          },
+          "median_decode_ms": {
+            "NATIVE": 285.3914566040039,
+            "PACKED_SDPA": 486.01078033447266,
+            "GQA_FUSED": 276.6544609069824
+          },
+          "fused_vs": {
+            "NATIVE": {
+              "ratios_by_round": [
+                0.9675246327983206,
+                0.9690695113451075,
+                0.9701625464475958
+              ],
+              "median_ratio": 0.9690695113451075,
+              "shorter_rounds": 3,
+              "rounds": 3
+            },
+            "PACKED_SDPA": {
+              "ratios_by_round": [
+                0.5692352353101896,
+                0.5702783103526666,
+                0.5689216031873937
+              ],
+              "median_ratio": 0.5692352353101896,
+              "shorter_rounds": 3,
+              "rounds": 3
+            }
+          }
+        },
+        "wall_ms": {
+          "phase_sum_fused_vs": {
+            "NATIVE": {
+              "ratios_by_round": [
+                1.1430690914786137,
+                1.1458581747800203,
+                1.147058575266424
+              ],
+              "median_ratio": 1.1458581747800203
+            },
+            "PACKED_SDPA": {
+              "ratios_by_round": [
+                0.6330558889070602,
+                0.6344324762357983,
+                0.633280196997636
+              ],
+              "median_ratio": 0.633280196997636
+            }
+          },
+          "by_arm": {
+            "NATIVE": [
+              {
+                "round": 0,
+                "prefill_ms": 30.29890199991314,
+                "compression_ms": 0.0,
+                "decode_ms": 286.1463870001444,
+                "phase_sum_ms": 316.4452890000575
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.14019299996562,
+                "compression_ms": 0.0,
+                "decode_ms": 285.5981059997248,
+                "phase_sum_ms": 315.7382989996904
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.1824430000579,
+                "compression_ms": 0.0,
+                "decode_ms": 285.5414780000274,
+                "phase_sum_ms": 315.7239210000853
+              }
+            ],
+            "PACKED_SDPA": [
+              {
+                "round": 0,
+                "prefill_ms": 30.129703000056907,
+                "compression_ms": 55.031103000033,
+                "decode_ms": 486.22449399999823,
+                "phase_sum_ms": 571.3853000000881
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.214052000019365,
+                "compression_ms": 54.871832999992876,
+                "decode_ms": 485.17387399988365,
+                "phase_sum_ms": 570.2597589998959
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.111852000004546,
+                "compression_ms": 54.977922999910334,
+                "decode_ms": 486.7800429998397,
+                "phase_sum_ms": 571.8698179997546
+              }
+            ],
+            "GQA_FUSED": [
+              {
+                "round": 0,
+                "prefill_ms": 29.9955720000753,
+                "compression_ms": 54.862772999968,
+                "decode_ms": 276.8604839999398,
+                "phase_sum_ms": 361.7188289999831
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.05522299997665,
+                "compression_ms": 54.97142299998359,
+                "decode_ms": 276.7646649999733,
+                "phase_sum_ms": 361.79131099993356
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.21561200000633,
+                "compression_ms": 54.912202999958026,
+                "decode_ms": 277.0260159999225,
+                "phase_sum_ms": 362.15383099988685
+              }
+            ]
+          },
+          "median_decode_ms": {
+            "NATIVE": 285.5981059997248,
+            "PACKED_SDPA": 486.22449399999823,
+            "GQA_FUSED": 276.8604839999398
+          },
+          "fused_vs": {
+            "NATIVE": {
+              "ratios_by_round": [
+                0.9675484177956791,
+                0.9690703796202347,
+                0.9701778457555505
+              ],
+              "median_ratio": 0.9690703796202347,
+              "shorter_rounds": 3,
+              "rounds": 3
+            },
+            "PACKED_SDPA": {
+              "ratios_by_round": [
+                0.5694087554543084,
+                0.5704442877730875,
+                0.5690989595479652
+              ],
+              "median_ratio": 0.5694087554543084,
+              "shorter_rounds": 3,
+              "rounds": 3
+            }
+          }
+        }
+      },
+      "memory_peak_bytes": {
+        "NATIVE": {
+          "allocated": {
+            "prefill": [
+              8595795968,
+              8595795968,
+              8595795968
+            ],
+            "decode": [
+              8472228352,
+              8472228352,
+              8472228352
+            ]
+          },
+          "reserved": {
+            "prefill": [
+              8640266240,
+              8640266240,
+              8640266240
+            ],
+            "decode": [
+              8646557696,
+              8646557696,
+              8646557696
+            ]
+          }
+        },
+        "PACKED_SDPA": {
+          "allocated": {
+            "prefill": [
+              8595795968,
+              8595795968,
+              8595795968
+            ],
+            "decode": [
+              8463909376,
+              8463909376,
+              8463909376
+            ]
+          },
+          "reserved": {
+            "prefill": [
+              8640266240,
+              8640266240,
+              8640266240
+            ],
+            "decode": [
+              8640266240,
+              8640266240,
+              8640266240
+            ]
+          }
+        },
+        "GQA_FUSED": {
+          "allocated": {
+            "prefill": [
+              8595795968,
+              8595795968,
+              8595795968
+            ],
+            "decode": [
+              8460061696,
+              8460061696,
+              8460061696
+            ]
+          },
+          "reserved": {
+            "prefill": [
+              8640266240,
+              8640266240,
+              8640266240
+            ],
+            "decode": [
+              8640266240,
+              8640266240,
+              8640266240
+            ]
+          }
+        }
+      },
+      "terminal_kv_bytes": {
+        "NATIVE": 24510464,
+        "PACKED_SDPA": 15597824,
+        "GQA_FUSED": 15597824
+      },
+      "scope": "One of four selected new passages; 8 post-compression predictions, 4 actual-Q points, 3 technical repetitions. Checked native baseline; setup and evidence IO excluded from timing."
+    },
+    {
+      "selected_book_rank": 2,
+      "book_id": "45277",
+      "experiment": "LOOP-KV-NB05",
+      "version": "0.1.0",
+      "status": "PASS_MODEL_CONNECTION",
+      "completed_forward_calls": 135,
+      "material_count": 1,
+      "main_repetitions_per_arm": 3,
+      "official_native_equal": true,
+      "prefill_equal": true,
+      "packed_initial_equal": true,
+      "repeat_stable": {
+        "NATIVE": true,
+        "PACKED_SDPA": true,
+        "GQA_FUSED": true
+      },
+      "numerical_pass": true,
+      "actual_q": [
+        {
+          "slot": 0,
+          "step": 1,
+          "model_replay_equal": true,
+          "pass_all": true,
+          "trace_normal_equal": {
+            "TORCH_SDPA": true,
+            "TILE_SDPA": true,
+            "GQA_FUSED": true
+          },
+          "tile_fused_restore_equal": {
+            "k": true,
+            "v": true
+          },
+          "restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 1,
+              "elements": 132096,
+              "max_abs": 0.0001220703125,
+              "rmse": 3.3586536648774103e-07,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 1,
+              "elements": 132096,
+              "max_abs": 0.0009765625,
+              "rmse": 2.6869229319019282e-06,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "torch_cpu_restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 1,
+              "elements": 132096,
+              "max_abs": 0.0009765625,
+              "rmse": 2.6869229319019282e-06,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "score": {
+            "pass_budget": true,
+            "max_abs": 2.3783200830962414e-06,
+            "rmse": 3.7187251539959406e-07,
+            "element_exceed": 0,
+            "head_exceed": 0,
+            "elements": 6192
+          },
+          "context": {
+            "pass_budget": true,
+            "elements": 6144,
+            "exceed": 0,
+            "max_abs": 2.6106759953847813e-07,
+            "rmse": 1.2047911386256973e-08
+          },
+          "output_rounding_equal": true,
+          "sdpa": {
+            "TORCH_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.007509035439852152,
+              "element_exceed": 0,
+              "head_exceed": 0
+            },
+            "TILE_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.007509035439852152,
+              "element_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "fused_vs_sdpa": {
+            "TORCH_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.00390625,
+              "rmse": 9.325524665984474e-05
+            },
+            "TILE_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.00390625,
+              "rmse": 9.325524665984474e-05
+            }
+          }
+        },
+        {
+          "slot": 43,
+          "step": 1,
+          "model_replay_equal": true,
+          "pass_all": true,
+          "trace_normal_equal": {
+            "TORCH_SDPA": true,
+            "TILE_SDPA": true,
+            "GQA_FUSED": true
+          },
+          "tile_fused_restore_equal": {
+            "k": true,
+            "v": true
+          },
+          "restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 1,
+              "elements": 132096,
+              "max_abs": 0.015625,
+              "rmse": 4.299076691043085e-05,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "torch_cpu_restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "score": {
+            "pass_budget": true,
+            "max_abs": 1.3399298843808083e-06,
+            "rmse": 2.677750326793097e-07,
+            "element_exceed": 0,
+            "head_exceed": 0,
+            "elements": 6192
+          },
+          "context": {
+            "pass_budget": true,
+            "elements": 6144,
+            "exceed": 0,
+            "max_abs": 1.1687198160359458e-06,
+            "rmse": 8.178876263692569e-08
+          },
+          "output_rounding_equal": true,
+          "sdpa": {
+            "TORCH_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.01648288873041981,
+              "element_exceed": 0,
+              "head_exceed": 0
+            },
+            "TILE_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.01648288873041981,
+              "element_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "fused_vs_sdpa": {
+            "TORCH_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.03125,
+              "rmse": 0.001283412057157125
+            },
+            "TILE_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.03125,
+              "rmse": 0.001283412057157125
+            }
+          }
+        },
+        {
+          "slot": 0,
+          "step": 8,
+          "model_replay_equal": true,
+          "pass_all": true,
+          "trace_normal_equal": {
+            "TORCH_SDPA": true,
+            "TILE_SDPA": true,
+            "GQA_FUSED": true
+          },
+          "tile_fused_restore_equal": {
+            "k": true,
+            "v": true
+          },
+          "restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 1,
+              "elements": 139264,
+              "max_abs": 0.0001220703125,
+              "rmse": 3.271075919008424e-07,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 1,
+              "elements": 139264,
+              "max_abs": 0.0009765625,
+              "rmse": 2.616860735206739e-06,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "torch_cpu_restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 1,
+              "elements": 139264,
+              "max_abs": 0.0009765625,
+              "rmse": 2.616860735206739e-06,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "score": {
+            "pass_budget": true,
+            "max_abs": 1.67251600480256e-06,
+            "rmse": 2.8713917142685566e-07,
+            "element_exceed": 0,
+            "head_exceed": 0,
+            "elements": 6528
+          },
+          "context": {
+            "pass_budget": true,
+            "elements": 6144,
+            "exceed": 0,
+            "max_abs": 2.378830510352259e-07,
+            "rmse": 7.095626677539339e-09
+          },
+          "output_rounding_equal": true,
+          "sdpa": {
+            "TORCH_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.0053750723433281244,
+              "element_exceed": 0,
+              "head_exceed": 0
+            },
+            "TILE_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.0053750723433281244,
+              "element_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "fused_vs_sdpa": {
+            "TORCH_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.001953125,
+              "rmse": 9.130707801954658e-05
+            },
+            "TILE_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.001953125,
+              "rmse": 9.130707801954658e-05
+            }
+          }
+        },
+        {
+          "slot": 43,
+          "step": 8,
+          "model_replay_equal": true,
+          "pass_all": true,
+          "trace_normal_equal": {
+            "TORCH_SDPA": true,
+            "TILE_SDPA": true,
+            "GQA_FUSED": true
+          },
+          "tile_fused_restore_equal": {
+            "k": true,
+            "v": true
+          },
+          "restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 1,
+              "elements": 139264,
+              "max_abs": 0.015625,
+              "rmse": 4.1869771763307824e-05,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "torch_cpu_restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "score": {
+            "pass_budget": true,
+            "max_abs": 1.6660785000510714e-06,
+            "rmse": 2.8991465147000584e-07,
+            "element_exceed": 0,
+            "head_exceed": 0,
+            "elements": 6528
+          },
+          "context": {
+            "pass_budget": true,
+            "elements": 6144,
+            "exceed": 0,
+            "max_abs": 3.9875149617785155e-06,
+            "rmse": 8.906010548027846e-08
+          },
+          "output_rounding_equal": true,
+          "sdpa": {
+            "TORCH_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.038261551169666674,
+              "element_exceed": 0,
+              "head_exceed": 0
+            },
+            "TILE_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.038261551169666674,
+              "element_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "fused_vs_sdpa": {
+            "TORCH_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.0625,
+              "rmse": 0.001831480242362091
+            },
+            "TILE_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.0625,
+              "rmse": 0.001831480242362091
+            }
+          }
+        }
+      ],
+      "codec_pass": true,
+      "route_errors": [],
+      "storage_errors": [],
+      "prefix_errors": [],
+      "raw_array_bytes": 80240768,
+      "timing_prepared": true,
+      "timing_interpretation": "prepared checked-model decode timing",
+      "quality": {
+        "post_compression_8": {
+          "positions": [
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135,
+            136
+          ],
+          "mean_nll_by_round": {
+            "NATIVE": [
+              3.366343690975814,
+              3.366343690975814,
+              3.366343690975814
+            ],
+            "PACKED_SDPA": [
+              3.409608736891089,
+              3.409608736891089,
+              3.409608736891089
+            ],
+            "GQA_FUSED": [
+              3.4107475238964526,
+              3.4107475238964526,
+              3.4107475238964526
+            ]
+          },
+          "median_mean_nll": {
+            "NATIVE": 3.366343690975814,
+            "PACKED_SDPA": 3.409608736891089,
+            "GQA_FUSED": 3.4107475238964526
+          },
+          "ppl": {
+            "NATIVE": 28.972401109765904,
+            "PACKED_SDPA": 30.2534049021421,
+            "GQA_FUSED": 30.28787671081119
+          },
+          "contrasts": {
+            "PACKED_SDPA_vs_NATIVE": {
+              "delta_nll": 0.043265045915275024,
+              "relative_ppl_percent": 4.421462299665593,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            },
+            "GQA_FUSED_vs_NATIVE": {
+              "delta_nll": 0.04440383292063865,
+              "relative_ppl_percent": 4.5404438384703605,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            },
+            "GQA_FUSED_vs_PACKED_SDPA": {
+              "delta_nll": 0.0011387870053636284,
+              "relative_ppl_percent": 0.11394356694921456,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            }
+          }
+        },
+        "all_9": {
+          "positions": [
+            128,
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135,
+            136
+          ],
+          "mean_nll_by_round": {
+            "NATIVE": [
+              3.8512364461061472,
+              3.8512364461061472,
+              3.8512364461061472
+            ],
+            "PACKED_SDPA": [
+              3.8896942646975026,
+              3.8896942646975026,
+              3.8896942646975026
+            ],
+            "GQA_FUSED": [
+              3.890706519813382,
+              3.890706519813382,
+              3.890706519813382
+            ]
+          },
+          "median_mean_nll": {
+            "NATIVE": 3.8512364461061472,
+            "PACKED_SDPA": 3.8896942646975026,
+            "GQA_FUSED": 3.890706519813382
+          },
+          "ppl": {
+            "NATIVE": 47.051203557910874,
+            "PACKED_SDPA": 48.89593502476213,
+            "GQA_FUSED": 48.945455244456056
+          },
+          "contrasts": {
+            "PACKED_SDPA_vs_NATIVE": {
+              "delta_nll": 0.03845781859135533,
+              "relative_ppl_percent": 3.9206892222868355,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            },
+            "GQA_FUSED_vs_NATIVE": {
+              "delta_nll": 0.039470073707234654,
+              "relative_ppl_percent": 4.025936731275592,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            },
+            "GQA_FUSED_vs_PACKED_SDPA": {
+              "delta_nll": 0.0010122551158793236,
+              "relative_ppl_percent": 0.10127676190025167,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            }
+          }
+        }
+      },
+      "timing": {
+        "cuda_ms": {
+          "phase_sum_fused_vs": {
+            "NATIVE": {
+              "ratios_by_round": [
+                1.1488716595908117,
+                1.1457020622610774,
+                1.1477615639089551
+              ],
+              "median_ratio": 1.1477615639089551
+            },
+            "PACKED_SDPA": {
+              "ratios_by_round": [
+                0.6288210830297409,
+                0.6355959714139248,
+                0.6304452702356483
+              ],
+              "median_ratio": 0.6304452702356483
+            }
+          },
+          "by_arm": {
+            "NATIVE": [
+              {
+                "round": 0,
+                "prefill_ms": 29.672895431518555,
+                "compression_ms": 0.0,
+                "decode_ms": 284.4427185058594,
+                "phase_sum_ms": 314.11561393737793
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.165632247924805,
+                "compression_ms": 0.0,
+                "decode_ms": 286.4945297241211,
+                "phase_sum_ms": 316.6601619720459
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.100095748901367,
+                "compression_ms": 0.0,
+                "decode_ms": 285.77356719970703,
+                "phase_sum_ms": 315.8736629486084
+              }
+            ],
+            "PACKED_SDPA": [
+              {
+                "round": 0,
+                "prefill_ms": 30.189184188842773,
+                "compression_ms": 55.14704132080078,
+                "decode_ms": 488.56076431274414,
+                "phase_sum_ms": 573.8969898223877
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.515039443969727,
+                "compression_ms": 54.88822555541992,
+                "decode_ms": 485.39676666259766,
+                "phase_sum_ms": 570.8000316619873
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.171743392944336,
+                "compression_ms": 55.09564971923828,
+                "decode_ms": 489.79862213134766,
+                "phase_sum_ms": 575.0660152435303
+              }
+            ],
+            "GQA_FUSED": [
+              {
+                "round": 0,
+                "prefill_ms": 29.914079666137695,
+                "compression_ms": 54.6459846496582,
+                "decode_ms": 276.3184623718262,
+                "phase_sum_ms": 360.87852668762207
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.049055099487305,
+                "compression_ms": 54.793983459472656,
+                "decode_ms": 277.95516204833984,
+                "phase_sum_ms": 362.7982006072998
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.109439849853516,
+                "compression_ms": 54.89436721801758,
+                "decode_ms": 277.5438423156738,
+                "phase_sum_ms": 362.5476493835449
+              }
+            ]
+          },
+          "median_decode_ms": {
+            "NATIVE": 285.77356719970703,
+            "PACKED_SDPA": 488.56076431274414,
+            "GQA_FUSED": 277.5438423156738
+          },
+          "fused_vs": {
+            "NATIVE": {
+              "ratios_by_round": [
+                0.9714379887215645,
+                0.970193610035053,
+                0.9712019380774919
+              ],
+              "median_ratio": 0.9712019380774919,
+              "shorter_rounds": 3,
+              "rounds": 3
+            },
+            "PACKED_SDPA": {
+              "ratios_by_round": [
+                0.5655764493502091,
+                0.5726349682126091,
+                0.566648883387928
+              ],
+              "median_ratio": 0.566648883387928,
+              "shorter_rounds": 3,
+              "rounds": 3
+            }
+          }
+        },
+        "wall_ms": {
+          "phase_sum_fused_vs": {
+            "NATIVE": {
+              "ratios_by_round": [
+                1.1488291791464684,
+                1.1456471911794532,
+                1.1476873012734434
+              ],
+              "median_ratio": 1.1476873012734434
+            },
+            "PACKED_SDPA": {
+              "ratios_by_round": [
+                0.6289610312466651,
+                0.635787467449845,
+                0.6305886096376695
+              ],
+              "median_ratio": 0.6305886096376695
+            }
+          },
+          "by_arm": {
+            "NATIVE": [
+              {
+                "round": 0,
+                "prefill_ms": 29.707402999974875,
+                "compression_ms": 0.0,
+                "decode_ms": 284.64952800027277,
+                "phase_sum_ms": 314.35693100024764
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.20364300004985,
+                "compression_ms": 0.0,
+                "decode_ms": 286.7107350000424,
+                "phase_sum_ms": 316.91437800009226
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.147161999934724,
+                "compression_ms": 0.0,
+                "decode_ms": 285.9713369999781,
+                "phase_sum_ms": 316.11849899991284
+              }
+            ],
+            "PACKED_SDPA": [
+              {
+                "round": 0,
+                "prefill_ms": 30.227143000047363,
+                "compression_ms": 55.168223000009675,
+                "decode_ms": 488.7934899998072,
+                "phase_sum_ms": 574.1888559998642
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.554192000067815,
+                "compression_ms": 54.907562000039434,
+                "decode_ms": 485.59710700021697,
+                "phase_sum_ms": 571.0588610003242
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.20908300004521,
+                "compression_ms": 55.11888299997736,
+                "decode_ms": 490.0157390001141,
+                "phase_sum_ms": 575.3437050001367
+              }
+            ],
+            "GQA_FUSED": [
+              {
+                "round": 0,
+                "prefill_ms": 29.95277200000146,
+                "compression_ms": 54.66933200000312,
+                "decode_ms": 276.52031100001295,
+                "phase_sum_ms": 361.14241500001754
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.08646199998566,
+                "compression_ms": 54.815481999980875,
+                "decode_ms": 278.1701230002227,
+                "phase_sum_ms": 363.07206700018924
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.14618299994254,
+                "compression_ms": 54.91510299998481,
+                "decode_ms": 277.7439009998943,
+                "phase_sum_ms": 362.8051869998217
+              }
+            ]
+          },
+          "median_decode_ms": {
+            "NATIVE": 285.9713369999781,
+            "PACKED_SDPA": 488.7934899998072,
+            "GQA_FUSED": 277.7439009998943
+          },
+          "fused_vs": {
+            "NATIVE": {
+              "ratios_by_round": [
+                0.971441312208141,
+                0.9702117466936896,
+                0.9712298579067579
+              ],
+              "median_ratio": 0.9712298579067579,
+              "shorter_rounds": 3,
+              "rounds": 3
+            },
+            "PACKED_SDPA": {
+              "ratios_by_round": [
+                0.5657201183267028,
+                0.5728413925664068,
+                0.5668060817120604
+              ],
+              "median_ratio": 0.5668060817120604,
+              "shorter_rounds": 3,
+              "rounds": 3
+            }
+          }
+        }
+      },
+      "memory_peak_bytes": {
+        "NATIVE": {
+          "allocated": {
+            "prefill": [
+              8595795968,
+              8595795968,
+              8595795968
+            ],
+            "decode": [
+              8472228352,
+              8472228352,
+              8472228352
+            ]
+          },
+          "reserved": {
+            "prefill": [
+              8640266240,
+              8640266240,
+              8640266240
+            ],
+            "decode": [
+              8646557696,
+              8646557696,
+              8646557696
+            ]
+          }
+        },
+        "PACKED_SDPA": {
+          "allocated": {
+            "prefill": [
+              8595795968,
+              8595795968,
+              8595795968
+            ],
+            "decode": [
+              8463909376,
+              8463909376,
+              8463909376
+            ]
+          },
+          "reserved": {
+            "prefill": [
+              8640266240,
+              8640266240,
+              8640266240
+            ],
+            "decode": [
+              8640266240,
+              8640266240,
+              8640266240
+            ]
+          }
+        },
+        "GQA_FUSED": {
+          "allocated": {
+            "prefill": [
+              8595795968,
+              8595795968,
+              8595795968
+            ],
+            "decode": [
+              8460061696,
+              8460061696,
+              8460061696
+            ]
+          },
+          "reserved": {
+            "prefill": [
+              8640266240,
+              8640266240,
+              8640266240
+            ],
+            "decode": [
+              8640266240,
+              8640266240,
+              8640266240
+            ]
+          }
+        }
+      },
+      "terminal_kv_bytes": {
+        "NATIVE": 24510464,
+        "PACKED_SDPA": 15597824,
+        "GQA_FUSED": 15597824
+      },
+      "scope": "One of four selected new passages; 8 post-compression predictions, 4 actual-Q points, 3 technical repetitions. Checked native baseline; setup and evidence IO excluded from timing."
+    },
+    {
+      "selected_book_rank": 3,
+      "book_id": "28881",
+      "experiment": "LOOP-KV-NB05",
+      "version": "0.1.0",
+      "status": "PASS_MODEL_CONNECTION",
+      "completed_forward_calls": 135,
+      "material_count": 1,
+      "main_repetitions_per_arm": 3,
+      "official_native_equal": true,
+      "prefill_equal": true,
+      "packed_initial_equal": true,
+      "repeat_stable": {
+        "NATIVE": true,
+        "PACKED_SDPA": true,
+        "GQA_FUSED": true
+      },
+      "numerical_pass": true,
+      "actual_q": [
+        {
+          "slot": 0,
+          "step": 1,
+          "model_replay_equal": true,
+          "pass_all": true,
+          "trace_normal_equal": {
+            "TORCH_SDPA": true,
+            "TILE_SDPA": true,
+            "GQA_FUSED": true
+          },
+          "tile_fused_restore_equal": {
+            "k": true,
+            "v": true
+          },
+          "restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "torch_cpu_restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "score": {
+            "pass_budget": true,
+            "max_abs": 2.368424901533217e-06,
+            "rmse": 3.5394931467330116e-07,
+            "element_exceed": 0,
+            "head_exceed": 0,
+            "elements": 6192
+          },
+          "context": {
+            "pass_budget": true,
+            "elements": 6144,
+            "exceed": 0,
+            "max_abs": 2.0607732209576568e-07,
+            "rmse": 7.1912887378913215e-09
+          },
+          "output_rounding_equal": true,
+          "sdpa": {
+            "TORCH_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.003506771845348311,
+              "element_exceed": 0,
+              "head_exceed": 0
+            },
+            "TILE_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.003506771845348311,
+              "element_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "fused_vs_sdpa": {
+            "TORCH_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.00390625,
+              "rmse": 9.46636913847717e-05
+            },
+            "TILE_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.00390625,
+              "rmse": 9.46636913847717e-05
+            }
+          }
+        },
+        {
+          "slot": 43,
+          "step": 1,
+          "model_replay_equal": true,
+          "pass_all": true,
+          "trace_normal_equal": {
+            "TORCH_SDPA": true,
+            "TILE_SDPA": true,
+            "GQA_FUSED": true
+          },
+          "tile_fused_restore_equal": {
+            "k": true,
+            "v": true
+          },
+          "restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 2,
+              "elements": 132096,
+              "max_abs": 0.0009765625,
+              "rmse": 2.7696167640314846e-06,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "torch_cpu_restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 132096,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 2,
+              "elements": 132096,
+              "max_abs": 0.0009765625,
+              "rmse": 2.7696167640314846e-06,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "score": {
+            "pass_budget": true,
+            "max_abs": 2.0411757635230288e-06,
+            "rmse": 2.5456756419300687e-07,
+            "element_exceed": 0,
+            "head_exceed": 0,
+            "elements": 6192
+          },
+          "context": {
+            "pass_budget": true,
+            "elements": 6144,
+            "exceed": 0,
+            "max_abs": 1.006899768896119e-06,
+            "rmse": 7.475117227096356e-08
+          },
+          "output_rounding_equal": true,
+          "sdpa": {
+            "TORCH_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.030565928233100337,
+              "element_exceed": 0,
+              "head_exceed": 0
+            },
+            "TILE_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.030565928233100337,
+              "element_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "fused_vs_sdpa": {
+            "TORCH_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.03125,
+              "rmse": 0.0013644123457928633
+            },
+            "TILE_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.03125,
+              "rmse": 0.0013644123457928633
+            }
+          }
+        },
+        {
+          "slot": 0,
+          "step": 8,
+          "model_replay_equal": true,
+          "pass_all": true,
+          "trace_normal_equal": {
+            "TORCH_SDPA": true,
+            "TILE_SDPA": true,
+            "GQA_FUSED": true
+          },
+          "tile_fused_restore_equal": {
+            "k": true,
+            "v": true
+          },
+          "restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "torch_cpu_restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "score": {
+            "pass_budget": true,
+            "max_abs": 2.476930486494666e-06,
+            "rmse": 3.6873799990399395e-07,
+            "element_exceed": 0,
+            "head_exceed": 0,
+            "elements": 6528
+          },
+          "context": {
+            "pass_budget": true,
+            "elements": 6144,
+            "exceed": 0,
+            "max_abs": 3.202833429583052e-07,
+            "rmse": 2.0912575648755088e-08
+          },
+          "output_rounding_equal": true,
+          "sdpa": {
+            "TORCH_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.005530282519951246,
+              "element_exceed": 0,
+              "head_exceed": 0
+            },
+            "TILE_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.005530282519951246,
+              "element_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "fused_vs_sdpa": {
+            "TORCH_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.001953125,
+              "rmse": 0.00015496138876320022
+            },
+            "TILE_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.001953125,
+              "rmse": 0.00015496138876320022
+            }
+          }
+        },
+        {
+          "slot": 43,
+          "step": 8,
+          "model_replay_equal": true,
+          "pass_all": true,
+          "trace_normal_equal": {
+            "TORCH_SDPA": true,
+            "TILE_SDPA": true,
+            "GQA_FUSED": true
+          },
+          "tile_fused_restore_equal": {
+            "k": true,
+            "v": true
+          },
+          "restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 2,
+              "elements": 139264,
+              "max_abs": 0.0009765625,
+              "rmse": 2.6973983046972182e-06,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "torch_cpu_restoration": {
+            "k": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 139264,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "v": {
+              "pass_budget": true,
+              "bit_differences": 2,
+              "elements": 139264,
+              "max_abs": 0.0009765625,
+              "rmse": 2.6973983046972182e-06,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "score": {
+            "pass_budget": true,
+            "max_abs": 1.376750780934799e-06,
+            "rmse": 3.0339285716048654e-07,
+            "element_exceed": 0,
+            "head_exceed": 0,
+            "elements": 6528
+          },
+          "context": {
+            "pass_budget": true,
+            "elements": 6144,
+            "exceed": 0,
+            "max_abs": 2.133919462465883e-06,
+            "rmse": 8.851331909000238e-08
+          },
+          "output_rounding_equal": true,
+          "sdpa": {
+            "TORCH_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.017281747182215312,
+              "element_exceed": 0,
+              "head_exceed": 0
+            },
+            "TILE_SDPA": {
+              "pass_budget": true,
+              "max_abs": 0.017281747182215312,
+              "element_exceed": 0,
+              "head_exceed": 0
+            }
+          },
+          "fused_vs_sdpa": {
+            "TORCH_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.03125,
+              "rmse": 0.0008049217762025413
+            },
+            "TILE_SDPA": {
+              "bit_equal": false,
+              "max_abs": 0.03125,
+              "rmse": 0.0008049217762025413
+            }
+          }
+        }
+      ],
+      "codec_pass": true,
+      "route_errors": [],
+      "storage_errors": [],
+      "prefix_errors": [],
+      "raw_array_bytes": 80240768,
+      "timing_prepared": true,
+      "timing_interpretation": "prepared checked-model decode timing",
+      "quality": {
+        "post_compression_8": {
+          "positions": [
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135,
+            136
+          ],
+          "mean_nll_by_round": {
+            "NATIVE": [
+              0.1978455310984586,
+              0.1978455310984586,
+              0.1978455310984586
+            ],
+            "PACKED_SDPA": [
+              0.19893786437671412,
+              0.19893786437671412,
+              0.19893786437671412
+            ],
+            "GQA_FUSED": [
+              0.20513786103271947,
+              0.20513786103271947,
+              0.20513786103271947
+            ]
+          },
+          "median_mean_nll": {
+            "NATIVE": 0.1978455310984586,
+            "PACKED_SDPA": 0.19893786437671412,
+            "GQA_FUSED": 0.20513786103271947
+          },
+          "ppl": {
+            "NATIVE": 1.2187741165815125,
+            "PACKED_SDPA": 1.2201061514883114,
+            "GQA_FUSED": 1.2276943045018234
+          },
+          "contrasts": {
+            "PACKED_SDPA_vs_NATIVE": {
+              "delta_nll": 0.0010923332782555306,
+              "relative_ppl_percent": 0.10929300915374768,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            },
+            "GQA_FUSED_vs_NATIVE": {
+              "delta_nll": 0.007292329934260877,
+              "relative_ppl_percent": 0.7318983722209904,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            },
+            "GQA_FUSED_vs_PACKED_SDPA": {
+              "delta_nll": 0.0061999966560053466,
+              "relative_ppl_percent": 0.6219256418186004,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            }
+          }
+        },
+        "all_9": {
+          "positions": [
+            128,
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135,
+            136
+          ],
+          "mean_nll_by_round": {
+            "NATIVE": [
+              0.1763996474789956,
+              0.1763996474789956,
+              0.1763996474789956
+            ],
+            "PACKED_SDPA": [
+              0.17737061039300053,
+              0.17737061039300053,
+              0.17737061039300053
+            ],
+            "GQA_FUSED": [
+              0.18288171853167196,
+              0.18288171853167196,
+              0.18288171853167196
+            ]
+          },
+          "median_mean_nll": {
+            "NATIVE": 0.1763996474789956,
+            "PACKED_SDPA": 0.17737061039300053,
+            "GQA_FUSED": 0.18288171853167196
+          },
+          "ppl": {
+            "NATIVE": 1.1929147087543297,
+            "PACKED_SDPA": 1.1940735471996349,
+            "GQA_FUSED": 1.2006723823891228
+          },
+          "contrasts": {
+            "PACKED_SDPA_vs_NATIVE": {
+              "delta_nll": 0.0009709629140049192,
+              "relative_ppl_percent": 0.09714344510977661,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            },
+            "GQA_FUSED_vs_NATIVE": {
+              "delta_nll": 0.006482071052676341,
+              "relative_ppl_percent": 0.6503125142026216,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            },
+            "GQA_FUSED_vs_PACKED_SDPA": {
+              "delta_nll": 0.005511108138671422,
+              "relative_ppl_percent": 0.5526322231125267,
+              "relative_ppl_overflow": false,
+              "reference_5pct": "WITHIN_5PCT_ON_THIS_TEXT"
+            }
+          }
+        }
+      },
+      "timing": {
+        "cuda_ms": {
+          "phase_sum_fused_vs": {
+            "NATIVE": {
+              "ratios_by_round": [
+                1.1532890682256998,
+                1.1475477298364938,
+                1.1356913700771953
+              ],
+              "median_ratio": 1.1475477298364938
+            },
+            "PACKED_SDPA": {
+              "ratios_by_round": [
+                0.63622140129163,
+                0.6351193692560806,
+                0.6277836617445972
+              ],
+              "median_ratio": 0.6351193692560806
+            }
+          },
+          "by_arm": {
+            "NATIVE": [
+              {
+                "round": 0,
+                "prefill_ms": 30.117631912231445,
+                "compression_ms": 0.0,
+                "decode_ms": 285.44908905029297,
+                "phase_sum_ms": 315.5667209625244
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.252288818359375,
+                "compression_ms": 0.0,
+                "decode_ms": 287.61286544799805,
+                "phase_sum_ms": 317.8651542663574
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.102752685546875,
+                "compression_ms": 0.0,
+                "decode_ms": 289.45561599731445,
+                "phase_sum_ms": 319.5583686828613
+              }
+            ],
+            "PACKED_SDPA": [
+              {
+                "round": 0,
+                "prefill_ms": 30.13324737548828,
+                "compression_ms": 55.14780807495117,
+                "decode_ms": 486.7519645690918,
+                "phase_sum_ms": 572.0330200195312
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.358848571777344,
+                "compression_ms": 55.55936050415039,
+                "decode_ms": 488.40758514404297,
+                "phase_sum_ms": 574.3257942199707
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.205535888671875,
+                "compression_ms": 55.032222747802734,
+                "decode_ms": 492.85897064208984,
+                "phase_sum_ms": 578.0967292785645
+              }
+            ],
+            "GQA_FUSED": [
+              {
+                "round": 0,
+                "prefill_ms": 30.05027198791504,
+                "compression_ms": 55.33369445800781,
+                "decode_ms": 278.5556831359863,
+                "phase_sum_ms": 363.9396495819092
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.417055130004883,
+                "compression_ms": 55.55827331542969,
+                "decode_ms": 278.7901077270508,
+                "phase_sum_ms": 364.76543617248535
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.215679168701172,
+                "compression_ms": 55.313472747802734,
+                "decode_ms": 277.39052963256836,
+                "phase_sum_ms": 362.91968154907227
+              }
+            ]
+          },
+          "median_decode_ms": {
+            "NATIVE": 287.61286544799805,
+            "PACKED_SDPA": 488.40758514404297,
+            "GQA_FUSED": 278.5556831359863
+          },
+          "fused_vs": {
+            "NATIVE": {
+              "ratios_by_round": [
+                0.9758506641683761,
+                0.9693241896282888,
+                0.9583180090558062
+              ],
+              "median_ratio": 0.9693241896282888,
+              "shorter_rounds": 3,
+              "rounds": 3
+            },
+            "PACKED_SDPA": {
+              "ratios_by_round": [
+                0.5722743890362806,
+                0.5708144513047008,
+                0.5628192772289157
+              ],
+              "median_ratio": 0.5708144513047008,
+              "shorter_rounds": 3,
+              "rounds": 3
+            }
+          }
+        },
+        "wall_ms": {
+          "phase_sum_fused_vs": {
+            "NATIVE": {
+              "ratios_by_round": [
+                1.1532394621166615,
+                1.147496127423035,
+                1.1355762731200159
+              ],
+              "median_ratio": 1.147496127423035
+            },
+            "PACKED_SDPA": {
+              "ratios_by_round": [
+                0.6363936024605212,
+                0.6352743228509071,
+                0.6279488634367266
+              ],
+              "median_ratio": 0.6352743228509071
+            }
+          },
+          "by_arm": {
+            "NATIVE": [
+              {
+                "round": 0,
+                "prefill_ms": 30.153881999922305,
+                "compression_ms": 0.0,
+                "decode_ms": 285.66155699991214,
+                "phase_sum_ms": 315.81543899983444
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.28825199999119,
+                "compression_ms": 0.0,
+                "decode_ms": 287.82166600001347,
+                "phase_sum_ms": 318.10991800000465
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.143133000024136,
+                "compression_ms": 0.0,
+                "decode_ms": 289.6873580000374,
+                "phase_sum_ms": 319.83049100006156
+              }
+            ],
+            "PACKED_SDPA": [
+              {
+                "round": 0,
+                "prefill_ms": 30.17110199994022,
+                "compression_ms": 55.169642000009844,
+                "decode_ms": 486.96360600001753,
+                "phase_sum_ms": 572.3043499999676
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.396833000054357,
+                "compression_ms": 55.5832619999137,
+                "decode_ms": 488.6219090000168,
+                "phase_sum_ms": 574.6020039999848
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.244071999959488,
+                "compression_ms": 55.05572200002007,
+                "decode_ms": 493.07838000015636,
+                "phase_sum_ms": 578.3781740001359
+              }
+            ],
+            "GQA_FUSED": [
+              {
+                "round": 0,
+                "prefill_ms": 30.086552000057054,
+                "compression_ms": 55.35317200008194,
+                "decode_ms": 278.7711030001674,
+                "phase_sum_ms": 364.2108270003064
+              },
+              {
+                "round": 1,
+                "prefill_ms": 30.45588299994506,
+                "compression_ms": 55.578681999918444,
+                "decode_ms": 278.9953340000011,
+                "phase_sum_ms": 365.0298989998646
+              },
+              {
+                "round": 2,
+                "prefill_ms": 30.255961999955616,
+                "compression_ms": 55.3336320000426,
+                "decode_ms": 277.60232299999643,
+                "phase_sum_ms": 363.19191699999465
+              }
+            ]
+          },
+          "median_decode_ms": {
+            "NATIVE": 287.82166600001347,
+            "PACKED_SDPA": 488.6219090000168,
+            "GQA_FUSED": 278.7711030001674
+          },
+          "fused_vs": {
+            "NATIVE": {
+              "ratios_by_round": [
+                0.9758789594507921,
+                0.9693340250486495,
+                0.9582824908774948
+              ],
+              "median_ratio": 0.9693340250486495,
+              "shorter_rounds": 3,
+              "rounds": 3
+            },
+            "PACKED_SDPA": {
+              "ratios_by_round": [
+                0.5724680439469173,
+                0.5709840857749822,
+                0.5629983675210185
+              ],
+              "median_ratio": 0.5709840857749822,
+              "shorter_rounds": 3,
+              "rounds": 3
+            }
+          }
+        }
+      },
+      "memory_peak_bytes": {
+        "NATIVE": {
+          "allocated": {
+            "prefill": [
+              8595795968,
+              8595795968,
+              8595795968
+            ],
+            "decode": [
+              8472228352,
+              8472228352,
+              8472228352
+            ]
+          },
+          "reserved": {
+            "prefill": [
+              8640266240,
+              8640266240,
+              8640266240
+            ],
+            "decode": [
+              8646557696,
+              8646557696,
+              8646557696
+            ]
+          }
+        },
+        "PACKED_SDPA": {
+          "allocated": {
+            "prefill": [
+              8595795968,
+              8595795968,
+              8595795968
+            ],
+            "decode": [
+              8463909376,
+              8463909376,
+              8463909376
+            ]
+          },
+          "reserved": {
+            "prefill": [
+              8640266240,
+              8640266240,
+              8640266240
+            ],
+            "decode": [
+              8640266240,
+              8640266240,
+              8640266240
+            ]
+          }
+        },
+        "GQA_FUSED": {
+          "allocated": {
+            "prefill": [
+              8595795968,
+              8595795968,
+              8595795968
+            ],
+            "decode": [
+              8460061696,
+              8460061696,
+              8460061696
+            ]
+          },
+          "reserved": {
+            "prefill": [
+              8640266240,
+              8640266240,
+              8640266240
+            ],
+            "decode": [
+              8640266240,
+              8640266240,
+              8640266240
+            ]
+          }
+        }
+      },
+      "terminal_kv_bytes": {
+        "NATIVE": 24510464,
+        "PACKED_SDPA": 15597824,
+        "GQA_FUSED": 15597824
+      },
+      "scope": "One of four selected new passages; 8 post-compression predictions, 4 actual-Q points, 3 technical repetitions. Checked native baseline; setup and evidence IO excluded from timing."
+    }
+  ],
+  "quality": {
+    "post_compression_8": {
+      "mean_of_book_mean_nll": {
+        "NATIVE": 1.1270082249219482,
+        "PACKED_SDPA": 1.14291470924645,
+        "GQA_FUSED": 1.1421545559989565
+      },
+      "ppl": {
+        "NATIVE": 3.0864088325259265,
+        "PACKED_SDPA": 3.135895280542464,
+        "GQA_FUSED": 3.13351242534346
+      },
+      "contrasts": {
+        "PACKED_SDPA_vs_NATIVE": {
+          "delta_nll": 0.015906484324501813,
+          "relative_ppl_percent": 1.6033665888662414
+        },
+        "GQA_FUSED_vs_NATIVE": {
+          "delta_nll": 0.015146331077008357,
+          "relative_ppl_percent": 1.5261618072478034
+        },
+        "GQA_FUSED_vs_PACKED_SDPA": {
+          "delta_nll": -0.0007601532474934558,
+          "relative_ppl_percent": -0.07598644042066419
+        }
+      },
+      "unique_target_positions_per_arm": 32
+    },
+    "all_9": {
+      "mean_of_book_mean_nll": {
+        "NATIVE": 1.364587676055403,
+        "PACKED_SDPA": 1.378726773232738,
+        "GQA_FUSED": 1.3780510814571882
+      },
+      "ppl": {
+        "NATIVE": 3.914108838430296,
+        "PACKED_SDPA": 3.969843896847669,
+        "GQA_FUSED": 3.9671624120070006
+      },
+      "contrasts": {
+        "PACKED_SDPA_vs_NATIVE": {
+          "delta_nll": 0.01413909717733497,
+          "relative_ppl_percent": 1.4239526982526352
+        },
+        "GQA_FUSED_vs_NATIVE": {
+          "delta_nll": 0.013463405401785256,
+          "relative_ppl_percent": 1.3554445153850478
+        },
+        "GQA_FUSED_vs_PACKED_SDPA": {
+          "delta_nll": -0.0006756917755497138,
+          "relative_ppl_percent": -0.06754635472688261
+        }
+      },
+      "unique_target_positions_per_arm": 36
+    }
+  },
+  "timing": {
+    "cuda_ms": {
+      "decode": {
+        "GQA_FUSED_vs_NATIVE": {
+          "book_medians": [
+            0.9709887922517543,
+            0.9690695113451075,
+            0.9712019380774919,
+            0.9693241896282888
+          ],
+          "median_of_book_medians": 0.9701564909400215,
+          "paired_blocks": [
+            {
+              "selected_book_rank": 0,
+              "round": 0,
+              "ratio": 0.9731881988063079
+            },
+            {
+              "selected_book_rank": 0,
+              "round": 1,
+              "ratio": 0.9680243518186892
+            },
+            {
+              "selected_book_rank": 0,
+              "round": 2,
+              "ratio": 0.9709887922517543
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 0,
+              "ratio": 0.9675246327983206
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 1,
+              "ratio": 0.9690695113451075
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 2,
+              "ratio": 0.9701625464475958
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 0,
+              "ratio": 0.9714379887215645
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 1,
+              "ratio": 0.970193610035053
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 2,
+              "ratio": 0.9712019380774919
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 0,
+              "ratio": 0.9758506641683761
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 1,
+              "ratio": 0.9693241896282888
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 2,
+              "ratio": 0.9583180090558062
+            }
+          ]
+        },
+        "GQA_FUSED_vs_PACKED_SDPA": {
+          "book_medians": [
+            0.5699660199628311,
+            0.5692352353101896,
+            0.566648883387928,
+            0.5708144513047008
+          ],
+          "median_of_book_medians": 0.5696006276365104,
+          "paired_blocks": [
+            {
+              "selected_book_rank": 0,
+              "round": 0,
+              "ratio": 0.5715172961974373
+            },
+            {
+              "selected_book_rank": 0,
+              "round": 1,
+              "ratio": 0.5691798914824803
+            },
+            {
+              "selected_book_rank": 0,
+              "round": 2,
+              "ratio": 0.5699660199628311
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 0,
+              "ratio": 0.5692352353101896
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 1,
+              "ratio": 0.5702783103526666
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 2,
+              "ratio": 0.5689216031873937
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 0,
+              "ratio": 0.5655764493502091
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 1,
+              "ratio": 0.5726349682126091
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 2,
+              "ratio": 0.566648883387928
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 0,
+              "ratio": 0.5722743890362806
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 1,
+              "ratio": 0.5708144513047008
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 2,
+              "ratio": 0.5628192772289157
+            }
+          ]
+        }
+      },
+      "phase_sum": {
+        "GQA_FUSED_vs_NATIVE": {
+          "book_medians": [
+            1.1493110299660019,
+            1.1459279130419258,
+            1.1477615639089551,
+            1.1475477298364938
+          ],
+          "median_of_book_medians": 1.1476546468727244,
+          "paired_blocks": [
+            {
+              "selected_book_rank": 0,
+              "round": 0,
+              "ratio": 1.150712605601748
+            },
+            {
+              "selected_book_rank": 0,
+              "round": 1,
+              "ratio": 1.1467455625002205
+            },
+            {
+              "selected_book_rank": 0,
+              "round": 2,
+              "ratio": 1.1493110299660019
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 0,
+              "ratio": 1.1431121542680878
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 1,
+              "ratio": 1.1459279130419258
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 2,
+              "ratio": 1.1471069318396119
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 0,
+              "ratio": 1.1488716595908117
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 1,
+              "ratio": 1.1457020622610774
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 2,
+              "ratio": 1.1477615639089551
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 0,
+              "ratio": 1.1532890682256998
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 1,
+              "ratio": 1.1475477298364938
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 2,
+              "ratio": 1.1356913700771953
+            }
+          ]
+        },
+        "GQA_FUSED_vs_PACKED_SDPA": {
+          "book_medians": [
+            0.6342889370725949,
+            0.6331147792835453,
+            0.6304452702356483,
+            0.6351193692560806
+          ],
+          "median_of_book_medians": 0.6337018581780701,
+          "paired_blocks": [
+            {
+              "selected_book_rank": 0,
+              "round": 0,
+              "ratio": 0.6350841751440144
+            },
+            {
+              "selected_book_rank": 0,
+              "round": 1,
+              "ratio": 0.6342889370725949
+            },
+            {
+              "selected_book_rank": 0,
+              "round": 2,
+              "ratio": 0.6335294543823083
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 0,
+              "ratio": 0.6328984627604068
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 1,
+              "ratio": 0.634278128949807
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 2,
+              "ratio": 0.6331147792835453
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 0,
+              "ratio": 0.6288210830297409
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 1,
+              "ratio": 0.6355959714139248
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 2,
+              "ratio": 0.6304452702356483
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 0,
+              "ratio": 0.63622140129163
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 1,
+              "ratio": 0.6351193692560806
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 2,
+              "ratio": 0.6277836617445972
+            }
+          ]
+        }
+      }
+    },
+    "wall_ms": {
+      "decode": {
+        "GQA_FUSED_vs_NATIVE": {
+          "book_medians": [
+            0.9710196555696067,
+            0.9690703796202347,
+            0.9712298579067579,
+            0.9693340250486495
+          ],
+          "median_of_book_medians": 0.9701768403091281,
+          "paired_blocks": [
+            {
+              "selected_book_rank": 0,
+              "round": 0,
+              "ratio": 0.9732029278254712
+            },
+            {
+              "selected_book_rank": 0,
+              "round": 1,
+              "ratio": 0.9680204191673077
+            },
+            {
+              "selected_book_rank": 0,
+              "round": 2,
+              "ratio": 0.9710196555696067
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 0,
+              "ratio": 0.9675484177956791
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 1,
+              "ratio": 0.9690703796202347
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 2,
+              "ratio": 0.9701778457555505
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 0,
+              "ratio": 0.971441312208141
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 1,
+              "ratio": 0.9702117466936896
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 2,
+              "ratio": 0.9712298579067579
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 0,
+              "ratio": 0.9758789594507921
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 1,
+              "ratio": 0.9693340250486495
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 2,
+              "ratio": 0.9582824908774948
+            }
+          ]
+        },
+        "GQA_FUSED_vs_PACKED_SDPA": {
+          "book_medians": [
+            0.5701574564789993,
+            0.5694087554543084,
+            0.5668060817120604,
+            0.5709840857749822
+          ],
+          "median_of_book_medians": 0.5697831059666538,
+          "paired_blocks": [
+            {
+              "selected_book_rank": 0,
+              "round": 0,
+              "ratio": 0.5717009269211599
+            },
+            {
+              "selected_book_rank": 0,
+              "round": 1,
+              "ratio": 0.5693591218167501
+            },
+            {
+              "selected_book_rank": 0,
+              "round": 2,
+              "ratio": 0.5701574564789993
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 0,
+              "ratio": 0.5694087554543084
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 1,
+              "ratio": 0.5704442877730875
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 2,
+              "ratio": 0.5690989595479652
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 0,
+              "ratio": 0.5657201183267028
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 1,
+              "ratio": 0.5728413925664068
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 2,
+              "ratio": 0.5668060817120604
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 0,
+              "ratio": 0.5724680439469173
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 1,
+              "ratio": 0.5709840857749822
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 2,
+              "ratio": 0.5629983675210185
+            }
+          ]
+        }
+      },
+      "phase_sum": {
+        "GQA_FUSED_vs_NATIVE": {
+          "book_medians": [
+            1.149275575179287,
+            1.1458581747800203,
+            1.1476873012734434,
+            1.147496127423035
+          ],
+          "median_of_book_medians": 1.1475917143482393,
+          "paired_blocks": [
+            {
+              "selected_book_rank": 0,
+              "round": 0,
+              "ratio": 1.1506595866022518
+            },
+            {
+              "selected_book_rank": 0,
+              "round": 1,
+              "ratio": 1.1466769500878438
+            },
+            {
+              "selected_book_rank": 0,
+              "round": 2,
+              "ratio": 1.149275575179287
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 0,
+              "ratio": 1.1430690914786137
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 1,
+              "ratio": 1.1458581747800203
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 2,
+              "ratio": 1.147058575266424
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 0,
+              "ratio": 1.1488291791464684
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 1,
+              "ratio": 1.1456471911794532
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 2,
+              "ratio": 1.1476873012734434
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 0,
+              "ratio": 1.1532394621166615
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 1,
+              "ratio": 1.147496127423035
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 2,
+              "ratio": 1.1355762731200159
+            }
+          ]
+        },
+        "GQA_FUSED_vs_PACKED_SDPA": {
+          "book_medians": [
+            0.634461637078886,
+            0.633280196997636,
+            0.6305886096376695,
+            0.6352743228509071
+          ],
+          "median_of_book_medians": 0.633870917038261,
+          "paired_blocks": [
+            {
+              "selected_book_rank": 0,
+              "round": 0,
+              "ratio": 0.6352551062250333
+            },
+            {
+              "selected_book_rank": 0,
+              "round": 1,
+              "ratio": 0.634461637078886
+            },
+            {
+              "selected_book_rank": 0,
+              "round": 2,
+              "ratio": 0.6337036663619897
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 0,
+              "ratio": 0.6330558889070602
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 1,
+              "ratio": 0.6344324762357983
+            },
+            {
+              "selected_book_rank": 1,
+              "round": 2,
+              "ratio": 0.633280196997636
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 0,
+              "ratio": 0.6289610312466651
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 1,
+              "ratio": 0.635787467449845
+            },
+            {
+              "selected_book_rank": 2,
+              "round": 2,
+              "ratio": 0.6305886096376695
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 0,
+              "ratio": 0.6363936024605212
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 1,
+              "ratio": 0.6352743228509071
+            },
+            {
+              "selected_book_rank": 3,
+              "round": 2,
+              "ratio": 0.6279488634367266
+            }
+          ]
+        }
+      }
+    }
+  },
+  "timing_prepared": true,
+  "hypotheses": {
+    "H1_all_book_connections": true,
+    "H2_all_book_fused_ppl_within_5pct": true,
+    "H3_fused_faster_than_full_restore": true
+  },
+  "pooling": "Four passages once each. Technical repeats are not additional texts; no old-run pooling, CI or p-value."
+}

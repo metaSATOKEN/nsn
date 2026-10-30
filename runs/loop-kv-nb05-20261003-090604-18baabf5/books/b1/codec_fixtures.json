@@ -1,0 +1,107 @@
+{
+  "device": "cuda",
+  "checks": [
+    {
+      "id": "pack_1",
+      "pass": true
+    },
+    {
+      "id": "pack_2",
+      "pass": true
+    },
+    {
+      "id": "pack_3",
+      "pass": true
+    },
+    {
+      "id": "pack_7",
+      "pass": true
+    },
+    {
+      "id": "pack_8",
+      "pass": true
+    },
+    {
+      "id": "pack_9",
+      "pass": true
+    },
+    {
+      "id": "pack_63",
+      "pass": true
+    },
+    {
+      "id": "pack_64",
+      "pass": true
+    },
+    {
+      "id": "pack_65",
+      "pass": true
+    },
+    {
+      "id": "pack_8192",
+      "pass": true
+    },
+    {
+      "id": "group_zero",
+      "pass": true,
+      "shape": [
+        1,
+        2,
+        1,
+        64,
+        128
+      ],
+      "noncontiguous_input": false
+    },
+    {
+      "id": "group_constant",
+      "pass": true,
+      "shape": [
+        1,
+        2,
+        1,
+        64,
+        128
+      ],
+      "noncontiguous_input": false
+    },
+    {
+      "id": "group_strided",
+      "pass": true,
+      "shape": [
+        1,
+        2,
+        1,
+        64,
+        128
+      ],
+      "noncontiguous_input": true
+    },
+    {
+      "id": "group_K_00",
+      "pass": true,
+      "shape": [
+        1,
+        8,
+        1,
+        64,
+        128
+      ],
+      "noncontiguous_input": false
+    },
+    {
+      "id": "group_V_43",
+      "pass": true,
+      "shape": [
+        1,
+        8,
+        1,
+        64,
+        128
+      ],
+      "noncontiguous_input": false
+    }
+  ],
+  "pass": true,
+  "model_forward_calls": 0
+}

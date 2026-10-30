@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "fixtures": 64,
+  "decisions": 192,
+  "normal": 8,
+  "nonfinite": 36,
+  "structural": 20
+}

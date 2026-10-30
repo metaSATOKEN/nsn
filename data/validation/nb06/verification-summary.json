@@ -1,0 +1,19 @@
+{
+  "zip_sha256": "2ef013414a6a7130bb55ddd0ff32328698b965a1f3347fa023b2400d5d2246fa",
+  "zip_bytes": 225291002,
+  "entries": 304,
+  "manifest_files": 303,
+  "embedded_sources_match_delivered": 29,
+  "verified": true,
+  "status": "PASS_MODEL_CONNECTION",
+  "derived_float_difference_count": 42,
+  "max_derived_float_difference": 3.552713678800501e-15,
+  "all_nll_component_count": 15420,
+  "max_nll_component_difference": 0.0,
+  "local_model_calls": 0,
+  "gpu_runs": 0,
+  "raw_archive_mutations": 0,
+  "raw_logit_rows_checked": 384,
+  "actual_q_captures_checked": 32,
+  "independence_scope": "Separately implemented verifier within the same project, CPU-only; no third-party replication."
+}

@@ -1,0 +1,69 @@
+{
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "transformers": "4.56.2",
+    "huggingface-hub": "0.36.2",
+    "accelerate": "1.14.0",
+    "tokenizers": "0.22.2",
+    "safetensors": "0.8.0",
+    "numpy": "2.1.3",
+    "sentencepiece": "0.2.2"
+  },
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "gpu_total_bytes": 101974081536,
+  "cuda": "12.8",
+  "python": "3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]",
+  "experiment": "LOOP-KV-AC08",
+  "software_version": "0.1.0",
+  "model": "ByteDance/Ouro-1.4B",
+  "model_revision": "fcfcfbc429c7b10ee73dfc718033351d8936d2a8",
+  "tokenizer_sha256": "fbd16291c3d91d530a306acbef718fa37eb7d9f1beeff0a3293f664688ece2e6",
+  "vocab_size": 49152,
+  "execution_dtype": "BF16",
+  "parameter_dtype_counts": {
+    "torch.bfloat16": 269
+  },
+  "floating_buffer_dtype_counts": {
+    "torch.float32": 1
+  },
+  "source_hashes": {
+    "modeling_ouro.py": "c5c68fbb368ce2909c257ae2afc50719be8c91539333d3295e19312c4316f413",
+    "configuration_ouro.py": "950443e32929047aa08d02abad2e1888bc1914b3db988d3d675f70787f65dafb",
+    "config.json": "474ea0d5e14ad62aee3245771cedf132a6920c311ae2dc12a8b2271cd868d242"
+  },
+  "worker_sha256": "83581a6f15bb1b8def5b3126151dd4acd2a7281e3a704ada803931ed5ab72446",
+  "legacy_full_p0_pass": false,
+  "readout": "exit_at_step=7; labels=None; use_weighted_exit=False",
+  "nll_dtype": "CPU float64",
+  "unpack_kernel": {
+    "triton": "3.6.0",
+    "torch_requirement": "triton==3.6.0; platform_system == \"Linux\"",
+    "block": 1024,
+    "num_warps": 4,
+    "autotune": false
+  },
+  "restore_kernel": {
+    "baseline": {
+      "triton": "3.6.0",
+      "torch_requirement": "triton==3.6.0; platform_system == \"Linux\"",
+      "block": 1024,
+      "num_warps": 4,
+      "autotune": false
+    },
+    "block": 1024,
+    "num_warps": 4,
+    "autotune": false,
+    "enable_fp_fusion": false,
+    "division": "div_rn",
+    "output_rounding": "rtne",
+    "norm": "torch_vector_norm_clamp"
+  },
+  "material_sha256": "bc765846c8317f04b21990a8574a3b99e92c1a2d322bb7c12bbd171a387b210d",
+  "caps_seconds": {
+    "prepare": 1800,
+    "gate": 1200,
+    "warmup": 1500,
+    "main": 3600,
+    "case": 900
+  }
+}

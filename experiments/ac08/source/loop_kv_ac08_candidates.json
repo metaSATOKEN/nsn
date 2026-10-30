@@ -1,0 +1,439 @@
+{
+  "experiment": "LOOP-KV-AC08",
+  "version": "0.1",
+  "date": "2026-10-02",
+  "status": "CANDIDATES_FIXED_NOT_YET_DOWNLOADED",
+  "selection_seed": 2026093001,
+  "sort_key": "sha256(UTF8(f\"2026093001:{book_id}\")) ascending",
+  "data_revision": "4d28bd77e66947ad3835cf78ed7aaeb4dd87ad8b",
+  "tokenizer_revision": "fcfcfbc429c7b10ee73dfc718033351d8936d2a8",
+  "source_manifests": [
+    {
+      "path": "runs/loop-kv-p0_p1a-20260930-073005-5928f5a5/artifacts/sources/pg19-train-files.txt",
+      "sha256": "145b5f0896cc2fff3231222874a0f324ee04559144ecf25a873d294eb161719c"
+    },
+    {
+      "path": "runs/loop-kv-p0_p1a-20260930-073005-5928f5a5/artifacts/sources/pg19-metadata.csv",
+      "sha256": "fbb2fdb48522927b2e16aa52950f2afeb83c6fa8fed45f0c3dd834e9bc9b43b9"
+    }
+  ],
+  "previous_candidate_ledger": {
+    "path": "plans/loop-kv-ac06-material-candidates-v0.1-2026-10-02.json",
+    "sha256": "6ec5ea50710c2013fd47b11339dd256190f5d42bad5df6e3fb2500096d2620c6"
+  },
+  "exclusion_scope": "77 saved run material/schedule/selection records plus AC06 prior inventory; 24 observed or prepared IDs. Unused within this research, not a claim about pretraining.",
+  "prior_materials": [
+    {
+      "book_id": "31",
+      "title": "The Oedipus Trilogy by Sophocles",
+      "text_sha256": "451fce18b3c8550c17ff8a57cbc5247418f7697fb182784739da399bc512c1bc",
+      "normalized_title": "the oedipus trilogy by sophocles"
+    },
+    {
+      "book_id": "2976",
+      "title": "Spain by Jacques Casanova de Seingalt",
+      "text_sha256": "9ecf85d8bbc9261bd5fb132a7c050b66a85bbe92efb64066059a355a5d83a507",
+      "normalized_title": "spain by jacques casanova de seingalt"
+    },
+    {
+      "book_id": "3752",
+      "title": "Voyager's Tales by Richard Hakluyt",
+      "text_sha256": "a9c81bd7bd48bcd1f9fd657f8575a3525767e7dd7ef4cabf09db937f638b8c1b",
+      "normalized_title": "voyager's tales by richard hakluyt"
+    },
+    {
+      "book_id": "4124",
+      "title": "The Diary of Samuel Pepys October November & December 1660",
+      "text_sha256": "877cabdc0fe8242602fa23083486946f57562c31fd2b1126399c77d51cee6422",
+      "normalized_title": "the diary of samuel pepys october november & december 1660"
+    },
+    {
+      "book_id": "4537",
+      "title": "Sylvia's Lovers Complete by Elizabeth Gaskell",
+      "text_sha256": "8ad15a08ed567687af2185a8a7d6c35d8e6b4a3bc9dd3f5babca243c81401bab",
+      "normalized_title": "sylvia's lovers complete by elizabeth gaskell"
+    },
+    {
+      "book_id": "9442",
+      "title": "Helbeck of Bannisdale Vol. 2 by Mrs. Humphry Ward",
+      "text_sha256": "7a5017b855208af74e84056ae3d09427e634f8951361f323e0f8a235ff1d7643",
+      "normalized_title": "helbeck of bannisdale vol. 2 by mrs. humphry ward"
+    },
+    {
+      "book_id": "11311",
+      "title": "The Masters of the Peaks by Joseph A. Altsheler",
+      "text_sha256": "f24526fd630c332cf8b95642828d06c10bd7bc701344f7badab58775a53200c1",
+      "normalized_title": "the masters of the peaks by joseph a. altsheler"
+    },
+    {
+      "book_id": "11579",
+      "title": "Scott's Last Expedition Volume I by Captain R. F. Scott",
+      "text_sha256": "0ed4ad6ed013e00b5e4486d8e79f0f9f61adae54638fe100cfdc649fc9a89fb0",
+      "normalized_title": "scott's last expedition volume i by captain r. f. scott"
+    },
+    {
+      "book_id": "12261",
+      "title": "A Study In Magic And Religion Vol. 1 of 2 by James George Frazer",
+      "text_sha256": "ef74ad840d8dea38d1ef283dc42664065d0f8353925cee51a20d1c98a84c0b7c",
+      "normalized_title": "a study in magic and religion vol. 1 of 2 by james george frazer"
+    },
+    {
+      "book_id": "26540",
+      "title": "Boy Scouts in the Canal Zone by G. Harvey Ralphson",
+      "text_sha256": "2b70c584fd867403923674aaa1eb4e1fe08d22e1a60c9ec103987fd996b59ff1",
+      "normalized_title": "boy scouts in the canal zone by g. harvey ralphson"
+    },
+    {
+      "book_id": "31131",
+      "title": "Boys' Book of Indian Warriors by Edwin L. Sabin",
+      "text_sha256": "06ae07b62e48df6accf63669d14eba6d7538fc9a53ddd58ce710bf85fd0402ec",
+      "normalized_title": "boys' book of indian warriors by edwin l. sabin"
+    },
+    {
+      "book_id": "31258",
+      "title": "Our campaign around Gettysburg by John Lockwood",
+      "text_sha256": "9d44d1ec4eed131388eff8a542df927f257feab9a5749efc74aca1c446565a2e",
+      "normalized_title": "our campaign around gettysburg by john lockwood"
+    },
+    {
+      "book_id": "33390",
+      "title": "Bosom Friends by Angela Brazil",
+      "text_sha256": "5174a8663f803d9fcfe16dc601ae4e51eabec6433c6877491dce34ae477a14f3",
+      "normalized_title": "bosom friends by angela brazil"
+    },
+    {
+      "book_id": "34475",
+      "title": "Materialized Apparitions by Edward Augustus Brackett",
+      "text_sha256": "382daeaf491c1b8965a279be18b921e3e975f80ebcfaae810e4206a0216597ff",
+      "normalized_title": "materialized apparitions by edward augustus brackett"
+    },
+    {
+      "book_id": "37013",
+      "title": "The Pleasures of the Country by Harriet Myrtle",
+      "text_sha256": "23067064f55adc225897bd8867111934c38e2858de8a59f7db5c5467c1d38a9a",
+      "normalized_title": "the pleasures of the country by harriet myrtle"
+    },
+    {
+      "book_id": "49484",
+      "title": "My Friend Pasquale and other stories by James Selwin Tait",
+      "text_sha256": "b34150d5936b93cc5c9a49dfdcedb5e92a1b84295cc5ec35dbbe4e97c90b0c9f",
+      "normalized_title": "my friend pasquale and other stories by james selwin tait"
+    },
+    {
+      "book_id": "49966",
+      "title": "Geology of Devils Tower National Monument Wyoming",
+      "text_sha256": "e18df82eb137ca83e520cab5094404c560bac45dabe148cbe71aa35612f9b55d",
+      "normalized_title": "geology of devils tower national monument wyoming"
+    },
+    {
+      "book_id": "51863",
+      "title": "Seven Centuries of Lace by Mrs. John Hungerford Pollen",
+      "text_sha256": "39a602cfa55afcb8376e3919a2904388c33bc97f92a088c95c4724ff22f01375",
+      "normalized_title": "seven centuries of lace by mrs. john hungerford pollen"
+    },
+    {
+      "book_id": "53248",
+      "title": "Gallant Little Wales by Jeannette Augustus Marks",
+      "text_sha256": "9b94378e088975fe75e0fc91240224f2e1025fdcf111eda82d92ddf0f8c5984a",
+      "normalized_title": "gallant little wales by jeannette augustus marks"
+    },
+    {
+      "book_id": "56102",
+      "title": "American Missionary Volume 35 No. 9 September 1881 by Various",
+      "text_sha256": "5f18f02d74b7085e374880eca0aa53d03d85ab018cdf27c484310b4c7afd8f3d",
+      "normalized_title": "american missionary volume 35 no. 9 september 1881 by various"
+    },
+    {
+      "book_id": "58109",
+      "title": "History of biology by Louis Compton Miall",
+      "text_sha256": "ac91dc3b0eff4c94346c2eb33cbf9ad1fe3dec378dee9ae8b7a64c45e89fb450",
+      "normalized_title": "history of biology by louis compton miall"
+    },
+    {
+      "book_id": "42080",
+      "title": "The Voice in Singing by Emma Seiler",
+      "text_sha256": "16a0fefdcb6c17b7741bedc90c8a24515df173d017d780c278f1cf8905f64554",
+      "normalized_title": "the voice in singing by emma seiler"
+    },
+    {
+      "book_id": "41533",
+      "title": "History of Painting in Italy Volume VI (of 6) by Luigi Antonio Lanzi",
+      "text_sha256": "aa3bfe4bd3e6f9524eb917e9b60aeff4d63177f1c9f28fc51a40c8f17615c480",
+      "normalized_title": "history of painting in italy volume vi (of 6) by luigi antonio lanzi"
+    },
+    {
+      "book_id": "49087",
+      "title": "The Abbeys of Great Britain by H. Claiborne Dixon",
+      "text_sha256": "db62869fc9554e35c619eab1bae17987421a43b5a47217383276604c04553909",
+      "normalized_title": "the abbeys of great britain by h. claiborne dixon"
+    }
+  ],
+  "candidates": [
+    {
+      "candidate_index": 0,
+      "original_rank_zero_based": 24,
+      "book_id": "38233",
+      "file": "train/38233.txt",
+      "title": "Birds Every Child Should Know by Neltje Blanchan",
+      "normalized_title": "birds every child should know by neltje blanchan",
+      "publication_date": "1907",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/38233.txt"
+    },
+    {
+      "candidate_index": 1,
+      "original_rank_zero_based": 25,
+      "book_id": "57533",
+      "file": "train/57533.txt",
+      "title": "Three short stories from 'THE CAPTAIN' Vol. 27 by Percy F. Westerman",
+      "normalized_title": "three short stories from 'the captain' vol. 27 by percy f. westerman",
+      "publication_date": "1912",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/57533.txt"
+    },
+    {
+      "candidate_index": 2,
+      "original_rank_zero_based": 26,
+      "book_id": "3921",
+      "file": "train/3921.txt",
+      "title": "The Red Lily Vol. 3 by Anatole France",
+      "normalized_title": "the red lily vol. 3 by anatole france",
+      "publication_date": "1894",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/3921.txt"
+    },
+    {
+      "candidate_index": 3,
+      "original_rank_zero_based": 27,
+      "book_id": "58192",
+      "file": "train/58192.txt",
+      "title": "Winning His Y by Ralph Henry Barbour",
+      "normalized_title": "winning his y by ralph henry barbour",
+      "publication_date": "1910",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/58192.txt"
+    },
+    {
+      "candidate_index": 4,
+      "original_rank_zero_based": 28,
+      "book_id": "9667",
+      "file": "train/9667.txt",
+      "title": "Specimens with Memoirs of the Less-known British Poets",
+      "normalized_title": "specimens with memoirs of the less-known british poets",
+      "publication_date": "1860",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/9667.txt"
+    },
+    {
+      "candidate_index": 5,
+      "original_rank_zero_based": 29,
+      "book_id": "26438",
+      "file": "train/26438.txt",
+      "title": "Are the Effects of Use and Disuse Inherited? by William Platt Ball",
+      "normalized_title": "are the effects of use and disuse inherited? by william platt ball",
+      "publication_date": "1890",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/26438.txt"
+    },
+    {
+      "candidate_index": 6,
+      "original_rank_zero_based": 30,
+      "book_id": "45277",
+      "file": "train/45277.txt",
+      "title": "Studies in Folk-Song and Popular Poetry by Alfred M. Williams",
+      "normalized_title": "studies in folk-song and popular poetry by alfred m. williams",
+      "publication_date": "1895",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/45277.txt"
+    },
+    {
+      "candidate_index": 7,
+      "original_rank_zero_based": 31,
+      "book_id": "28881",
+      "file": "train/28881.txt",
+      "title": "Harper's Young People May 4 1880 by Various",
+      "normalized_title": "harper's young people may 4 1880 by various",
+      "publication_date": "1880",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/28881.txt"
+    },
+    {
+      "candidate_index": 8,
+      "original_rank_zero_based": 32,
+      "book_id": "41350",
+      "file": "train/41350.txt",
+      "title": "Stories from the Faerie Queen by Edmund Spenser and Jeanie Lang",
+      "normalized_title": "stories from the faerie queen by edmund spenser and jeanie lang",
+      "publication_date": "1905",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/41350.txt"
+    },
+    {
+      "candidate_index": 9,
+      "original_rank_zero_based": 33,
+      "book_id": "37027",
+      "file": "train/37027.txt",
+      "title": "With Fire and Sword by Henryk Sienkiewicz",
+      "normalized_title": "with fire and sword by henryk sienkiewicz",
+      "publication_date": "1898",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/37027.txt"
+    },
+    {
+      "candidate_index": 10,
+      "original_rank_zero_based": 34,
+      "book_id": "9207",
+      "file": "train/9207.txt",
+      "title": "Vision of the Fountain (From Twice Told Tales)by Nathaniel Hawthorne",
+      "normalized_title": "vision of the fountain (from twice told tales)by nathaniel hawthorne",
+      "publication_date": "1837",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/9207.txt"
+    },
+    {
+      "candidate_index": 11,
+      "original_rank_zero_based": 35,
+      "book_id": "54246",
+      "file": "train/54246.txt",
+      "title": "The Clergy And The Pulpit In Their Relations To The People",
+      "normalized_title": "the clergy and the pulpit in their relations to the people",
+      "publication_date": "1867",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/54246.txt"
+    },
+    {
+      "candidate_index": 12,
+      "original_rank_zero_based": 36,
+      "book_id": "847",
+      "file": "train/847.txt",
+      "title": "Lays of Ancient Rome by Thomas Babbington Macaulay",
+      "normalized_title": "lays of ancient rome by thomas babbington macaulay",
+      "publication_date": "1842",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/847.txt"
+    },
+    {
+      "candidate_index": 13,
+      "original_rank_zero_based": 37,
+      "book_id": "49922",
+      "file": "train/49922.txt",
+      "title": "The Mentor Vol. 1 No. 45 December 22 1913: Makers of American Art",
+      "normalized_title": "the mentor vol. 1 no. 45 december 22 1913: makers of american art",
+      "publication_date": "1913",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/49922.txt"
+    },
+    {
+      "candidate_index": 14,
+      "original_rank_zero_based": 38,
+      "book_id": "48170",
+      "file": "train/48170.txt",
+      "title": "Charles Sumner; His Complete Works Vol. 8 of 20 by Charles Sumner",
+      "normalized_title": "charles sumner; his complete works vol. 8 of 20 by charles sumner",
+      "publication_date": "1900",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/48170.txt"
+    },
+    {
+      "candidate_index": 15,
+      "original_rank_zero_based": 39,
+      "book_id": "10571",
+      "file": "train/10571.txt",
+      "title": "The Old Man of the Sea by W. W. Jacobs",
+      "normalized_title": "the old man of the sea by w. w. jacobs",
+      "publication_date": "1911",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/10571.txt"
+    },
+    {
+      "candidate_index": 16,
+      "original_rank_zero_based": 40,
+      "book_id": "35517",
+      "file": "train/35517.txt",
+      "title": "The Three Impostors by Arthur Machen",
+      "normalized_title": "the three impostors by arthur machen",
+      "publication_date": "1895",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/35517.txt"
+    },
+    {
+      "candidate_index": 17,
+      "original_rank_zero_based": 41,
+      "book_id": "49518",
+      "file": "train/49518.txt",
+      "title": "A Few More Verses by Susan Coolidge",
+      "normalized_title": "a few more verses by susan coolidge",
+      "publication_date": "1889",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/49518.txt"
+    },
+    {
+      "candidate_index": 18,
+      "original_rank_zero_based": 42,
+      "book_id": "47168",
+      "file": "train/47168.txt",
+      "title": "The Forest Schoolmaster by Peter Rosegger",
+      "normalized_title": "the forest schoolmaster by peter rosegger",
+      "publication_date": "1900",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/47168.txt"
+    },
+    {
+      "candidate_index": 19,
+      "original_rank_zero_based": 43,
+      "book_id": "10926",
+      "file": "train/10926.txt",
+      "title": "Saxe Holm's Stories by Helen Hunt Jackson",
+      "normalized_title": "saxe holm's stories by helen hunt jackson",
+      "publication_date": "1874",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/10926.txt"
+    },
+    {
+      "candidate_index": 20,
+      "original_rank_zero_based": 44,
+      "book_id": "35428",
+      "file": "train/35428.txt",
+      "title": "A Charming Fellow Volume I (of 3) by Frances Eleanor Trollope",
+      "normalized_title": "a charming fellow volume i (of 3) by frances eleanor trollope",
+      "publication_date": "1876",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/35428.txt"
+    },
+    {
+      "candidate_index": 21,
+      "original_rank_zero_based": 45,
+      "book_id": "11182",
+      "file": "train/11182.txt",
+      "title": "Captains All Book 2: The Boatswain's Mate by W. W. Jacobs",
+      "normalized_title": "captains all book 2: the boatswain's mate by w. w. jacobs",
+      "publication_date": "1909",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/11182.txt"
+    },
+    {
+      "candidate_index": 22,
+      "original_rank_zero_based": 46,
+      "book_id": "27371",
+      "file": "train/27371.txt",
+      "title": "Diplomatic Correspondence of the American Revolution",
+      "normalized_title": "diplomatic correspondence of the american revolution",
+      "publication_date": "1829",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/27371.txt"
+    },
+    {
+      "candidate_index": 23,
+      "original_rank_zero_based": 47,
+      "book_id": "54147",
+      "file": "train/54147.txt",
+      "title": "Dorothy Dale and Her Chums by Margaret Penrose",
+      "normalized_title": "dorothy dale and her chums by margaret penrose",
+      "publication_date": "1909",
+      "source_url": "https://storage.googleapis.com/deepmind-gutenberg/train/54147.txt"
+    }
+  ],
+  "selection_contract": {
+    "required_books": 4,
+    "max_candidates": 24,
+    "tokens": 1024,
+    "offset": 0,
+    "network_retries": 0,
+    "per_text_bytes_cap": 16777216,
+    "per_request_seconds": 90,
+    "candidate_bytes_cap": 402653184,
+    "freeze_before_model_load": true,
+    "replace_after_selection": false,
+    "score_blind": true,
+    "skip_only": [
+      "DUPLICATE_NORMALIZED_TITLE",
+      "DUPLICATE_TEXT_SHA256",
+      "TOO_SHORT"
+    ],
+    "stop_on": [
+      "NETWORK_ERROR",
+      "HTTP_ERROR",
+      "DECODE_ERROR",
+      "HASH_ERROR",
+      "SIZE_LIMIT",
+      "TIME_LIMIT"
+    ]
+  }
+}

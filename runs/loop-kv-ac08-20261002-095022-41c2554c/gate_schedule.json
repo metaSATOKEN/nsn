@@ -1,0 +1,57 @@
+[
+  {
+    "id": "AC08-gate-b37013-OFFICIAL",
+    "phase": "gate",
+    "book_id": "37013",
+    "arm": "OFFICIAL",
+    "prefix": 768,
+    "length": 1023,
+    "scored": 255,
+    "forwards": 256,
+    "auxiliary_forwards": 1
+  },
+  {
+    "id": "AC08-gate-b37013-OFFICIAL_REPEAT",
+    "phase": "gate",
+    "book_id": "37013",
+    "arm": "OFFICIAL_REPEAT",
+    "prefix": 768,
+    "length": 1023,
+    "scored": 255,
+    "forwards": 256,
+    "auxiliary_forwards": 1
+  },
+  {
+    "id": "AC08-gate-b37013-NATIVE",
+    "phase": "gate",
+    "book_id": "37013",
+    "arm": "NATIVE",
+    "prefix": 768,
+    "length": 1023,
+    "scored": 255,
+    "forwards": 256,
+    "auxiliary_forwards": 1
+  },
+  {
+    "id": "AC08-gate-b37013-PACKED_GROUPED",
+    "phase": "gate",
+    "book_id": "37013",
+    "arm": "PACKED_GROUPED",
+    "prefix": 768,
+    "length": 1023,
+    "scored": 255,
+    "forwards": 256,
+    "auxiliary_forwards": 1
+  },
+  {
+    "id": "AC08-gate-b37013-PACKED_KV_FUSED",
+    "phase": "gate",
+    "book_id": "37013",
+    "arm": "PACKED_KV_FUSED",
+    "prefix": 768,
+    "length": 1023,
+    "scored": 255,
+    "forwards": 256,
+    "auxiliary_forwards": 1
+  }
+]

@@ -1,0 +1,129 @@
+{
+  "schema_version": "0.1.0",
+  "generated_at": "2026-05-14T06:38:04+00:00",
+  "generator": "phase_d3a_jamba_per_layer.py",
+  "transformers_version": "5.8.1",
+  "model_id": "ai21labs/AI21-Jamba-Mini-1.6",
+  "model_label": "Jamba-1.5-Mini",
+  "geometry": "between_layer_coupled",
+  "purpose": "Paper D Phase D-3a — per-K + per-SSM layer dissection on Jamba-1.5-Mini. K-side: SSM held at LAB b_0=6, KV INT3 applied at one attention layer (C8.l). SSM-side: KV held at FP16, LAB b_0=6 applied at one Mamba layer (C9.k, sampled across the stack). Per-layer interactions I_l computed against D-2 v0.1 / v0.2 anchors.",
+  "protocol": {
+    "ctx": 1024,
+    "n_windows": 5,
+    "kv_recipe": "qa_nsep_pchan_asym (NSN v0.3 hero)",
+    "ssm_recipe": "per-(c, s) state INT-b mid-tread, k=7.0"
+  },
+  "fp16_baseline_ppl": 6.689885270252582,
+  "delta_K_per_layer": {
+    "4": -2.624828273454476,
+    "12": -1.9486116854491087,
+    "20": 0.6376443485565564,
+    "28": -0.2537603349442317
+  },
+  "delta_S_C3": 4.556197924020196,
+  "delta_both_C7": 0.283015176368393,
+  "I_per_K_layer": {
+    "4": -1.7597178846332024,
+    "12": -2.6479889562250074,
+    "20": -3.2480221772355193,
+    "28": -2.7886702368994754
+  },
+  "I_K_argmax": 20,
+  "I_K_spread_pp": 1.488304292602317,
+  "delta_C8_L4_L12": -2.300191502118613,
+  "delta_S_per_layer": {
+    "0": 0.43397234039069305,
+    "9": 0.7454342065901518,
+    "19": -0.13761676198110598,
+    "29": 0.0011980383958716497
+  },
+  "ssm_probe_layers": [
+    0,
+    9,
+    19,
+    29
+  ],
+  "j1_pass": true,
+  "j2_pass": true,
+  "j3_pass": true,
+  "attn_layers": [
+    4,
+    12,
+    20,
+    28
+  ],
+  "n_ssm_layers": 28,
+  "conditions": {
+    "C0_FP16": {
+      "ppl": 6.689885270252582,
+      "delta_pct": 0.0,
+      "ssm": "FP16",
+      "kv_layer_bits": {}
+    },
+    "C8_L4_KV_INT3_SSM_b6_all": {
+      "ppl": 6.70136857645783,
+      "delta_pct": 0.1716517659325179,
+      "ssm": "full_b6_all",
+      "kv_layer_bits": {
+        "4": 3
+      }
+    },
+    "C8_L12_KV_INT3_SSM_b6_all": {
+      "ppl": 6.687182374795471,
+      "delta_pct": -0.04040271765391997,
+      "ssm": "full_b6_all",
+      "kv_layer_bits": {
+        "12": 3
+      }
+    },
+    "C8_L20_KV_INT3_SSM_b6_all": {
+      "ppl": 6.82005840219643,
+      "delta_pct": 1.9458200953412337,
+      "ssm": "full_b6_all",
+      "kv_layer_bits": {
+        "20": 3
+      }
+    },
+    "C8_L28_KV_INT3_SSM_b6_all": {
+      "ppl": 6.79115456937173,
+      "delta_pct": 1.5137673521764894,
+      "ssm": "full_b6_all",
+      "kv_layer_bits": {
+        "28": 3
+      }
+    },
+    "C8_L4_L12_KV_INT3_SSM_b6_all": {
+      "ppl": 6.536005097764748,
+      "delta_pct": -2.300191502118613,
+      "ssm": "full_b6_all",
+      "kv_layer_bits": {
+        "4": 3,
+        "12": 3
+      }
+    },
+    "C9_L0_SSM_only_LAB_b6": {
+      "ppl": 6.71891752192935,
+      "delta_pct": 0.43397234039069305,
+      "ssm": "full_b6_only_L0",
+      "kv_layer_bits": {}
+    },
+    "C9_L9_SSM_only_LAB_b6": {
+      "ppl": 6.739753963438681,
+      "delta_pct": 0.7454342065901518,
+      "ssm": "full_b6_only_L9",
+      "kv_layer_bits": {}
+    },
+    "C9_L19_SSM_only_LAB_b6": {
+      "ppl": 6.68067886676341,
+      "delta_pct": -0.13761676198110598,
+      "ssm": "full_b6_only_L19",
+      "kv_layer_bits": {}
+    },
+    "C9_L29_SSM_only_LAB_b6": {
+      "ppl": 6.68996541764676,
+      "delta_pct": 0.0011980383958716497,
+      "ssm": "full_b6_only_L29",
+      "kv_layer_bits": {}
+    }
+  }
+}

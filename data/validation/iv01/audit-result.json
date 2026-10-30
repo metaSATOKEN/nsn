@@ -1,0 +1,12 @@
+{
+  "zip": "loop-kv-iv01-20261001-142907-0c002415.zip",
+  "sha256": "9d607d58936aadd08c676aa5fbb349983dfaf9c4dff18d84240d967a27e8a2c4",
+  "zip_bytes": 121682609,
+  "files": 231,
+  "verified_file_hashes": 230,
+  "verified_source_hashes": 16,
+  "verification": "VERIFIED",
+  "verifier_source": "pre-run frozen v0.1.1 capsule",
+  "returned_code_executed": false,
+  "raw_files_modified": false
+}

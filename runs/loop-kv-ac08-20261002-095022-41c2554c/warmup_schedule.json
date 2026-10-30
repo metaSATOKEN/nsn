@@ -1,0 +1,74 @@
+[
+  {
+    "id": "AC08-warmup0-b37013-NATIVE",
+    "phase": "warmup",
+    "book_id": "37013",
+    "arm": "NATIVE",
+    "prefix": 768,
+    "length": 1023,
+    "scored": 255,
+    "forwards": 256,
+    "auxiliary_forwards": 1,
+    "round": 0
+  },
+  {
+    "id": "AC08-warmup0-b37013-PACKED_GROUPED",
+    "phase": "warmup",
+    "book_id": "37013",
+    "arm": "PACKED_GROUPED",
+    "prefix": 768,
+    "length": 1023,
+    "scored": 255,
+    "forwards": 256,
+    "auxiliary_forwards": 1,
+    "round": 0
+  },
+  {
+    "id": "AC08-warmup0-b37013-PACKED_KV_FUSED",
+    "phase": "warmup",
+    "book_id": "37013",
+    "arm": "PACKED_KV_FUSED",
+    "prefix": 768,
+    "length": 1023,
+    "scored": 255,
+    "forwards": 256,
+    "auxiliary_forwards": 1,
+    "round": 0
+  },
+  {
+    "id": "AC08-warmup1-b37013-PACKED_KV_FUSED",
+    "phase": "warmup",
+    "book_id": "37013",
+    "arm": "PACKED_KV_FUSED",
+    "prefix": 768,
+    "length": 1023,
+    "scored": 255,
+    "forwards": 256,
+    "auxiliary_forwards": 1,
+    "round": 1
+  },
+  {
+    "id": "AC08-warmup1-b37013-PACKED_GROUPED",
+    "phase": "warmup",
+    "book_id": "37013",
+    "arm": "PACKED_GROUPED",
+    "prefix": 768,
+    "length": 1023,
+    "scored": 255,
+    "forwards": 256,
+    "auxiliary_forwards": 1,
+    "round": 1
+  },
+  {
+    "id": "AC08-warmup1-b37013-NATIVE",
+    "phase": "warmup",
+    "book_id": "37013",
+    "arm": "NATIVE",
+    "prefix": 768,
+    "length": 1023,
+    "scored": 255,
+    "forwards": 256,
+    "auxiliary_forwards": 1,
+    "round": 1
+  }
+]

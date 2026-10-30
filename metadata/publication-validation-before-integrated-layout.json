@@ -1,0 +1,67 @@
+{
+  "status": "PASS",
+  "date": "2026-10-29",
+  "scope": "Local GitHub preparation; no upload or model execution",
+  "license_authorization": {
+    "code": "Apache-2.0",
+    "author_owned_papers_figures_data": "CC-BY-4.0",
+    "third_party": "original terms retained"
+  },
+  "source_file_hashes": {
+    "original_files_checked": 3616,
+    "mismatches": 0,
+    "expanded_members": 107,
+    "expanded_members_all_match": true
+  },
+  "readable_distributions": {
+    "AC08": 47,
+    "NB05": 31,
+    "NB06": 29,
+    "default_check_only": true,
+    "modified_source_and_extra_file_rejection": "PASS",
+    "undefined_global_names": [],
+    "gpu_rerun": false
+  },
+  "transport": {
+    "failure_boundary_tests": 10,
+    "passed": 10,
+    "full_restore": "PASS",
+    "archive_files": 17,
+    "external_members": 1673,
+    "external_uncompressed_bytes": 6907963436,
+    "zip_bytes": 6302337365
+  },
+  "scientific_reproduction": {
+    "report": "reproduction-20261029.json",
+    "status": "PASS",
+    "python": "3.13.17",
+    "saved_value_checks": 1732,
+    "failed_checks": 0,
+    "raw_logit_nll_predictions": 432,
+    "nb06_saved_loss_components": 15420,
+    "current_manuscripts_exact": 4,
+    "base_figures_pixel_equal": 5,
+    "supplement_outputs_exact": 14,
+    "new_model_calls": 0
+  },
+  "documentation": {
+    "current_documents_link_checked": 20,
+    "missing_current_links": [],
+    "current_contacts": "info@metaclan.jp",
+    "historical_inputs": "Original links/contact text preserved where frozen; not selected as current editions"
+  },
+  "content_scan": {
+    "report": "content-scan.json",
+    "real_credentials_found": false,
+    "candidate_literals": "five repeated-character placeholders",
+    "archived_notebook_magic_files": 5,
+    "compressed_executable_payload_assignments": 0
+  },
+  "remaining_publication_steps": [
+    "Choose actual GitHub repository and release URLs/tag",
+    "Upload repository and all 17 evidence assets",
+    "Re-export PDFs with corrected contact if PDFs are included",
+    "Assign integrated archive DOI if desired"
+  ],
+  "original_research_environment": "Unchanged standard-library-only root venv; analysis dependencies were installed only in a restored temporary copy"
+}

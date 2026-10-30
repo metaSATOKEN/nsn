@@ -1,0 +1,28 @@
+{
+  "reference": {
+    "baseline": {
+      "triton": "3.6.0",
+      "torch_requirement": "triton==3.6.0; platform_system == \"Linux\"",
+      "block": 1024,
+      "num_warps": 4,
+      "autotune": false
+    },
+    "block": 1024,
+    "num_warps": 4,
+    "autotune": false,
+    "enable_fp_fusion": false,
+    "division": "div_rn",
+    "output_rounding": "rtne",
+    "norm": "torch_vector_norm_clamp"
+  },
+  "token_tile": 16,
+  "num_warps": 4,
+  "autotune": false,
+  "enable_fp_fusion": false,
+  "normalization": "FP32 sum-of-squares/sqrt in token row",
+  "division": "div_rn",
+  "kv_rounding": "BF16 rtne before QK",
+  "accumulation": "FP32 reduction",
+  "scale": 0.08838834764831843,
+  "mask": "all stored positions; single decode query"
+}

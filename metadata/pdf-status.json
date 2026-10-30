@@ -1,0 +1,18 @@
+[
+  {
+    "path": "papers/nsn-integrated/manuscript-en-v0.7-2026-10-08.pdf",
+    "bytes": 553680,
+    "sha256": "ffdfbdbdcc3c59fbb9b375c52a4586b60469979a76011bfd0ee414eeb86526eb",
+    "included": false,
+    "reason": "Cover contact is info@mataclan.jp; re-export from corrected current Markdown before PDF publication.",
+    "check": "Poppler text extraction of cover; no complete layout audit"
+  },
+  {
+    "path": "papers/loop-kv/manuscript-en-v0.3-2026-10-08.pdf",
+    "bytes": 425723,
+    "sha256": "8cbd25fa76c983e3c149a91b1615a1ac623e4c4412f7a1d736a756db3b9bd7d3",
+    "included": false,
+    "reason": "Cover contact is info@mataclan.jp; re-export from corrected current Markdown before PDF publication.",
+    "check": "Poppler text extraction of cover; no complete layout audit"
+  }
+]

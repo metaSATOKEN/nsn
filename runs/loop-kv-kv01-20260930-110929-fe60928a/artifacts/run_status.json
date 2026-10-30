@@ -1,0 +1,10 @@
+{
+  "status": "COMPLETE",
+  "experiment": "LOOP-KV-KV01",
+  "p0r_route_status": "PASS_ROUTE_KV01",
+  "p1_started": true,
+  "legacy_p0_status": "BLOCKED_IMPLEMENTATION_RETAINED",
+  "legacy_full_p0_pass": false,
+  "elapsed_seconds": 1787.253332746,
+  "time_utc": "2026-09-30T11:39:18.331670+00:00"
+}

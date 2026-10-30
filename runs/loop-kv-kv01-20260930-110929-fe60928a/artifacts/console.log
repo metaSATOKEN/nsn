@@ -1,0 +1,98 @@
+Installing original-run dependency versions; keeping Colab PyTorch.
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 40.1/40.1 kB 4.0 MB/s eta 0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 11.6/11.6 MB 284.7 MB/s eta 0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 566.4/566.4 kB 62.3 MB/s eta 0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.3/3.3 MB 229.5 MB/s eta 0:00:00
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+gradio 6.26.0 requires huggingface-hub<2.0,>=1.16.0, but you have huggingface-hub 0.36.2 which is incompatible.
+diffusers 0.40.0 requires huggingface-hub<2.0,>=1.23.0, but you have huggingface-hub 0.36.2 which is incompatible.
+
+Loading pinned Ouro-1.4B BF16. P0KV must pass before the fixed 32 KV01 trajectories.
+2026-09-30 11:09:48.036187: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-09-30 11:09:48.066659: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI AVX512_BF16 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+`torch_dtype` is deprecated! Use `dtype` instead!
+P0KV G2-b37013-r8
+P0KV G2-b2976-r8
+P0KV G2-b9442-r8
+P0KV G2-b56102-r8
+P0KV G3-L1-r8
+P0KV G3-L63-r8
+P0KV G3-L64-r8
+P0KV G3-L65-r8
+P0KV G3-L127-r8
+P0KV G3-L128-r8
+P0KV G3-L129-r8
+P0KV G4-b37013-r8
+P0KV G4-b2976-r8
+P0KV G4-b9442-r8
+P0KV G4-b56102-r8
+Compatibility G5-b37013-r8-KV
+Compatibility G5-b2976-r8-KV
+Compatibility G5-b9442-r8-KV
+Compatibility G5-b56102-r8-KV
+KV01 [1/32] KV01-b49966-r8-NATIVE
+  COMPLETE_FINITE / 255 predictions / 29.6s
+KV01 [2/32] KV01-b49966-r8-KV
+  COMPLETE_FINITE / 255 predictions / 29.5s
+KV01 [3/32] KV01-b49966-r8-V_ONLY
+  COMPLETE_FINITE / 255 predictions / 29.5s
+KV01 [4/32] KV01-b49966-r8-K_ONLY
+  COMPLETE_FINITE / 255 predictions / 29.3s
+KV01 [5/32] KV01-b34475-r8-NATIVE
+  COMPLETE_FINITE / 255 predictions / 29.4s
+KV01 [6/32] KV01-b34475-r8-K_ONLY
+  COMPLETE_FINITE / 255 predictions / 29.7s
+KV01 [7/32] KV01-b34475-r8-KV
+  COMPLETE_FINITE / 255 predictions / 29.7s
+KV01 [8/32] KV01-b34475-r8-V_ONLY
+  COMPLETE_FINITE / 255 predictions / 29.5s
+KV01 [9/32] KV01-b49484-r8-NATIVE
+  COMPLETE_FINITE / 255 predictions / 29.4s
+KV01 [10/32] KV01-b49484-r8-K_ONLY
+  COMPLETE_FINITE / 255 predictions / 29.5s
+KV01 [11/32] KV01-b49484-r8-V_ONLY
+  COMPLETE_FINITE / 255 predictions / 29.5s
+KV01 [12/32] KV01-b49484-r8-KV
+  COMPLETE_FINITE / 255 predictions / 29.5s
+KV01 [13/32] KV01-b3752-r8-NATIVE
+  COMPLETE_FINITE / 255 predictions / 29.7s
+KV01 [14/32] KV01-b3752-r8-KV
+  COMPLETE_FINITE / 255 predictions / 29.7s
+KV01 [15/32] KV01-b3752-r8-K_ONLY
+  COMPLETE_FINITE / 255 predictions / 30.2s
+KV01 [16/32] KV01-b3752-r8-V_ONLY
+  COMPLETE_FINITE / 255 predictions / 29.8s
+KV01 [17/32] KV01-b4537-r8-NATIVE
+  COMPLETE_FINITE / 255 predictions / 29.7s
+KV01 [18/32] KV01-b4537-r8-KV
+  COMPLETE_FINITE / 255 predictions / 30.1s
+KV01 [19/32] KV01-b4537-r8-V_ONLY
+  COMPLETE_FINITE / 255 predictions / 29.9s
+KV01 [20/32] KV01-b4537-r8-K_ONLY
+  COMPLETE_FINITE / 255 predictions / 30.0s
+KV01 [21/32] KV01-b31258-r8-NATIVE
+  COMPLETE_FINITE / 255 predictions / 30.1s
+KV01 [22/32] KV01-b31258-r8-V_ONLY
+  COMPLETE_FINITE / 255 predictions / 29.9s
+KV01 [23/32] KV01-b31258-r8-KV
+  COMPLETE_FINITE / 255 predictions / 30.3s
+KV01 [24/32] KV01-b31258-r8-K_ONLY
+  COMPLETE_FINITE / 255 predictions / 30.2s
+KV01 [25/32] KV01-b4124-r8-NATIVE
+  COMPLETE_FINITE / 255 predictions / 29.7s
+KV01 [26/32] KV01-b4124-r8-V_ONLY
+  COMPLETE_FINITE / 255 predictions / 30.2s
+KV01 [27/32] KV01-b4124-r8-K_ONLY
+  COMPLETE_FINITE / 255 predictions / 30.3s
+KV01 [28/32] KV01-b4124-r8-KV
+  COMPLETE_FINITE / 255 predictions / 29.8s
+KV01 [29/32] KV01-b31131-r8-NATIVE
+  COMPLETE_FINITE / 255 predictions / 29.5s
+KV01 [30/32] KV01-b31131-r8-V_ONLY
+  COMPLETE_FINITE / 255 predictions / 29.8s
+KV01 [31/32] KV01-b31131-r8-K_ONLY
+  COMPLETE_FINITE / 255 predictions / 30.3s
+KV01 [32/32] KV01-b31131-r8-KV
+  COMPLETE_FINITE / 255 predictions / 30.2s
+Closed: COMPLETE / P0KV=PASS_ROUTE_KV01 / KV01 started=True

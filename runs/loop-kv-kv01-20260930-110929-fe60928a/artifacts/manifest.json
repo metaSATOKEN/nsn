@@ -1,0 +1,81 @@
+{
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "transformers": "4.56.2",
+    "huggingface-hub": "0.36.2",
+    "accelerate": "1.14.0",
+    "tokenizers": "0.22.2",
+    "safetensors": "0.8.0",
+    "numpy": "2.1.3",
+    "sentencepiece": "0.2.2"
+  },
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "gpu_total_bytes": 101974081536,
+  "cuda": "12.8",
+  "python": "3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]",
+  "experiment": "LOOP-KV-KV01",
+  "version": "0.1",
+  "run_id": "loop-kv-kv01-20260930-110929-fe60928a",
+  "model": "ByteDance/Ouro-1.4B",
+  "model_revision": "fcfcfbc429c7b10ee73dfc718033351d8936d2a8",
+  "tokenizer_sha256": "fbd16291c3d91d530a306acbef718fa37eb7d9f1beeff0a3293f664688ece2e6",
+  "material_source": {
+    "run_id": "loop-kv-p0_p1a-20260930-073005-5928f5a5",
+    "original_zip_sha256": "f79154199da43865f8bc6995c667e82b5818ad67b2b9a68771df968c7500a0b6",
+    "worker_sha256": "4312155fc121d926f0a9bd794a62758f7acab634f8991d671e60fe22a7b0b1c9",
+    "packages": {
+      "torch": "2.11.0+cu128",
+      "transformers": "4.56.2",
+      "huggingface-hub": "0.36.2",
+      "accelerate": "1.14.0",
+      "tokenizers": "0.22.2",
+      "safetensors": "0.8.0",
+      "numpy": "2.1.3",
+      "sentencepiece": "0.2.2"
+    },
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "tokenizer_sha256": "fbd16291c3d91d530a306acbef718fa37eb7d9f1beeff0a3293f664688ece2e6",
+    "model_revision": "fcfcfbc429c7b10ee73dfc718033351d8936d2a8"
+  },
+  "material_sha256": "739a619d7486f34a8ab11c494702e804803ac170e45563fd7abde16bbcc0cc6f",
+  "core_sha256": "4312155fc121d926f0a9bd794a62758f7acab634f8991d671e60fe22a7b0b1c9",
+  "diagnostic_helper_sha256": "8d9fdff352cf0ebae5ba850ecd2413ba65af33143c331c7e0adf01c2fa62c5cd",
+  "worker_sha256": "7f248fce97af1c6724e555d07b8f9fae3ccf181947663a9b0517d24e3284ef11",
+  "source_hashes": {
+    "modeling_ouro.py": "c5c68fbb368ce2909c257ae2afc50719be8c91539333d3295e19312c4316f413",
+    "configuration_ouro.py": "950443e32929047aa08d02abad2e1888bc1914b3db988d3d675f70787f65dafb",
+    "config.json": "474ea0d5e14ad62aee3245771cedf132a6920c311ae2dc12a8b2271cd868d242"
+  },
+  "historical_identity_sha256": "f0cbed21c4a018d3fde1e1e07086c363f0a86c6a51a49c351f5e2dd3fe096b00",
+  "quality_margin_relative_ppl": 0.05,
+  "main_contrast": "NLL(K_ONLY)-NLL(V_ONLY)",
+  "interaction": "KV-K_ONLY-V_ONLY+NATIVE",
+  "historical_outcomes_pooled": false,
+  "targets": [
+    "NATIVE",
+    "K_ONLY",
+    "V_ONLY",
+    "KV"
+  ],
+  "execution_dtype": "BF16",
+  "parameter_dtype_counts": {
+    "torch.bfloat16": 269
+  },
+  "floating_buffer_dtype_counts": {
+    "torch.float32": 1
+  },
+  "legacy_p0_status": "BLOCKED_IMPLEMENTATION_RETAINED",
+  "legacy_full_p0_pass": false,
+  "p1_auto_start_requires": "PASS_ROUTE_KV01",
+  "prepared_seconds": 25.74143968599992,
+  "independent_diagnostic_books": 8,
+  "readout": "exit_at_step=r-1; labels=None; use_weighted_exit=False",
+  "caps_seconds": {
+    "prepare": 1800,
+    "p0kv": 1800,
+    "kv01": 3600,
+    "case": 180,
+    "trajectory": 900
+  },
+  "artifact_bytes_cap": 10737418240
+}

@@ -1,0 +1,63 @@
+{
+  "phase": "D-13c",
+  "title": "INT6 real-pack sanity (Gemma4-31B K-INT6 hero)",
+  "timestamp_utc": "2026-05-07T05:23:53.238282+00:00",
+  "transformers_version": "5.8.0",
+  "ppl_rel_diff_threshold": 0.0001,
+  "selftest_int6": {
+    "trials": 5,
+    "passed": 5,
+    "failed": 0,
+    "fail_msgs": [],
+    "pass": true
+  },
+  "model": {
+    "id": "google/gemma-4-31B",
+    "label": "Gemma4-31B"
+  },
+  "protocol": {
+    "ctx": 4096,
+    "stride": 2048,
+    "n_windows": 3
+  },
+  "k_bits": 6,
+  "results": {
+    "fp16_ppl": 6.591762776282821,
+    "sim_ppl": 6.598082291284633,
+    "real_ppl": 6.598082291284633,
+    "sim_delta_pct": 0.09586987906404965,
+    "real_delta_pct": 0.09586987906404965,
+    "abs_diff": 0.0,
+    "rel_diff": 0.0,
+    "ppl_pass": true
+  },
+  "d17_historical": {
+    "delta_pct": 0.096,
+    "drift_pp": -0.00013012093595035634
+  },
+  "criteria": {
+    "D13c-A": {
+      "name": "INT6 pack/unpack codes-roundtrip identity",
+      "pass": true,
+      "details": {
+        "trials": 5,
+        "passed": 5,
+        "failed": 0,
+        "fail_msgs": [],
+        "pass": true
+      }
+    },
+    "D13c-B": {
+      "name": "Gemma4-31B K-INT6 sim \u2261 real (rel_diff < 1e-04)",
+      "pass": true,
+      "details": {
+        "rel_diff": 0.0,
+        "abs_diff": 0.0
+      }
+    }
+  },
+  "n_passed": 2,
+  "n_total": 2,
+  "overall": "FULL PASS",
+  "interpretation": "INT6 pack helper is bit-exact reversible and the inheritance argument extends to the Gemma4-31B K-INT6 long-context hero. Combined with D-13 (INT4 + INT5) and D-13b (compression analytical sanity), Paper D's fake-quant -> real-pack quality transfer is now empirically verified across the full bit-width range used by the 6-model deployment hero table (INT3 inherited from NSN Phase 26, INT4 / INT5 / INT6 verified at Paper D scale)."
+}

@@ -1,0 +1,78 @@
+{
+  "schema_version": "0.1.0",
+  "generated_at": "2026-05-14T06:54:06+00:00",
+  "generator": "phase_d5_policy_jamba.py",
+  "transformers_version": "5.8.1",
+  "model_id": "ai21labs/AI21-Jamba-Mini-1.6",
+  "model_label": "Jamba-1.5-Mini",
+  "geometry": "between_layer_coupled",
+  "purpose": "Paper D Phase D-5 policy prototype on Jamba-1.5-Mini. Two new policy cells (π_J2, π_J6); other candidates reused from D-2 v0.2 / D-3a. Policy table feeds compute_d6_effective_memory.py for the matched-memory Pareto comparison.",
+  "fp16_baseline_ppl": 6.689885270252582,
+  "attn_layers": [
+    4,
+    12,
+    20,
+    28
+  ],
+  "n_ssm_layers": 28,
+  "results": {
+    "pi_J0_FP16": {
+      "ppl": 6.689885270252582,
+      "delta_pct": 0.0,
+      "K": "FP16",
+      "S": "FP16"
+    },
+    "pi_J2_K_INT4_S_LAB_b6": {
+      "ppl": 6.731503148698803,
+      "delta_pct": 0.6221015273801386,
+      "K": "INT4 all",
+      "S": "LAB b6",
+      "kv_layer_bits": {
+        "4": 4,
+        "12": 4,
+        "20": 4,
+        "28": 4
+      },
+      "ssm_profile_label": "full_b6"
+    },
+    "pi_J6_K_INT3_S_LAB_b5": {
+      "ppl": 6.7699805240144055,
+      "delta_pct": 1.1972590040964795,
+      "K": "INT3 all",
+      "S": "LAB b5",
+      "kv_layer_bits": {
+        "4": 3,
+        "12": 3,
+        "20": 3,
+        "28": 3
+      },
+      "ssm_profile_label": "full_b5"
+    }
+  },
+  "reused_from_earlier_phases": {
+    "pi_J1_K_INT3_S_LAB_b6": {
+      "delta_pct": 0.283,
+      "source": "D-2 v0.2 C7",
+      "K": "INT3 all",
+      "S": "LAB b6"
+    },
+    "pi_J3_K_FP16_S_LAB_b6": {
+      "delta_pct": 4.556,
+      "source": "D-2 v0.2 C3",
+      "K": "FP16",
+      "S": "LAB b6"
+    },
+    "pi_J4_K_partial_S_LAB_b6": {
+      "delta_pct": 0.533,
+      "source": "D-3a C8.4+12",
+      "K": "{L4,L12} INT3 only",
+      "S": "LAB b6"
+    },
+    "pi_J5_global_INT4": {
+      "delta_pct": 39.443,
+      "source": "D-2 v0.2 C5",
+      "K": "INT4 all (uniform)",
+      "S": "uniform b4"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "run_id": "loop-kv-nb06-20261008-075410-5621380a",
+  "summary_sha256": "6da2ac29e8490ef5a36364b5637ce56d47bc00554605674a38f3ec93bd4ddc8a",
+  "actual_q_count": 32,
+  "max_abs": {
+    "k_reconstruction": 0.0625,
+    "v_reconstruction": 0.0078125,
+    "score": 3.5216028919649034e-06,
+    "context": 2.4317108255900166e-06,
+    "sdpa": 0.06006792125402072
+  },
+  "all_fixed_budgets_pass": true,
+  "references": "The same quantized-input references and budgets as NB05; manuscript Table B1.",
+  "bridge_fused_kv_bit_equal": true,
+  "forward_calls": 15420,
+  "raw_logit_rows": 384,
+  "evidence_scope": "All-position NLL components and logit hashes; raw FP32 logits only at 8 fixed steps in 48 non-warmup trajectories.",
+  "max_nll_component_difference": 0.0
+}

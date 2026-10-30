@@ -1,0 +1,180 @@
+{
+  "experiment": "LOOP-KV-AF01",
+  "parent_zip": "loop-kv-ac02-20261001-113455-864bf298.zip",
+  "parent_sha256": "3a079b6f127d2109ccbe3006f0af9921ca126349116d90335d7e9409726bd67a",
+  "parent_gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "dependencies": {
+    "loop_kv_pilot.py": "4312155fc121d926f0a9bd794a62758f7acab634f8991d671e60fe22a7b0b1c9",
+    "loop_kv_p0_diagnostic.py": "8d9fdff352cf0ebae5ba850ecd2413ba65af33143c331c7e0adf01c2fa62c5cd",
+    "loop_kv_pk01_cache.py": "95bebcd9b9e5412077465e80a88c7d400a34fdbb39a7800d922eaebc13ba22ac",
+    "loop_kv_pu01_kernel.py": "88e4567ffe1e8169bdfe6781c49a851b7c0a8446f02d2fd7666985d61914bcd3",
+    "loop_kv_rf01_kernel.py": "23c0845313ffbcd11199cdf7f19a8e4413902364548d2b0b22168e6941812809",
+    "loop_kv_qk01_kernel.py": "694a24cf27ddd0d305855261a429800ce5a801272460bfb4d089a0dbe3f5d03a",
+    "loop_kv_qk01_contract.py": "b445dfb82b45aa4a95d29131ef9a5f6ca3fe37c7fdaee621d2e9fd51ec3709ae",
+    "loop_kv_ac01_attention.py": "3cfbefd3e33459d549cb9110a80afc15b6833c3ecec125c6497b7290755870fb"
+  },
+  "samples": [
+    {
+      "id": "AC02-main-b3752-EXPLICIT-L769-S0",
+      "length": 769,
+      "compressed": 704,
+      "slot": 0,
+      "file": "real_query/AC02-main-b3752-EXPLICIT-L769-S0.npz",
+      "sha256": "823ee0eb2ea611a8a5dfd9cf6840b8da3a6889724a5663c7249bfdb497e99494",
+      "bytes": 7757487
+    },
+    {
+      "id": "AC02-main-b3752-EXPLICIT-L769-S95",
+      "length": 769,
+      "compressed": 704,
+      "slot": 95,
+      "file": "real_query/AC02-main-b3752-EXPLICIT-L769-S95.npz",
+      "sha256": "3c4f7ac3450013e35b7a6f0cb585034a97baa41e05513a635aac05a5fe2b81ab",
+      "bytes": 8645193
+    },
+    {
+      "id": "AC02-main-b3752-EXPLICIT-L769-S191",
+      "length": 769,
+      "compressed": 704,
+      "slot": 191,
+      "file": "real_query/AC02-main-b3752-EXPLICIT-L769-S191.npz",
+      "sha256": "407d50dabdd634684ad8e478bae676cc89b4982c471ad69e49bbc104fb1f555a",
+      "bytes": 8646275
+    },
+    {
+      "id": "AC02-main-b3752-EXPLICIT-L831-S0",
+      "length": 831,
+      "compressed": 704,
+      "slot": 0,
+      "file": "real_query/AC02-main-b3752-EXPLICIT-L831-S0.npz",
+      "sha256": "c44cf456360b4e7364a0cd96c428bb284cb5bc11c955f8f98b91503b08e359d7",
+      "bytes": 8419082
+    },
+    {
+      "id": "AC02-main-b3752-EXPLICIT-L831-S95",
+      "length": 831,
+      "compressed": 704,
+      "slot": 95,
+      "file": "real_query/AC02-main-b3752-EXPLICIT-L831-S95.npz",
+      "sha256": "62fff23beadbb28d102056c4edc4f44712963401ed3a06ef9cba46ae4d571f7c",
+      "bytes": 9478619
+    },
+    {
+      "id": "AC02-main-b3752-EXPLICIT-L831-S191",
+      "length": 831,
+      "compressed": 704,
+      "slot": 191,
+      "file": "real_query/AC02-main-b3752-EXPLICIT-L831-S191.npz",
+      "sha256": "c2dd9f6c33e48075ba6cc2bc7c557affee4f531fe7510bc2a8d9654802e5ee39",
+      "bytes": 9480021
+    },
+    {
+      "id": "AC02-main-b3752-EXPLICIT-L833-S0",
+      "length": 833,
+      "compressed": 768,
+      "slot": 0,
+      "file": "real_query/AC02-main-b3752-EXPLICIT-L833-S0.npz",
+      "sha256": "3fdf3fd03e3194f1fd938155b7aef8359590ccf930c808f8ed6b520beb56f5ee",
+      "bytes": 8370018
+    },
+    {
+      "id": "AC02-main-b3752-EXPLICIT-L833-S95",
+      "length": 833,
+      "compressed": 768,
+      "slot": 95,
+      "file": "real_query/AC02-main-b3752-EXPLICIT-L833-S95.npz",
+      "sha256": "108d3d9063ff8fc02fa72bd8cbb8ff584b9f463108eddb5c34f876b23a564878",
+      "bytes": 9349759
+    },
+    {
+      "id": "AC02-main-b3752-EXPLICIT-L833-S191",
+      "length": 833,
+      "compressed": 768,
+      "slot": 191,
+      "file": "real_query/AC02-main-b3752-EXPLICIT-L833-S191.npz",
+      "sha256": "898700a96fd967aa52e63be00a44be08a050c3295cca21d21406c3731ca4da3c",
+      "bytes": 9350353
+    },
+    {
+      "id": "AC02-main-b31131-EXPLICIT-L769-S0",
+      "length": 769,
+      "compressed": 704,
+      "slot": 0,
+      "file": "real_query/AC02-main-b31131-EXPLICIT-L769-S0.npz",
+      "sha256": "e64f1d1cf3ca46cb74aaa1fbc069565de252ee37da83c9ac1f078ba023b97555",
+      "bytes": 7645575
+    },
+    {
+      "id": "AC02-main-b31131-EXPLICIT-L769-S95",
+      "length": 769,
+      "compressed": 704,
+      "slot": 95,
+      "file": "real_query/AC02-main-b31131-EXPLICIT-L769-S95.npz",
+      "sha256": "b7b495bfec07234877fb91875ba694b048c8cd73078295d732755c4eb63a41f7",
+      "bytes": 8643989
+    },
+    {
+      "id": "AC02-main-b31131-EXPLICIT-L769-S191",
+      "length": 769,
+      "compressed": 704,
+      "slot": 191,
+      "file": "real_query/AC02-main-b31131-EXPLICIT-L769-S191.npz",
+      "sha256": "c43db02cb93389b75dc82253fe70a70959e8df0e953332f591acabeb69f8145d",
+      "bytes": 8644485
+    },
+    {
+      "id": "AC02-main-b31131-EXPLICIT-L831-S0",
+      "length": 831,
+      "compressed": 704,
+      "slot": 0,
+      "file": "real_query/AC02-main-b31131-EXPLICIT-L831-S0.npz",
+      "sha256": "304e5fefc3805ed86e42e18e91422636a1b7c3d8583207e5c1152b2c34d37b80",
+      "bytes": 8339669
+    },
+    {
+      "id": "AC02-main-b31131-EXPLICIT-L831-S95",
+      "length": 831,
+      "compressed": 704,
+      "slot": 95,
+      "file": "real_query/AC02-main-b31131-EXPLICIT-L831-S95.npz",
+      "sha256": "0f15fd2b0e2b2ca38017793065622a08d58ba547259369da24863319128e66a3",
+      "bytes": 9475340
+    },
+    {
+      "id": "AC02-main-b31131-EXPLICIT-L831-S191",
+      "length": 831,
+      "compressed": 704,
+      "slot": 191,
+      "file": "real_query/AC02-main-b31131-EXPLICIT-L831-S191.npz",
+      "sha256": "8641de42a314ece9c9919305a227a84ecffdac9c444051dcb87daba92cb3e908",
+      "bytes": 9475607
+    },
+    {
+      "id": "AC02-main-b31131-EXPLICIT-L833-S0",
+      "length": 833,
+      "compressed": 768,
+      "slot": 0,
+      "file": "real_query/AC02-main-b31131-EXPLICIT-L833-S0.npz",
+      "sha256": "3a5243fd501e6db991712484902db0b52edbbcbaaa7618971a7114f7fb893574",
+      "bytes": 8298008
+    },
+    {
+      "id": "AC02-main-b31131-EXPLICIT-L833-S95",
+      "length": 833,
+      "compressed": 768,
+      "slot": 95,
+      "file": "real_query/AC02-main-b31131-EXPLICIT-L833-S95.npz",
+      "sha256": "f59f716ff69ce359b5aa9afcf604f892816053d32b96bdbd432fb9bdbed67b95",
+      "bytes": 9347278
+    },
+    {
+      "id": "AC02-main-b31131-EXPLICIT-L833-S191",
+      "length": 833,
+      "compressed": 768,
+      "slot": 191,
+      "file": "real_query/AC02-main-b31131-EXPLICIT-L833-S191.npz",
+      "sha256": "ee09097faeb8dabd51048c783b25ffeb955f301c516cdcfa78d264ca751e9b11",
+      "bytes": 9347279
+    }
+  ]
+}

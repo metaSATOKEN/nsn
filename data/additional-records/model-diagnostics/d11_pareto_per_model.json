@@ -1,0 +1,292 @@
+{
+  "schema_version": "0.1.0",
+  "phase": "D-11",
+  "purpose": "Per-model Pareto frontier (compression \u00d7 \u0394PPL) and deployment recommendations under PPL targets (1/3/5/10 %). Inherits Paper C Phase C-6 \u00a7V8 logic.",
+  "ppl_targets": [
+    {
+      "label": "tight (\u22641 %)",
+      "max_delta_pp": 1.0
+    },
+    {
+      "label": "standard (\u22643 %)",
+      "max_delta_pp": 3.0
+    },
+    {
+      "label": "loose (\u22645 %)",
+      "max_delta_pp": 5.0
+    },
+    {
+      "label": "lax (\u226410 %)",
+      "max_delta_pp": 10.0
+    }
+  ],
+  "results": {
+    "Zamba2-1.2B": {
+      "pareto": [
+        {
+          "policy": "hero",
+          "compression": 3.994780339277947,
+          "delta_pp": -0.254,
+          "K_recipe": "K-all-INT4",
+          "S_recipe": "LAB b3-b4 (mean_b\u22483.5)",
+          "M_recipe": "\u2014",
+          "E_recipe": "\u2014"
+        },
+        {
+          "policy": "alt_aggressive",
+          "compression": 4.166969147005445,
+          "delta_pp": -0.165,
+          "K_recipe": "K-all-INT4",
+          "S_recipe": "LAB b3 (cancellation)",
+          "M_recipe": "\u2014",
+          "E_recipe": "\u2014"
+        }
+      ],
+      "recommendations": {
+        "tight (\u22641 %)": {
+          "policy": "alt_aggressive",
+          "compression": 4.166969147005445,
+          "delta_pp": -0.165,
+          "K_recipe": "K-all-INT4",
+          "S_recipe": "LAB b3 (cancellation)",
+          "M_recipe": "\u2014",
+          "E_recipe": "\u2014"
+        },
+        "standard (\u22643 %)": {
+          "policy": "alt_aggressive",
+          "compression": 4.166969147005445,
+          "delta_pp": -0.165,
+          "K_recipe": "K-all-INT4",
+          "S_recipe": "LAB b3 (cancellation)",
+          "M_recipe": "\u2014",
+          "E_recipe": "\u2014"
+        },
+        "loose (\u22645 %)": {
+          "policy": "alt_aggressive",
+          "compression": 4.166969147005445,
+          "delta_pp": -0.165,
+          "K_recipe": "K-all-INT4",
+          "S_recipe": "LAB b3 (cancellation)",
+          "M_recipe": "\u2014",
+          "E_recipe": "\u2014"
+        },
+        "lax (\u226410 %)": {
+          "policy": "alt_aggressive",
+          "compression": 4.166969147005445,
+          "delta_pp": -0.165,
+          "K_recipe": "K-all-INT4",
+          "S_recipe": "LAB b3 (cancellation)",
+          "M_recipe": "\u2014",
+          "E_recipe": "\u2014"
+        }
+      }
+    },
+    "Jamba-1.5-Mini": {
+      "pareto": [
+        {
+          "policy": "FP16",
+          "compression": 1.0,
+          "delta_pp": 0.0,
+          "K_recipe": "FP16",
+          "S_recipe": "FP16",
+          "M_recipe": "\u2014",
+          "E_recipe": "FP16"
+        },
+        {
+          "policy": "hero",
+          "compression": 3.992172858330588,
+          "delta_pp": 0.283,
+          "K_recipe": "K-all-INT3 (cancellation)",
+          "S_recipe": "LAB b6 (F13 absorption)",
+          "M_recipe": "\u2014",
+          "E_recipe": "INT4 (F35/F36 preserve absorption budget)"
+        }
+      ],
+      "recommendations": {
+        "tight (\u22641 %)": {
+          "policy": "hero",
+          "compression": 3.992172858330588,
+          "delta_pp": 0.283,
+          "K_recipe": "K-all-INT3 (cancellation)",
+          "S_recipe": "LAB b6 (F13 absorption)",
+          "M_recipe": "\u2014",
+          "E_recipe": "INT4 (F35/F36 preserve absorption budget)"
+        },
+        "standard (\u22643 %)": {
+          "policy": "hero",
+          "compression": 3.992172858330588,
+          "delta_pp": 0.283,
+          "K_recipe": "K-all-INT3 (cancellation)",
+          "S_recipe": "LAB b6 (F13 absorption)",
+          "M_recipe": "\u2014",
+          "E_recipe": "INT4 (F35/F36 preserve absorption budget)"
+        },
+        "loose (\u22645 %)": {
+          "policy": "hero",
+          "compression": 3.992172858330588,
+          "delta_pp": 0.283,
+          "K_recipe": "K-all-INT3 (cancellation)",
+          "S_recipe": "LAB b6 (F13 absorption)",
+          "M_recipe": "\u2014",
+          "E_recipe": "INT4 (F35/F36 preserve absorption budget)"
+        },
+        "lax (\u226410 %)": {
+          "policy": "hero",
+          "compression": 3.992172858330588,
+          "delta_pp": 0.283,
+          "K_recipe": "K-all-INT3 (cancellation)",
+          "S_recipe": "LAB b6 (F13 absorption)",
+          "M_recipe": "\u2014",
+          "E_recipe": "INT4 (F35/F36 preserve absorption budget)"
+        }
+      }
+    },
+    "Qwen3.6-27B": {
+      "pareto": [
+        {
+          "policy": "alt_M_only",
+          "compression": 3.1709240528030174,
+          "delta_pp": -0.979,
+          "K_recipe": "FP16",
+          "S_recipe": "\u2014",
+          "M_recipe": "INT5 (F37 sweet spot)",
+          "E_recipe": "\u2014"
+        },
+        {
+          "policy": "hero",
+          "compression": 3.196888840877174,
+          "delta_pp": -0.282,
+          "K_recipe": "K-all-INT4",
+          "S_recipe": "\u2014",
+          "M_recipe": "INT5 (F37 sweet spot)",
+          "E_recipe": "\u2014"
+        },
+        {
+          "policy": "global_INT4",
+          "compression": 3.9916911705198412,
+          "delta_pp": 5.916,
+          "K_recipe": "K-all-INT4 (NSN asym)",
+          "S_recipe": "\u2014",
+          "M_recipe": "INT4 weight",
+          "E_recipe": "\u2014"
+        }
+      ],
+      "recommendations": {
+        "tight (\u22641 %)": {
+          "policy": "hero",
+          "compression": 3.196888840877174,
+          "delta_pp": -0.282,
+          "K_recipe": "K-all-INT4",
+          "S_recipe": "\u2014",
+          "M_recipe": "INT5 (F37 sweet spot)",
+          "E_recipe": "\u2014"
+        },
+        "standard (\u22643 %)": {
+          "policy": "hero",
+          "compression": 3.196888840877174,
+          "delta_pp": -0.282,
+          "K_recipe": "K-all-INT4",
+          "S_recipe": "\u2014",
+          "M_recipe": "INT5 (F37 sweet spot)",
+          "E_recipe": "\u2014"
+        },
+        "loose (\u22645 %)": {
+          "policy": "hero",
+          "compression": 3.196888840877174,
+          "delta_pp": -0.282,
+          "K_recipe": "K-all-INT4",
+          "S_recipe": "\u2014",
+          "M_recipe": "INT5 (F37 sweet spot)",
+          "E_recipe": "\u2014"
+        },
+        "lax (\u226410 %)": {
+          "policy": "global_INT4",
+          "compression": 3.9916911705198412,
+          "delta_pp": 5.916,
+          "K_recipe": "K-all-INT4 (NSN asym)",
+          "S_recipe": "\u2014",
+          "M_recipe": "INT4 weight",
+          "E_recipe": "\u2014"
+        }
+      }
+    },
+    "Gemma4-26B-A4B-base": {
+      "pareto": [
+        {
+          "policy": "FP16",
+          "compression": 1.0,
+          "delta_pp": 0.0,
+          "K_recipe": "FP16",
+          "S_recipe": "\u2014",
+          "M_recipe": "\u2014",
+          "E_recipe": "FP16"
+        },
+        {
+          "policy": "hero",
+          "compression": 1.0012039389170735,
+          "delta_pp": 0.029,
+          "K_recipe": "3-tier (good=INT3 / neutral=INT4 / bad=FP16)",
+          "S_recipe": "\u2014",
+          "M_recipe": "\u2014",
+          "E_recipe": "FP16 (Branch B safety)"
+        },
+        {
+          "policy": "alt_E_INT5",
+          "compression": 3.1857563617463174,
+          "delta_pp": 0.248,
+          "K_recipe": "3-tier (good=INT3 / neutral=INT4 / bad=FP16)",
+          "S_recipe": "\u2014",
+          "M_recipe": "\u2014",
+          "E_recipe": "INT5 (F37 sweet spot)"
+        },
+        {
+          "policy": "global_INT4",
+          "compression": 3.9772804349509587,
+          "delta_pp": 5.378,
+          "K_recipe": "K-all-INT4 (NSN asym)",
+          "S_recipe": "\u2014",
+          "M_recipe": "\u2014",
+          "E_recipe": "INT4 weight"
+        }
+      ],
+      "recommendations": {
+        "tight (\u22641 %)": {
+          "policy": "alt_E_INT5",
+          "compression": 3.1857563617463174,
+          "delta_pp": 0.248,
+          "K_recipe": "3-tier (good=INT3 / neutral=INT4 / bad=FP16)",
+          "S_recipe": "\u2014",
+          "M_recipe": "\u2014",
+          "E_recipe": "INT5 (F37 sweet spot)"
+        },
+        "standard (\u22643 %)": {
+          "policy": "alt_E_INT5",
+          "compression": 3.1857563617463174,
+          "delta_pp": 0.248,
+          "K_recipe": "3-tier (good=INT3 / neutral=INT4 / bad=FP16)",
+          "S_recipe": "\u2014",
+          "M_recipe": "\u2014",
+          "E_recipe": "INT5 (F37 sweet spot)"
+        },
+        "loose (\u22645 %)": {
+          "policy": "alt_E_INT5",
+          "compression": 3.1857563617463174,
+          "delta_pp": 0.248,
+          "K_recipe": "3-tier (good=INT3 / neutral=INT4 / bad=FP16)",
+          "S_recipe": "\u2014",
+          "M_recipe": "\u2014",
+          "E_recipe": "INT5 (F37 sweet spot)"
+        },
+        "lax (\u226410 %)": {
+          "policy": "global_INT4",
+          "compression": 3.9772804349509587,
+          "delta_pp": 5.378,
+          "K_recipe": "K-all-INT4 (NSN asym)",
+          "S_recipe": "\u2014",
+          "M_recipe": "\u2014",
+          "E_recipe": "INT4 weight"
+        }
+      }
+    }
+  }
+}

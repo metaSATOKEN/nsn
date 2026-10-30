@@ -1,0 +1,399 @@
+{
+  "schema_version": "0.1.0",
+  "generated_at": "2026-05-04T05:21:46+00:00",
+  "generator": "phase_d1_kv_risk_signals.py",
+  "transformers_version": "5.7.0",
+  "protocol": {
+    "prefill_tokens": 1024,
+    "segment_offsets": [
+      0,
+      8192,
+      16384
+    ],
+    "calib_corpus": "WikiText-2 test (model's own tokenizer)",
+    "kv_pool": "all KV heads pooled, per-token L2 norm CV",
+    "based_on": "modeq/experiments/phase23_norm_dispersion.py (NSN Phase 23)"
+  },
+  "models": {
+    "Zamba2-1.2B": {
+      "model_id": "Zyphra/Zamba2-1.2B",
+      "model_label": "Zamba2-1.2B",
+      "n_layers": 38,
+      "attention_layer_indices": [
+        5,
+        11,
+        17,
+        23,
+        29,
+        35
+      ],
+      "n_attention": 6,
+      "layer_signals": [
+        {
+          "layer_index": 5,
+          "n_heads_kv": null,
+          "head_dim": null,
+          "self_attn_path": "model.layers.5.shared_transformer.self_attn",
+          "L_l_raw": 5,
+          "L_l_norm": 0.13513513513513514,
+          "D_K_l": {
+            "mean": 0.1140564722798703,
+            "std": 0.0022014222943413466,
+            "n": 3
+          },
+          "D_V_l": {
+            "mean": 0.11486715671011494,
+            "std": 0.0013780254701659701,
+            "n": 3
+          },
+          "K_p99_p50_ratio": {
+            "mean": 1.284330444277517,
+            "std": 0.008917607988662908,
+            "n": 3
+          },
+          "V_p99_p50_ratio": {
+            "mean": 1.1892710385671394,
+            "std": 0.012036470377122644,
+            "n": 3
+          },
+          "S_attn_l": {
+            "mean": 0.19803243481485086,
+            "std": 0.011976513912004683,
+            "n": 3
+          },
+          "k_per_head_cv_last": null,
+          "v_per_head_cv_last": null
+        },
+        {
+          "layer_index": 11,
+          "n_heads_kv": null,
+          "head_dim": null,
+          "self_attn_path": "model.layers.11.shared_transformer.self_attn",
+          "L_l_raw": 11,
+          "L_l_norm": 0.2972972972972973,
+          "D_K_l": {
+            "mean": 0.0753504286725345,
+            "std": 0.0046244263720742985,
+            "n": 3
+          },
+          "D_V_l": {
+            "mean": 0.09641336761213426,
+            "std": 0.00029298744745338845,
+            "n": 3
+          },
+          "K_p99_p50_ratio": {
+            "mean": 1.1675173660314113,
+            "std": 0.030742016869657794,
+            "n": 3
+          },
+          "V_p99_p50_ratio": {
+            "mean": 1.1732193138676388,
+            "std": 0.011380106843478564,
+            "n": 3
+          },
+          "S_attn_l": {
+            "mean": 0.16893931652000074,
+            "std": 0.0045618270597750045,
+            "n": 3
+          },
+          "k_per_head_cv_last": null,
+          "v_per_head_cv_last": null
+        },
+        {
+          "layer_index": 17,
+          "n_heads_kv": null,
+          "head_dim": null,
+          "self_attn_path": "model.layers.17.shared_transformer.self_attn",
+          "L_l_raw": 17,
+          "L_l_norm": 0.4594594594594595,
+          "D_K_l": {
+            "mean": 0.07289255037726321,
+            "std": 0.0010266811806725964,
+            "n": 3
+          },
+          "D_V_l": {
+            "mean": 0.09214168645795996,
+            "std": 0.0027340840547911472,
+            "n": 3
+          },
+          "K_p99_p50_ratio": {
+            "mean": 1.1622374840208505,
+            "std": 0.005381116309075429,
+            "n": 3
+          },
+          "V_p99_p50_ratio": {
+            "mean": 1.156530626648162,
+            "std": 0.016907735321895125,
+            "n": 3
+          },
+          "S_attn_l": {
+            "mean": 0.16520056677518666,
+            "std": 0.003317278790589371,
+            "n": 3
+          },
+          "k_per_head_cv_last": null,
+          "v_per_head_cv_last": null
+        },
+        {
+          "layer_index": 23,
+          "n_heads_kv": null,
+          "head_dim": null,
+          "self_attn_path": "model.layers.23.shared_transformer.self_attn",
+          "L_l_raw": 23,
+          "L_l_norm": 0.6216216216216216,
+          "D_K_l": {
+            "mean": 0.07929686421245695,
+            "std": 0.0033549554210616657,
+            "n": 3
+          },
+          "D_V_l": {
+            "mean": 0.08948233639593821,
+            "std": 0.002985679308883512,
+            "n": 3
+          },
+          "K_p99_p50_ratio": {
+            "mean": 1.1902382655395012,
+            "std": 0.010383934482291706,
+            "n": 3
+          },
+          "V_p99_p50_ratio": {
+            "mean": 1.1518986373678939,
+            "std": 0.010315543840164752,
+            "n": 3
+          },
+          "S_attn_l": {
+            "mean": 0.1779800511881083,
+            "std": 0.010092520580599347,
+            "n": 3
+          },
+          "k_per_head_cv_last": null,
+          "v_per_head_cv_last": null
+        },
+        {
+          "layer_index": 29,
+          "n_heads_kv": null,
+          "head_dim": null,
+          "self_attn_path": "model.layers.29.shared_transformer.self_attn",
+          "L_l_raw": 29,
+          "L_l_norm": 0.7837837837837838,
+          "D_K_l": {
+            "mean": 0.08577626832185152,
+            "std": 0.00442573245106801,
+            "n": 3
+          },
+          "D_V_l": {
+            "mean": 0.15879118599102152,
+            "std": 0.005340414830232804,
+            "n": 3
+          },
+          "K_p99_p50_ratio": {
+            "mean": 1.173823438097927,
+            "std": 0.029159849719417708,
+            "n": 3
+          },
+          "V_p99_p50_ratio": {
+            "mean": 1.2612280233228523,
+            "std": 0.02473408951666642,
+            "n": 3
+          },
+          "S_attn_l": {
+            "mean": 0.17801771767410146,
+            "std": 0.006658971349853145,
+            "n": 3
+          },
+          "k_per_head_cv_last": null,
+          "v_per_head_cv_last": null
+        },
+        {
+          "layer_index": 35,
+          "n_heads_kv": null,
+          "head_dim": null,
+          "self_attn_path": "model.layers.35.shared_transformer.self_attn",
+          "L_l_raw": 35,
+          "L_l_norm": 0.9459459459459459,
+          "D_K_l": {
+            "mean": 0.08046268071877866,
+            "std": 0.006517652690271796,
+            "n": 3
+          },
+          "D_V_l": {
+            "mean": 0.13554239010632893,
+            "std": 0.009305454282945812,
+            "n": 3
+          },
+          "K_p99_p50_ratio": {
+            "mean": 1.1623938321945166,
+            "std": 0.006540900511299824,
+            "n": 3
+          },
+          "V_p99_p50_ratio": {
+            "mean": 1.2865747510906347,
+            "std": 0.04444781727176215,
+            "n": 3
+          },
+          "S_attn_l": {
+            "mean": 0.12622430203402088,
+            "std": 0.011590249977044045,
+            "n": 3
+          },
+          "k_per_head_cv_last": null,
+          "v_per_head_cv_last": null
+        }
+      ]
+    },
+    "Jamba-1.5-Mini": {
+      "model_id": "ai21labs/AI21-Jamba-Mini-1.6",
+      "model_label": "Jamba-1.5-Mini",
+      "n_layers": 32,
+      "attention_layer_indices": [
+        4,
+        12,
+        20,
+        28
+      ],
+      "n_attention": 4,
+      "layer_signals": [
+        {
+          "layer_index": 4,
+          "n_heads_kv": null,
+          "head_dim": null,
+          "self_attn_path": "model.layers.4.self_attn",
+          "L_l_raw": 4,
+          "L_l_norm": 0.12903225806451613,
+          "D_K_l": {
+            "mean": 0.08033891755409177,
+            "std": 0.0023157125716621145,
+            "n": 3
+          },
+          "D_V_l": {
+            "mean": 0.12369776706672515,
+            "std": 0.00808173883140615,
+            "n": 3
+          },
+          "K_p99_p50_ratio": {
+            "mean": 1.177666462049422,
+            "std": 0.010561511960221254,
+            "n": 3
+          },
+          "V_p99_p50_ratio": {
+            "mean": 1.2605182119148326,
+            "std": 0.0044831424089847825,
+            "n": 3
+          },
+          "S_attn_l": {
+            "mean": 0.3175510781143864,
+            "std": 0.19164601646870358,
+            "n": 3
+          },
+          "k_per_head_cv_last": null,
+          "v_per_head_cv_last": null
+        },
+        {
+          "layer_index": 12,
+          "n_heads_kv": null,
+          "head_dim": null,
+          "self_attn_path": "model.layers.12.self_attn",
+          "L_l_raw": 12,
+          "L_l_norm": 0.3870967741935484,
+          "D_K_l": {
+            "mean": 0.0961010807341322,
+            "std": 0.007180136685270921,
+            "n": 3
+          },
+          "D_V_l": {
+            "mean": 0.08632601601337252,
+            "std": 0.009537823416627443,
+            "n": 3
+          },
+          "K_p99_p50_ratio": {
+            "mean": 1.2171164518660238,
+            "std": 0.012263061067404256,
+            "n": 3
+          },
+          "V_p99_p50_ratio": {
+            "mean": 1.176205167849454,
+            "std": 0.0063488795441905225,
+            "n": 3
+          },
+          "S_attn_l": {
+            "mean": 0.2222147120983539,
+            "std": 0.11222678004403219,
+            "n": 3
+          },
+          "k_per_head_cv_last": null,
+          "v_per_head_cv_last": null
+        },
+        {
+          "layer_index": 20,
+          "n_heads_kv": null,
+          "head_dim": null,
+          "self_attn_path": "model.layers.20.self_attn",
+          "L_l_raw": 20,
+          "L_l_norm": 0.6451612903225806,
+          "D_K_l": {
+            "mean": 0.11931558469346872,
+            "std": 0.008279916720001296,
+            "n": 3
+          },
+          "D_V_l": {
+            "mean": 0.11768800603664953,
+            "std": 0.007453389934003389,
+            "n": 3
+          },
+          "K_p99_p50_ratio": {
+            "mean": 1.283471085975783,
+            "std": 0.048532220824639746,
+            "n": 3
+          },
+          "V_p99_p50_ratio": {
+            "mean": 1.2075994405079522,
+            "std": 0.011566283044570039,
+            "n": 3
+          },
+          "S_attn_l": {
+            "mean": 0.19375172798218035,
+            "std": 0.06621316338245102,
+            "n": 3
+          },
+          "k_per_head_cv_last": null,
+          "v_per_head_cv_last": null
+        },
+        {
+          "layer_index": 28,
+          "n_heads_kv": null,
+          "head_dim": null,
+          "self_attn_path": "model.layers.28.self_attn",
+          "L_l_raw": 28,
+          "L_l_norm": 0.9032258064516129,
+          "D_K_l": {
+            "mean": 0.14278989825817465,
+            "std": 0.016021154187311128,
+            "n": 3
+          },
+          "D_V_l": {
+            "mean": 0.2659301495300296,
+            "std": 0.012813692972803069,
+            "n": 3
+          },
+          "K_p99_p50_ratio": {
+            "mean": 1.4181626523664068,
+            "std": 0.06720889815513091,
+            "n": 3
+          },
+          "V_p99_p50_ratio": {
+            "mean": 1.5617389186644999,
+            "std": 0.04316683224728312,
+            "n": 3
+          },
+          "S_attn_l": {
+            "mean": 0.24126126786208837,
+            "std": 0.04000237480026404,
+            "n": 3
+          },
+          "k_per_head_cv_last": null,
+          "v_per_head_cv_last": null
+        }
+      ]
+    }
+  }
+}

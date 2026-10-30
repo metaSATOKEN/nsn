@@ -1,0 +1,72 @@
+[
+  {
+    "length": 768,
+    "component_bytes": {
+      "float_kv": 1207959552
+    },
+    "tensor_bytes": 1207959552,
+    "unique_storage_bytes": 1207959552,
+    "tensor_count": 384,
+    "storage_count": 384,
+    "devices": [
+      "cuda:0"
+    ],
+    "compressed_tokens": 0
+  },
+  {
+    "length": 833,
+    "component_bytes": {
+      "float_kv": 1310195712
+    },
+    "tensor_bytes": 1310195712,
+    "unique_storage_bytes": 1310195712,
+    "tensor_count": 384,
+    "storage_count": 384,
+    "devices": [
+      "cuda:0"
+    ],
+    "compressed_tokens": 0
+  },
+  {
+    "length": 897,
+    "component_bytes": {
+      "float_kv": 1410859008
+    },
+    "tensor_bytes": 1410859008,
+    "unique_storage_bytes": 1410859008,
+    "tensor_count": 384,
+    "storage_count": 384,
+    "devices": [
+      "cuda:0"
+    ],
+    "compressed_tokens": 0
+  },
+  {
+    "length": 961,
+    "component_bytes": {
+      "float_kv": 1511522304
+    },
+    "tensor_bytes": 1511522304,
+    "unique_storage_bytes": 1511522304,
+    "tensor_count": 384,
+    "storage_count": 384,
+    "devices": [
+      "cuda:0"
+    ],
+    "compressed_tokens": 0
+  },
+  {
+    "length": 1023,
+    "component_bytes": {
+      "float_kv": 1609039872
+    },
+    "tensor_bytes": 1609039872,
+    "unique_storage_bytes": 1609039872,
+    "tensor_count": 384,
+    "storage_count": 384,
+    "devices": [
+      "cuda:0"
+    ],
+    "compressed_tokens": 0
+  }
+]

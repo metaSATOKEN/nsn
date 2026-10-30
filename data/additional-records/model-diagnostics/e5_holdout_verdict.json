@@ -1,0 +1,122 @@
+{
+  "phase": "E-5 phase 3: hold-out verdict",
+  "source": "/Users/user/Desktop/Recync\u7cfb/Substrate-Aware-Diagnostic-and-Prescription/results/e5_holdout_oracle.json",
+  "verdicts": {
+    "Bamba-9B-v2": {
+      "prediction": "three_tier_mask",
+      "K_localization": "hotspot",
+      "best_single": "nsn_int3",
+      "pred_vs_best_single": {
+        "mean": -2.3712178954946572,
+        "std": 2.004086481586114,
+        "ci_lo": -3.0945717015208065,
+        "ci_hi": -1.682975695746673,
+        "ci_half_width": 0.7057980028870667,
+        "pred_cleaner_excludes_zero": true,
+        "pred_not_worse": true
+      },
+      "pred_vs_best_plain_asym": {
+        "mean": -2.938168170346886,
+        "std": 2.5922041241861056,
+        "ci_lo": -3.84874227869057,
+        "ci_hi": -2.057098393460241,
+        "ci_half_width": 0.8958219426151643,
+        "pred_cleaner_excludes_zero": true,
+        "pred_not_worse": true
+      },
+      "routing_correct": true,
+      "prescription_optimal": true,
+      "strong_cleaner_than_best_single": true,
+      "H1_pass": true
+    },
+    "OLMoE-1B-7B": {
+      "prediction": "plain_asym_int4",
+      "K_localization": "uniform",
+      "pred_vs_nsn_int4": {
+        "mean": 0.9819162730376654,
+        "std": 1.395233238283836,
+        "ci_lo": 0.5216615836799386,
+        "ci_hi": 1.5011357884579488,
+        "ci_half_width": 0.4897371023890051,
+        "pred_cleaner_excludes_zero": false,
+        "pred_not_worse": false
+      },
+      "routing_correct": false,
+      "prescription_optimal": false,
+      "strong_cleaner_than_nsn_int4": false,
+      "H1_pass": false
+    },
+    "Granite-3.0-3b-a800m": {
+      "prediction": "three_tier_mask",
+      "K_localization": "hotspot",
+      "best_single": "plain_asym_int4",
+      "pred_vs_best_single": {
+        "mean": 1.0988756618758022,
+        "std": 1.9017159382505975,
+        "ci_lo": 0.3833385785875598,
+        "ci_hi": 1.7372655773806438,
+        "ci_half_width": 0.676963499396542,
+        "pred_cleaner_excludes_zero": false,
+        "pred_not_worse": false
+      },
+      "pred_vs_best_plain_asym": {
+        "mean": 1.0988756618758022,
+        "std": 1.9017159382505975,
+        "ci_lo": 0.3833385785875598,
+        "ci_hi": 1.7372655773806438,
+        "ci_half_width": 0.676963499396542,
+        "pred_cleaner_excludes_zero": false,
+        "pred_not_worse": false
+      },
+      "routing_correct": false,
+      "prescription_optimal": false,
+      "strong_cleaner_than_best_single": false,
+      "H1_pass": false
+    },
+    "Qwen3-30B-A3B": {
+      "prediction": "plain_asym_int4",
+      "K_localization": "uniform",
+      "pred_vs_nsn_int4": {
+        "mean": 2.911982342584858,
+        "std": 2.688928866131012,
+        "ci_lo": 2.0216824235491733,
+        "ci_hi": 3.8861670891458626,
+        "ci_half_width": 0.9322423327983447,
+        "pred_cleaner_excludes_zero": false,
+        "pred_not_worse": false
+      },
+      "routing_correct": false,
+      "prescription_optimal": false,
+      "strong_cleaner_than_nsn_int4": false,
+      "H1_pass": false
+    }
+  },
+  "H3_vs_uniform_int4": {
+    "Bamba-9B-v2": {
+      "pred_mean": -1.9471299452096424,
+      "uniform_int4_mean": 0.500981681929901,
+      "pred_better": true
+    },
+    "OLMoE-1B-7B": {
+      "pred_mean": 1.8683933318962225,
+      "uniform_int4_mean": 0.886477058858557,
+      "pred_better": false
+    },
+    "Granite-3.0-3b-a800m": {
+      "pred_mean": 2.530021846568632,
+      "uniform_int4_mean": 1.940386143434049,
+      "pred_better": false
+    },
+    "Qwen3-30B-A3B": {
+      "pred_mean": 3.9701854724991414,
+      "uniform_int4_mean": 1.0582031299142831,
+      "pred_better": false
+    }
+  },
+  "summary": {
+    "H1_pass": 1,
+    "n_models": 4,
+    "H2_hotspot_count": 2,
+    "H3_beats_uniform": 1
+  }
+}

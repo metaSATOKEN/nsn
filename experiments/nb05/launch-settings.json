@@ -1,0 +1,15 @@
+{
+  "HF_SECRET_NAME": "HF_TOKEN",
+  "EXPECTED_CAPS": {
+    "prepare": 1800,
+    "measure": 1200,
+    "verify": 600,
+    "zip": 300,
+    "outer": 3900,
+    "series": 120,
+    "book": 600
+  },
+  "OUTPUT_LIMIT_BYTES": 402653184,
+  "ZIP_LIMIT_BYTES": 268435456,
+  "INITIAL_FREE_BYTES": 32212254720
+}

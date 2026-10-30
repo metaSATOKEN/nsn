@@ -1,0 +1,5 @@
+{
+  "bit_equal": true,
+  "logits_bit_equal": true,
+  "terminal_kv_equal": true
+}

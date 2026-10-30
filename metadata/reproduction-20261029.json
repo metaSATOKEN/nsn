@@ -1,0 +1,172 @@
+{
+  "package": {
+    "status": "PASS",
+    "repository_files": 2092,
+    "files_checked": 3765,
+    "external_files_present": 1673,
+    "external_files_total": 1673,
+    "failures": []
+  },
+  "scope": "CPU saved-value and saved-logit checks; no model/GPU calls",
+  "comparisons": [
+    {
+      "item": "extraction/checks.json",
+      "passed": true
+    },
+    {
+      "item": "extraction/evidence-tables.json",
+      "passed": true
+    },
+    {
+      "item": "extraction/protocol-specifications.json",
+      "passed": true
+    },
+    {
+      "item": "extraction/result-catalog.json",
+      "passed": true
+    },
+    {
+      "item": "extraction/source-manifest.json",
+      "passed": true
+    },
+    {
+      "item": "extraction/summary.json",
+      "passed": true
+    },
+    {
+      "item": "extraction/window-values.json",
+      "passed": true
+    },
+    {
+      "item": "numerical/numerical-audit-v0.4-2026-10-03.json",
+      "passed": true
+    },
+    {
+      "item": "paper/manuscript-ja-v0.7-2026-10-05.md",
+      "passed": true
+    },
+    {
+      "item": "paper/paper-data-v0.4-2026-10-05.json",
+      "passed": true
+    },
+    {
+      "item": "english/manuscript-en-v0.6-2026-10-05.md",
+      "passed": true
+    },
+    {
+      "item": "english/english-build-manifest-v0.6.json",
+      "passed": true
+    },
+    {
+      "item": "nb06/nb06-results-v0.1-2026-10-08.json",
+      "passed": true
+    },
+    {
+      "item": "supplement/papers/loop-kv/evidence-index-en-v0.3-2026-10-08.md",
+      "passed": true
+    },
+    {
+      "item": "supplement/papers/loop-kv/evidence-index-v0.5-2026-10-08.md",
+      "passed": true
+    },
+    {
+      "item": "supplement/papers/loop-kv/figures/v0.3/figure-06-continuation.png",
+      "passed": true
+    },
+    {
+      "item": "supplement/papers/loop-kv/figures/v0.3/figure-06-continuation.svg",
+      "passed": true
+    },
+    {
+      "item": "supplement/papers/loop-kv/manuscript-en-v0.3-2026-10-08.md",
+      "passed": true
+    },
+    {
+      "item": "supplement/papers/loop-kv/manuscript-ja-v0.5-2026-10-08.md",
+      "passed": true
+    },
+    {
+      "item": "supplement/papers/loop-kv/numerical-audit-nb06-v0.1-2026-10-08.json",
+      "passed": true
+    },
+    {
+      "item": "supplement/papers/loop-kv/paper-data-v0.3-2026-10-08.json",
+      "passed": true
+    },
+    {
+      "item": "supplement/papers/nsn-integrated/figures/v0.3/figure-06-continuation.png",
+      "passed": true
+    },
+    {
+      "item": "supplement/papers/nsn-integrated/figures/v0.3/figure-06-continuation.svg",
+      "passed": true
+    },
+    {
+      "item": "supplement/papers/nsn-integrated/manuscript-en-v0.7-2026-10-08.md",
+      "passed": true
+    },
+    {
+      "item": "supplement/papers/nsn-integrated/manuscript-ja-v0.8-2026-10-08.md",
+      "passed": true
+    },
+    {
+      "item": "supplement/papers/nsn-integrated/numerical-audit-nb06-v0.1-2026-10-08.json",
+      "passed": true
+    },
+    {
+      "item": "supplement/papers/nsn-integrated/paper-data-v0.5-2026-10-08.json",
+      "passed": true
+    }
+  ],
+  "rendering": [
+    {
+      "figure": "figure-01-nsn.png",
+      "pixel_equal": true,
+      "svg_generated": true
+    },
+    {
+      "figure": "figure-02-quality-boundaries.png",
+      "pixel_equal": true,
+      "svg_generated": true
+    },
+    {
+      "figure": "figure-03-int5-applicability.png",
+      "pixel_equal": true,
+      "svg_generated": true
+    },
+    {
+      "figure": "figure-04-family-gaps.png",
+      "pixel_equal": true,
+      "svg_generated": true
+    },
+    {
+      "figure": "figure-05-model-cost.png",
+      "pixel_equal": true,
+      "svg_generated": true
+    }
+  ],
+  "environment_metadata": {
+    "current": {
+      "python": "3.13.17",
+      "torch": "2.11.0",
+      "cpu_only": true
+    },
+    "frozen": {
+      "python": "3.13.5",
+      "torch": "2.11.0",
+      "cpu_only": true
+    }
+  },
+  "status": "PASS",
+  "saved_value_checks": {
+    "total": 1732,
+    "failed": 0
+  },
+  "raw_logit_nll": {
+    "predictions": 432,
+    "all_within_original_tolerance": true
+  },
+  "nb06_nll_components_checked": 15420,
+  "current_manuscript_outputs": 4,
+  "supplement_outputs_checked": 14
+}

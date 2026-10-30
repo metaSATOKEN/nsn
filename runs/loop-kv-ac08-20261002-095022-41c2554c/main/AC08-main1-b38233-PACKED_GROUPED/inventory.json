@@ -1,0 +1,87 @@
+[
+  {
+    "length": 768,
+    "component_bytes": {
+      "native_tail": 100663296,
+      "codes": 207618048,
+      "headers": 811008,
+      "metadata": 43253760
+    },
+    "tensor_bytes": 352346112,
+    "unique_storage_bytes": 352346112,
+    "tensor_count": 2304,
+    "storage_count": 2304,
+    "devices": [
+      "cuda:0"
+    ],
+    "compressed_tokens": 704
+  },
+  {
+    "length": 833,
+    "component_bytes": {
+      "native_tail": 102236160,
+      "codes": 226492416,
+      "headers": 884736,
+      "metadata": 47185920
+    },
+    "tensor_bytes": 376799232,
+    "unique_storage_bytes": 376799232,
+    "tensor_count": 2304,
+    "storage_count": 2304,
+    "devices": [
+      "cuda:0"
+    ],
+    "compressed_tokens": 768
+  },
+  {
+    "length": 897,
+    "component_bytes": {
+      "native_tail": 102236160,
+      "codes": 245366784,
+      "headers": 958464,
+      "metadata": 51118080
+    },
+    "tensor_bytes": 399679488,
+    "unique_storage_bytes": 399679488,
+    "tensor_count": 2304,
+    "storage_count": 2304,
+    "devices": [
+      "cuda:0"
+    ],
+    "compressed_tokens": 832
+  },
+  {
+    "length": 961,
+    "component_bytes": {
+      "native_tail": 102236160,
+      "codes": 264241152,
+      "headers": 1032192,
+      "metadata": 55050240
+    },
+    "tensor_bytes": 422559744,
+    "unique_storage_bytes": 422559744,
+    "tensor_count": 2304,
+    "storage_count": 2304,
+    "devices": [
+      "cuda:0"
+    ],
+    "compressed_tokens": 896
+  },
+  {
+    "length": 1023,
+    "component_bytes": {
+      "native_tail": 199753728,
+      "codes": 264241152,
+      "headers": 1032192,
+      "metadata": 55050240
+    },
+    "tensor_bytes": 520077312,
+    "unique_storage_bytes": 520077312,
+    "tensor_count": 2304,
+    "storage_count": 2304,
+    "devices": [
+      "cuda:0"
+    ],
+    "compressed_tokens": 896
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "file": "config.json",
+    "bytes": 959,
+    "sha256": "844ff06b34b349eae66e7c714542dab2092170f60c0e54d0bf16b0d1e792665a"
+  },
+  {
+    "file": "configuration_nanbeige.py",
+    "bytes": 26023,
+    "sha256": "c517227741f0fc007061bde1873138545ce15e67716a062513193c06300c7685"
+  },
+  {
+    "file": "modeling_nanbeige.py",
+    "bytes": 121957,
+    "sha256": "547737f989f5cb741c1a568acaf85f83521fa67a8f7268e19f9a37e60127c0d5"
+  },
+  {
+    "file": "special_tokens_map.json",
+    "bytes": 548,
+    "sha256": "20e75e78a486a1282a8ff92cbfaa7ff23578e058419c516d86867b5f75588b2c"
+  },
+  {
+    "file": "tokenizer.model",
+    "bytes": 2782298,
+    "sha256": "fb41d04798b714520a9b075727b0226538b7330254299062742c50ec8374bc36"
+  },
+  {
+    "file": "tokenizer_config.json",
+    "bytes": 992,
+    "sha256": "346e6cc38237fd3cd165627435f6cf27a12d9ffafc5726e06e17223a8f5268fb"
+  },
+  {
+    "file": "model.safetensors",
+    "bytes": 8339624768,
+    "sha256": "8fff9061c4c8a16832e0fd8e484ec6375dec9821743539d469d4130d46d404a8"
+  }
+]

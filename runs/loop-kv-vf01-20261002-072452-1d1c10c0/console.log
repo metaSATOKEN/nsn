@@ -1,0 +1,13 @@
+VF01 runtime: venv
+VF01 runtime: install
+VF01 runtime: pip_check
+VF01 runtime: versions
+VF01 runtime: cuda_probe
+VF01 runtime ready: torch 2.11.0+cu128; starting the fixed experiment.
+VF01 fixtures recorded: 16 normal cases and 24 rejection cases.
+VF01 timing round 1 / 5 complete.
+VF01 timing round 2 / 5 complete.
+VF01 timing round 3 / 5 complete.
+VF01 timing round 4 / 5 complete.
+VF01 timing round 5 / 5 complete.
+Closed VF01: COMPLETE_COMPARISON

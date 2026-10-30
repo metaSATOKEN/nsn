@@ -1,0 +1,6 @@
+{"kind": "q_nan", "rejected_before_triton": true}
+{"kind": "v_nan", "rejected_before_triton": true}
+{"kind": "score_nan", "rejected_before_triton": true}
+{"kind": "score_dtype", "rejected_before_triton": true}
+{"kind": "score_shape", "rejected_before_triton": true}
+{"kind": "empty_tail", "rejected_before_triton": true}

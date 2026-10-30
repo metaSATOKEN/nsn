@@ -1,0 +1,668 @@
+{
+  "experiment": "LOOP-KV-NB05",
+  "version": "0.1",
+  "stage": "DESIGN_ONLY_NO_NEW_MODEL_RESULTS",
+  "date": "2026-10-03",
+  "question": "Repeat the fixed NB04 implementation and length on four previously unused short PG19 passages, then close the current manuscript experiment scope.",
+  "baseline": {
+    "run": "runs/loop-kv-nb04-20261002-150544-da91e289",
+    "input_contract": "plans/loop-kv-nb04-input-contract-v0.1-2026-10-02.json",
+    "input_contract_sha256": "10a2a74d2e8dd5bbb98910be0eb7197a31c11d97cfe82c5042da9e6a958152db",
+    "capsule": "scripts/nb04_capsule.json",
+    "capsule_sha256": "8a97f382d70619f97c8e41e0b319aff597a6cae734eebcf48c785a1b46bc5f8e",
+    "onecell": "colab/loop_kv_nb04_onecell.py",
+    "onecell_sha256": "cd7878191a6e1e574bea566a37184ad874a308303198a71aa7a367c6275bbd51"
+  },
+  "model": {
+    "id": "Nanbeige/Nanbeige4.2-3B-Base",
+    "revision": "4a38e817c14b9f2c4b69b1e05cbda90395872f6b",
+    "dtype": "bfloat16",
+    "attention": "sdpa",
+    "layers": 22,
+    "loops": 2,
+    "slots": 44,
+    "query_heads": 48,
+    "kv_heads": 8,
+    "head_dim": 128,
+    "vocab_size": 166144,
+    "batch": 1,
+    "seed": 2026100201
+  },
+  "series": [
+    "NATIVE",
+    "PACKED_SDPA",
+    "GQA_FUSED"
+  ],
+  "prefix_tokens": 128,
+  "tokens_per_book": 137,
+  "decode_calls_per_series": 8,
+  "forward_calls_per_series": 9,
+  "terminal_cache_length": 136,
+  "compression_contract": {
+    "bits": 3,
+    "block": 64,
+    "protected_tail_min": 64,
+    "compressed_tokens": 64,
+    "metadata_dtype": "float16",
+    "header_bytes_per_head_block": 12,
+    "compression_after_prefill": true,
+    "next_compression_at_length": 192,
+    "requantization": false
+  },
+  "resident_bytes": {
+    "packed": 15597824,
+    "packed_components": {
+      "codes": 2162688,
+      "metadata": 450560,
+      "headers": 8448,
+      "native_tail": 12976128
+    },
+    "native": 24510464
+  },
+  "material_selection": {
+    "candidate_file": "plans/loop-kv-nb05-material-candidates-v0.1-2026-10-03.json",
+    "sha256": "2a2b619d58aef11d39c2238e8724bc1f5f9e044014f69475d78bc229b334b556",
+    "independent_books": 4,
+    "take_first_tokens": 137,
+    "offset": 0,
+    "freeze_all_tokens_and_resolved_schedule_before_weights_or_model_load": true,
+    "no_old_fixture_in_new_quality_denominator": true
+  },
+  "schedule": [
+    {
+      "id": "b0-gate-official",
+      "phase": "gate",
+      "arm": "OFFICIAL",
+      "raw_logits": true,
+      "selected_book_rank": 0
+    },
+    {
+      "id": "b0-gate-native",
+      "phase": "gate",
+      "arm": "NATIVE",
+      "raw_logits": true,
+      "selected_book_rank": 0
+    },
+    {
+      "id": "b0-diagnostic-fused",
+      "phase": "diagnostic",
+      "arm": "GQA_FUSED",
+      "raw_logits": true,
+      "selected_book_rank": 0
+    },
+    {
+      "id": "b0-warm-native",
+      "phase": "warmup",
+      "arm": "NATIVE",
+      "raw_logits": false,
+      "selected_book_rank": 0
+    },
+    {
+      "id": "b0-warm-packed_sdpa",
+      "phase": "warmup",
+      "arm": "PACKED_SDPA",
+      "raw_logits": false,
+      "selected_book_rank": 0
+    },
+    {
+      "id": "b0-warm-gqa_fused",
+      "phase": "warmup",
+      "arm": "GQA_FUSED",
+      "raw_logits": false,
+      "selected_book_rank": 0
+    },
+    {
+      "id": "b0-main-r0-native",
+      "phase": "main",
+      "round": 0,
+      "arm": "NATIVE",
+      "raw_logits": true,
+      "selected_book_rank": 0
+    },
+    {
+      "id": "b0-main-r0-packed_sdpa",
+      "phase": "main",
+      "round": 0,
+      "arm": "PACKED_SDPA",
+      "raw_logits": true,
+      "selected_book_rank": 0
+    },
+    {
+      "id": "b0-main-r0-gqa_fused",
+      "phase": "main",
+      "round": 0,
+      "arm": "GQA_FUSED",
+      "raw_logits": true,
+      "selected_book_rank": 0
+    },
+    {
+      "id": "b0-main-r1-packed_sdpa",
+      "phase": "main",
+      "round": 1,
+      "arm": "PACKED_SDPA",
+      "raw_logits": true,
+      "selected_book_rank": 0
+    },
+    {
+      "id": "b0-main-r1-gqa_fused",
+      "phase": "main",
+      "round": 1,
+      "arm": "GQA_FUSED",
+      "raw_logits": true,
+      "selected_book_rank": 0
+    },
+    {
+      "id": "b0-main-r1-native",
+      "phase": "main",
+      "round": 1,
+      "arm": "NATIVE",
+      "raw_logits": true,
+      "selected_book_rank": 0
+    },
+    {
+      "id": "b0-main-r2-gqa_fused",
+      "phase": "main",
+      "round": 2,
+      "arm": "GQA_FUSED",
+      "raw_logits": true,
+      "selected_book_rank": 0
+    },
+    {
+      "id": "b0-main-r2-native",
+      "phase": "main",
+      "round": 2,
+      "arm": "NATIVE",
+      "raw_logits": true,
+      "selected_book_rank": 0
+    },
+    {
+      "id": "b0-main-r2-packed_sdpa",
+      "phase": "main",
+      "round": 2,
+      "arm": "PACKED_SDPA",
+      "raw_logits": true,
+      "selected_book_rank": 0
+    },
+    {
+      "id": "b1-gate-official",
+      "phase": "gate",
+      "arm": "OFFICIAL",
+      "raw_logits": true,
+      "selected_book_rank": 1
+    },
+    {
+      "id": "b1-gate-native",
+      "phase": "gate",
+      "arm": "NATIVE",
+      "raw_logits": true,
+      "selected_book_rank": 1
+    },
+    {
+      "id": "b1-diagnostic-fused",
+      "phase": "diagnostic",
+      "arm": "GQA_FUSED",
+      "raw_logits": true,
+      "selected_book_rank": 1
+    },
+    {
+      "id": "b1-warm-native",
+      "phase": "warmup",
+      "arm": "NATIVE",
+      "raw_logits": false,
+      "selected_book_rank": 1
+    },
+    {
+      "id": "b1-warm-packed_sdpa",
+      "phase": "warmup",
+      "arm": "PACKED_SDPA",
+      "raw_logits": false,
+      "selected_book_rank": 1
+    },
+    {
+      "id": "b1-warm-gqa_fused",
+      "phase": "warmup",
+      "arm": "GQA_FUSED",
+      "raw_logits": false,
+      "selected_book_rank": 1
+    },
+    {
+      "id": "b1-main-r0-native",
+      "phase": "main",
+      "round": 0,
+      "arm": "NATIVE",
+      "raw_logits": true,
+      "selected_book_rank": 1
+    },
+    {
+      "id": "b1-main-r0-packed_sdpa",
+      "phase": "main",
+      "round": 0,
+      "arm": "PACKED_SDPA",
+      "raw_logits": true,
+      "selected_book_rank": 1
+    },
+    {
+      "id": "b1-main-r0-gqa_fused",
+      "phase": "main",
+      "round": 0,
+      "arm": "GQA_FUSED",
+      "raw_logits": true,
+      "selected_book_rank": 1
+    },
+    {
+      "id": "b1-main-r1-packed_sdpa",
+      "phase": "main",
+      "round": 1,
+      "arm": "PACKED_SDPA",
+      "raw_logits": true,
+      "selected_book_rank": 1
+    },
+    {
+      "id": "b1-main-r1-gqa_fused",
+      "phase": "main",
+      "round": 1,
+      "arm": "GQA_FUSED",
+      "raw_logits": true,
+      "selected_book_rank": 1
+    },
+    {
+      "id": "b1-main-r1-native",
+      "phase": "main",
+      "round": 1,
+      "arm": "NATIVE",
+      "raw_logits": true,
+      "selected_book_rank": 1
+    },
+    {
+      "id": "b1-main-r2-gqa_fused",
+      "phase": "main",
+      "round": 2,
+      "arm": "GQA_FUSED",
+      "raw_logits": true,
+      "selected_book_rank": 1
+    },
+    {
+      "id": "b1-main-r2-native",
+      "phase": "main",
+      "round": 2,
+      "arm": "NATIVE",
+      "raw_logits": true,
+      "selected_book_rank": 1
+    },
+    {
+      "id": "b1-main-r2-packed_sdpa",
+      "phase": "main",
+      "round": 2,
+      "arm": "PACKED_SDPA",
+      "raw_logits": true,
+      "selected_book_rank": 1
+    },
+    {
+      "id": "b2-gate-official",
+      "phase": "gate",
+      "arm": "OFFICIAL",
+      "raw_logits": true,
+      "selected_book_rank": 2
+    },
+    {
+      "id": "b2-gate-native",
+      "phase": "gate",
+      "arm": "NATIVE",
+      "raw_logits": true,
+      "selected_book_rank": 2
+    },
+    {
+      "id": "b2-diagnostic-fused",
+      "phase": "diagnostic",
+      "arm": "GQA_FUSED",
+      "raw_logits": true,
+      "selected_book_rank": 2
+    },
+    {
+      "id": "b2-warm-native",
+      "phase": "warmup",
+      "arm": "NATIVE",
+      "raw_logits": false,
+      "selected_book_rank": 2
+    },
+    {
+      "id": "b2-warm-packed_sdpa",
+      "phase": "warmup",
+      "arm": "PACKED_SDPA",
+      "raw_logits": false,
+      "selected_book_rank": 2
+    },
+    {
+      "id": "b2-warm-gqa_fused",
+      "phase": "warmup",
+      "arm": "GQA_FUSED",
+      "raw_logits": false,
+      "selected_book_rank": 2
+    },
+    {
+      "id": "b2-main-r0-native",
+      "phase": "main",
+      "round": 0,
+      "arm": "NATIVE",
+      "raw_logits": true,
+      "selected_book_rank": 2
+    },
+    {
+      "id": "b2-main-r0-packed_sdpa",
+      "phase": "main",
+      "round": 0,
+      "arm": "PACKED_SDPA",
+      "raw_logits": true,
+      "selected_book_rank": 2
+    },
+    {
+      "id": "b2-main-r0-gqa_fused",
+      "phase": "main",
+      "round": 0,
+      "arm": "GQA_FUSED",
+      "raw_logits": true,
+      "selected_book_rank": 2
+    },
+    {
+      "id": "b2-main-r1-packed_sdpa",
+      "phase": "main",
+      "round": 1,
+      "arm": "PACKED_SDPA",
+      "raw_logits": true,
+      "selected_book_rank": 2
+    },
+    {
+      "id": "b2-main-r1-gqa_fused",
+      "phase": "main",
+      "round": 1,
+      "arm": "GQA_FUSED",
+      "raw_logits": true,
+      "selected_book_rank": 2
+    },
+    {
+      "id": "b2-main-r1-native",
+      "phase": "main",
+      "round": 1,
+      "arm": "NATIVE",
+      "raw_logits": true,
+      "selected_book_rank": 2
+    },
+    {
+      "id": "b2-main-r2-gqa_fused",
+      "phase": "main",
+      "round": 2,
+      "arm": "GQA_FUSED",
+      "raw_logits": true,
+      "selected_book_rank": 2
+    },
+    {
+      "id": "b2-main-r2-native",
+      "phase": "main",
+      "round": 2,
+      "arm": "NATIVE",
+      "raw_logits": true,
+      "selected_book_rank": 2
+    },
+    {
+      "id": "b2-main-r2-packed_sdpa",
+      "phase": "main",
+      "round": 2,
+      "arm": "PACKED_SDPA",
+      "raw_logits": true,
+      "selected_book_rank": 2
+    },
+    {
+      "id": "b3-gate-official",
+      "phase": "gate",
+      "arm": "OFFICIAL",
+      "raw_logits": true,
+      "selected_book_rank": 3
+    },
+    {
+      "id": "b3-gate-native",
+      "phase": "gate",
+      "arm": "NATIVE",
+      "raw_logits": true,
+      "selected_book_rank": 3
+    },
+    {
+      "id": "b3-diagnostic-fused",
+      "phase": "diagnostic",
+      "arm": "GQA_FUSED",
+      "raw_logits": true,
+      "selected_book_rank": 3
+    },
+    {
+      "id": "b3-warm-native",
+      "phase": "warmup",
+      "arm": "NATIVE",
+      "raw_logits": false,
+      "selected_book_rank": 3
+    },
+    {
+      "id": "b3-warm-packed_sdpa",
+      "phase": "warmup",
+      "arm": "PACKED_SDPA",
+      "raw_logits": false,
+      "selected_book_rank": 3
+    },
+    {
+      "id": "b3-warm-gqa_fused",
+      "phase": "warmup",
+      "arm": "GQA_FUSED",
+      "raw_logits": false,
+      "selected_book_rank": 3
+    },
+    {
+      "id": "b3-main-r0-native",
+      "phase": "main",
+      "round": 0,
+      "arm": "NATIVE",
+      "raw_logits": true,
+      "selected_book_rank": 3
+    },
+    {
+      "id": "b3-main-r0-packed_sdpa",
+      "phase": "main",
+      "round": 0,
+      "arm": "PACKED_SDPA",
+      "raw_logits": true,
+      "selected_book_rank": 3
+    },
+    {
+      "id": "b3-main-r0-gqa_fused",
+      "phase": "main",
+      "round": 0,
+      "arm": "GQA_FUSED",
+      "raw_logits": true,
+      "selected_book_rank": 3
+    },
+    {
+      "id": "b3-main-r1-packed_sdpa",
+      "phase": "main",
+      "round": 1,
+      "arm": "PACKED_SDPA",
+      "raw_logits": true,
+      "selected_book_rank": 3
+    },
+    {
+      "id": "b3-main-r1-gqa_fused",
+      "phase": "main",
+      "round": 1,
+      "arm": "GQA_FUSED",
+      "raw_logits": true,
+      "selected_book_rank": 3
+    },
+    {
+      "id": "b3-main-r1-native",
+      "phase": "main",
+      "round": 1,
+      "arm": "NATIVE",
+      "raw_logits": true,
+      "selected_book_rank": 3
+    },
+    {
+      "id": "b3-main-r2-gqa_fused",
+      "phase": "main",
+      "round": 2,
+      "arm": "GQA_FUSED",
+      "raw_logits": true,
+      "selected_book_rank": 3
+    },
+    {
+      "id": "b3-main-r2-native",
+      "phase": "main",
+      "round": 2,
+      "arm": "NATIVE",
+      "raw_logits": true,
+      "selected_book_rank": 3
+    },
+    {
+      "id": "b3-main-r2-packed_sdpa",
+      "phase": "main",
+      "round": 2,
+      "arm": "PACKED_SDPA",
+      "raw_logits": true,
+      "selected_book_rank": 3
+    }
+  ],
+  "order": "Selected rank 0..3; NB04 15-series order within each book; same seed and fresh cache for every series. One model load for all books.",
+  "captures_per_book": [
+    {
+      "slot": 0,
+      "step": 1,
+      "length": 129
+    },
+    {
+      "slot": 43,
+      "step": 1,
+      "length": 129
+    },
+    {
+      "slot": 0,
+      "step": 8,
+      "length": 136
+    },
+    {
+      "slot": 43,
+      "step": 8,
+      "length": 136
+    }
+  ],
+  "counts": {
+    "books": 4,
+    "technical_rounds_per_arm_per_book": 3,
+    "trajectories": 60,
+    "gate_trajectories": 8,
+    "diagnostic_trajectories": 4,
+    "warmup_trajectories": 12,
+    "main_trajectories": 36,
+    "forward_calls": 540,
+    "gate_forwards": 72,
+    "diagnostic_forwards": 36,
+    "warmup_forwards": 108,
+    "main_forwards": 324,
+    "raw_logit_trajectories": 48,
+    "raw_logit_rows": 432,
+    "raw_logit_float32_bytes": 287096832,
+    "actual_q_captures": 16,
+    "main_quality_entries": 288,
+    "unique_primary_target_positions_per_arm": 32,
+    "book_round_paired_blocks": 12
+  },
+  "quality": {
+    "primary_positions": [
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136
+    ],
+    "secondary_positions": [
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136
+    ],
+    "reference_delta_ppl_percent": 5.0,
+    "gates_connection": false,
+    "per_book": "Round-wise values, equality check, and the median NLL per arm; 8 positions primary, 9 secondary.",
+    "aggregate": "For each arm, average the four book-level mean NLLs once, then exp. Do not average PPLs or count technical repeats as new texts.",
+    "primary_quality_expectation": "All four fused vs native primary comparisons within +5%; per-book packed vs native also reported.",
+    "old_run_pooling": false,
+    "ci": false,
+    "p_value": false
+  },
+  "timing": {
+    "within_book": "Three round-paired ratios and their median, separately for decode and prefill+compression+decode, CUDA and wall.",
+    "across_books": "Median of four book-level median ratios; all four books and all 12 technical blocks shown.",
+    "expectation": "Median across four book-level GQA_FUSED/PACKED_SDPA CUDA decode ratios < 1.",
+    "native_speedup_required": false,
+    "cache_snapshot_before_and_after_each_book_main": true
+  },
+  "numeric": {
+    "inherit_nb04_component_budgets": true,
+    "inherit_bitwise_official_gate": true,
+    "raw_arrays_hashes_discrete_exact": true,
+    "summary_float_rtol": 1e-12,
+    "summary_float_atol": 1e-12,
+    "same_arm_repetition_instability": "INCONCLUSIVE",
+    "cache_change": "Timing unprepared; do not erase connection/quality observations."
+  },
+  "verdicts": [
+    "PASS_MODEL_CONNECTION",
+    "FAIL_MODEL_CONNECTION",
+    "INCONCLUSIVE"
+  ],
+  "closure": {
+    "finite_numeric_failure": "Continue fixed schedule and mark failure. Do not repair/tune inside the run.",
+    "quality_or_time_not_as_expected": "Complete and report; do not add books/repeats.",
+    "official_gate_nonfinite_structural_resource_failure": "Stop with INCONCLUSIVE, preserve completed rows and planned missing cells.",
+    "after_fixed_result": "Proceed to current-study Japanese draft within observed evidence."
+  },
+  "phase_cap_seconds": {
+    "prepare": 1800,
+    "measure": 1200,
+    "verify": 600,
+    "zip": 300,
+    "outer": 3900,
+    "series": 120,
+    "book": 600
+  },
+  "evidence_limit_bytes": 402653184,
+  "closure_reserve_bytes": 16777216,
+  "zip_limit_bytes": 268435456,
+  "minimum_initial_free_bytes": 32212254720,
+  "minimum_before_weights_free_bytes": 12884901888,
+  "storage_estimate": {
+    "basis": "Conservative fourfold scaling of the complete NB04 returned evidence/ZIP, not a guarantee.",
+    "nb04_evidence_bytes": 83591259,
+    "nb04_zip_bytes": 39669766,
+    "fourfold_evidence_bytes": 334365036,
+    "fourfold_zip_bytes": 158679064
+  },
+  "colab": {
+    "onecell": true,
+    "drive": false,
+    "previous_zip_required": false,
+    "auto_download_zip": true,
+    "secret_name": "HF_TOKEN",
+    "local_model_load": false,
+    "additional_paid_api": false,
+    "user_colab_quota_consumed": true
+  },
+  "implementation_changes": [
+    "Reuse completed NB04 computational code; add four-book orchestration and per-book identity binding.",
+    "Adapt completed AC08 score-blind selector to fixed Nanbeige tokenizer and 137 tokens; do not copy Ouro token IDs.",
+    "Adapt verifier to four book-scoped series sets and the frozen selection lock, preserve original within-book numerical and measurement rules.",
+    "Update limits, evidence paths, source manifest and independent aggregate; leave old sources and results intact."
+  ]
+}

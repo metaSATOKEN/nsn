@@ -1,0 +1,258 @@
+{
+  "schema_version": 1,
+  "missing_value_policy": {
+    "unknown": "Not established from selected records; never inferred from a model label.",
+    "not_applicable": "Metric or condition not used by this protocol."
+  },
+  "series": {
+    "legacy_quality": {
+      "tables": [
+        "legacy_primary",
+        "legacy_ablation",
+        "legacy_boundaries"
+      ],
+      "dataset": "WikiText-2 test",
+      "metric": "relative change of saved aggregate PPL",
+      "requested_dtype": "float16 except explicit BF16 diagnostics",
+      "actual_dtype": "unknown except recorded diagnostics",
+      "model_revision": "unknown in selected primary aggregates",
+      "tokenizer_revision": "unknown",
+      "gpu": "unknown per primary run; manuscript environment is separate evidence",
+      "raw_logits": "not used in this extraction",
+      "context": 1024,
+      "prefix_compressed_tokens": 512,
+      "scored_tokens_per_window": 512,
+      "stride": 512,
+      "initial_first_target_logit": "computed before compression",
+      "packing": "QDQ simulator except Phase26 real-cache comparison",
+      "runtime_versions": "unknown per legacy primary run"
+    },
+    "sadp_quality": {
+      "tables": [
+        "sadp_quality",
+        "sadp_paired",
+        "sadp_verdicts",
+        "sadp_skipped_configs",
+        "window_overlap"
+      ],
+      "dataset": "WikiText-2 test",
+      "metric": "mean of per-window relative PPL changes (%)",
+      "requested_dtype": "float16",
+      "actual_dtype": "unknown per tensor; code-level precision documented separately",
+      "model_revision": "unknown in selected result metadata",
+      "tokenizer_revision": "unknown",
+      "gpu": "unknown in selected result metadata",
+      "raw_logits": "not used; saved per-window changes",
+      "windows": 30,
+      "bootstrap_replicates": 5000,
+      "window_independence": "overlapping windows present; original bootstrap retained without new dependence correction",
+      "other_components": "Uniform NSN/plain comparison leaves E/M/S unquantized; three-tier-mask rows are separate auxiliary comparisons",
+      "plain_comparator": "local plain-asymmetric K/V recipe, not complete official KIVI implementation"
+    },
+    "legacy_storage_latency": {
+      "tables": [
+        "storage",
+        "packed_ppl",
+        "legacy_latency"
+      ],
+      "gpu_latency": "A100 recorded in Phase27 protocol",
+      "latency_replicates": 3,
+      "decode_steps_timed": 50,
+      "warmup_steps": {
+        "ordinary": 5,
+        "compile": 10
+      },
+      "initial_pack": "outside timed loop for unpack-only paths; roundtrip repacks in timed loop",
+      "storage_measurement": "synthetic 2048x128 slice expanded by model geometry; INT4 formula only",
+      "model_revision": "unknown",
+      "runtime_versions": "unknown"
+    },
+    "sadp_kernel": {
+      "tables": [
+        "kernel_cells",
+        "kernel_summary"
+      ],
+      "input": "synthetic tensors; model names label geometry",
+      "endpoint": "QK scores",
+      "warmup_steps": 30,
+      "timing_iterations": 100,
+      "raw_timing_iterations": "not available in selected saved JSON",
+      "code_storage": {
+        "K1": "float16",
+        "K1b": "float16",
+        "K1c": "uint8, one byte per code"
+      },
+      "actual_INT4_or_INT5_bitpacking": false,
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition; recorded in all three source headers",
+      "ppl": "not_applicable"
+    },
+    "looped": {
+      "tables": [
+        "loop_quality",
+        "loop_timing",
+        "loop_memory",
+        "loop_nb05_raw_summaries",
+        "bridge"
+      ],
+      "dataset": "PG19 training split",
+      "model_and_tokenizer_revisions": "frozen in papers/loop-kv/evidence-index-v0.4-2026-10-03.md and referenced run inputs",
+      "gpu_and_versions": "recorded per run; see existing S1",
+      "dtype": "BF16 model, FP16 stored auxiliaries; intermediate arithmetic per frozen contract",
+      "sdpa_actual_backend": "unknown; automatic selection, not individually identified",
+      "independent_texts_claim": "4 distinct texts per model; no technical replicate inflation",
+      "metric": "equal-text mean NLL difference exponentiated",
+      "raw_logit_check": "previous within-project verification inherited; source hashes rechecked",
+      "new_lower_level_reaggregation": "NB05 324 main step JSON, VF01 540 timing JSONL rows; AC08 existing comparison summaries"
+    }
+  },
+  "saved_run_metadata": {
+    "e5_holdout_oracle": {
+      "metadata": {
+        "phase": "E-5 phase 2: hold-out generalisation oracle",
+        "frozen_compiler_sha": "98508ff",
+        "preregistration_lock2": "1ebf5d9",
+        "knobs": {
+          "ctx": 1024,
+          "n_windows": 30,
+          "n_bootstrap": 5000,
+          "seed": 20260510
+        },
+        "started": "2026-06-21T03:31:26.107260+00:00",
+        "finished": "2026-06-21T03:45:59.506967+00:00"
+      },
+      "origin": {
+        "source": "Substrate-Aware-Diagnostic-and-Prescription/results/e5_holdout_oracle.json",
+        "pointer": "",
+        "sha256": "6ec3e8b264ce21b7641c61d88addff065c56a0e111c50d11ea155ee6388b3a84"
+      }
+    },
+    "holdout_causal_faithful": {
+      "metadata": {
+        "phase": "Tier-2 (b) hold-out causal-faithful family re-evaluation",
+        "generated_at": "2026-06-23T08:18:49+00:00",
+        "generator": "phase_holdout_causal_faithful.py",
+        "transformers_version": "5.12.1",
+        "preregistration": "experiments/holdout_causal_faithful_preregistration.md",
+        "knobs": {
+          "k_bits": 4,
+          "v_bits": 4,
+          "group_size": 128,
+          "residual_len": 128,
+          "n_windows": 30,
+          "n_bootstrap": 5000,
+          "seed": 20260510,
+          "nll_chunk": 2048
+        },
+        "derived_fields_note": "verdict, aggregate, and k_localization regenerated 2026-06-24 from the unchanged raw per-window data using the corrected cross_recipe_verdict (A2 fallback when the post-RMSNorm A3 config NaN-overflows for one recipe) and the measured K_spread class thresholds; raw measurements and bootstrap gaps are unchanged. The original run predated the NaN-fallback fix."
+      },
+      "origin": {
+        "source": "Substrate-Aware-Diagnostic-and-Prescription/results/holdout_causal_faithful.json",
+        "pointer": "",
+        "sha256": "2ce32c2bccbb8e6c957602591f825357e3ec56b7db66aeb3414f03d08c020ed1"
+      }
+    },
+    "w1d_causal_faithful_longctx": {
+      "metadata": {
+        "phase": "W-1d causal-faithful long-context family-split re-evaluation",
+        "generated_at": "2026-06-22T03:10:10+00:00",
+        "generator": "phase_w1d_causal_faithful_longctx.py",
+        "transformers_version": "5.12.1",
+        "preregistration": "experiments/W1d_causal_faithful_preregistration.md",
+        "knobs": {
+          "k_bits": 5,
+          "group_size": 128,
+          "residual_len": 128,
+          "n_windows": 30,
+          "n_bootstrap": 5000,
+          "seed": 20260510,
+          "nll_chunk": 2048,
+          "clean_band_pp": 0.5
+        }
+      },
+      "origin": {
+        "source": "Substrate-Aware-Diagnostic-and-Prescription/results/w1d_causal_faithful_longctx.json",
+        "pointer": "",
+        "sha256": "caeb1ef405498d3d9d0cf516d2585ae4be096792907397a06f89fdc230868ae4"
+      }
+    },
+    "w1e_class_dependence": {
+      "metadata": {
+        "phase": "W-1e class-dependence of the long-context family separation",
+        "generated_at": "2026-06-22T08:55:39+00:00",
+        "generator": "phase_w1e_class_dependence.py",
+        "transformers_version": "5.12.1",
+        "preregistration": "experiments/W1e_class_dependence_preregistration.md",
+        "knobs": {
+          "k_bits": 5,
+          "n_windows": 30,
+          "n_bootstrap": 5000,
+          "seed": 20260510,
+          "nll_chunk": 2048,
+          "clean_band_pp": 0.5,
+          "config": "A0_full_window"
+        }
+      },
+      "origin": {
+        "source": "Substrate-Aware-Diagnostic-and-Prescription/results/w1e_class_dependence.json",
+        "pointer": "",
+        "sha256": "bcd06259bc98df428a52c1975d7c4b5351d3228db3544f8b7be795045bff72d3"
+      }
+    },
+    "k1_production_kernel": {
+      "metadata": {
+        "seed": 20260510,
+        "warmup": 30,
+        "iters": 100,
+        "torch": "2.11.0+cu128",
+        "cuda": "12.8",
+        "device_name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+        "has_triton": true,
+        "kivi_group": 32,
+        "kivi_residual": 128,
+        "note": "torch path (dequant materialised, pessimistic absolute); fused Triton bandwidth path is the next iteration"
+      },
+      "origin": {
+        "source": "Substrate-Aware-Diagnostic-and-Prescription/results/k1_production_kernel.json",
+        "pointer": "/meta",
+        "sha256": "f999e28c1f7755defb3b66fe07633d721b7fe17393a0723655c7efb2b3c23862"
+      }
+    },
+    "k1b_compile_corroboration": {
+      "metadata": {
+        "seed": 20260510,
+        "warmup": 30,
+        "iters": 100,
+        "path": "torch_compiled",
+        "torch": "2.11.0+cu128",
+        "cuda": "12.8",
+        "device_name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+        "note": "torch.compile-fused dequant; isolates the fused NSN-vs-KIVI delta; still materialises K, so not a vs-FP16 absolute (that is the Triton step)"
+      },
+      "origin": {
+        "source": "Substrate-Aware-Diagnostic-and-Prescription/results/k1b_compile_corroboration.json",
+        "pointer": "/meta",
+        "sha256": "0a68f528fed80d63a38a1d2ba4d1800c404ff355177333f02ffffd7c86228d19"
+      }
+    },
+    "k1c_triton_fused": {
+      "metadata": {
+        "seed": 20260510,
+        "warmup": 30,
+        "iters": 100,
+        "path": "triton_fused",
+        "torch": "2.11.0+cu128",
+        "cuda": "12.8",
+        "triton": "3.6.0",
+        "device_name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+        "block_t": 32,
+        "gate_tol": 0.01,
+        "note": "fused dequant-then-score, no K materialisation; int64 pointers; int8 codes (first cut, vs-FP16 is a bandwidth lower bound); NSN = KIVI + 1 per-token scalar on the score; every timed cell passed the gate"
+      },
+      "origin": {
+        "source": "Substrate-Aware-Diagnostic-and-Prescription/results/k1c_triton_fused.json",
+        "pointer": "/meta",
+        "sha256": "2b31f1656dd8f5c9e1e6190a0bea9bf5da9fa75002572bbdfc572b8175b383c1"
+      }
+    }
+  }
+}

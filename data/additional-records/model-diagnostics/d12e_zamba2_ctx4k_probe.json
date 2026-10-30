@@ -1,0 +1,73 @@
+{
+  "schema_version": "0.1.0",
+  "generated_at": "2026-05-05T23:50:19+00:00",
+  "generator": "phase_d12e_zamba2_ctx4k_probe.py",
+  "transformers_version": "5.8.0",
+  "model_id": "Zyphra/Zamba2-1.2B",
+  "model_label": "Zamba2-1.2B",
+  "phase": "D-12e",
+  "purpose": "Paper D Phase D-12e — F40 generalization test on Zamba2-1.2B (Branch A) at ctx=4K. D-12d on Gemma4 (Branch B) found per-layer K signs flip at ctx=8K. This phase tests whether the same phenomenon holds on Branch A (Mamba-class K+S, within-layer). ctx=8K is blocked by Mamba-2 reference forward O(T²) OOM (D-12a); ctx=4K is feasible. If Zamba2 K-INT3/INT4 also shifts significantly at ctx=4K vs ctx=1024 reference, F40 generalizes; if not, F40 is Branch-B specific.",
+  "protocol": {
+    "ctx": 4096,
+    "stride": 2048,
+    "n_windows": 3,
+    "kv_recipe": "qa_nsep_pchan_asym (NSN v0.3 hero)",
+    "test_corpus": "WikiText-2 test"
+  },
+  "fp16_ppl_reference_ctx1024": 6.82862553808825,
+  "fp16_ppl_at_ctx": 7.485416963152216,
+  "fp16_drift_vs_ctx1024": 0.6567914250639655,
+  "ctx1024_references": {
+    "delta_K_INT3_all": 3.586,
+    "delta_K_INT4_all": 0.501,
+    "spread_K_INT3": 0.276,
+    "argmax_layer": 17
+  },
+  "n_attn_layers": 6,
+  "attn_layers": [
+    5,
+    11,
+    17,
+    23,
+    29,
+    35
+  ],
+  "results": {
+    "pi_Z12e_0_FP16_ctx4096": {
+      "ppl": 7.485416963152216,
+      "delta_pct": 0.0,
+      "ctx": 4096,
+      "k_recipe": "FP16",
+      "vram_peak_gb": 55.682827264,
+      "drift_vs_ctx1024_baseline": 0.6567914250639655
+    },
+    "pi_Z12e_1_K_INT4_all_ctx4096": {
+      "ppl": 7.503924796311851,
+      "delta_pct": 0.24725186653919143,
+      "ctx": 4096,
+      "k_recipe": "NSN-INT4 all",
+      "vram_peak_gb": 55.682827264,
+      "ref_at_ctx1024": 0.501
+    },
+    "pi_Z12e_2_K_INT3_all_ctx4096": {
+      "ppl": 7.701894872324408,
+      "delta_pct": 2.891995332228361,
+      "ctx": 4096,
+      "k_recipe": "NSN-INT3 all",
+      "vram_peak_gb": 55.682827264,
+      "ref_at_ctx1024": 3.586
+    },
+    "pi_Z12e_3_L17_only_ctx4096": {
+      "ppl": 7.54686784123141,
+      "delta_pct": 0.8209412833205244,
+      "ctx": 4096,
+      "k_recipe": "L17-only INT3",
+      "vram_peak_gb": 55.682827264
+    }
+  },
+  "verdict": {
+    "delta_INT4_shift": -0.2537481334608086,
+    "delta_INT3_shift": -0.6940046677716389,
+    "diagnosis": "F40-LIKE — long-ctx degrades on Branch A"
+  }
+}

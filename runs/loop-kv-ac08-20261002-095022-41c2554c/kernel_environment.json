@@ -1,0 +1,7 @@
+{
+  "triton": "3.6.0",
+  "torch_requirement": "triton==3.6.0; platform_system == \"Linux\"",
+  "block": 1024,
+  "num_warps": 4,
+  "autotune": false
+}

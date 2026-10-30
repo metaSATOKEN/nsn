@@ -1,0 +1,449 @@
+{
+  "schema_version": "1.0",
+  "description": "Per-cell measurement JSONs for Substrate-Aware Diagnostic and Prescription (paper preprint v1.0.0). Each entry maps a filename to its phase, topic, and approximate role.",
+  "generated_at": "2026-05-12",
+  "results_count": 63,
+  "entries": [
+    {
+      "file": "d10a_jamba_e_int5.json",
+      "phase": "D-10a",
+      "topic": "Jamba E-substrate sweet-spot lookup (F37; INT4 vs INT5)",
+      "size_bytes": 2755,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d10b_qwen36_m_int5.json",
+      "phase": "D-10b",
+      "topic": "Qwen3.6 M-substrate sweet-spot (INT5 cancellation regime)",
+      "size_bytes": 2739,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d10c_gemma4_selective_k.json",
+      "phase": "D-10c",
+      "topic": "Gemma4 K 3-tier selective mask hero (good=INT3 / neutral=INT4 / bad=FP16)",
+      "size_bytes": 4697,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d11_pareto_per_model.json",
+      "phase": "D-11",
+      "topic": "Per-model pareto sweep",
+      "size_bytes": 9001,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d11_validation_table.json",
+      "phase": "D-11",
+      "topic": "Cross-cell validation aggregator + hero summary table",
+      "size_bytes": 14994,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d12b_gemma4_long_ctx.json",
+      "phase": "D-12b",
+      "topic": "Gemma4 long-context probe (P5 onset; F46)",
+      "size_bytes": 2486,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d12c_qwen36_long_ctx.json",
+      "phase": "D-12c",
+      "topic": "Qwen3.6 long-context probe (P4-strong historical NSN; F47/F60)",
+      "size_bytes": 2236,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d12d_gemma4_ctx_deepen.json",
+      "phase": "D-12d",
+      "topic": "Gemma4 ctx deepen probe",
+      "size_bytes": 4089,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d12e_zamba2_ctx4k_probe.json",
+      "phase": "D-12e",
+      "topic": "Zamba2 ctx=4K probe (P4-direction)",
+      "size_bytes": 2371,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d13_real_pack_sanity.json",
+      "phase": "D-13",
+      "topic": "Real bit-packed cache reproduces fake-quant PPL on 3 substrate geometries (F38)",
+      "size_bytes": 2728,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d13b_compression_sanity.json",
+      "phase": "D-13b",
+      "topic": "Compression ratio accounting (pack-helper §B)",
+      "size_bytes": 3276,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d13c_int6_pack_sanity.json",
+      "phase": "D-13c",
+      "topic": "INT6 pack-helper extension sanity",
+      "size_bytes": 1817,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d14_industry_baselines.json",
+      "phase": "D-14",
+      "topic": "Deterministic industry baselines table (§C)",
+      "size_bytes": 23016,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d14_partial_Gemma4_26B_A4B_base.json",
+      "phase": "D-14",
+      "topic": "D-14 partial snapshot (Gemma4 progress checkpoint)",
+      "size_bytes": 7517,
+      "is_partial_snapshot": true
+    },
+    {
+      "file": "d14_partial_Qwen3_6_27B.json",
+      "phase": "D-14",
+      "topic": "D-14 partial snapshot (Qwen3.6 progress checkpoint)",
+      "size_bytes": 14195,
+      "is_partial_snapshot": true
+    },
+    {
+      "file": "d14b_n5_protocol_sanity.json",
+      "phase": "D-14b",
+      "topic": "N=5 protocol sanity (validates seed alignment)",
+      "size_bytes": 1653,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d14c_partial_Gemma4_26B_A4B_base.json",
+      "phase": "D-14c",
+      "topic": "D-14c partial snapshot (Gemma4 progress checkpoint)",
+      "size_bytes": 12094,
+      "is_partial_snapshot": true
+    },
+    {
+      "file": "d14c_partial_Qwen3_6_27B.json",
+      "phase": "D-14c",
+      "topic": "D-14c partial snapshot (Qwen3.6 progress checkpoint)",
+      "size_bytes": 23997,
+      "is_partial_snapshot": true
+    },
+    {
+      "file": "d14c_random_window_ci.json",
+      "phase": "D-14c",
+      "topic": "Random-window bootstrap CI protocol introduction (F47/F48/F49)",
+      "size_bytes": 24185,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d15a_llama31_long_ctx.json",
+      "phase": "D-15a",
+      "topic": "Llama-3.1-8B long-context cell (null comparator)",
+      "size_bytes": 3066,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d15b_gemma4_31b_long_ctx.json",
+      "phase": "D-15b",
+      "topic": "Gemma4-31B long-context cell (P5 size-scaled)",
+      "size_bytes": 3137,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d16_gemma4_long_ctx_prescription.json",
+      "phase": "D-16",
+      "topic": "Gemma4-26B-A4B long-context prescription (§6.4.5)",
+      "size_bytes": 5551,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d17_gemma4_31b_prescription.json",
+      "phase": "D-17",
+      "topic": "Gemma4-31B prescription (P5 size-scaled workaround; §6.4.6)",
+      "size_bytes": 3387,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d18a_zamba2_iks_ci.json",
+      "phase": "D-18a",
+      "topic": "Zamba2 I_KS interaction CI (Appendix E)",
+      "size_bytes": 8544,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d18b_jamba_iks_ikse_ci.json",
+      "phase": "D-18b",
+      "topic": "Jamba I_KS / I_KSE interaction CIs (Appendix E)",
+      "size_bytes": 20100,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d18c2_gemma4_kint5_ike_ci.json",
+      "phase": "D-18c2",
+      "topic": "Gemma4 I_KE @ K-INT5 interaction CI (Appendix E)",
+      "size_bytes": 9771,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d18c_gemma4_ike_ci.json",
+      "phase": "D-18c",
+      "topic": "Gemma4 I_KE @ K-INT3 interaction CI (Appendix E)",
+      "size_bytes": 8992,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d19_qwen15_moe_branch_b.json",
+      "phase": "D-19",
+      "topic": "Qwen1.5-MoE-A2.7B out-of-sample probe (routes to Branch C; F58)",
+      "size_bytes": 6778,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d1_5_kv_layer_micro.json",
+      "phase": "D-1.5",
+      "topic": "Jamba L28 microtest (substrate-map merge sanity)",
+      "size_bytes": 3081,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d1_jamba_substrate_xray.json",
+      "phase": "D-1",
+      "topic": "Jamba multi-substrate xray (per-layer redundancy + coupling)",
+      "size_bytes": 9281,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d1_kv_risk_signals.json",
+      "phase": "D-1",
+      "topic": "Per-layer K-cache risk signals (F4 K_localization input)",
+      "size_bytes": 11205,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d1_substrate_map.json",
+      "phase": "D-1",
+      "topic": "Substrate map (per-model row schema: F1/F2/F4 fixed-field diagnostic input)",
+      "size_bytes": 23698,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d20_paired_bootstrap.json",
+      "phase": "D-20",
+      "topic": "Qwen3.6 ctx=8192 paired bootstrap (F60 long-ctx Pareto-coexistence)",
+      "size_bytes": 13563,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d21_mixtral_branch_b_confirmer.json",
+      "phase": "D-21",
+      "topic": "Mixtral 8x7B out-of-sample probe (routes to Branch C via K_localization=uniform)",
+      "size_bytes": 7907,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d22a_jamba_hero_ci.json",
+      "phase": "D-22A",
+      "topic": "Jamba motivation cell 5-cell bootstrap CI (F64; F49-pattern 2nd case)",
+      "size_bytes": 18204,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d22a_partial_after_J0.json",
+      "phase": "D-22A",
+      "topic": "D-22A partial snapshot after π_J0 (FP16 baseline)",
+      "size_bytes": 1828,
+      "is_partial_snapshot": true
+    },
+    {
+      "file": "d22a_partial_after_J6.json",
+      "phase": "D-22A",
+      "topic": "D-22A partial snapshot after π_J6 (hero recipe)",
+      "size_bytes": 4071,
+      "is_partial_snapshot": true
+    },
+    {
+      "file": "d22a_partial_after_J6K4.json",
+      "phase": "D-22A",
+      "topic": "D-22A partial snapshot after π_J6_K4 (K-relaxed alt)",
+      "size_bytes": 6317,
+      "is_partial_snapshot": true
+    },
+    {
+      "file": "d22a_partial_after_J6S7.json",
+      "phase": "D-22A",
+      "topic": "D-22A partial snapshot after π_J6_S7 (S-relaxed alt)",
+      "size_bytes": 8559,
+      "is_partial_snapshot": true
+    },
+    {
+      "file": "d22b_partial_after_FP16.json",
+      "phase": "D-22B",
+      "topic": "D-22B partial snapshot after π_Q1024_FP16 reference",
+      "size_bytes": 1831,
+      "is_partial_snapshot": true
+    },
+    {
+      "file": "d22b_partial_after_K5.json",
+      "phase": "D-22B",
+      "topic": "D-22B partial snapshot after π_Q1024_K5 (K-bitwidth hypothesis)",
+      "size_bytes": 6379,
+      "is_partial_snapshot": true
+    },
+    {
+      "file": "d22b_partial_after_KIVI.json",
+      "phase": "D-22B",
+      "topic": "D-22B partial snapshot after π_Q1024_KIVI (recipe-family hypothesis; F65 hero)",
+      "size_bytes": 8706,
+      "is_partial_snapshot": true
+    },
+    {
+      "file": "d22b_partial_after_LABD.json",
+      "phase": "D-22B",
+      "topic": "D-22B partial snapshot after π_Q1024_LABD (historical NSN hero)",
+      "size_bytes": 4121,
+      "is_partial_snapshot": true
+    },
+    {
+      "file": "d22b_qwen36_ctx1024_ci.json",
+      "phase": "D-22B",
+      "topic": "Qwen3.6 ctx=1024 K-recipe family refinement 5-cell CI (F65)",
+      "size_bytes": 20703,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d2_component_baseline.json",
+      "phase": "D-2",
+      "topic": "Single-substrate component baselines",
+      "size_bytes": 5000,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d2_ssm_jamba.json",
+      "phase": "D-2",
+      "topic": "Jamba Mamba-S substrate baseline (NSN K + LAB calibration)",
+      "size_bytes": 2430,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d2_ssm_zamba2.json",
+      "phase": "D-2",
+      "topic": "Zamba2 Mamba-S substrate baseline",
+      "size_bytes": 2377,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d3a_jamba_per_layer.json",
+      "phase": "D-3a",
+      "topic": "Jamba per-layer single-substrate fragility profile (F6, F11)",
+      "size_bytes": 3439,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d3b_zamba2_per_layer.json",
+      "phase": "D-3b",
+      "topic": "Zamba2 per-layer single-substrate fragility profile (F6, F11)",
+      "size_bytes": 3358,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d5_policy_jamba.json",
+      "phase": "D-5",
+      "topic": "Jamba POR hand-tuned policies (π_J1-J6); pi_J6 hero",
+      "size_bytes": 1968,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d5_policy_zamba2.json",
+      "phase": "D-5",
+      "topic": "Zamba2 POR hand-tuned policies (π_Z1, π_Z2 hero)",
+      "size_bytes": 2262,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d6_effective_memory_pareto.json",
+      "phase": "D-6",
+      "topic": "Effective-memory accounting for pack-helper claims",
+      "size_bytes": 4176,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d7_0_substrate_discovery.json",
+      "phase": "D-7",
+      "topic": "Cross-model substrate-presence discovery",
+      "size_bytes": 56213,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d7_1_gemma4_base_ke.json",
+      "phase": "D-7.1",
+      "topic": "Gemma4-26B-A4B-base K+E composition cell",
+      "size_bytes": 5143,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d7_1_gemma4_ke_it_v0_2.json",
+      "phase": "D-7.1",
+      "topic": "Gemma4-26B-A4B-it K+E composition cell (instruct v0.2)",
+      "size_bytes": 4794,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d7_2_qwen36_km.json",
+      "phase": "D-7.2",
+      "topic": "Qwen3.6 K+M composition cell (historical NSN; pre-F65)",
+      "size_bytes": 4339,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d7_3_jamba_kse.json",
+      "phase": "D-7.3",
+      "topic": "Jamba K+S+E composition cell",
+      "size_bytes": 2912,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d8a_qwen36_per_k_layer.json",
+      "phase": "D-8a",
+      "topic": "Qwen3.6 per-K-layer Δ_K_INT3 sign classification",
+      "size_bytes": 4209,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d8b_gemma4_per_k_layer.json",
+      "phase": "D-8b",
+      "topic": "Gemma4 per-K-layer Δ_K_INT3 sign classification (Branch B mask)",
+      "size_bytes": 5860,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d9_mri_report.json",
+      "phase": "D-9",
+      "topic": "MRI compiler diagnostic report (the fixed-field row for each model)",
+      "size_bytes": 6821,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d9_prescriptions.json",
+      "phase": "D-9",
+      "topic": "Compiler-emitted prescriptions per testbed model (3-branch tree output)",
+      "size_bytes": 5007,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d_down_gemma4_smoke.json",
+      "phase": "D-down",
+      "topic": "Gemma4 LongBench smoke test (§7.8)",
+      "size_bytes": 242121,
+      "is_partial_snapshot": false
+    },
+    {
+      "file": "d_down_qwen36_smoke.json",
+      "phase": "D-down",
+      "topic": "Qwen3.6 LongBench smoke test (§7.8)",
+      "size_bytes": 185908,
+      "is_partial_snapshot": false
+    }
+  ]
+}

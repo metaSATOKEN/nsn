@@ -1,0 +1,138 @@
+{
+  "phase": "E-5 phase 1b: frozen-compiler hold-out predictions",
+  "frozen_compiler_sha": "98508ff",
+  "source_diagnostic": "/Users/user/Desktop/Recync\u7cfb/Substrate-Aware-Diagnostic-and-Prescription/results/e5_holdout_diagnostic.json",
+  "deployment_ctx": 1024,
+  "predictions": {
+    "Bamba-9B-v2": {
+      "model_label": "Bamba-9B-v2",
+      "K_spread_pp": 3.308678719656003,
+      "K_localization": "hotspot",
+      "branch": "A",
+      "branch_label": "Mamba-class with P1 active",
+      "K_policy": "3-tier selective NSN mask: NSN-INT3 on K_good, NSN-INT4 on K_neutral, FP16 on K_bad (per-K-layer \u0394_K_INT3 sign)",
+      "K_recipe_short": "three_tier_mask",
+      "K_layer_mask": {
+        "K_good_layers": [
+          9
+        ],
+        "K_bad_layers": [
+          18,
+          27
+        ],
+        "K_neutral_layers": []
+      },
+      "delta_K_INT3_pp": 1.0032503085380384,
+      "rule_trace": [
+        "K_localization = 'hotspot' (K_spread = 3.309 pp)",
+        "  hotspot AND (short ctx OR not Gemma4-family) -> 3-tier selective NSN mask",
+        "  K_good (INT3) = [9]",
+        "  K_neutral (INT4) = []",
+        "  K_bad (FP16) = [18, 27]",
+        "delta_S_LAB_b6 = None >= 1.0 AND I_KS not sufficiently negative -> LAB b6 + FP16 partial (S protection)",
+        "M not in substrate set -> no M policy",
+        "E not in substrate set -> no E policy",
+        "branch routing: p1_condition='(a)', redundancy_substrate=['Mamba-2 S'], K_localization='hotspot', is_gemma4_family=False, has_E=False -> Branch A (Mamba-class with P1 active)"
+      ]
+    },
+    "OLMoE-1B-7B": {
+      "model_label": "OLMoE-1B-7B",
+      "K_spread_pp": 0.4232507330695695,
+      "K_localization": "uniform",
+      "branch": "C",
+      "branch_label": "P1 inactive or K not hotspot",
+      "K_policy": "plain per-(head, channel) asym INT4 + V plain per-(head, token) asym INT4",
+      "K_recipe_short": "plain_asym_int4",
+      "K_layer_mask": null,
+      "delta_K_INT3_pp": 2.152794484371565,
+      "rule_trace": [
+        "K_localization = 'uniform' (K_spread = 0.423 pp)",
+        "  delta_K_INT4 = +0.612 < 1.0 -> K-INT4 clean (plain asym recipe, post-F65)",
+        "S not in substrate set -> no S policy",
+        "M not in substrate set -> no M policy",
+        "delta_E_INT4 missing -> INT5 (conservative default)",
+        "branch routing: p1_condition='(a)', redundancy_substrate=[], K_localization='uniform', is_gemma4_family=False, has_E=True -> Branch C (P1 inactive or K not hotspot)"
+      ]
+    },
+    "Granite-3.0-3b-a800m": {
+      "model_label": "Granite-3.0-3b-a800m",
+      "K_spread_pp": 2.2206343265242667,
+      "K_localization": "hotspot",
+      "branch": "B",
+      "branch_label": "within-layer K+E hybrid with P1 (a) and K hotspot",
+      "K_policy": "3-tier selective NSN mask: NSN-INT3 on K_good, NSN-INT4 on K_neutral, FP16 on K_bad (per-K-layer \u0394_K_INT3 sign)",
+      "K_recipe_short": "three_tier_mask",
+      "K_layer_mask": {
+        "K_good_layers": [
+          5,
+          7,
+          8,
+          10
+        ],
+        "K_bad_layers": [
+          21
+        ],
+        "K_neutral_layers": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          6,
+          9,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31
+        ]
+      },
+      "delta_K_INT3_pp": 9.035537710460746,
+      "rule_trace": [
+        "K_localization = 'hotspot' (K_spread = 2.221 pp)",
+        "  hotspot AND (short ctx OR not Gemma4-family) -> 3-tier selective NSN mask",
+        "  K_good (INT3) = [5, 7, 8, 10]",
+        "  K_neutral (INT4) = [0, 1, 2, 3, 4, 6, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]",
+        "  K_bad (FP16) = [21]",
+        "S not in substrate set -> no S policy",
+        "M not in substrate set -> no M policy",
+        "delta_E_INT4 missing -> INT5 (conservative default)",
+        "branch routing: p1_condition='(a)', redundancy_substrate=[], K_localization='hotspot', is_gemma4_family=False, has_E=True -> Branch B (within-layer K+E hybrid with P1 (a) and K hotspot)"
+      ]
+    },
+    "Qwen3-30B-A3B": {
+      "model_label": "Qwen3-30B-A3B",
+      "K_spread_pp": 0.7922020216783459,
+      "K_localization": "uniform",
+      "branch": "C",
+      "branch_label": "P1 inactive or K not hotspot",
+      "K_policy": "plain per-(head, channel) asym INT4 + V plain per-(head, token) asym INT4",
+      "K_recipe_short": "plain_asym_int4",
+      "K_layer_mask": null,
+      "delta_K_INT3_pp": 4.763473832238433,
+      "rule_trace": [
+        "K_localization = 'uniform' (K_spread = 0.792 pp)",
+        "  delta_K_INT4 = +0.442 < 1.0 -> K-INT4 clean (plain asym recipe, post-F65)",
+        "S not in substrate set -> no S policy",
+        "M not in substrate set -> no M policy",
+        "delta_E_INT4 missing -> INT5 (conservative default)",
+        "branch routing: p1_condition='(a)', redundancy_substrate=[], K_localization='uniform', is_gemma4_family=False, has_E=True -> Branch C (P1 inactive or K not hotspot)"
+      ]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "token_tile": 16,
+  "num_warps": 4,
+  "autotune": false,
+  "enable_fp_fusion": false,
+  "stages": 2,
+  "partial_dtype": "float32",
+  "output_dtype": "bfloat16",
+  "division": "div_rn",
+  "exp": "tl.exp",
+  "v_input": "restored BF16"
+}

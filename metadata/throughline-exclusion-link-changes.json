@@ -1,0 +1,50 @@
+[
+  {
+    "path": "papers/nsn-integrated/manuscript-ja-v0.8-2026-10-08.md",
+    "before": "fc1e608b34dd95bd291ed99d2aadf5c698a4099b1e2c5482f3c000385be4b0c3",
+    "after": "13388bb74f0e69eda6f4098d193b526e7fc7eed50197650f98edd2e7b564fec6",
+    "kind": "Publication references only; S1 internal-ledger sentence replaced explicitly"
+  },
+  {
+    "path": "papers/nsn-integrated/manuscript-en-v0.7-2026-10-08.md",
+    "before": "b2343098c90081525ecc90ace4a0f60a95d9e95a26c69628cc8feea905629406",
+    "after": "f81d90168565987770a6fcf8c00e575e4242516172c5436dcb2b1f29ad3cd478",
+    "kind": "Publication references only; S1 internal-ledger sentence replaced explicitly"
+  },
+  {
+    "path": "papers/loop-kv/manuscript-ja-v0.5-2026-10-08.md",
+    "before": "5a9e44beec738723a2eb5c1278defd372347f300fe264aa898d65ef4ad4c22c3",
+    "after": "9d3a2490eef66c0f300c6d3a9f5fb6d12ba9af70f927495dee31e24dcf12c205",
+    "kind": "Publication references only; S1 internal-ledger sentence replaced explicitly"
+  },
+  {
+    "path": "papers/loop-kv/manuscript-en-v0.3-2026-10-08.md",
+    "before": "292a1d446c72fa69d688baa5bf9619138c2074624cd550ead9376f554f3d3611",
+    "after": "344232d3d7e15ddb5f8187f5623e2b4615fe0c03edfb551e4d9a6af87b79b3c7",
+    "kind": "Publication references only; S1 internal-ledger sentence replaced explicitly"
+  },
+  {
+    "path": "papers/loop-kv/evidence-index-v0.5-2026-10-08.md",
+    "before": "c8c815b0f06f218140efab6baf9e517bfa7948bd8d3d1c722c12b89541a72b02",
+    "after": "0d0f4babe9b5fb25558f492921e41b0442194a87d7cbb63993cc427efcf26364",
+    "kind": "Publication references only; S1 internal-ledger sentence replaced explicitly"
+  },
+  {
+    "path": "papers/loop-kv/evidence-index-en-v0.3-2026-10-08.md",
+    "before": "aa2b37e5de17e9e5629c6e19b96fb6797f00deb99314b5b08d9e04745a290906",
+    "after": "a1d010ddf573f46160b51942f1932acf43ad2fdfc209f61ce9699978eb782c19",
+    "kind": "Publication references only; S1 internal-ledger sentence replaced explicitly"
+  },
+  {
+    "path": "papers/nsn-integrated/publication-provenance-v0.1-2026-10-03.md",
+    "before": "566ed9427f21c0f7c9de2ecb0c4139ec56336665ef94034c108a10209c1c6dab",
+    "after": "47b835a41378c7e5c1bcf4968b589b7f6c9db84522a9301a7e6488db01d45d90",
+    "kind": "Publication references only; S1 internal-ledger sentence replaced explicitly"
+  },
+  {
+    "path": "reports/nb06-results-v0.1-2026-10-08.md",
+    "before": "b1ccef0fa13731a38007012c5c0a4e8763ab777ddd325c3a00b594a598ad6f91",
+    "after": "69c0880b51129504daa29b61534b8b771d753be54a103cd69f5c45af53a5dfbc",
+    "kind": "Publication references only; S1 internal-ledger sentence replaced explicitly"
+  }
+]

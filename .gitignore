@@ -1,76 +1,20 @@
-# Python
+.venv/
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-
-# Virtual environments
-.env
-.venv
-env/
-venv/
-ENV/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS
 .DS_Store
-Thumbs.db
-
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-.tox/
-
-# Jupyter
 .ipynb_checkpoints/
-
-# HuggingFace cache (large)
 .cache/
-*.safetensors
-*.bin
+.env
+.env.*
+!.env.example
+outputs/
+reproduced/
+*.zip
+*.tar
+*.tar.gz
+# Saved arrays are restored from companion assets, outside the publication repository.
+*.npz
+*.npy
 
-# Build artifacts
-*.pdf
-!paper/*.pdf
-!figures/*.pdf
-!paper_c/figures_c/*.pdf
-!paper_c/paper_c.pdf
-
-# pandoc latex build artifacts (keep .tex, drop aux / log)
-paper/*.aux
-paper/*.log
-paper/*.out
-paper/*.toc
-
-# Paper C raw spectral dumps that exceed github's 100 MB-per-file
-# limit. Phase C-1's full JSON stores per-state-unit flat lists
-# (5.24 M floats each for A_log_flat and rho_static_flat), which
-# bloats to ~257 MB. We commit the abridged *_summary.json
-# instead. Other phases (C-1b onwards) use streaming aggregation
-# and are committed in full.
-paper_c/results_c/phase_c1_ssm_spectral_baseline.json
-!paper_c/results_c/phase_c1_ssm_spectral_baseline_summary.json
+# Private research workflow; never part of this publication repository.
+/throughline/

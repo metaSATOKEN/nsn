@@ -1,0 +1,88 @@
+{
+  "scope": "Existing evidence only; no new model/GPU/network calls. New descriptive synthesis, not preregistered evidence.",
+  "primary": {
+    "models": 8,
+    "D_under5": 8,
+    "C_under5": 5,
+    "mean_C": 0.720030379167354,
+    "mean_D": 0.19363256697880565,
+    "mean_reduction_percent": 66.02986529704569,
+    "mean_D_percent": 1.9021484581616657,
+    "four_way_under5": {
+      "A": 3,
+      "B": 3,
+      "C": 5,
+      "D": 8
+    }
+  },
+  "norm_spearman": {
+    "k": 0.2857142857142857,
+    "v": 0.8809523809523809
+  },
+  "packed_roundtrip_sanity": {
+    "max_abs_diff": 0.005859375,
+    "max_rel_diff": 0.07487309724092484,
+    "mismatched": 223471,
+    "total_elements": 262144,
+    "shape": [
+      2048,
+      128
+    ],
+    "dtype": "torch.float16"
+  },
+  "loop_aggregate_percent": {
+    "Ouro": -0.5474049251975358,
+    "Nanbeige": 1.5261618072478034
+  },
+  "selected_result_files": 20,
+  "catalogued_result_files": 135,
+  "tables": {
+    "legacy_primary": 8,
+    "legacy_ablation": 32,
+    "legacy_boundaries": 47,
+    "legacy_blocked": 1,
+    "norm_dispersion": 8,
+    "storage": 10,
+    "packed_ppl": 2,
+    "legacy_latency": 10,
+    "sadp_quality": 88,
+    "sadp_paired": 54,
+    "sadp_verdicts": 11,
+    "sadp_skipped_configs": 4,
+    "window_overlap": 15,
+    "kernel_cells": 480,
+    "kernel_summary": 6,
+    "loop_quality": 8,
+    "loop_timing": 6,
+    "loop_memory": 2,
+    "loop_nb05_raw_summaries": 36,
+    "bridge": 2
+  },
+  "saved_window_values": 2640,
+  "checks": 1732,
+  "failed_checks": 0,
+  "findings": [
+    {
+      "id": "Gemma_window_cap",
+      "description": "30 is max_windows; stored tokens 10240/11264 imply 20/22 scored windows of 512, not 30 completed.",
+      "origin": {
+        "source": "modeq/results/phase21_gemma_b_anomaly_probe.json",
+        "pointer": "/results",
+        "sha256": "4e546f904480fefeeeda2bb674d8ab98ee681539a6be6dab5d17abdb0640d1b2"
+      }
+    }
+  ],
+  "environment": {
+    "python": "3.13.5",
+    "torch": "2.11.0",
+    "cpu_only": true
+  },
+  "known_scope_limits": [
+    "old NSN: saved aggregate PPL only",
+    "SADP: per-window relative changes, not raw token logits",
+    "looped: earlier raw-logit validation inherited; NB05 step NLL/timings recalculated; AC08 comparison summaries recalculated",
+    "bootstrap reproduces original window-unit intervals; overlapping windows are not independent texts; no new cluster correction",
+    "correlation exploratory; no causal inference",
+    "E7 downstream tasks remain appendix candidates, not audited here"
+  ]
+}

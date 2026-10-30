@@ -1,0 +1,232 @@
+{
+  "p0r_route_status": "PASS_ROUTE_KV01",
+  "legacy_p0_status": "BLOCKED_IMPLEMENTATION_RETAINED",
+  "legacy_full_p0_pass": false,
+  "fixtures": [
+    {
+      "test": "codec",
+      "bits": 3,
+      "status": "PASS"
+    },
+    {
+      "test": "codec",
+      "bits": 4,
+      "status": "PASS"
+    },
+    {
+      "test": "codec",
+      "bits": 5,
+      "status": "PASS"
+    },
+    {
+      "test": "metadata_overflow_detection",
+      "status": "PASS"
+    },
+    {
+      "test": "causal_mask_and_independent_arithmetic",
+      "status": "PASS"
+    },
+    {
+      "test": "gpu_codec_roundtrip",
+      "bits": 3,
+      "status": "PASS"
+    },
+    {
+      "test": "gpu_codec_roundtrip",
+      "bits": 4,
+      "status": "PASS"
+    },
+    {
+      "test": "gpu_codec_roundtrip",
+      "bits": 5,
+      "status": "PASS"
+    },
+    {
+      "test": "cache_schedule_fixture",
+      "bits": 3,
+      "mode": "PREFIX_ONLY",
+      "status": "PASS",
+      "flush": [],
+      "compressed": 704,
+      "native_tail": 319
+    },
+    {
+      "test": "cache_schedule_fixture",
+      "bits": 3,
+      "mode": "DECODE_ONLINE",
+      "status": "PASS",
+      "flush": [
+        64,
+        128,
+        192
+      ],
+      "compressed": 896,
+      "native_tail": 127
+    },
+    {
+      "test": "cache_schedule_fixture",
+      "bits": 4,
+      "mode": "PREFIX_ONLY",
+      "status": "PASS",
+      "flush": [],
+      "compressed": 704,
+      "native_tail": 319
+    },
+    {
+      "test": "cache_schedule_fixture",
+      "bits": 4,
+      "mode": "DECODE_ONLINE",
+      "status": "PASS",
+      "flush": [
+        64,
+        128,
+        192
+      ],
+      "compressed": 896,
+      "native_tail": 127
+    },
+    {
+      "test": "cache_schedule_fixture",
+      "bits": 5,
+      "mode": "PREFIX_ONLY",
+      "status": "PASS",
+      "flush": [],
+      "compressed": 704,
+      "native_tail": 319
+    },
+    {
+      "test": "cache_schedule_fixture",
+      "bits": 5,
+      "mode": "DECODE_ONLINE",
+      "status": "PASS",
+      "flush": [
+        64,
+        128,
+        192
+      ],
+      "compressed": 896,
+      "native_tail": 127
+    },
+    {
+      "test": "selective_intervention",
+      "target": "NATIVE",
+      "status": "PASS"
+    },
+    {
+      "test": "selective_intervention",
+      "target": "K_ONLY",
+      "status": "PASS"
+    },
+    {
+      "test": "selective_intervention",
+      "target": "V_ONLY",
+      "status": "PASS"
+    },
+    {
+      "test": "selective_intervention",
+      "target": "KV",
+      "status": "PASS"
+    }
+  ],
+  "planned_cases": 15,
+  "passed_cases": 15,
+  "route_comparisons": 45,
+  "compatibility_planned": 4,
+  "compatibility_passed": 4,
+  "compatibility_not_run_ids": [],
+  "compatibility_forwards": 2048,
+  "obtained_forwards": 5963,
+  "not_run_ids": [],
+  "full_incremental_diagnostic": [
+    {
+      "id": "G2-b37013-r8",
+      "kl": 0.0012688204878941178,
+      "delta_nll": -0.00145721435546875,
+      "max_abs_logit": 1.0546875,
+      "within_original_tolerance": false,
+      "nll_test": "MEASURED"
+    },
+    {
+      "id": "G2-b2976-r8",
+      "kl": 0.0009070042870007455,
+      "delta_nll": -0.002201557159423828,
+      "max_abs_logit": 0.8125,
+      "within_original_tolerance": false,
+      "nll_test": "MEASURED"
+    },
+    {
+      "id": "G2-b9442-r8",
+      "kl": 0.0008666761568747461,
+      "delta_nll": 0.0008373260498046875,
+      "max_abs_logit": 0.6875,
+      "within_original_tolerance": false,
+      "nll_test": "MEASURED"
+    },
+    {
+      "id": "G2-b56102-r8",
+      "kl": 0.0029220390133559704,
+      "delta_nll": -0.0006022453308105469,
+      "max_abs_logit": 2.0,
+      "within_original_tolerance": false,
+      "nll_test": "MEASURED"
+    },
+    {
+      "id": "G3-L1-r8",
+      "kl": 0.0,
+      "delta_nll": null,
+      "max_abs_logit": 0.0,
+      "within_original_tolerance": true,
+      "nll_test": "NOT_APPLICABLE"
+    },
+    {
+      "id": "G3-L63-r8",
+      "kl": 0.0,
+      "delta_nll": 0.0,
+      "max_abs_logit": 0.0,
+      "within_original_tolerance": true,
+      "nll_test": "MEASURED"
+    },
+    {
+      "id": "G3-L64-r8",
+      "kl": 0.0,
+      "delta_nll": 0.0,
+      "max_abs_logit": 0.0,
+      "within_original_tolerance": true,
+      "nll_test": "MEASURED"
+    },
+    {
+      "id": "G3-L65-r8",
+      "kl": 0.002083654049783945,
+      "delta_nll": 0.02124309539794922,
+      "max_abs_logit": 1.375,
+      "within_original_tolerance": false,
+      "nll_test": "MEASURED"
+    },
+    {
+      "id": "G3-L127-r8",
+      "kl": 0.016090242192149162,
+      "delta_nll": 0.06207752227783203,
+      "max_abs_logit": 4.09375,
+      "within_original_tolerance": false,
+      "nll_test": "MEASURED"
+    },
+    {
+      "id": "G3-L128-r8",
+      "kl": 0.015976227819919586,
+      "delta_nll": 0.061867713928222656,
+      "max_abs_logit": 4.09375,
+      "within_original_tolerance": false,
+      "nll_test": "MEASURED"
+    },
+    {
+      "id": "G3-L129-r8",
+      "kl": 0.0026117051020264626,
+      "delta_nll": 0.044014930725097656,
+      "max_abs_logit": 1.9375,
+      "within_original_tolerance": false,
+      "nll_test": "MEASURED"
+    }
+  ],
+  "gate_error": null,
+  "full_incremental_is_progression_gate": false
+}

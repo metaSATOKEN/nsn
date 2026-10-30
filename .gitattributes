@@ -1,0 +1,2 @@
+# Preserve byte hashes across clones, including on Windows.
+* -text

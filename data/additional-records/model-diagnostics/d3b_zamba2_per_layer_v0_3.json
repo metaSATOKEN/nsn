@@ -1,0 +1,125 @@
+{
+  "schema_version": "0.1.0",
+  "generated_at": "2026-05-14T06:30:58+00:00",
+  "generator": "phase_d3b_zamba2_per_layer.py",
+  "transformers_version": "5.8.1",
+  "model_id": "Zyphra/Zamba2-1.2B",
+  "model_label": "Zamba2-1.2B",
+  "geometry": "within_layer_coupled",
+  "purpose": "Paper D Phase D-3b — per-K-layer composition matrix on Zamba2-1.2B. Each C8.l holds SSM at LAB b_0=6 and quantises KV at one attention layer to INT3, giving the per-layer interaction I_l = Δ_both,l - Δ_K,l - Δ_S. C10 tests an L17 INT4 fallback policy. C11 measures the SSM aggressive-budget tolerance limit (b_0=3).",
+  "protocol": {
+    "ctx": 1024,
+    "n_windows": 5,
+    "kv_recipe": "qa_nsep_pchan_asym (NSN v0.3 hero)",
+    "ssm_recipe": "chunk-boundary state INT-b mid-tread, k=7.0"
+  },
+  "fp16_baseline_ppl": 6.82862553808825,
+  "delta_K_per_layer": {
+    "5": 0.730100708119386,
+    "11": 0.7682897299651837,
+    "17": 2.255156798777212,
+    "23": 1.3737069162235283,
+    "29": 0.06812721379973637,
+    "35": 0.11084347607729715
+  },
+  "delta_S_C3": -0.7490099614636028,
+  "delta_both_C7": 2.158732544388893,
+  "I_per_layer": {
+    "5": 0.07173442175185629,
+    "11": -0.044084529313570764,
+    "17": 0.06178344563169946,
+    "23": -0.008214459734358859,
+    "29": 0.06197042047390555,
+    "35": -0.014293267999081816
+  },
+  "I_argmax_layer": 5,
+  "I_spread_pp": 0.11581895106542706,
+  "nonuniform_pass": false,
+  "fallback_gain_pp": 0.21295867515724365,
+  "fallback_pass": true,
+  "ssm_b3_alone_pct": -0.5874651170247531,
+  "attn_layers": [
+    5,
+    11,
+    17,
+    23,
+    29,
+    35
+  ],
+  "n_ssm_layers": 38,
+  "conditions": {
+    "C0_FP16": {
+      "ppl": 6.82862553808825,
+      "delta_pct": 0.0,
+      "ssm_profile": null,
+      "kv_layer_bits": {}
+    },
+    "C8_L5_KV_INT3_SSM_b6": {
+      "ppl": 6.832232771028672,
+      "delta_pct": 0.052825168407639546,
+      "ssm_profile": "full_b6",
+      "kv_layer_bits": {
+        "5": 3
+      }
+    },
+    "C8_L11_KV_INT3_SSM_b6": {
+      "ppl": 6.826931713856781,
+      "delta_pct": -0.024804760811989818,
+      "ssm_profile": "full_b6",
+      "kv_layer_bits": {
+        "11": 3
+      }
+    },
+    "C8_L17_KV_INT3_SSM_b6": {
+      "ppl": 6.935693625808873,
+      "delta_pct": 1.5679302829453086,
+      "ssm_profile": "full_b6",
+      "kv_layer_bits": {
+        "17": 3
+      }
+    },
+    "C8_L23_KV_INT3_SSM_b6": {
+      "ppl": 6.87072281918141,
+      "delta_pct": 0.6164824950255666,
+      "ssm_profile": "full_b6",
+      "kv_layer_bits": {
+        "23": 3
+      }
+    },
+    "C8_L29_KV_INT3_SSM_b6": {
+      "ppl": 6.78636233285538,
+      "delta_pct": -0.6189123271899608,
+      "ssm_profile": "full_b6",
+      "kv_layer_bits": {
+        "29": 3
+      }
+    },
+    "C8_L35_KV_INT3_SSM_b6": {
+      "ppl": 6.784071504742828,
+      "delta_pct": -0.6524597533853874,
+      "ssm_profile": "full_b6",
+      "kv_layer_bits": {
+        "35": 3
+      }
+    },
+    "C10_KV_all_INT3_L17_INT4_SSM_b6": {
+      "ppl": 6.96149514943605,
+      "delta_pct": 1.9457738692316495,
+      "ssm_profile": "full_b6",
+      "kv_layer_bits": {
+        "5": 3,
+        "11": 3,
+        "17": 4,
+        "23": 3,
+        "29": 3,
+        "35": 3
+      }
+    },
+    "C11_SSM_LAB_b3_alone": {
+      "ppl": 6.788509745079738,
+      "delta_pct": -0.5874651170247531,
+      "ssm_profile": "full_b3",
+      "kv_layer_bits": {}
+    }
+  }
+}

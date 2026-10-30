@@ -1,0 +1,812 @@
+[
+  {
+    "path": "modeq/results/phase10_real_kv_distribution.json",
+    "sha256": "05cf33396e550a10962a74e5574696472e8d8d358596bd5c69de364a00555800",
+    "bytes": 3239,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase11_2tier_sanity.json",
+    "sha256": "04420af4ced9997cafb77f6078f0c6fc45a0e640e3a6cd4cd070b7fd8e8581de",
+    "bytes": 1935,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase12_real_kv_2tier.json",
+    "sha256": "fffbffc39284ef02dd9827a2e5393ebc3d985992cb0895c57f27948b166407c7",
+    "bytes": 2231,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase13_full_sweep.json",
+    "sha256": "6c1f1d04eb14c397bf69de0cec704dd8073aca8a7a1cc62f1d289c529095d308",
+    "bytes": 15239,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase14_asym_wikitext2_ppl.json",
+    "sha256": "11dad98de27e4a218d4d3779448b4ed7656ec595caa39257f451cae7ea345361",
+    "bytes": 1984,
+    "coverage": "selected_extracted"
+  },
+  {
+    "path": "modeq/results/phase15_real_compression.json",
+    "sha256": "4d412f0b4e0fca2da9552b1a20c12130843809c3fc8cea0deef7111e8412f88f",
+    "bytes": 2690,
+    "coverage": "selected_extracted"
+  },
+  {
+    "path": "modeq/results/phase16_asym_seven_model_sweep.json",
+    "sha256": "d7e49ac811dcb258374972a0f47723f2acbf50e8fb312a0346d0fd19a3fe95c8",
+    "bytes": 6242,
+    "coverage": "selected_extracted"
+  },
+  {
+    "path": "modeq/results/phase17_2026_flagships.json",
+    "sha256": "8966579eb36b9ce212268406ef814506ed1c134d1ff4e41870e692c8c711cfa8",
+    "bytes": 6413,
+    "coverage": "selected_extracted"
+  },
+  {
+    "path": "modeq/results/phase18_ablation_vs_industry_naive.json",
+    "sha256": "f24681d5614b1068383fb8ec4de7d8f16e3fb04488cf705272e8aad65dd42e3e",
+    "bytes": 4633,
+    "coverage": "selected_extracted"
+  },
+  {
+    "path": "modeq/results/phase19_ablation_generalization.json",
+    "sha256": "0c6c2d3420b5fc20eea40942cdcb797ed04dcd1853b943e2616933c5a30793cc",
+    "bytes": 10849,
+    "coverage": "selected_extracted"
+  },
+  {
+    "path": "modeq/results/phase1_qwen2_7b_bitwidth.json",
+    "sha256": "0dedeb399b95febcd335874a3ae4dd98fa19b8a825f09d439a97b6cf77f3f7d4",
+    "bytes": 2821,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase20_bf16_disambiguation.json",
+    "sha256": "c36c87c9bfeab44284378a0c23fba86732a1cc110aacde3722e74a1b71f48b6d",
+    "bytes": 7310,
+    "coverage": "selected_extracted"
+  },
+  {
+    "path": "modeq/results/phase21_gemma_b_anomaly_probe.json",
+    "sha256": "4e546f904480fefeeeda2bb674d8ab98ee681539a6be6dab5d17abdb0640d1b2",
+    "bytes": 7571,
+    "coverage": "selected_extracted"
+  },
+  {
+    "path": "modeq/results/phase22_mmlu_downstream.json",
+    "sha256": "b4991dade2d66b70b7bccc1d946c716121059404b7005f4e25f013f29fb6983b",
+    "bytes": 9149,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase23_norm_dispersion.json",
+    "sha256": "ae6ba57efebe3b741c4b333d41e49faf5f152da844de78061ea69e3ce90c2c46",
+    "bytes": 149389,
+    "coverage": "selected_extracted"
+  },
+  {
+    "path": "modeq/results/phase24_nih_longctx.json",
+    "sha256": "e7ca94c752ff529ffedd69ce0bba77d42254a4edbb1b8f2edf7a1f0a417eb4b4",
+    "bytes": 10463,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase24b_nih_multineedle.json",
+    "sha256": "bef3b88d7d2968ba4daef2dcbaee0ac0e2064569174f694ead2fb4bc4d1c7458",
+    "bytes": 28327,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase24c_nih_multineedle_qwen2.json",
+    "sha256": "2a15b966293246427a4790d252406e8b24483a52b208c2d8014775cb4ee6ae89",
+    "bytes": 28245,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase24d_nih_multineedle_qwen25_14b.json",
+    "sha256": "cfa3c42bc6636f987a327633611ba3497701e1786f8e5a6d10480a34e41f2956",
+    "bytes": 28709,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase25_fractional_bits.json",
+    "sha256": "0c71f221d5774bea7c0c8ac4006b5c4cd12a29ebdd05742bf94eade281aee6e3",
+    "bytes": 4912,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase26_real_cache_ppl.json",
+    "sha256": "c16f777f5632e77d0a4c310a7d8fa8f83584a017dfdd0ab2ee9df020c6021e80",
+    "bytes": 2804,
+    "coverage": "selected_extracted"
+  },
+  {
+    "path": "modeq/results/phase27_decode_latency.json",
+    "sha256": "738f43b8187f37b8bc04bef6a417dcffecbcf95d9a5b7af2a1ae6e7af18aba97",
+    "bytes": 4691,
+    "coverage": "selected_extracted"
+  },
+  {
+    "path": "modeq/results/phase28_mode1_detection_small_qwen.json",
+    "sha256": "77dbeaf6282011962d0b92b0fc782e2dd2cfa438858ad4dab926870e0bdcaa0f",
+    "bytes": 4203,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase28b_recipe_on_small_qwen.json",
+    "sha256": "f2f628bae5337dbccf197aca95a89be7dc235ff1b677d03477a6b08f31d99aa7",
+    "bytes": 2871,
+    "coverage": "selected_extracted"
+  },
+  {
+    "path": "modeq/results/phase28c_mid_qwen_scale.json",
+    "sha256": "60caf181a9287a6e7c79dbf5bd05e60831c93166ec993ff03812c704cda9e312",
+    "bytes": 5396,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase28d_qwen25_7b_asym_sweep.json",
+    "sha256": "06ab957040146e48754fd00081dfe04e8dad5274dd9d5a7b127db1a66f5db238",
+    "bytes": 3826,
+    "coverage": "selected_extracted"
+  },
+  {
+    "path": "modeq/results/phase29_qwen_loop_detection.json",
+    "sha256": "57e2afa217955deaccdd6f937cde771a8f3e0b11549d9ca147d1fdc4ded63622",
+    "bytes": 11393,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase29b_transformer_only_compression.json",
+    "sha256": "6a555dd0f389d605066531bb6c8377c87eaefe443186eaa59359acdd3db0f037",
+    "bytes": 36375,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase29c_qwen25_7b_loop_control.json",
+    "sha256": "de8f8be68eed6a7de41d757b232219352d9a0de63ebc877d81042fb8bfa2bcb9",
+    "bytes": 24451,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase29d_hybrid_fragility_diagnostic.json",
+    "sha256": "8aef8f47c1fb7ed2b1f134e0fa3f2431d7fdd1cfb491cc99602f597643080c0f",
+    "bytes": 10674,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase29e_gaussian_noise_sweep.json",
+    "sha256": "3c2b1a8b9c6c18f0f45724f0802627993936bcdd99421deac40f0e653c8879d3",
+    "bytes": 6871,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase29f_per_layer_fragility.json",
+    "sha256": "782dd7c7cc3531d052c538f39406f5bcd4f4f5ee7b26f486883fdc40f6ce2ef8",
+    "bytes": 19086,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase29g_anchor_hypothesis.json",
+    "sha256": "04050671cef117eb4fc9bbdcd660c8738d35dd6eb0abc2e3504600214ae312dd",
+    "bytes": 6981,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase29h_universal_compression.json",
+    "sha256": "ca2cf911c577eee8b2e7a66afce22cefeb8eef419b1aa9f2ff97d3423eac32ac",
+    "bytes": 4424,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase30a_bias_correction_probe.json",
+    "sha256": "d73e014cea35c6e33357592b60688f98c333f01a20e816553e6358acc5f039fd",
+    "bytes": 2062,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase3_four_model_dichotomy.json",
+    "sha256": "3d38defdaa5bb614edc8f2532c375d94ca3caedf70e45cca1ecbb88cc4d95401",
+    "bytes": 4200,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase4_additional_models.json",
+    "sha256": "3ebffb2c556c0355123540153ed02140541d81495c50036f423cb1f3ce74d1ae",
+    "bytes": 3395,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase5_int3_real_packing.json",
+    "sha256": "ab4483c6444b1045ad66382a2efc857f20a7c9c30a8c241c4cb724140749b1f3",
+    "bytes": 2799,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase5b_int3_real_packing_qwen2_7b.json",
+    "sha256": "efe4d6c9cd88a8accf24005a4b20e57f5eb89d8053327298353fb6f6b208c958",
+    "bytes": 2530,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase7_residual_correction.json",
+    "sha256": "ec2315727b63e22feeae350f71ce672930049a6f10562e3aab2c0512c6b0a542",
+    "bytes": 5296,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase8_rms_residual_validation.json",
+    "sha256": "a4e658a506bbd5e85907d2d581c6b7b75e1f2610eb71d3dd2f1d27d86d545284",
+    "bytes": 4830,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "modeq/results/phase9_rotation_sanity.json",
+    "sha256": "f64ab92ffdb2b4a30e445d1886832c6aa7d4b089d4d33bcd875ab209cadb9869",
+    "bytes": 3085,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/cancellation_mmlu_jamba.json",
+    "sha256": "e4d609b81482902b18b0186b98efeeed127e2853ca02ea340957d69b70bb0141",
+    "bytes": 9814,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d10a_jamba_e_int5_v0_3.json",
+    "sha256": "0f0e5fbcae2b62d3bc313ac125643a55184ab97dbee53eef715577fcdb1c3a44",
+    "bytes": 2891,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d10b_qwen36_m_int5_v0_3.json",
+    "sha256": "cc5f63097d39194fe5dec356ebc5a194ed2845c5fb5c85271de93f97049e22d0",
+    "bytes": 3263,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d10c_gemma4_selective_k_v0_3.json",
+    "sha256": "bc1a95d8893b14591866311730bab1fbd9951590428176d5166f0a6922e91964",
+    "bytes": 4697,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d11_pareto_per_model.json",
+    "sha256": "4e52f8642372dd47dd8ede4495516e929eab2fae3230ef2bb97701cc2d8f7f81",
+    "bytes": 9001,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d11_validation_table.json",
+    "sha256": "e823402a12d6a09e5be05ce8ff1771dba6e5a33b3d9d8da2624c678e98bb248f",
+    "bytes": 14994,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d12b_gemma4_long_ctx_v0_3.json",
+    "sha256": "89d0aeceb5801058d0969b9e0a24b495018ee633b24fef048ee0eda9d3d072e5",
+    "bytes": 2486,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d12c_qwen36_long_ctx_v0_3.json",
+    "sha256": "0220d1bad9c423fb947fa4fd72b05811c67030ac9f6f634273ab2453dcc890ea",
+    "bytes": 2235,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d12d_gemma4_ctx_deepen_v0_3.json",
+    "sha256": "24997c46decaaf03b182bfcc748b46dca602e58d9376e29465eabcb5d97e65d5",
+    "bytes": 4089,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d12e_zamba2_ctx4k_probe.json",
+    "sha256": "a5feec8f985a87923badf0348bd192f3e35a686e56e314cae2a1fd22bb27bed8",
+    "bytes": 2371,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d13_real_pack_sanity.json",
+    "sha256": "c0a0f7c5b68edc0fb5141d1985c3bade65f0a232875f5cfc56842f4fad70dd26",
+    "bytes": 2728,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d13b_compression_sanity.json",
+    "sha256": "918e2fad277c51e16e2ab470b23a17956d75b783636a496adf39df1d93d2e163",
+    "bytes": 3276,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d13c_int6_pack_sanity.json",
+    "sha256": "a384de8c92480a8bc65b0a3b0b75f74d8bf04daee7b9b8b64101da485a2693c3",
+    "bytes": 1817,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d14_industry_baselines.json",
+    "sha256": "37abcc50fa667e45941849b320b3f91a21bc7c4d7fb32235f0c7686dc1f37599",
+    "bytes": 23016,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d14_partial_Gemma4_26B_A4B_base.json",
+    "sha256": "5e08db2460fb4fbc754bfe50679194f4a39d1041db32ad5fa5a12df89f5ed10b",
+    "bytes": 7517,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d14_partial_Qwen3_6_27B.json",
+    "sha256": "0d6bb04cb9e58a4d549d80d02b9b4736cc33fca2c272b5efddda0fb630d4657b",
+    "bytes": 14195,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d14b_n5_protocol_sanity.json",
+    "sha256": "9b7dd68a52ae80555fd4b6db835ee68cba2fd02d7a08688c81c3d23e17b8f0ba",
+    "bytes": 1653,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d14c_partial_Gemma4_26B_A4B_base.json",
+    "sha256": "7f3781f040492dbf19e9c5803aed7d2e5e5295e301c0a32e63dc19226da48fad",
+    "bytes": 12094,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d14c_partial_Qwen3_6_27B.json",
+    "sha256": "edac41451ec860af75a70ad7a20623b99e6e32a58c62252971bf136a88a2d084",
+    "bytes": 23997,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d14c_random_window_ci.json",
+    "sha256": "95582b72d7d2f888bc50cc04569b7ff02741e472169a5e75c67764d24a6b2570",
+    "bytes": 24185,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d15a_llama31_long_ctx.json",
+    "sha256": "5e17085f9d4f5a165fdd2a608115e5b04e6b16dce27d0ec40a5a324b57260b3d",
+    "bytes": 3066,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d15b_gemma4_31b_long_ctx_v0_3.json",
+    "sha256": "d23039da3832f88f3af975fe68a3440bbb9f53e22606372bde434c1c00dd78e4",
+    "bytes": 3546,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d16_gemma4_long_ctx_prescription_v0_3.json",
+    "sha256": "3736d886cffe4f34f3bb219cdc48fca58874018682bd497d4ac227bd0803aab0",
+    "bytes": 5551,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d17_gemma4_31b_prescription_v0_3.json",
+    "sha256": "3c8243ec2f6e9d027c0252355f8ccafcd358a7ba39a8374f1b8edd68a5e9691b",
+    "bytes": 3394,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d18a_zamba2_iks_ci_v0_3.json",
+    "sha256": "8d634f99d10247b98508ccd4be0e3db8b793d57ebc1c379604202995c7fca65e",
+    "bytes": 8542,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d18b_jamba_iks_ikse_ci_v0_3.json",
+    "sha256": "157b445ebac67cbc6ec258a7db63a3c5fe5540f81200b5db97dcd5fb70020fe0",
+    "bytes": 20341,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d18c2_gemma4_kint5_ike_ci_v0_3.json",
+    "sha256": "5fd9b03d73a06ed7a9d05612a69592ca4beb48a26dd73abf6d5276f538849ae2",
+    "bytes": 9771,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d18c_gemma4_ike_ci_v0_3.json",
+    "sha256": "2d47307c7c162b79bbdd9e606769a8db393fa2ae4c8c3c66187e925739a18a13",
+    "bytes": 8992,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d19_deepseek_moe_branch_b_v0_3.json",
+    "sha256": "8e3b2bc1ab9dd9a53d6a309cc1cacce4b25b99248d85fd061f61b1167edc3ae5",
+    "bytes": 8512,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d19_qwen15_moe_branch_b_v0_3.json",
+    "sha256": "53616113ab5a2401cc4d1c6049805aab3dc7701066b3699eee9a2fa7e8e2a916",
+    "bytes": 7988,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d1_5_kv_layer_micro.json",
+    "sha256": "b568d0dcf505cebf8a931bd8caf46af2b183fd09c5f7e3f2d298c8d33bd5357e",
+    "bytes": 3081,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d1_jamba_substrate_xray.json",
+    "sha256": "53834d147a1e887e03278ba95daf7be0a58a994e18e45f815692370ec7a32711",
+    "bytes": 9281,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d1_kv_risk_signals.json",
+    "sha256": "5d7ebfd18fa1377485458ad9c4b7b1f3cef07d394c6e7d59b154f67441eef59e",
+    "bytes": 11205,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d1_substrate_map.json",
+    "sha256": "e54b130a089b836d7870b11919e02cf0318aca3fd3ed9b147807027f729793b0",
+    "bytes": 23698,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d20_paired_bootstrap.json",
+    "sha256": "48a7b4961ebb3442edc1001af1748f8840037cd10e0c079d9af23f5d5dfdbd58",
+    "bytes": 13563,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d21_mixtral_branch_b_confirmer_v0_3.json",
+    "sha256": "cfefd3f2e2f71bfe0257f4c8f95a51a491b7fee7c1f3e45b462ed7bae2d89699",
+    "bytes": 9382,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22a_jamba_hero_ci_v0_3.json",
+    "sha256": "025aefdb7d624c3f383edbeaf9fddd03f6ab4a214c33426a80d1eaee201f4075",
+    "bytes": 18851,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22a_partial_after_J0_v0_3.json",
+    "sha256": "146c83f2d8242b8f17f58588e32a124ecd71af95250aa1878981a8affea18619",
+    "bytes": 1828,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22a_partial_after_J6K4_v0_3.json",
+    "sha256": "3599c48057aa9557169f9ef9f54001f3dd8551fb2e4b6f05db0b003132208127",
+    "bytes": 6341,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22a_partial_after_J6S7_v0_3.json",
+    "sha256": "3e158656d8f0fd4e1bb7d0b5c60a41b111f4c4104ec950a0d83a437c22590895",
+    "bytes": 8597,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22a_partial_after_J6_v0_3.json",
+    "sha256": "410028447c94bb37189237f326e01a3b1f873b83a0965cd0fcc7ca435f9b4712",
+    "bytes": 4088,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22b_partial_after_FP16.json",
+    "sha256": "88573c3bfd8e8031f5406c67823080edc76f6097985ae681a6fc4cc1aac8e720",
+    "bytes": 1831,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22b_partial_after_K5.json",
+    "sha256": "20091ce9860532b9eaf62ffc2f6f1dec4d874fc67133d811d71c72b8ea012142",
+    "bytes": 6379,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22b_partial_after_KIVI.json",
+    "sha256": "724a3e37c264a3565b4cfcf2a603f85417be90b967773c24bf73110b3e761fa2",
+    "bytes": 8706,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22b_partial_after_LABD.json",
+    "sha256": "457b66aef1571e88cb14427db7704681d48c5f884dab6d1caf560bc4f8d16a06",
+    "bytes": 4121,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22b_qwen36_ctx1024_ci_v0_3.json",
+    "sha256": "bb5a9909982f325ad4940c32fa51ce426cc0225b95078a38756cd6d4309beec5",
+    "bytes": 20703,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_partial_after_FP16 (1).json",
+    "sha256": "fa9ed0eceff0be9441c8690b3c83b6bc01c1b4a25e22b8313c06ddd1a31a6d27",
+    "bytes": 1836,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_partial_after_FP16.json",
+    "sha256": "fa9ed0eceff0be9441c8690b3c83b6bc01c1b4a25e22b8313c06ddd1a31a6d27",
+    "bytes": 1836,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_partial_after_K5 (1).json",
+    "sha256": "2e75f64baefa11e448ebf52c4cf432d39cb4004f323d28404cfb49d8970544d5",
+    "bytes": 6472,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_partial_after_K5.json",
+    "sha256": "2e75f64baefa11e448ebf52c4cf432d39cb4004f323d28404cfb49d8970544d5",
+    "bytes": 6472,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_partial_after_KIVI (1).json",
+    "sha256": "b163e36c7f98721b26db6aa8caae9c4b3b8763d4ff3ccaee94c7840a4d285cda",
+    "bytes": 8833,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_partial_after_KIVI.json",
+    "sha256": "b163e36c7f98721b26db6aa8caae9c4b3b8763d4ff3ccaee94c7840a4d285cda",
+    "bytes": 8833,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_partial_after_LABD (1).json",
+    "sha256": "67a11055e8f5b1871f2e082a5fefb320b46a957ca1fe776d6fd8ab49adbcb8fc",
+    "bytes": 4164,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_partial_after_LABD.json",
+    "sha256": "67a11055e8f5b1871f2e082a5fefb320b46a957ca1fe776d6fd8ab49adbcb8fc",
+    "bytes": 4164,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_qwen36_ctx8192_ci.json",
+    "sha256": "07a1342b6cd25f0bfde1611eb5f6e015ee1bf9e82e8633dfbc532be0c92a8aec",
+    "bytes": 21035,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_qwen36_ctx8192_ci_v0_3.json",
+    "sha256": "a9af03b400a3beb716a809154e37db8c72e81653df3beaa3d5edc65171c3c362",
+    "bytes": 21035,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d2_component_baseline_v0_3.json",
+    "sha256": "cff0686d7a95f65ed79cf9a5d367e7b9c54a39a817968fc5f2021ef6795c4655",
+    "bytes": 5000,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d2_ssm_jamba_v0_3.json",
+    "sha256": "c1a3d4935dcdbe874b0dfd32a6d3f358cb73a3dd79e3203623b6b8246322c2fd",
+    "bytes": 3563,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d2_ssm_zamba2_v0_3.json",
+    "sha256": "f513a89ee2b6168813c5488e27f8e13166951122cc5b14603bf328dfb4e2159a",
+    "bytes": 3652,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d3a_jamba_per_layer_v0_3.json",
+    "sha256": "9ec6a70f3df558920acf922b62ca3ec4d661c653ab3541483c92113f4e0302d1",
+    "bytes": 3435,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d3b_zamba2_per_layer_v0_3.json",
+    "sha256": "9fe1014a51bc252ccf59200c33d31979e0bd352c0f7417bafcd06b60df7597cb",
+    "bytes": 3358,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d5_policy_jamba_v0_3.json",
+    "sha256": "c5495193a44b8575e6c39b23949973101a8b4b727cb1217e0ed8f13627235773",
+    "bytes": 1970,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d5_policy_zamba2_v0_3.json",
+    "sha256": "c55f2ac512f999ecde1b3801fc39aee41a5c6f6ef50aeb0cc0a20db737813d38",
+    "bytes": 2260,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d6_effective_memory_pareto.json",
+    "sha256": "51a646c9c884a689923fbde0d7b408b0bd8aec726012f835ab81b9ddad46211f",
+    "bytes": 4176,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d7_0_substrate_discovery_v0_3.json",
+    "sha256": "0aa0a8d6cc556be2dfb7ff9e8042498032018c99dd6d766494d39690829e9675",
+    "bytes": 56213,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d7_1_gemma4_base_ke_v0_3.json",
+    "sha256": "3f4a186a3397b0025e7509f25bb7754cc5e4cd63c0ffdfbbcb79213f579a9a2d",
+    "bytes": 6382,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d7_1_gemma4_ke_it_v0_2.json",
+    "sha256": "585e55f5793dcc5d16fe46079da9df93724108ff6547ddbcfbfe88e90cb5b172",
+    "bytes": 4794,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d7_2_qwen36_km_v0_3.json",
+    "sha256": "132913c2c5ffd1624902acd108b4c44306f33412f4f577057978ba6b613c274e",
+    "bytes": 5287,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d7_3_jamba_kse_v0_3.json",
+    "sha256": "02633fdfc55b4d3a05058b601efa627c1aabfdf513274a330750c4d67aa798a6",
+    "bytes": 2914,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d8a_qwen36_per_k_layer_v0_3.json",
+    "sha256": "e6243ff0ccb3d78326fbe43cb55093c684b93a9fbc115a1eb19c5e4b747b8e92",
+    "bytes": 4209,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d8b_gemma4_per_k_layer_v0_3.json",
+    "sha256": "50621dc9222fab25e054f35696f65256ccaa8ec6e840d9a57a6d00f76ac63d20",
+    "bytes": 5860,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d9_mri_report_v0_3.json",
+    "sha256": "7dc17c833cf7f83466d65b10e4bf29465e9c958b7e111e0bffb61b7736fc315c",
+    "bytes": 6884,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d9_prescriptions_v0_3.json",
+    "sha256": "ce4bab526a8f8b3b24129d952f375eb6ad53c683fe29356976cacbba7144d65c",
+    "bytes": 5011,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d_down_gemma4_smoke_v0_3.json",
+    "sha256": "6a4e5e335971d28abcb9e04896fe470f149fa0b833a89fe844c6caa460c64d13",
+    "bytes": 242121,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/d_down_qwen36_smoke_v0_3.json",
+    "sha256": "dc3c1fc27e973696d715c43d0d0139eca38538df78be70b687d78afb364972c1",
+    "bytes": 200320,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/e1_causal_faithful_ci.json",
+    "sha256": "809263df4c07bea5c1a442dc873a80016007fd4a10c269d83f0220bd75801be7",
+    "bytes": 73901,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/e2_heavy_offload_ci.json",
+    "sha256": "dc513937d4145edd70ba7d172599101b31a02d817550c01332ae34ab5f2c4534",
+    "bytes": 10202,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/e3_deepseek_branch_b_ci.json",
+    "sha256": "f3464ce8ecfd66d9ee0a18bf9e5069c673a5dc234026ac719964557be786f0da",
+    "bytes": 5410,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/e4_selector_ci.json",
+    "sha256": "6fb8fd228cd953d44d1db5ed266ce72dc1e0bc5bb0347fe0a856f34bd643fd13",
+    "bytes": 7552,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/e5_holdout_diagnostic.json",
+    "sha256": "801c679a601444ef57fc74b7730ca613af9cae3b96ab00b5243c7e26a968f7b3",
+    "bytes": 7573,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/e5_holdout_oracle.json",
+    "sha256": "6ec3e8b264ce21b7641c61d88addff065c56a0e111c50d11ea155ee6388b3a84",
+    "bytes": 50217,
+    "coverage": "selected_extracted"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/e5_holdout_predictions.json",
+    "sha256": "31e385ed8ebe91678fbe67b99af67e18a158530fd37935b24a9c5b6554454b3d",
+    "bytes": 5272,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/e5_holdout_verdict.json",
+    "sha256": "5b7a1bf5037ab77364d3cd7c756d64f0381627ddb05ab48c45726c4b812c34ee",
+    "bytes": 3777,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/holdout_causal_faithful.json",
+    "sha256": "2ce32c2bccbb8e6c957602591f825357e3ec56b7db66aeb3414f03d08c020ed1",
+    "bytes": 48044,
+    "coverage": "selected_extracted"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/k1_production_kernel.json",
+    "sha256": "f999e28c1f7755defb3b66fe07633d721b7fe17393a0723655c7efb2b3c23862",
+    "bytes": 79177,
+    "coverage": "selected_extracted"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/k1b_compile_corroboration.json",
+    "sha256": "0a68f528fed80d63a38a1d2ba4d1800c404ff355177333f02ffffd7c86228d19",
+    "bytes": 80640,
+    "coverage": "selected_extracted"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/k1c_triton_fused.json",
+    "sha256": "2b31f1656dd8f5c9e1e6190a0bea9bf5da9fa75002572bbdfc572b8175b383c1",
+    "bytes": 87665,
+    "coverage": "selected_extracted"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/manifest.json",
+    "sha256": "523eea797a5c27dafc5ed88b3adae0042fcfbeed595f861f696e4704b2a6fdda",
+    "bytes": 13702,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/w1a_longctx_probe.json",
+    "sha256": "fa2b4a5bd0be96bee64f4c5e5e399b28489a96905ed6c9d0d03e70df8e3e69a1",
+    "bytes": 1979,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/w1b_longctx_oracle.json",
+    "sha256": "ec450b2ef384646c09899629a7628a219d77b5daf26723f4b15dfafc2d90c277",
+    "bytes": 26195,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/w1c_gemma12b_extreme_ctx.json",
+    "sha256": "5870b09a6ad124ff34364904a41a314a134f4d8f9baf6c494326b15e3dc73be6",
+    "bytes": 2294,
+    "coverage": "inventory_only_not_recomputed"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/w1d_causal_faithful_longctx.json",
+    "sha256": "caeb1ef405498d3d9d0cf516d2585ae4be096792907397a06f89fdc230868ae4",
+    "bytes": 40964,
+    "coverage": "selected_extracted"
+  },
+  {
+    "path": "Substrate-Aware-Diagnostic-and-Prescription/results/w1e_class_dependence.json",
+    "sha256": "bcd06259bc98df428a52c1975d7c4b5351d3228db3544f8b7be795045bff72d3",
+    "bytes": 15675,
+    "coverage": "selected_extracted"
+  }
+]

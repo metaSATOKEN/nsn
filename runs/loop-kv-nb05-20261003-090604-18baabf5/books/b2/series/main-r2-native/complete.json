@@ -1,0 +1,1020 @@
+{
+  "id": "main-r2-native",
+  "phase": "main",
+  "round": 2,
+  "arm": "NATIVE",
+  "raw_logits": true,
+  "started_monotonic": 985.129932662,
+  "finished_monotonic": 985.684821426,
+  "forward_calls": 9,
+  "logit_hashes": [
+    "a3ef402f3909409762b238ecf5b0a7558d6720126dfca5ec00311d7fd7953d28",
+    "b26167ae48fb960f6f786ca5633ee8e5eff602950e60e5fb4c7d77d8ae69fe05",
+    "fd0baf22b31a387aa0d5108182143db088af5df83bf6976acb6f29822a21ef62",
+    "9a2f8e5f2325148ecb2078ede1540da6a2482e4684c04a06a4fd5774c13be1ee",
+    "c0d27a19b5e30849d8ca9f8aac918b879ba408defc7398b9aaa6396cf31af4eb",
+    "08e57732a5be25ad35a9df0b55929f6348f61a338c60121a98c146aeb462b198",
+    "6fa2ef796e5b0fdf1bc4aa7f1ab6b24fc6eb284e76d5b76359457e3a135b995d",
+    "a2384579686739fe17d7ba62793b88c692d3121396e85eb5de1b02458e14d653",
+    "bd9e3f32f8d25cc44f403941cf85e9ceac2eb421fd4baeb904ee7b176ee0a7f7"
+  ],
+  "nll": [
+    7.7303784871488155,
+    0.22560830562456502,
+    1.6277675580638444,
+    0.8737895492499881,
+    0.4203720869330567,
+    5.691882305201069,
+    10.528009935371067,
+    2.0332308587136723,
+    5.530088928649249
+  ],
+  "prefill_source": {
+    "00-K": {
+      "native": "8d25fcbcf3af4cacaea6873da6d5625541f8ca76d116870d2ed9dcb1a442b3a9"
+    },
+    "00-V": {
+      "native": "2427c3d4482a37657415849ad68e3eedad69adf9e32e92000e32748cf7c8388f"
+    },
+    "01-K": {
+      "native": "20a4decae3fa6ce0cef9b19bf7b5ae20affd78fcc797391bf3eab94156850b9d"
+    },
+    "01-V": {
+      "native": "ffadc41b97fed512f9f05436fec9386b676ecd4a150830582c06d869a8b710a1"
+    },
+    "02-K": {
+      "native": "87fb21408a387c79db862ec6f67ea3f119c93171f6507ecce1f81648778a0307"
+    },
+    "02-V": {
+      "native": "996824a523df99eefb3276c54b3ab17351a07c1f44ece3b89b587a1f812e017d"
+    },
+    "03-K": {
+      "native": "4c6f1e4d3c636cded5b5a5ff802186213e89782d37fbbc7d50ff2f11d10bc7ca"
+    },
+    "03-V": {
+      "native": "c65478fdfeb1d122eebc1d15ac5f0f5fb9ccbc6f69c6b87f9863fd855a56ee71"
+    },
+    "04-K": {
+      "native": "21b776eff2f8cc16cb1140fef0139982eebe7294afd56eaaa08e7d4764c77aed"
+    },
+    "04-V": {
+      "native": "ecc60e33261ebd39f58fdb5d6421c789546736bcd5a364a9e37e12e9852e56a7"
+    },
+    "05-K": {
+      "native": "67a5c504ed20c255b968abc3d53f214b734df2c5d02140daa9dc21a27bc76f8e"
+    },
+    "05-V": {
+      "native": "94ae7d0edbbc4e2c83f024fdcc79038d20aa5da3fdd1761054997e35bd63b4ab"
+    },
+    "06-K": {
+      "native": "01c8d6c5132082526a3a415d5446e1062d8e4a941ac98d5df91377a2b64a0832"
+    },
+    "06-V": {
+      "native": "b041c8906a857a3134f4d18df3eb815b896d572ec093df15b95469e4b38aa7f4"
+    },
+    "07-K": {
+      "native": "7ceafc41fe89e39a13ac4966b3f92359b7f4af3afa44852a07ef85a4169aa628"
+    },
+    "07-V": {
+      "native": "9ec29696a4482734d400fa595f85f049b20e5ff368e4b8844a6fb89c58041e30"
+    },
+    "08-K": {
+      "native": "6c25c686bebcd8f8f97e98d8bd1b2706abd51607435273087a32f3a33439b0a9"
+    },
+    "08-V": {
+      "native": "ed24b0fb42bb67664b334e52bda8a11bcef3eafefe08c72dcbde679c0098d2df"
+    },
+    "09-K": {
+      "native": "6fb8ddc30cb7263b32ab8c0fcaeaea056a9107d213463a1bed911adb336fa863"
+    },
+    "09-V": {
+      "native": "61df39ce36c3e501c8fc63cf25f6e8ead489d3b28f0b8a44f68e9f29795443bd"
+    },
+    "10-K": {
+      "native": "f331f00954526557bebdd0b5c748ef08c80cf5b6b33e0c822d98f895eaa1bcd3"
+    },
+    "10-V": {
+      "native": "dd61af9c8624f1557a13b1ca8a0cad85f6f5199244044b1fac8e875451176bb9"
+    },
+    "11-K": {
+      "native": "54aed16f1687bea75d7c6003ecab4636dadf1fe80da0312e2b2ecb44e70c63e2"
+    },
+    "11-V": {
+      "native": "9b3675174d18856d112532f4dea06cbc9a81388322e957be46e38d6b47e97368"
+    },
+    "12-K": {
+      "native": "c8a5c89437aa19396ba2b14bb55096d19ec45696a048eb4021eef3ee8125fd40"
+    },
+    "12-V": {
+      "native": "17aebb979a9115274fc2b30df7b5d8a45fad9f8afa376360d050b95a2796e3e0"
+    },
+    "13-K": {
+      "native": "7c2c8986a1612b6c600db368c0ec3333bbb6c0ba396754a1ebca6b29aa11f65c"
+    },
+    "13-V": {
+      "native": "505f77ad9ddb961d9cd5b61b3634fdcfd65483bf996498b6c8d7bf85bc4a005a"
+    },
+    "14-K": {
+      "native": "3cc14dd3dad027a92793836b882c5afd7c595c26f4261c24b29b0ba6132cfb07"
+    },
+    "14-V": {
+      "native": "d034fb890f7ea840d01635433cd20c411d6726509f1f024dcb27cb794a198e47"
+    },
+    "15-K": {
+      "native": "68addfbec82bd95efc2eb9e078f4ff8c3e2dff602275c530d06c21c899292488"
+    },
+    "15-V": {
+      "native": "290539aea129bce8e5a8c3e62cbe184241cb1d68d385a5f1e724db6c8678a720"
+    },
+    "16-K": {
+      "native": "a9ace4d158c36669557166f1d06a7754a300d6533f4b9c91973de525ae0199d1"
+    },
+    "16-V": {
+      "native": "abbf739d497da837f37f866d4eb74f34b5dae2a0bfd2c405c1ac16fd8efdb591"
+    },
+    "17-K": {
+      "native": "be93f1d9cc640a4f14d6e701e2d7918990238f2dfb25d6b34c2ff1a205286fb1"
+    },
+    "17-V": {
+      "native": "91d571a295dda2d248fb19f9dee92011ae6852245e179126e39fb568afbb8870"
+    },
+    "18-K": {
+      "native": "2a3f89b6217efa5dca1d9ab9fe8b19daf0d2a93b80c1da33410333afe77e5c58"
+    },
+    "18-V": {
+      "native": "34a21a1a9c79861932bcbc5b16795081cb1163b2835cfa7cf4360407bbb8d5a7"
+    },
+    "19-K": {
+      "native": "a0d71db084c4467350447c96e7b2284173cf165ca000cf866c724cbe3d0c6599"
+    },
+    "19-V": {
+      "native": "e54ca6dc3862637d4328b30728da7aad74c36f9bf5bfea806bb5b0edc89095db"
+    },
+    "20-K": {
+      "native": "88ee7cf7cf44530a21c532d12c340bc94ad95e44947360b5e3b0a27f6d84d8cf"
+    },
+    "20-V": {
+      "native": "a0830c702764d374f3480c91467024db85b50ed9be3c131d2db4be7fca60c060"
+    },
+    "21-K": {
+      "native": "196869838c78544b4aa42042858b215773c9bd93f9ea545352e6cf536a0a29f9"
+    },
+    "21-V": {
+      "native": "bec0b06f202d4ff7a5c3fb0aae8ac6152162f7df742813de80f4f0ceb0ab7a08"
+    },
+    "22-K": {
+      "native": "20ea7b3474514c46358da43240c2365aaa22530e0ed7e0f73bc2eb74693e810c"
+    },
+    "22-V": {
+      "native": "66e65d0589ad47ce8281c8b6fdf1ea584b9d82a2a595b39672b74c7d0d85c2b4"
+    },
+    "23-K": {
+      "native": "36e3b42cc0854b72134abb5cb3e80c29620f85f9e78f76e752824edde4a8bc50"
+    },
+    "23-V": {
+      "native": "387f504f3b97ffcdda9fff2b8c901f2dab3a9a3cd22eaf4be5b1c4e6c77a42bb"
+    },
+    "24-K": {
+      "native": "ec7dae23a89e73557ee02e902b8a0d43f09f6d287b8443b4667ab9179ed7b4a8"
+    },
+    "24-V": {
+      "native": "1fcdfb4971e80214a031c280a945ce664aec2a167c100d4fef46c7b897e37a0b"
+    },
+    "25-K": {
+      "native": "757eb5380fb1416c071c361b79859157e233a4653da4b347af88b431d5b6e530"
+    },
+    "25-V": {
+      "native": "617410d365e02e220d6efafbd0f361871e2f97dbeeb688a236aa550acfb2566d"
+    },
+    "26-K": {
+      "native": "e9e9761eb61a58d8ebb26b2aeec7528cde232b08ddd57b57b6cf052910044135"
+    },
+    "26-V": {
+      "native": "dd425216baa5cceadda527915cebe3c8f7b15f4a8a1b90ec7a84304734a0a52e"
+    },
+    "27-K": {
+      "native": "d4dda851513be2bf4220b5a329fb8036e969320a6b57c2b7aaf771e513ec22a0"
+    },
+    "27-V": {
+      "native": "84954b5ed5b65af92773685d4eda24285bb9806bf3bb665c7cf883f70afa5f2f"
+    },
+    "28-K": {
+      "native": "d98cd67923ad8a515e7c2e1e8647d36803e123cac19c35b5e001df130749dd24"
+    },
+    "28-V": {
+      "native": "a58e060caa96d3812f11c53c22bf3fc4ccdef13e73f4e7d9dc952896375411db"
+    },
+    "29-K": {
+      "native": "1ad7c72e8c115051c806bb7d8653ec1b7d57bd396cc4a86b091a59ab8a3b926b"
+    },
+    "29-V": {
+      "native": "fd14ebfa6ecf4a7b51e1200cd9d45a653b029d98565a46960a37e6d4baa6b083"
+    },
+    "30-K": {
+      "native": "4d9757f8620d6cff7db56677fe406199cdaad0eb849de4d244d3d9e0334edfe0"
+    },
+    "30-V": {
+      "native": "c71567ad71b05e723b8e9bdf2c6ba349bb6264ae602a11ce490e9b8bc189bb96"
+    },
+    "31-K": {
+      "native": "3564082bd2789ac22f44e7bd88619e2dc816df7a007755ac5c294696a803097b"
+    },
+    "31-V": {
+      "native": "3a7f90bcc4eb5df2672169560c6cd82417af80939f65f60b5c5e099dc14e00eb"
+    },
+    "32-K": {
+      "native": "221681f627fd60a27cd16de36b2a733ae014cb609afdca41e536cf066ab62ba4"
+    },
+    "32-V": {
+      "native": "897020b008c70d4497120877062216b776a18f934c4e2e4b5122b8ea8a8d4057"
+    },
+    "33-K": {
+      "native": "70f0e827a2a137e24853b58964b76d0f353d3a52cff56730df1e51ee9126de94"
+    },
+    "33-V": {
+      "native": "855fadbcd77c4c004573cf74b64f1b7cc455091b8cd4d0916c131dfdcc61144f"
+    },
+    "34-K": {
+      "native": "ba4e3d193bcf9cf11d4a3ba19fa49c5ec9b456f0679904e98830cecb3b35a313"
+    },
+    "34-V": {
+      "native": "1c7af9295b88e0cfda52fb7b350d0da1fdd21973427fd15f044de3190d77b65e"
+    },
+    "35-K": {
+      "native": "d808f930fa6eb4f5508d827bf8fb6513f78f7a6931616789bb36f150dabb44c5"
+    },
+    "35-V": {
+      "native": "29f3d1a7bebfc59a078198a32b02e65874de565300da527cc98c9c751990c9d5"
+    },
+    "36-K": {
+      "native": "04b39da2e10b65b98673831062023b2bf7d924d96256bef129f5dabed199f709"
+    },
+    "36-V": {
+      "native": "71da0e9e398e118fc0195b367ee47dd66bc74646bc3da603acc98ad84928d031"
+    },
+    "37-K": {
+      "native": "aa27a606e7527c1723f00b4ca1a571cf3207f5164b731ea8c241c1316954dd99"
+    },
+    "37-V": {
+      "native": "ca281addb9a4ab368b91d0ab8147fbbabef7a47511df163cddce12dab8d496a1"
+    },
+    "38-K": {
+      "native": "f00a07a263c4cf0d7232982e294249f8c4c48d884161e4b98724d9a3ca000d22"
+    },
+    "38-V": {
+      "native": "dd721c1f022f55e2778f898247f9f656f4be4ab3debe14fd386c71031a47bacb"
+    },
+    "39-K": {
+      "native": "ba3fea6e2781c21b1e6919a5d5527983be59e185dd18beaa69d004b907733c67"
+    },
+    "39-V": {
+      "native": "279e0809e01b72268ca666efcf5c85e84f81393e019defb774dd8d9925c5452e"
+    },
+    "40-K": {
+      "native": "18c65019ea00cafd9c1e67487268c3b1f70f52fb9e8b4245dd500888cf29f25f"
+    },
+    "40-V": {
+      "native": "91567f39027b53ebeecb1a3c8ef1477022bb8c735843a57a3efa40e5d0f8c5f3"
+    },
+    "41-K": {
+      "native": "297b33eb7caa0518275bb4a087dda62366df4e249e0280452227897b4dff7bab"
+    },
+    "41-V": {
+      "native": "1809767b5f890fc0c343e4445b9c48ab0103b0b6eb7ee8b80dc32b3411fa982c"
+    },
+    "42-K": {
+      "native": "a3c0c39bf20e2d0e357c85cac6d5a2dba392d4e23ee6eba16632db1c4dd2d2d7"
+    },
+    "42-V": {
+      "native": "5a5ad30fbdf9887d30bb73fb105373e1fd5b64412c7756246d694cbd2bddbef5"
+    },
+    "43-K": {
+      "native": "7a5923e62fd5301de7c15244b22bb06b29e88314c21d5fb69fdeea39602fa09a"
+    },
+    "43-V": {
+      "native": "73fc27923a58f71666061f76f026303db6b171aa1e03749358133903ae0665da"
+    }
+  },
+  "prefix_before": {
+    "00-K": {
+      "native": "8d25fcbcf3af4cacaea6873da6d5625541f8ca76d116870d2ed9dcb1a442b3a9"
+    },
+    "00-V": {
+      "native": "2427c3d4482a37657415849ad68e3eedad69adf9e32e92000e32748cf7c8388f"
+    },
+    "01-K": {
+      "native": "20a4decae3fa6ce0cef9b19bf7b5ae20affd78fcc797391bf3eab94156850b9d"
+    },
+    "01-V": {
+      "native": "ffadc41b97fed512f9f05436fec9386b676ecd4a150830582c06d869a8b710a1"
+    },
+    "02-K": {
+      "native": "87fb21408a387c79db862ec6f67ea3f119c93171f6507ecce1f81648778a0307"
+    },
+    "02-V": {
+      "native": "996824a523df99eefb3276c54b3ab17351a07c1f44ece3b89b587a1f812e017d"
+    },
+    "03-K": {
+      "native": "4c6f1e4d3c636cded5b5a5ff802186213e89782d37fbbc7d50ff2f11d10bc7ca"
+    },
+    "03-V": {
+      "native": "c65478fdfeb1d122eebc1d15ac5f0f5fb9ccbc6f69c6b87f9863fd855a56ee71"
+    },
+    "04-K": {
+      "native": "21b776eff2f8cc16cb1140fef0139982eebe7294afd56eaaa08e7d4764c77aed"
+    },
+    "04-V": {
+      "native": "ecc60e33261ebd39f58fdb5d6421c789546736bcd5a364a9e37e12e9852e56a7"
+    },
+    "05-K": {
+      "native": "67a5c504ed20c255b968abc3d53f214b734df2c5d02140daa9dc21a27bc76f8e"
+    },
+    "05-V": {
+      "native": "94ae7d0edbbc4e2c83f024fdcc79038d20aa5da3fdd1761054997e35bd63b4ab"
+    },
+    "06-K": {
+      "native": "01c8d6c5132082526a3a415d5446e1062d8e4a941ac98d5df91377a2b64a0832"
+    },
+    "06-V": {
+      "native": "b041c8906a857a3134f4d18df3eb815b896d572ec093df15b95469e4b38aa7f4"
+    },
+    "07-K": {
+      "native": "7ceafc41fe89e39a13ac4966b3f92359b7f4af3afa44852a07ef85a4169aa628"
+    },
+    "07-V": {
+      "native": "9ec29696a4482734d400fa595f85f049b20e5ff368e4b8844a6fb89c58041e30"
+    },
+    "08-K": {
+      "native": "6c25c686bebcd8f8f97e98d8bd1b2706abd51607435273087a32f3a33439b0a9"
+    },
+    "08-V": {
+      "native": "ed24b0fb42bb67664b334e52bda8a11bcef3eafefe08c72dcbde679c0098d2df"
+    },
+    "09-K": {
+      "native": "6fb8ddc30cb7263b32ab8c0fcaeaea056a9107d213463a1bed911adb336fa863"
+    },
+    "09-V": {
+      "native": "61df39ce36c3e501c8fc63cf25f6e8ead489d3b28f0b8a44f68e9f29795443bd"
+    },
+    "10-K": {
+      "native": "f331f00954526557bebdd0b5c748ef08c80cf5b6b33e0c822d98f895eaa1bcd3"
+    },
+    "10-V": {
+      "native": "dd61af9c8624f1557a13b1ca8a0cad85f6f5199244044b1fac8e875451176bb9"
+    },
+    "11-K": {
+      "native": "54aed16f1687bea75d7c6003ecab4636dadf1fe80da0312e2b2ecb44e70c63e2"
+    },
+    "11-V": {
+      "native": "9b3675174d18856d112532f4dea06cbc9a81388322e957be46e38d6b47e97368"
+    },
+    "12-K": {
+      "native": "c8a5c89437aa19396ba2b14bb55096d19ec45696a048eb4021eef3ee8125fd40"
+    },
+    "12-V": {
+      "native": "17aebb979a9115274fc2b30df7b5d8a45fad9f8afa376360d050b95a2796e3e0"
+    },
+    "13-K": {
+      "native": "7c2c8986a1612b6c600db368c0ec3333bbb6c0ba396754a1ebca6b29aa11f65c"
+    },
+    "13-V": {
+      "native": "505f77ad9ddb961d9cd5b61b3634fdcfd65483bf996498b6c8d7bf85bc4a005a"
+    },
+    "14-K": {
+      "native": "3cc14dd3dad027a92793836b882c5afd7c595c26f4261c24b29b0ba6132cfb07"
+    },
+    "14-V": {
+      "native": "d034fb890f7ea840d01635433cd20c411d6726509f1f024dcb27cb794a198e47"
+    },
+    "15-K": {
+      "native": "68addfbec82bd95efc2eb9e078f4ff8c3e2dff602275c530d06c21c899292488"
+    },
+    "15-V": {
+      "native": "290539aea129bce8e5a8c3e62cbe184241cb1d68d385a5f1e724db6c8678a720"
+    },
+    "16-K": {
+      "native": "a9ace4d158c36669557166f1d06a7754a300d6533f4b9c91973de525ae0199d1"
+    },
+    "16-V": {
+      "native": "abbf739d497da837f37f866d4eb74f34b5dae2a0bfd2c405c1ac16fd8efdb591"
+    },
+    "17-K": {
+      "native": "be93f1d9cc640a4f14d6e701e2d7918990238f2dfb25d6b34c2ff1a205286fb1"
+    },
+    "17-V": {
+      "native": "91d571a295dda2d248fb19f9dee92011ae6852245e179126e39fb568afbb8870"
+    },
+    "18-K": {
+      "native": "2a3f89b6217efa5dca1d9ab9fe8b19daf0d2a93b80c1da33410333afe77e5c58"
+    },
+    "18-V": {
+      "native": "34a21a1a9c79861932bcbc5b16795081cb1163b2835cfa7cf4360407bbb8d5a7"
+    },
+    "19-K": {
+      "native": "a0d71db084c4467350447c96e7b2284173cf165ca000cf866c724cbe3d0c6599"
+    },
+    "19-V": {
+      "native": "e54ca6dc3862637d4328b30728da7aad74c36f9bf5bfea806bb5b0edc89095db"
+    },
+    "20-K": {
+      "native": "88ee7cf7cf44530a21c532d12c340bc94ad95e44947360b5e3b0a27f6d84d8cf"
+    },
+    "20-V": {
+      "native": "a0830c702764d374f3480c91467024db85b50ed9be3c131d2db4be7fca60c060"
+    },
+    "21-K": {
+      "native": "196869838c78544b4aa42042858b215773c9bd93f9ea545352e6cf536a0a29f9"
+    },
+    "21-V": {
+      "native": "bec0b06f202d4ff7a5c3fb0aae8ac6152162f7df742813de80f4f0ceb0ab7a08"
+    },
+    "22-K": {
+      "native": "20ea7b3474514c46358da43240c2365aaa22530e0ed7e0f73bc2eb74693e810c"
+    },
+    "22-V": {
+      "native": "66e65d0589ad47ce8281c8b6fdf1ea584b9d82a2a595b39672b74c7d0d85c2b4"
+    },
+    "23-K": {
+      "native": "36e3b42cc0854b72134abb5cb3e80c29620f85f9e78f76e752824edde4a8bc50"
+    },
+    "23-V": {
+      "native": "387f504f3b97ffcdda9fff2b8c901f2dab3a9a3cd22eaf4be5b1c4e6c77a42bb"
+    },
+    "24-K": {
+      "native": "ec7dae23a89e73557ee02e902b8a0d43f09f6d287b8443b4667ab9179ed7b4a8"
+    },
+    "24-V": {
+      "native": "1fcdfb4971e80214a031c280a945ce664aec2a167c100d4fef46c7b897e37a0b"
+    },
+    "25-K": {
+      "native": "757eb5380fb1416c071c361b79859157e233a4653da4b347af88b431d5b6e530"
+    },
+    "25-V": {
+      "native": "617410d365e02e220d6efafbd0f361871e2f97dbeeb688a236aa550acfb2566d"
+    },
+    "26-K": {
+      "native": "e9e9761eb61a58d8ebb26b2aeec7528cde232b08ddd57b57b6cf052910044135"
+    },
+    "26-V": {
+      "native": "dd425216baa5cceadda527915cebe3c8f7b15f4a8a1b90ec7a84304734a0a52e"
+    },
+    "27-K": {
+      "native": "d4dda851513be2bf4220b5a329fb8036e969320a6b57c2b7aaf771e513ec22a0"
+    },
+    "27-V": {
+      "native": "84954b5ed5b65af92773685d4eda24285bb9806bf3bb665c7cf883f70afa5f2f"
+    },
+    "28-K": {
+      "native": "d98cd67923ad8a515e7c2e1e8647d36803e123cac19c35b5e001df130749dd24"
+    },
+    "28-V": {
+      "native": "a58e060caa96d3812f11c53c22bf3fc4ccdef13e73f4e7d9dc952896375411db"
+    },
+    "29-K": {
+      "native": "1ad7c72e8c115051c806bb7d8653ec1b7d57bd396cc4a86b091a59ab8a3b926b"
+    },
+    "29-V": {
+      "native": "fd14ebfa6ecf4a7b51e1200cd9d45a653b029d98565a46960a37e6d4baa6b083"
+    },
+    "30-K": {
+      "native": "4d9757f8620d6cff7db56677fe406199cdaad0eb849de4d244d3d9e0334edfe0"
+    },
+    "30-V": {
+      "native": "c71567ad71b05e723b8e9bdf2c6ba349bb6264ae602a11ce490e9b8bc189bb96"
+    },
+    "31-K": {
+      "native": "3564082bd2789ac22f44e7bd88619e2dc816df7a007755ac5c294696a803097b"
+    },
+    "31-V": {
+      "native": "3a7f90bcc4eb5df2672169560c6cd82417af80939f65f60b5c5e099dc14e00eb"
+    },
+    "32-K": {
+      "native": "221681f627fd60a27cd16de36b2a733ae014cb609afdca41e536cf066ab62ba4"
+    },
+    "32-V": {
+      "native": "897020b008c70d4497120877062216b776a18f934c4e2e4b5122b8ea8a8d4057"
+    },
+    "33-K": {
+      "native": "70f0e827a2a137e24853b58964b76d0f353d3a52cff56730df1e51ee9126de94"
+    },
+    "33-V": {
+      "native": "855fadbcd77c4c004573cf74b64f1b7cc455091b8cd4d0916c131dfdcc61144f"
+    },
+    "34-K": {
+      "native": "ba4e3d193bcf9cf11d4a3ba19fa49c5ec9b456f0679904e98830cecb3b35a313"
+    },
+    "34-V": {
+      "native": "1c7af9295b88e0cfda52fb7b350d0da1fdd21973427fd15f044de3190d77b65e"
+    },
+    "35-K": {
+      "native": "d808f930fa6eb4f5508d827bf8fb6513f78f7a6931616789bb36f150dabb44c5"
+    },
+    "35-V": {
+      "native": "29f3d1a7bebfc59a078198a32b02e65874de565300da527cc98c9c751990c9d5"
+    },
+    "36-K": {
+      "native": "04b39da2e10b65b98673831062023b2bf7d924d96256bef129f5dabed199f709"
+    },
+    "36-V": {
+      "native": "71da0e9e398e118fc0195b367ee47dd66bc74646bc3da603acc98ad84928d031"
+    },
+    "37-K": {
+      "native": "aa27a606e7527c1723f00b4ca1a571cf3207f5164b731ea8c241c1316954dd99"
+    },
+    "37-V": {
+      "native": "ca281addb9a4ab368b91d0ab8147fbbabef7a47511df163cddce12dab8d496a1"
+    },
+    "38-K": {
+      "native": "f00a07a263c4cf0d7232982e294249f8c4c48d884161e4b98724d9a3ca000d22"
+    },
+    "38-V": {
+      "native": "dd721c1f022f55e2778f898247f9f656f4be4ab3debe14fd386c71031a47bacb"
+    },
+    "39-K": {
+      "native": "ba3fea6e2781c21b1e6919a5d5527983be59e185dd18beaa69d004b907733c67"
+    },
+    "39-V": {
+      "native": "279e0809e01b72268ca666efcf5c85e84f81393e019defb774dd8d9925c5452e"
+    },
+    "40-K": {
+      "native": "18c65019ea00cafd9c1e67487268c3b1f70f52fb9e8b4245dd500888cf29f25f"
+    },
+    "40-V": {
+      "native": "91567f39027b53ebeecb1a3c8ef1477022bb8c735843a57a3efa40e5d0f8c5f3"
+    },
+    "41-K": {
+      "native": "297b33eb7caa0518275bb4a087dda62366df4e249e0280452227897b4dff7bab"
+    },
+    "41-V": {
+      "native": "1809767b5f890fc0c343e4445b9c48ab0103b0b6eb7ee8b80dc32b3411fa982c"
+    },
+    "42-K": {
+      "native": "a3c0c39bf20e2d0e357c85cac6d5a2dba392d4e23ee6eba16632db1c4dd2d2d7"
+    },
+    "42-V": {
+      "native": "5a5ad30fbdf9887d30bb73fb105373e1fd5b64412c7756246d694cbd2bddbef5"
+    },
+    "43-K": {
+      "native": "7a5923e62fd5301de7c15244b22bb06b29e88314c21d5fb69fdeea39602fa09a"
+    },
+    "43-V": {
+      "native": "73fc27923a58f71666061f76f026303db6b171aa1e03749358133903ae0665da"
+    }
+  },
+  "prefix_after": {
+    "00-K": {
+      "native": "8d25fcbcf3af4cacaea6873da6d5625541f8ca76d116870d2ed9dcb1a442b3a9"
+    },
+    "00-V": {
+      "native": "2427c3d4482a37657415849ad68e3eedad69adf9e32e92000e32748cf7c8388f"
+    },
+    "01-K": {
+      "native": "20a4decae3fa6ce0cef9b19bf7b5ae20affd78fcc797391bf3eab94156850b9d"
+    },
+    "01-V": {
+      "native": "ffadc41b97fed512f9f05436fec9386b676ecd4a150830582c06d869a8b710a1"
+    },
+    "02-K": {
+      "native": "87fb21408a387c79db862ec6f67ea3f119c93171f6507ecce1f81648778a0307"
+    },
+    "02-V": {
+      "native": "996824a523df99eefb3276c54b3ab17351a07c1f44ece3b89b587a1f812e017d"
+    },
+    "03-K": {
+      "native": "4c6f1e4d3c636cded5b5a5ff802186213e89782d37fbbc7d50ff2f11d10bc7ca"
+    },
+    "03-V": {
+      "native": "c65478fdfeb1d122eebc1d15ac5f0f5fb9ccbc6f69c6b87f9863fd855a56ee71"
+    },
+    "04-K": {
+      "native": "21b776eff2f8cc16cb1140fef0139982eebe7294afd56eaaa08e7d4764c77aed"
+    },
+    "04-V": {
+      "native": "ecc60e33261ebd39f58fdb5d6421c789546736bcd5a364a9e37e12e9852e56a7"
+    },
+    "05-K": {
+      "native": "67a5c504ed20c255b968abc3d53f214b734df2c5d02140daa9dc21a27bc76f8e"
+    },
+    "05-V": {
+      "native": "94ae7d0edbbc4e2c83f024fdcc79038d20aa5da3fdd1761054997e35bd63b4ab"
+    },
+    "06-K": {
+      "native": "01c8d6c5132082526a3a415d5446e1062d8e4a941ac98d5df91377a2b64a0832"
+    },
+    "06-V": {
+      "native": "b041c8906a857a3134f4d18df3eb815b896d572ec093df15b95469e4b38aa7f4"
+    },
+    "07-K": {
+      "native": "7ceafc41fe89e39a13ac4966b3f92359b7f4af3afa44852a07ef85a4169aa628"
+    },
+    "07-V": {
+      "native": "9ec29696a4482734d400fa595f85f049b20e5ff368e4b8844a6fb89c58041e30"
+    },
+    "08-K": {
+      "native": "6c25c686bebcd8f8f97e98d8bd1b2706abd51607435273087a32f3a33439b0a9"
+    },
+    "08-V": {
+      "native": "ed24b0fb42bb67664b334e52bda8a11bcef3eafefe08c72dcbde679c0098d2df"
+    },
+    "09-K": {
+      "native": "6fb8ddc30cb7263b32ab8c0fcaeaea056a9107d213463a1bed911adb336fa863"
+    },
+    "09-V": {
+      "native": "61df39ce36c3e501c8fc63cf25f6e8ead489d3b28f0b8a44f68e9f29795443bd"
+    },
+    "10-K": {
+      "native": "f331f00954526557bebdd0b5c748ef08c80cf5b6b33e0c822d98f895eaa1bcd3"
+    },
+    "10-V": {
+      "native": "dd61af9c8624f1557a13b1ca8a0cad85f6f5199244044b1fac8e875451176bb9"
+    },
+    "11-K": {
+      "native": "54aed16f1687bea75d7c6003ecab4636dadf1fe80da0312e2b2ecb44e70c63e2"
+    },
+    "11-V": {
+      "native": "9b3675174d18856d112532f4dea06cbc9a81388322e957be46e38d6b47e97368"
+    },
+    "12-K": {
+      "native": "c8a5c89437aa19396ba2b14bb55096d19ec45696a048eb4021eef3ee8125fd40"
+    },
+    "12-V": {
+      "native": "17aebb979a9115274fc2b30df7b5d8a45fad9f8afa376360d050b95a2796e3e0"
+    },
+    "13-K": {
+      "native": "7c2c8986a1612b6c600db368c0ec3333bbb6c0ba396754a1ebca6b29aa11f65c"
+    },
+    "13-V": {
+      "native": "505f77ad9ddb961d9cd5b61b3634fdcfd65483bf996498b6c8d7bf85bc4a005a"
+    },
+    "14-K": {
+      "native": "3cc14dd3dad027a92793836b882c5afd7c595c26f4261c24b29b0ba6132cfb07"
+    },
+    "14-V": {
+      "native": "d034fb890f7ea840d01635433cd20c411d6726509f1f024dcb27cb794a198e47"
+    },
+    "15-K": {
+      "native": "68addfbec82bd95efc2eb9e078f4ff8c3e2dff602275c530d06c21c899292488"
+    },
+    "15-V": {
+      "native": "290539aea129bce8e5a8c3e62cbe184241cb1d68d385a5f1e724db6c8678a720"
+    },
+    "16-K": {
+      "native": "a9ace4d158c36669557166f1d06a7754a300d6533f4b9c91973de525ae0199d1"
+    },
+    "16-V": {
+      "native": "abbf739d497da837f37f866d4eb74f34b5dae2a0bfd2c405c1ac16fd8efdb591"
+    },
+    "17-K": {
+      "native": "be93f1d9cc640a4f14d6e701e2d7918990238f2dfb25d6b34c2ff1a205286fb1"
+    },
+    "17-V": {
+      "native": "91d571a295dda2d248fb19f9dee92011ae6852245e179126e39fb568afbb8870"
+    },
+    "18-K": {
+      "native": "2a3f89b6217efa5dca1d9ab9fe8b19daf0d2a93b80c1da33410333afe77e5c58"
+    },
+    "18-V": {
+      "native": "34a21a1a9c79861932bcbc5b16795081cb1163b2835cfa7cf4360407bbb8d5a7"
+    },
+    "19-K": {
+      "native": "a0d71db084c4467350447c96e7b2284173cf165ca000cf866c724cbe3d0c6599"
+    },
+    "19-V": {
+      "native": "e54ca6dc3862637d4328b30728da7aad74c36f9bf5bfea806bb5b0edc89095db"
+    },
+    "20-K": {
+      "native": "88ee7cf7cf44530a21c532d12c340bc94ad95e44947360b5e3b0a27f6d84d8cf"
+    },
+    "20-V": {
+      "native": "a0830c702764d374f3480c91467024db85b50ed9be3c131d2db4be7fca60c060"
+    },
+    "21-K": {
+      "native": "196869838c78544b4aa42042858b215773c9bd93f9ea545352e6cf536a0a29f9"
+    },
+    "21-V": {
+      "native": "bec0b06f202d4ff7a5c3fb0aae8ac6152162f7df742813de80f4f0ceb0ab7a08"
+    },
+    "22-K": {
+      "native": "20ea7b3474514c46358da43240c2365aaa22530e0ed7e0f73bc2eb74693e810c"
+    },
+    "22-V": {
+      "native": "66e65d0589ad47ce8281c8b6fdf1ea584b9d82a2a595b39672b74c7d0d85c2b4"
+    },
+    "23-K": {
+      "native": "36e3b42cc0854b72134abb5cb3e80c29620f85f9e78f76e752824edde4a8bc50"
+    },
+    "23-V": {
+      "native": "387f504f3b97ffcdda9fff2b8c901f2dab3a9a3cd22eaf4be5b1c4e6c77a42bb"
+    },
+    "24-K": {
+      "native": "ec7dae23a89e73557ee02e902b8a0d43f09f6d287b8443b4667ab9179ed7b4a8"
+    },
+    "24-V": {
+      "native": "1fcdfb4971e80214a031c280a945ce664aec2a167c100d4fef46c7b897e37a0b"
+    },
+    "25-K": {
+      "native": "757eb5380fb1416c071c361b79859157e233a4653da4b347af88b431d5b6e530"
+    },
+    "25-V": {
+      "native": "617410d365e02e220d6efafbd0f361871e2f97dbeeb688a236aa550acfb2566d"
+    },
+    "26-K": {
+      "native": "e9e9761eb61a58d8ebb26b2aeec7528cde232b08ddd57b57b6cf052910044135"
+    },
+    "26-V": {
+      "native": "dd425216baa5cceadda527915cebe3c8f7b15f4a8a1b90ec7a84304734a0a52e"
+    },
+    "27-K": {
+      "native": "d4dda851513be2bf4220b5a329fb8036e969320a6b57c2b7aaf771e513ec22a0"
+    },
+    "27-V": {
+      "native": "84954b5ed5b65af92773685d4eda24285bb9806bf3bb665c7cf883f70afa5f2f"
+    },
+    "28-K": {
+      "native": "d98cd67923ad8a515e7c2e1e8647d36803e123cac19c35b5e001df130749dd24"
+    },
+    "28-V": {
+      "native": "a58e060caa96d3812f11c53c22bf3fc4ccdef13e73f4e7d9dc952896375411db"
+    },
+    "29-K": {
+      "native": "1ad7c72e8c115051c806bb7d8653ec1b7d57bd396cc4a86b091a59ab8a3b926b"
+    },
+    "29-V": {
+      "native": "fd14ebfa6ecf4a7b51e1200cd9d45a653b029d98565a46960a37e6d4baa6b083"
+    },
+    "30-K": {
+      "native": "4d9757f8620d6cff7db56677fe406199cdaad0eb849de4d244d3d9e0334edfe0"
+    },
+    "30-V": {
+      "native": "c71567ad71b05e723b8e9bdf2c6ba349bb6264ae602a11ce490e9b8bc189bb96"
+    },
+    "31-K": {
+      "native": "3564082bd2789ac22f44e7bd88619e2dc816df7a007755ac5c294696a803097b"
+    },
+    "31-V": {
+      "native": "3a7f90bcc4eb5df2672169560c6cd82417af80939f65f60b5c5e099dc14e00eb"
+    },
+    "32-K": {
+      "native": "221681f627fd60a27cd16de36b2a733ae014cb609afdca41e536cf066ab62ba4"
+    },
+    "32-V": {
+      "native": "897020b008c70d4497120877062216b776a18f934c4e2e4b5122b8ea8a8d4057"
+    },
+    "33-K": {
+      "native": "70f0e827a2a137e24853b58964b76d0f353d3a52cff56730df1e51ee9126de94"
+    },
+    "33-V": {
+      "native": "855fadbcd77c4c004573cf74b64f1b7cc455091b8cd4d0916c131dfdcc61144f"
+    },
+    "34-K": {
+      "native": "ba4e3d193bcf9cf11d4a3ba19fa49c5ec9b456f0679904e98830cecb3b35a313"
+    },
+    "34-V": {
+      "native": "1c7af9295b88e0cfda52fb7b350d0da1fdd21973427fd15f044de3190d77b65e"
+    },
+    "35-K": {
+      "native": "d808f930fa6eb4f5508d827bf8fb6513f78f7a6931616789bb36f150dabb44c5"
+    },
+    "35-V": {
+      "native": "29f3d1a7bebfc59a078198a32b02e65874de565300da527cc98c9c751990c9d5"
+    },
+    "36-K": {
+      "native": "04b39da2e10b65b98673831062023b2bf7d924d96256bef129f5dabed199f709"
+    },
+    "36-V": {
+      "native": "71da0e9e398e118fc0195b367ee47dd66bc74646bc3da603acc98ad84928d031"
+    },
+    "37-K": {
+      "native": "aa27a606e7527c1723f00b4ca1a571cf3207f5164b731ea8c241c1316954dd99"
+    },
+    "37-V": {
+      "native": "ca281addb9a4ab368b91d0ab8147fbbabef7a47511df163cddce12dab8d496a1"
+    },
+    "38-K": {
+      "native": "f00a07a263c4cf0d7232982e294249f8c4c48d884161e4b98724d9a3ca000d22"
+    },
+    "38-V": {
+      "native": "dd721c1f022f55e2778f898247f9f656f4be4ab3debe14fd386c71031a47bacb"
+    },
+    "39-K": {
+      "native": "ba3fea6e2781c21b1e6919a5d5527983be59e185dd18beaa69d004b907733c67"
+    },
+    "39-V": {
+      "native": "279e0809e01b72268ca666efcf5c85e84f81393e019defb774dd8d9925c5452e"
+    },
+    "40-K": {
+      "native": "18c65019ea00cafd9c1e67487268c3b1f70f52fb9e8b4245dd500888cf29f25f"
+    },
+    "40-V": {
+      "native": "91567f39027b53ebeecb1a3c8ef1477022bb8c735843a57a3efa40e5d0f8c5f3"
+    },
+    "41-K": {
+      "native": "297b33eb7caa0518275bb4a087dda62366df4e249e0280452227897b4dff7bab"
+    },
+    "41-V": {
+      "native": "1809767b5f890fc0c343e4445b9c48ab0103b0b6eb7ee8b80dc32b3411fa982c"
+    },
+    "42-K": {
+      "native": "a3c0c39bf20e2d0e357c85cac6d5a2dba392d4e23ee6eba16632db1c4dd2d2d7"
+    },
+    "42-V": {
+      "native": "5a5ad30fbdf9887d30bb73fb105373e1fd5b64412c7756246d694cbd2bddbef5"
+    },
+    "43-K": {
+      "native": "7a5923e62fd5301de7c15244b22bb06b29e88314c21d5fb69fdeea39602fa09a"
+    },
+    "43-V": {
+      "native": "73fc27923a58f71666061f76f026303db6b171aa1e03749358133903ae0665da"
+    }
+  },
+  "terminal_hashes": null,
+  "captured": [],
+  "routes": {
+    "calls": [
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9
+    ],
+    "connections": [
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8
+    ],
+    "skipped_k": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skipped_v": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "logits_file": "series/main-r2-native/logits.npz",
+  "logits_sha256": "875fca7b8476373002c535c824b6776c00e1edd71a08634764413849c8dd746d"
+}

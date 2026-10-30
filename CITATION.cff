@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "Please cite the integrated paper when using this package. The earlier NSN DOI refers to a separate publication."
+type: software
+title: "NSN: KV Quantization by Separating Norm and Direction — Configuration, Applicability, and the Cost of Using Compressed Representations"
+authors:
+  - family-names: Sato
+    given-names: Kentaro
+    affiliation: Independent Researcher
+    email: info@metaclan.jp
+version: "1.0"
+repository-code: "https://github.com/metaSATOKEN/nsn"
+url: "https://github.com/metaSATOKEN/nsn"
+license:
+  - Apache-2.0
+  - CC-BY-4.0
+abstract: "Evidence and implementations for asymmetric NSN KV quantization: configuration, applicability, actual packed storage and readout costs. Includes the Nanbeige continuation evaluation."
+keywords:
+  - KV cache
+  - quantization
+  - norm separation
+  - looped Transformers
+
+preferred-citation:
+  type: report
+  title: "NSN: KV Quantization by Separating Norm and Direction — Configuration, Applicability, and the Cost of Using Compressed Representations"
+  authors:
+    - family-names: Sato
+      given-names: Kentaro
+      affiliation: Independent Researcher
+      email: info@metaclan.jp
+  url: "https://github.com/metaSATOKEN/nsn/blob/main/papers/nsn-integrated/NSN-2026-10-29-EN.md"
+  year: 2026
+  version: "1.0"

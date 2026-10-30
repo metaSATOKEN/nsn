@@ -1,0 +1,11 @@
+{
+  "status": "OFFLINE_VERIFIED",
+  "returned_summary_matches": true,
+  "verifier": "/Users/user/Desktop/Recync系/Looped Transformer/scripts/verify_loop_kv_ac08.py",
+  "verifier_sha256": "0c7387b99b844be16ac6e17a505032fa65a51f245362c94664a4e675cb8824f9",
+  "seconds": 115.57317624613643,
+  "model_loaded": false,
+  "gpu_used": false,
+  "returned_code_executed": false,
+  "n_scored": 8925
+}

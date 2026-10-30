@@ -1,0 +1,192 @@
+{
+  "schema_version": "0.1.0",
+  "generated_at": "2026-05-14T09:49:42+00:00",
+  "generator": "phase_d12d_gemma4_ctx_deepen.py",
+  "transformers_version": "5.8.1",
+  "model_id": "google/gemma-4-26B-A4B",
+  "model_label": "Gemma4-26B-A4B-base",
+  "phase": "D-12d",
+  "purpose": "Paper D Phase D-12d — ctx-dependent diagnosis deep-dive on Gemma4 in response to D-12b finding that the 3-tier hero loses to K-INT4 uniform at ctx=8K. Tests two hypotheses: H1 (per-layer signs ctx-invariant, composition breaks via F35 overstretch) vs H2 (per-layer signs flip, diagnosis itself ctx-dependent). Single-layer probes on D-8b's argmin (L0) and argmax K_bad (L8) at ctx=8K decide H1 vs H2; ctx=4K cells locate the cross-over context.",
+  "protocol": {
+    "long_ctx_configs": [
+      {
+        "ctx": 4096,
+        "stride": 2048,
+        "n_windows": 3
+      },
+      {
+        "ctx": 8192,
+        "stride": 4096,
+        "n_windows": 3
+      }
+    ],
+    "kv_recipe": "qa_nsep_pchan_asym (NSN v0.3 hero)",
+    "test_corpus": "WikiText-2 test"
+  },
+  "fp16_ppl_reference_ctx1024": 8.367825181251177,
+  "fp16_baselines": {
+    "4096": 7.095613878733067,
+    "8192": 4.67674974004223
+  },
+  "ctx1024_references": {
+    "delta_3tier_hero": 0.029,
+    "delta_K_INT4_uniform": 1.998,
+    "delta_K_good_aggregate": -2.962,
+    "delta_L0_alone": -2.459,
+    "delta_L8_alone": 1.525
+  },
+  "n_attn_layers": 25,
+  "attn_layers": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    6,
+    7,
+    8,
+    9,
+    10,
+    12,
+    13,
+    14,
+    15,
+    16,
+    18,
+    19,
+    20,
+    21,
+    22,
+    24,
+    25,
+    26,
+    27,
+    28
+  ],
+  "forward_path_selected": "direct",
+  "K_GOOD_LAYERS": [
+    0,
+    2,
+    3,
+    4,
+    7,
+    9
+  ],
+  "K_NEUTRAL_LAYERS": [
+    1,
+    6,
+    12,
+    13,
+    14,
+    15,
+    16,
+    18,
+    19,
+    20,
+    21,
+    22,
+    24,
+    25,
+    26,
+    27,
+    28
+  ],
+  "K_BAD_LAYERS": [
+    8,
+    10
+  ],
+  "results": {
+    "pi_G12d_0a_FP16_ctx4096": {
+      "ppl": 7.095613878733067,
+      "delta_pct": 0.0,
+      "ctx": 4096,
+      "k_recipe": "FP16",
+      "vram_peak_gb": 60.212773376
+    },
+    "pi_G12d_1_3tier_ctx4096": {
+      "ppl": 7.248843985952962,
+      "delta_pct": 2.159504587462902,
+      "ctx": 4096,
+      "k_recipe": "3-tier hero",
+      "vram_peak_gb": 60.212773376,
+      "mask": {
+        "0": 3,
+        "2": 3,
+        "3": 3,
+        "4": 3,
+        "7": 3,
+        "9": 3,
+        "1": 4,
+        "6": 4,
+        "12": 4,
+        "13": 4,
+        "14": 4,
+        "15": 4,
+        "16": 4,
+        "18": 4,
+        "19": 4,
+        "20": 4,
+        "21": 4,
+        "22": 4,
+        "24": 4,
+        "25": 4,
+        "26": 4,
+        "27": 4,
+        "28": 4
+      }
+    },
+    "pi_G12d_2_KINT4_ctx4096": {
+      "ppl": 7.16942011804029,
+      "delta_pct": 1.040167074598504,
+      "ctx": 4096,
+      "k_recipe": "K-INT4 uniform",
+      "vram_peak_gb": 60.212773376
+    },
+    "pi_G12d_0b_FP16_ctx8192": {
+      "ppl": 4.67674974004223,
+      "delta_pct": 0.0,
+      "ctx": 8192,
+      "k_recipe": "FP16",
+      "vram_peak_gb": 68.802740736,
+      "drift_vs_d12b": 4.974004222990658e-05
+    },
+    "pi_G12d_3_L0_only_ctx8192": {
+      "ppl": 4.718884229901593,
+      "delta_pct": 0.9009353119455624,
+      "ctx": 8192,
+      "k_recipe": "L0-only INT3",
+      "vram_peak_gb": 68.802740736,
+      "ref_at_ctx1024": -2.459
+    },
+    "pi_G12d_4_L8_only_ctx8192": {
+      "ppl": 4.690990785786389,
+      "delta_pct": 0.30450732957180343,
+      "ctx": 8192,
+      "k_recipe": "L8-only INT3",
+      "vram_peak_gb": 68.802740736,
+      "ref_at_ctx1024": 1.525
+    },
+    "pi_G12d_5_Kgood_only_ctx8192": {
+      "ppl": 4.729632803165785,
+      "delta_pct": 1.1307652977616314,
+      "ctx": 8192,
+      "k_recipe": "K_good-only INT3",
+      "vram_peak_gb": 68.802740736,
+      "ref_at_ctx1024": -2.962,
+      "K_good_layers": [
+        0,
+        2,
+        3,
+        4,
+        7,
+        9
+      ]
+    }
+  },
+  "verdict": {
+    "L0_sign_preserved": false,
+    "L8_sign_preserved": true,
+    "Kgood_sign_preserved": false,
+    "hypothesis_supported": "H2"
+  }
+}

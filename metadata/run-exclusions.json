@@ -1,0 +1,23 @@
+{
+  "scope": "Six selected runs; caches and duplicate ZIPs excluded. Earlier parent campaigns are not included in full.",
+  "files": [
+    {
+      "path": "runs/loop-kv-kv01-20260930-110929-fe60928a/original.zip",
+      "bytes": 14151812,
+      "sha256": "4f74d6fd66821ed6224e7b0bcbc8f97717dde6432f5f446919d1354afa3eaffe",
+      "reason": "duplicate original ZIP"
+    },
+    {
+      "path": "runs/loop-kv-kv01-20260930-110929-fe60928a/artifacts/__pycache__/loop_kv_p0_diagnostic.cpython-313.pyc",
+      "bytes": 42973,
+      "sha256": "621263bf351c084daadc79c1fa9c2f45785acc839f45d7d1f60fca50448821d1",
+      "reason": "execution cache; not scientific evidence"
+    },
+    {
+      "path": "runs/loop-kv-kv01-20260930-110929-fe60928a/artifacts/__pycache__/loop_kv_pilot.cpython-313.pyc",
+      "bytes": 81090,
+      "sha256": "a3abd284b0b30566404db2ee266dbd3cd8cf279666db421ef2461d3356974345",
+      "reason": "execution cache; not scientific evidence"
+    }
+  ]
+}

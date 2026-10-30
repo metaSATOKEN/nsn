@@ -1,0 +1,114 @@
+{
+  "schema_version": "0.1.0",
+  "phase": "D-9",
+  "purpose": "Auto-compiled deployment prescriptions per model. Each row was produced by the rule-based compiler defined in phase_d9_mri_compiler.py applied to the corresponding MRI row in d9_mri_report_v0_3.json. The rule_trace field documents the deterministic decision path so reviewers can audit which F1-F32 finding fires for each policy choice.",
+  "prescriptions": [
+    {
+      "model_label": "Zamba2-1.2B",
+      "branch": "A",
+      "branch_label": "Mamba-class with F27 active",
+      "K_policy": "NSN-INT4 all",
+      "K_layer_mask": null,
+      "S_policy": "LAB b3 (S in cancellation, push aggressive)",
+      "M_policy": null,
+      "E_policy": null,
+      "rule_trace": [
+        "delta_K_INT3 = +3.586 >= 0 (would degrade) AND delta_K_INT4 = +0.501 < 1.0 -> NSN-INT4 all",
+        "delta_S_LAB_b6 = -0.749 < 0 -> LAB b3",
+        "M not in substrate set -> no M policy",
+        "E not in substrate set -> no E policy",
+        "branch routing: F27='(a)+(b)', redundancy=['Mamba-S'], K_localization='distributed' -> Branch A (Mamba-class with F27 active)"
+      ],
+      "matched_existing_policy": "matches \u03c0_Z1 / \u03c0_Z2 spirit (D-5: K=NSN-INT4, S=LAB b3-b4)"
+    },
+    {
+      "model_label": "Jamba-1.5-Mini",
+      "branch": "A",
+      "branch_label": "Mamba-class with F27 active",
+      "K_policy": "NSN-INT3 all (K already in cancellation regime)",
+      "K_layer_mask": null,
+      "S_policy": "LAB b6 (S degrades alone but absorbed by K cancellation; F13)",
+      "M_policy": null,
+      "E_policy": "INT4 (F35/F36 preserve absorption budget for S)",
+      "rule_trace": [
+        "delta_K_INT3 = -3.914 < 0 -> NSN-INT3 all (F4 / F11 / F26)",
+        "delta_S_LAB_b6 = +4.556 >= 1.0 BUT I_KS = -0.359 < -0.3 -> F13 absorption active -> LAB b6 (no partial)",
+        "M not in substrate set -> no M policy",
+        "3-substrate KSE: delta_E_INT4 = +1.284 -> INT4 (F35/F36: 3-substrate prefers more aggressive E to preserve K cancellation budget for S; v0.2)",
+        "branch routing: F27='(b) for K+S; none for K+E (sparse, between)', redundancy=['Mamba-S', 'MoE-E'], K_localization='weak-local' -> Branch A (Mamba-class with F27 active)"
+      ],
+      "matched_existing_policy": "matches \u03c0_J2 / \u03c0_J6 spirit (D-5: K=NSN-INT3, S=LAB b6)"
+    },
+    {
+      "model_label": "Qwen3.6-27B",
+      "branch": "C",
+      "branch_label": "F27 inactive / single-substrate prescription",
+      "K_policy": "NSN-INT4 all",
+      "K_layer_mask": null,
+      "S_policy": null,
+      "M_policy": "INT5 (F37 cancellation sweet spot; \u0394_M_INT5 = -0.979%)",
+      "E_policy": null,
+      "rule_trace": [
+        "delta_K_INT3 = +2.127 >= 0 (would degrade) AND delta_K_INT4 = +0.213 < 1.0 -> NSN-INT4 all",
+        "S not in substrate set -> no S policy",
+        "F37 sweet-spot search for M: {3: 188.65, 4: 4.523, 5: -0.979, 6: 0.268} -> INT5 cancellation cell \u2b50 (v0.2)",
+        "E not in substrate set -> no E policy",
+        "branch routing: F27='none', redundancy=['LinAttn-M (no internal redundancy)'], K_localization='weak-local' -> Branch C (F27 inactive / single-substrate prescription)"
+      ],
+      "matched_existing_policy": "matches D-10b hero cell (K=NSN-INT4, M=INT5 sweet-spot, \u0394=-0.282% beats FP16 + 3.4\u00d7 compression)"
+    },
+    {
+      "model_label": "Gemma4-26B-A4B-base",
+      "branch": "B",
+      "branch_label": "non-Mamba with F27 (a) + bimodal K",
+      "K_policy": "3-tier selective K: NSN-INT3 on K_good (cancellation layers); NSN-INT4 on K_neutral; FP16 on K_bad",
+      "K_layer_mask": {
+        "K_good_layers": [
+          0,
+          2,
+          3,
+          4,
+          7,
+          9
+        ],
+        "K_bad_layers": [
+          8,
+          10
+        ],
+        "K_neutral_layers": [
+          1,
+          6,
+          12,
+          13,
+          14,
+          15,
+          16,
+          18,
+          19,
+          20,
+          21,
+          22,
+          24,
+          25,
+          26,
+          27,
+          28
+        ]
+      },
+      "S_policy": null,
+      "M_policy": null,
+      "E_policy": "INT5 (F37 cancellation sweet spot; \u0394_E_INT5 = -1.544%) OR FP16 for quality-priority deployment",
+      "rule_trace": [
+        "K_spread = 3.984 pp >= 2.0 -> hotspot -> 3-tier selective-K policy (F31 / F32)",
+        "  K_good (INT3) = [0, 2, 3, 4, 7, 9]",
+        "  K_neutral (INT4) = [1, 6, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 24, 25, 26, 27, 28]",
+        "  K_bad (FP16) = [8, 10]",
+        "S not in substrate set -> no S policy",
+        "M not in substrate set -> no M policy",
+        "F37 sweet-spot search for E (K+E only): {3: 22.141, 4: 6.691, 5: -1.544} -> INT5 cancellation cell \u2b50 (v0.2)",
+        "branch routing: F27='(a)', redundancy=['MoE-E'], K_localization='hotspot' -> Branch B (non-Mamba with F27 (a) + bimodal K)"
+      ],
+      "matched_existing_policy": "matches D-8b F32 selective-K spirit (Branch B novel policy)"
+    }
+  ]
+}

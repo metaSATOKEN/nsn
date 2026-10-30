@@ -1,0 +1,14 @@
+{
+  "model_only": {
+    "allocated": 2902860800,
+    "reserved": 3105882112
+  },
+  "prefill_post": {
+    "allocated": 3255378944,
+    "reserved": 4718592000
+  },
+  "terminal_post": {
+    "allocated": 3423085568,
+    "reserved": 4978638848
+  }
+}

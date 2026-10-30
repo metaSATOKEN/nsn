@@ -1,0 +1,104 @@
+{
+  "experiment": "LOOP-KV-NC01",
+  "version": "0.1.0",
+  "date": "2026-10-02",
+  "parent_run": "loop-kv-vf01-20261002-072452-1d1c10c0",
+  "parent_zip_sha256": "0938bfbe0bbb5bc4f0e162dd4addc6568d8bd1333e0108dbf30754e605972e1d",
+  "arms": [
+    "RF01_MATERIALIZE",
+    "TILE_MATERIALIZE",
+    "V_FUSED"
+  ],
+  "fixtures": [
+    {
+      "id": "C64T65-mixed_codes",
+      "compressed": 64,
+      "length": 65,
+      "pattern": "mixed_codes"
+    },
+    {
+      "id": "C768T833-mixed_codes",
+      "compressed": 768,
+      "length": 833,
+      "pattern": "mixed_codes"
+    },
+    {
+      "id": "C896T1023-mixed_codes",
+      "compressed": 896,
+      "length": 1023,
+      "pattern": "mixed_codes"
+    }
+  ],
+  "expected_old_contiguous": [
+    true,
+    false,
+    false
+  ],
+  "attempts": [
+    {
+      "id": "C64T65-RF01_MATERIALIZE",
+      "fixture": "C64T65-mixed_codes",
+      "arm": "RF01_MATERIALIZE"
+    },
+    {
+      "id": "C64T65-TILE_MATERIALIZE",
+      "fixture": "C64T65-mixed_codes",
+      "arm": "TILE_MATERIALIZE"
+    },
+    {
+      "id": "C64T65-V_FUSED",
+      "fixture": "C64T65-mixed_codes",
+      "arm": "V_FUSED"
+    },
+    {
+      "id": "C768T833-RF01_MATERIALIZE",
+      "fixture": "C768T833-mixed_codes",
+      "arm": "RF01_MATERIALIZE"
+    },
+    {
+      "id": "C768T833-TILE_MATERIALIZE",
+      "fixture": "C768T833-mixed_codes",
+      "arm": "TILE_MATERIALIZE"
+    },
+    {
+      "id": "C768T833-V_FUSED",
+      "fixture": "C768T833-mixed_codes",
+      "arm": "V_FUSED"
+    },
+    {
+      "id": "C896T1023-RF01_MATERIALIZE",
+      "fixture": "C896T1023-mixed_codes",
+      "arm": "RF01_MATERIALIZE"
+    },
+    {
+      "id": "C896T1023-TILE_MATERIALIZE",
+      "fixture": "C896T1023-mixed_codes",
+      "arm": "TILE_MATERIALIZE"
+    },
+    {
+      "id": "C896T1023-V_FUSED",
+      "fixture": "C896T1023-mixed_codes",
+      "arm": "V_FUSED"
+    }
+  ],
+  "caps_seconds": {
+    "prepare": 1800,
+    "experiment": 300,
+    "condition": 120,
+    "worker_verify": 120,
+    "independent_verify": 120,
+    "zip": 120,
+    "outer": 2700
+  },
+  "output_limit_bytes": 134217728,
+  "planned": {
+    "control_fixtures": 3,
+    "control_arm_outputs": 9,
+    "control_trace_and_plain_calls": 18,
+    "direct_baseline_calls": 3,
+    "negative_attempts": 9,
+    "old_layout_witnesses": 3
+  },
+  "new_model_calls": 0,
+  "timing_comparison": false
+}

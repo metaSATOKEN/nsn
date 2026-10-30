@@ -1,0 +1,1465 @@
+{
+  "version": 1,
+  "date": "2026-10-29",
+  "purpose": "Integrated experiment layout. Original source identifiers are retained in frozen numerical records and resolve here to unchanged source bytes.",
+  "files": {
+    "modeq/LICENSE": {
+      "path": "LICENSES/earlier-nsn-Apache-2.0.txt",
+      "bytes": 10763,
+      "sha256": "08e9a433c0abc2836bcb42d9e76d4d51f9f4a0e643da834477a18e6426bcd6ef",
+      "category": "license"
+    },
+    "modeq/experiments/phase15_real_compression_bench.py": {
+      "path": "experiments/storage/phase15_real_compression_bench.py",
+      "bytes": 8642,
+      "sha256": "2baba1d1c255a5d714a352b180c5a9e376c7ebd2c58e30715750b29733907102",
+      "category": "storage"
+    },
+    "modeq/experiments/phase18_ablation_vs_industry_naive.py": {
+      "path": "experiments/configuration/phase18_ablation_vs_industry_naive.py",
+      "bytes": 15771,
+      "sha256": "486a5de00386e67bcc8008b6a4e8a3a0a5b143d39cf5d1de9084280173fddc84",
+      "category": "configuration"
+    },
+    "modeq/experiments/phase19_ablation_generalization.py": {
+      "path": "experiments/configuration/phase19_ablation_generalization.py",
+      "bytes": 16646,
+      "sha256": "f104c23a4193b9431aa65c764f2ff23467c512ba0ab14440026af63e5714abe6",
+      "category": "configuration"
+    },
+    "modeq/experiments/phase21_gemma_b_anomaly_probe.py": {
+      "path": "experiments/configuration/phase21_gemma_b_anomaly_probe.py",
+      "bytes": 14404,
+      "sha256": "d0825c7930830c351cdfa4c451ac7a546745af0d06c731b384e7195072eceb3f",
+      "category": "configuration"
+    },
+    "modeq/experiments/phase26_real_cache_ppl.py": {
+      "path": "experiments/storage/phase26_real_cache_ppl.py",
+      "bytes": 19176,
+      "sha256": "ac2506c1ea295f4877d2fabc1f1321cfd487817aac89c063deeb0f394b7b2246",
+      "category": "storage"
+    },
+    "modeq/experiments/phase27_decode_latency.py": {
+      "path": "experiments/storage/phase27_decode_latency.py",
+      "bytes": 28320,
+      "sha256": "e30edcd13503f04c4859377de22654d5e9eb5c97cf2092691077306315efaaca",
+      "category": "storage"
+    },
+    "modeq/results/phase10_real_kv_distribution.json": {
+      "path": "data/additional-records/early-evaluations/phase10_real_kv_distribution.json",
+      "bytes": 3239,
+      "sha256": "05cf33396e550a10962a74e5574696472e8d8d358596bd5c69de364a00555800",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase11_2tier_sanity.json": {
+      "path": "data/additional-records/early-evaluations/phase11_2tier_sanity.json",
+      "bytes": 1935,
+      "sha256": "04420af4ced9997cafb77f6078f0c6fc45a0e640e3a6cd4cd070b7fd8e8581de",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase12_real_kv_2tier.json": {
+      "path": "data/additional-records/early-evaluations/phase12_real_kv_2tier.json",
+      "bytes": 2231,
+      "sha256": "fffbffc39284ef02dd9827a2e5393ebc3d985992cb0895c57f27948b166407c7",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase13_full_sweep.json": {
+      "path": "data/additional-records/early-evaluations/phase13_full_sweep.json",
+      "bytes": 15239,
+      "sha256": "6c1f1d04eb14c397bf69de0cec704dd8073aca8a7a1cc62f1d289c529095d308",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase14_asym_wikitext2_ppl.json": {
+      "path": "data/configuration/phase14_asym_wikitext2_ppl.json",
+      "bytes": 1984,
+      "sha256": "11dad98de27e4a218d4d3779448b4ed7656ec595caa39257f451cae7ea345361",
+      "category": "configuration"
+    },
+    "modeq/results/phase15_real_compression.json": {
+      "path": "data/storage/phase15_real_compression.json",
+      "bytes": 2690,
+      "sha256": "4d412f0b4e0fca2da9552b1a20c12130843809c3fc8cea0deef7111e8412f88f",
+      "category": "storage"
+    },
+    "modeq/results/phase16_asym_seven_model_sweep.json": {
+      "path": "data/configuration/phase16_asym_seven_model_sweep.json",
+      "bytes": 6242,
+      "sha256": "d7e49ac811dcb258374972a0f47723f2acbf50e8fb312a0346d0fd19a3fe95c8",
+      "category": "configuration"
+    },
+    "modeq/results/phase17_2026_flagships.json": {
+      "path": "data/configuration/phase17_2026_flagships.json",
+      "bytes": 6413,
+      "sha256": "8966579eb36b9ce212268406ef814506ed1c134d1ff4e41870e692c8c711cfa8",
+      "category": "configuration"
+    },
+    "modeq/results/phase18_ablation_vs_industry_naive.json": {
+      "path": "data/configuration/phase18_ablation_vs_industry_naive.json",
+      "bytes": 4633,
+      "sha256": "f24681d5614b1068383fb8ec4de7d8f16e3fb04488cf705272e8aad65dd42e3e",
+      "category": "configuration"
+    },
+    "modeq/results/phase19_ablation_generalization.json": {
+      "path": "data/configuration/phase19_ablation_generalization.json",
+      "bytes": 10849,
+      "sha256": "0c6c2d3420b5fc20eea40942cdcb797ed04dcd1853b943e2616933c5a30793cc",
+      "category": "configuration"
+    },
+    "modeq/results/phase1_qwen2_7b_bitwidth.json": {
+      "path": "data/additional-records/early-evaluations/phase1_qwen2_7b_bitwidth.json",
+      "bytes": 2821,
+      "sha256": "0dedeb399b95febcd335874a3ae4dd98fa19b8a825f09d439a97b6cf77f3f7d4",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase20_bf16_disambiguation.json": {
+      "path": "data/configuration/phase20_bf16_disambiguation.json",
+      "bytes": 7310,
+      "sha256": "c36c87c9bfeab44284378a0c23fba86732a1cc110aacde3722e74a1b71f48b6d",
+      "category": "configuration"
+    },
+    "modeq/results/phase21_gemma_b_anomaly_probe.json": {
+      "path": "data/configuration/phase21_gemma_b_anomaly_probe.json",
+      "bytes": 7571,
+      "sha256": "4e546f904480fefeeeda2bb674d8ab98ee681539a6be6dab5d17abdb0640d1b2",
+      "category": "configuration"
+    },
+    "modeq/results/phase22_mmlu_downstream.json": {
+      "path": "data/additional-records/early-evaluations/phase22_mmlu_downstream.json",
+      "bytes": 9149,
+      "sha256": "b4991dade2d66b70b7bccc1d946c716121059404b7005f4e25f013f29fb6983b",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase23_norm_dispersion.json": {
+      "path": "data/configuration/phase23_norm_dispersion.json",
+      "bytes": 149389,
+      "sha256": "ae6ba57efebe3b741c4b333d41e49faf5f152da844de78061ea69e3ce90c2c46",
+      "category": "configuration"
+    },
+    "modeq/results/phase24_nih_longctx.json": {
+      "path": "data/additional-records/early-evaluations/phase24_nih_longctx.json",
+      "bytes": 10463,
+      "sha256": "e7ca94c752ff529ffedd69ce0bba77d42254a4edbb1b8f2edf7a1f0a417eb4b4",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase24b_nih_multineedle.json": {
+      "path": "data/additional-records/early-evaluations/phase24b_nih_multineedle.json",
+      "bytes": 28327,
+      "sha256": "bef3b88d7d2968ba4daef2dcbaee0ac0e2064569174f694ead2fb4bc4d1c7458",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase24c_nih_multineedle_qwen2.json": {
+      "path": "data/additional-records/early-evaluations/phase24c_nih_multineedle_qwen2.json",
+      "bytes": 28245,
+      "sha256": "2a15b966293246427a4790d252406e8b24483a52b208c2d8014775cb4ee6ae89",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase24d_nih_multineedle_qwen25_14b.json": {
+      "path": "data/additional-records/early-evaluations/phase24d_nih_multineedle_qwen25_14b.json",
+      "bytes": 28709,
+      "sha256": "cfa3c42bc6636f987a327633611ba3497701e1786f8e5a6d10480a34e41f2956",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase25_fractional_bits.json": {
+      "path": "data/additional-records/early-evaluations/phase25_fractional_bits.json",
+      "bytes": 4912,
+      "sha256": "0c71f221d5774bea7c0c8ac4006b5c4cd12a29ebdd05742bf94eade281aee6e3",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase26_real_cache_ppl.json": {
+      "path": "data/storage/phase26_real_cache_ppl.json",
+      "bytes": 2804,
+      "sha256": "c16f777f5632e77d0a4c310a7d8fa8f83584a017dfdd0ab2ee9df020c6021e80",
+      "category": "storage"
+    },
+    "modeq/results/phase27_decode_latency.json": {
+      "path": "data/storage/phase27_decode_latency.json",
+      "bytes": 4691,
+      "sha256": "738f43b8187f37b8bc04bef6a417dcffecbcf95d9a5b7af2a1ae6e7af18aba97",
+      "category": "storage"
+    },
+    "modeq/results/phase28_mode1_detection_small_qwen.json": {
+      "path": "data/additional-records/early-evaluations/phase28_mode1_detection_small_qwen.json",
+      "bytes": 4203,
+      "sha256": "77dbeaf6282011962d0b92b0fc782e2dd2cfa438858ad4dab926870e0bdcaa0f",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase28b_recipe_on_small_qwen.json": {
+      "path": "data/configuration/phase28b_recipe_on_small_qwen.json",
+      "bytes": 2871,
+      "sha256": "f2f628bae5337dbccf197aca95a89be7dc235ff1b677d03477a6b08f31d99aa7",
+      "category": "configuration"
+    },
+    "modeq/results/phase28c_mid_qwen_scale.json": {
+      "path": "data/additional-records/early-evaluations/phase28c_mid_qwen_scale.json",
+      "bytes": 5396,
+      "sha256": "60caf181a9287a6e7c79dbf5bd05e60831c93166ec993ff03812c704cda9e312",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase28d_qwen25_7b_asym_sweep.json": {
+      "path": "data/configuration/phase28d_qwen25_7b_asym_sweep.json",
+      "bytes": 3826,
+      "sha256": "06ab957040146e48754fd00081dfe04e8dad5274dd9d5a7b127db1a66f5db238",
+      "category": "configuration"
+    },
+    "modeq/results/phase29_qwen_loop_detection.json": {
+      "path": "data/additional-records/early-evaluations/phase29_qwen_loop_detection.json",
+      "bytes": 11393,
+      "sha256": "57e2afa217955deaccdd6f937cde771a8f3e0b11549d9ca147d1fdc4ded63622",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase29b_transformer_only_compression.json": {
+      "path": "data/additional-records/early-evaluations/phase29b_transformer_only_compression.json",
+      "bytes": 36375,
+      "sha256": "6a555dd0f389d605066531bb6c8377c87eaefe443186eaa59359acdd3db0f037",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase29c_qwen25_7b_loop_control.json": {
+      "path": "data/additional-records/early-evaluations/phase29c_qwen25_7b_loop_control.json",
+      "bytes": 24451,
+      "sha256": "de8f8be68eed6a7de41d757b232219352d9a0de63ebc877d81042fb8bfa2bcb9",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase29d_hybrid_fragility_diagnostic.json": {
+      "path": "data/additional-records/early-evaluations/phase29d_hybrid_fragility_diagnostic.json",
+      "bytes": 10674,
+      "sha256": "8aef8f47c1fb7ed2b1f134e0fa3f2431d7fdd1cfb491cc99602f597643080c0f",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase29e_gaussian_noise_sweep.json": {
+      "path": "data/additional-records/early-evaluations/phase29e_gaussian_noise_sweep.json",
+      "bytes": 6871,
+      "sha256": "3c2b1a8b9c6c18f0f45724f0802627993936bcdd99421deac40f0e653c8879d3",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase29f_per_layer_fragility.json": {
+      "path": "data/additional-records/early-evaluations/phase29f_per_layer_fragility.json",
+      "bytes": 19086,
+      "sha256": "782dd7c7cc3531d052c538f39406f5bcd4f4f5ee7b26f486883fdc40f6ce2ef8",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase29g_anchor_hypothesis.json": {
+      "path": "data/additional-records/early-evaluations/phase29g_anchor_hypothesis.json",
+      "bytes": 6981,
+      "sha256": "04050671cef117eb4fc9bbdcd660c8738d35dd6eb0abc2e3504600214ae312dd",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase29h_universal_compression.json": {
+      "path": "data/additional-records/early-evaluations/phase29h_universal_compression.json",
+      "bytes": 4424,
+      "sha256": "ca2cf911c577eee8b2e7a66afce22cefeb8eef419b1aa9f2ff97d3423eac32ac",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase30a_bias_correction_probe.json": {
+      "path": "data/additional-records/early-evaluations/phase30a_bias_correction_probe.json",
+      "bytes": 2062,
+      "sha256": "d73e014cea35c6e33357592b60688f98c333f01a20e816553e6358acc5f039fd",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase3_four_model_dichotomy.json": {
+      "path": "data/additional-records/early-evaluations/phase3_four_model_dichotomy.json",
+      "bytes": 4200,
+      "sha256": "3d38defdaa5bb614edc8f2532c375d94ca3caedf70e45cca1ecbb88cc4d95401",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase4_additional_models.json": {
+      "path": "data/additional-records/early-evaluations/phase4_additional_models.json",
+      "bytes": 3395,
+      "sha256": "3ebffb2c556c0355123540153ed02140541d81495c50036f423cb1f3ce74d1ae",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase5_int3_real_packing.json": {
+      "path": "data/additional-records/early-evaluations/phase5_int3_real_packing.json",
+      "bytes": 2799,
+      "sha256": "ab4483c6444b1045ad66382a2efc857f20a7c9c30a8c241c4cb724140749b1f3",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase5b_int3_real_packing_qwen2_7b.json": {
+      "path": "data/additional-records/early-evaluations/phase5b_int3_real_packing_qwen2_7b.json",
+      "bytes": 2530,
+      "sha256": "efe4d6c9cd88a8accf24005a4b20e57f5eb89d8053327298353fb6f6b208c958",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase7_residual_correction.json": {
+      "path": "data/additional-records/early-evaluations/phase7_residual_correction.json",
+      "bytes": 5296,
+      "sha256": "ec2315727b63e22feeae350f71ce672930049a6f10562e3aab2c0512c6b0a542",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase8_rms_residual_validation.json": {
+      "path": "data/additional-records/early-evaluations/phase8_rms_residual_validation.json",
+      "bytes": 4830,
+      "sha256": "a4e658a506bbd5e85907d2d581c6b7b75e1f2610eb71d3dd2f1d27d86d545284",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/results/phase9_rotation_sanity.json": {
+      "path": "data/additional-records/early-evaluations/phase9_rotation_sanity.json",
+      "bytes": 3085,
+      "sha256": "f64ab92ffdb2b4a30e445d1886832c6aa7d4b089d4d33bcd875ab209cadb9869",
+      "category": "catalogued context, not reaggregated"
+    },
+    "modeq/src/nsn/__init__.py": {
+      "path": "src/nsn/__init__.py",
+      "bytes": 2634,
+      "sha256": "2b2b6545688e2c50497c8696f6f055377b8d5313918f00fe6ace501dca0b51db",
+      "category": "reference implementation"
+    },
+    "modeq/src/nsn/cache.py": {
+      "path": "src/nsn/cache.py",
+      "bytes": 11415,
+      "sha256": "63229d7a15258172d08ccf0d547cb5395152802ec572cae20738c9f66b760f0c",
+      "category": "reference implementation"
+    },
+    "modeq/src/nsn/detect.py": {
+      "path": "src/nsn/detect.py",
+      "bytes": 8129,
+      "sha256": "1e597d3ff9f24f1ef3cffdbc363587e9ef8afdf86aa4c3afe0e2c0c5644d7a40",
+      "category": "reference implementation"
+    },
+    "modeq/src/nsn/mode_aware.py": {
+      "path": "src/nsn/mode_aware.py",
+      "bytes": 9531,
+      "sha256": "66ca8ac208d05eae4eabab2027a9f79d582b1303c20e0e877f3c5df86b22162e",
+      "category": "reference implementation"
+    },
+    "modeq/src/nsn/pack.py": {
+      "path": "src/nsn/pack.py",
+      "bytes": 6691,
+      "sha256": "d4f216f67e6eafd9304a38eeee1bb95e3de3cfc38334848d5214a2521be85f15",
+      "category": "reference implementation"
+    },
+    "modeq/src/nsn/quantize.py": {
+      "path": "src/nsn/quantize.py",
+      "bytes": 17893,
+      "sha256": "82fa4544b1b80e3f037e68aa1ef4df76295dd96b7650068a3beb119dd078fe7f",
+      "category": "reference implementation"
+    },
+    "modeq/src/nsn/rotate.py": {
+      "path": "src/nsn/rotate.py",
+      "bytes": 6487,
+      "sha256": "f349bac2db129d5abc42fdbd5474f8480259d5dec2dff8a30f8d0cdf0694c2b5",
+      "category": "reference implementation"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/LICENSE": {
+      "path": "LICENSES/followup-code-Apache-2.0.txt",
+      "bytes": 10763,
+      "sha256": "08e9a433c0abc2836bcb42d9e76d4d51f9f4a0e643da834477a18e6426bcd6ef",
+      "category": "license"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/experiments/W1d_causal_faithful_preregistration.md": {
+      "path": "experiments/applicability/W1d_causal_faithful_preregistration.md",
+      "bytes": 7954,
+      "sha256": "2f686159550d8fd14e2b72f9f8e40a5f1cabadd4248d604d2f39ff8a252d44f1",
+      "category": "applicability"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/experiments/W1e_class_dependence_preregistration.md": {
+      "path": "experiments/applicability/W1e_class_dependence_preregistration.md",
+      "bytes": 8275,
+      "sha256": "c2381d950a50e0794f8a8e99a3a2e5eabfa94e4156883a51d924060a1153993c",
+      "category": "applicability"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/experiments/holdout_causal_faithful_preregistration.md": {
+      "path": "experiments/applicability/holdout_causal_faithful_preregistration.md",
+      "bytes": 6137,
+      "sha256": "5d024bc555f6904e32a7e507b16980cf98e9345bf63f989dbbd27a1b1899d984",
+      "category": "applicability"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/experiments/phase_e5_holdout_oracle.py": {
+      "path": "experiments/applicability/phase_e5_holdout_oracle.py",
+      "bytes": 17820,
+      "sha256": "f58f9411fcad60805bb582218715373085b58e68e3f631a1bc356d1eb473611d",
+      "category": "applicability"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/experiments/phase_holdout_causal_faithful.py": {
+      "path": "experiments/applicability/phase_holdout_causal_faithful.py",
+      "bytes": 34203,
+      "sha256": "6cb193b94dd7f6cb087c26c81a4b77c112ebba1babe3b09b43b138db184c61ab",
+      "category": "applicability"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/experiments/phase_k1_production_kernel_benchmark.py": {
+      "path": "experiments/kernels/phase_k1_production_kernel_benchmark.py",
+      "bytes": 24459,
+      "sha256": "8a49d1c29c98ca97af9999724d5af0886d5cd0c7f2417932be8ff5995c8e6c38",
+      "category": "kernels"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/experiments/phase_k1b_compile_corroboration.py": {
+      "path": "experiments/kernels/phase_k1b_compile_corroboration.py",
+      "bytes": 13691,
+      "sha256": "be38e79a97935f4113e63241e5d0a42815d29dc39c1bf029ad6ba5211a9ab50e",
+      "category": "kernels"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/experiments/phase_k1c_triton_fused_kernel.py": {
+      "path": "experiments/kernels/phase_k1c_triton_fused_kernel.py",
+      "bytes": 20855,
+      "sha256": "9c6bc6f05672675bdd7cf377943d78aa50b001ec7f25b22b7613df4f19099a40",
+      "category": "kernels"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/experiments/phase_w1d_causal_faithful_longctx.py": {
+      "path": "experiments/applicability/phase_w1d_causal_faithful_longctx.py",
+      "bytes": 28448,
+      "sha256": "82af89d021f6123e3c09c07b70b0455b4861d082a0e8b037c1c9bbf9436ff09a",
+      "category": "applicability"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/experiments/phase_w1e_class_dependence.py": {
+      "path": "experiments/applicability/phase_w1e_class_dependence.py",
+      "bytes": 22141,
+      "sha256": "36384006cb260d6d0c66af1e25a0f1fd71f6d2a7fa520ccb61b88ad2e8636481",
+      "category": "applicability"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/cancellation_mmlu_jamba.json": {
+      "path": "data/additional-records/model-diagnostics/cancellation_mmlu_jamba.json",
+      "bytes": 9814,
+      "sha256": "e4d609b81482902b18b0186b98efeeed127e2853ca02ea340957d69b70bb0141",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d10a_jamba_e_int5_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d10a_jamba_e_int5_v0_3.json",
+      "bytes": 2891,
+      "sha256": "0f0e5fbcae2b62d3bc313ac125643a55184ab97dbee53eef715577fcdb1c3a44",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d10b_qwen36_m_int5_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d10b_qwen36_m_int5_v0_3.json",
+      "bytes": 3263,
+      "sha256": "cc5f63097d39194fe5dec356ebc5a194ed2845c5fb5c85271de93f97049e22d0",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d10c_gemma4_selective_k_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d10c_gemma4_selective_k_v0_3.json",
+      "bytes": 4697,
+      "sha256": "bc1a95d8893b14591866311730bab1fbd9951590428176d5166f0a6922e91964",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d11_pareto_per_model.json": {
+      "path": "data/additional-records/model-diagnostics/d11_pareto_per_model.json",
+      "bytes": 9001,
+      "sha256": "4e52f8642372dd47dd8ede4495516e929eab2fae3230ef2bb97701cc2d8f7f81",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d11_validation_table.json": {
+      "path": "data/additional-records/model-diagnostics/d11_validation_table.json",
+      "bytes": 14994,
+      "sha256": "e823402a12d6a09e5be05ce8ff1771dba6e5a33b3d9d8da2624c678e98bb248f",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d12b_gemma4_long_ctx_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d12b_gemma4_long_ctx_v0_3.json",
+      "bytes": 2486,
+      "sha256": "89d0aeceb5801058d0969b9e0a24b495018ee633b24fef048ee0eda9d3d072e5",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d12c_qwen36_long_ctx_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d12c_qwen36_long_ctx_v0_3.json",
+      "bytes": 2235,
+      "sha256": "0220d1bad9c423fb947fa4fd72b05811c67030ac9f6f634273ab2453dcc890ea",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d12d_gemma4_ctx_deepen_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d12d_gemma4_ctx_deepen_v0_3.json",
+      "bytes": 4089,
+      "sha256": "24997c46decaaf03b182bfcc748b46dca602e58d9376e29465eabcb5d97e65d5",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d12e_zamba2_ctx4k_probe.json": {
+      "path": "data/additional-records/model-diagnostics/d12e_zamba2_ctx4k_probe.json",
+      "bytes": 2371,
+      "sha256": "a5feec8f985a87923badf0348bd192f3e35a686e56e314cae2a1fd22bb27bed8",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d13_real_pack_sanity.json": {
+      "path": "data/additional-records/model-diagnostics/d13_real_pack_sanity.json",
+      "bytes": 2728,
+      "sha256": "c0a0f7c5b68edc0fb5141d1985c3bade65f0a232875f5cfc56842f4fad70dd26",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d13b_compression_sanity.json": {
+      "path": "data/additional-records/model-diagnostics/d13b_compression_sanity.json",
+      "bytes": 3276,
+      "sha256": "918e2fad277c51e16e2ab470b23a17956d75b783636a496adf39df1d93d2e163",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d13c_int6_pack_sanity.json": {
+      "path": "data/additional-records/model-diagnostics/d13c_int6_pack_sanity.json",
+      "bytes": 1817,
+      "sha256": "a384de8c92480a8bc65b0a3b0b75f74d8bf04daee7b9b8b64101da485a2693c3",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d14_industry_baselines.json": {
+      "path": "data/additional-records/model-diagnostics/d14_industry_baselines.json",
+      "bytes": 23016,
+      "sha256": "37abcc50fa667e45941849b320b3f91a21bc7c4d7fb32235f0c7686dc1f37599",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d14_partial_Gemma4_26B_A4B_base.json": {
+      "path": "data/additional-records/model-diagnostics/d14_partial_Gemma4_26B_A4B_base.json",
+      "bytes": 7517,
+      "sha256": "5e08db2460fb4fbc754bfe50679194f4a39d1041db32ad5fa5a12df89f5ed10b",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d14_partial_Qwen3_6_27B.json": {
+      "path": "data/additional-records/model-diagnostics/d14_partial_Qwen3_6_27B.json",
+      "bytes": 14195,
+      "sha256": "0d6bb04cb9e58a4d549d80d02b9b4736cc33fca2c272b5efddda0fb630d4657b",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d14b_n5_protocol_sanity.json": {
+      "path": "data/additional-records/model-diagnostics/d14b_n5_protocol_sanity.json",
+      "bytes": 1653,
+      "sha256": "9b7dd68a52ae80555fd4b6db835ee68cba2fd02d7a08688c81c3d23e17b8f0ba",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d14c_partial_Gemma4_26B_A4B_base.json": {
+      "path": "data/additional-records/model-diagnostics/d14c_partial_Gemma4_26B_A4B_base.json",
+      "bytes": 12094,
+      "sha256": "7f3781f040492dbf19e9c5803aed7d2e5e5295e301c0a32e63dc19226da48fad",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d14c_partial_Qwen3_6_27B.json": {
+      "path": "data/additional-records/model-diagnostics/d14c_partial_Qwen3_6_27B.json",
+      "bytes": 23997,
+      "sha256": "edac41451ec860af75a70ad7a20623b99e6e32a58c62252971bf136a88a2d084",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d14c_random_window_ci.json": {
+      "path": "data/additional-records/model-diagnostics/d14c_random_window_ci.json",
+      "bytes": 24185,
+      "sha256": "95582b72d7d2f888bc50cc04569b7ff02741e472169a5e75c67764d24a6b2570",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d15a_llama31_long_ctx.json": {
+      "path": "data/additional-records/model-diagnostics/d15a_llama31_long_ctx.json",
+      "bytes": 3066,
+      "sha256": "5e17085f9d4f5a165fdd2a608115e5b04e6b16dce27d0ec40a5a324b57260b3d",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d15b_gemma4_31b_long_ctx_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d15b_gemma4_31b_long_ctx_v0_3.json",
+      "bytes": 3546,
+      "sha256": "d23039da3832f88f3af975fe68a3440bbb9f53e22606372bde434c1c00dd78e4",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d16_gemma4_long_ctx_prescription_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d16_gemma4_long_ctx_prescription_v0_3.json",
+      "bytes": 5551,
+      "sha256": "3736d886cffe4f34f3bb219cdc48fca58874018682bd497d4ac227bd0803aab0",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d17_gemma4_31b_prescription_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d17_gemma4_31b_prescription_v0_3.json",
+      "bytes": 3394,
+      "sha256": "3c8243ec2f6e9d027c0252355f8ccafcd358a7ba39a8374f1b8edd68a5e9691b",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d18a_zamba2_iks_ci_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d18a_zamba2_iks_ci_v0_3.json",
+      "bytes": 8542,
+      "sha256": "8d634f99d10247b98508ccd4be0e3db8b793d57ebc1c379604202995c7fca65e",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d18b_jamba_iks_ikse_ci_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d18b_jamba_iks_ikse_ci_v0_3.json",
+      "bytes": 20341,
+      "sha256": "157b445ebac67cbc6ec258a7db63a3c5fe5540f81200b5db97dcd5fb70020fe0",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d18c2_gemma4_kint5_ike_ci_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d18c2_gemma4_kint5_ike_ci_v0_3.json",
+      "bytes": 9771,
+      "sha256": "5fd9b03d73a06ed7a9d05612a69592ca4beb48a26dd73abf6d5276f538849ae2",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d18c_gemma4_ike_ci_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d18c_gemma4_ike_ci_v0_3.json",
+      "bytes": 8992,
+      "sha256": "2d47307c7c162b79bbdd9e606769a8db393fa2ae4c8c3c66187e925739a18a13",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d19_deepseek_moe_branch_b_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d19_deepseek_moe_branch_b_v0_3.json",
+      "bytes": 8512,
+      "sha256": "8e3b2bc1ab9dd9a53d6a309cc1cacce4b25b99248d85fd061f61b1167edc3ae5",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d19_qwen15_moe_branch_b_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d19_qwen15_moe_branch_b_v0_3.json",
+      "bytes": 7988,
+      "sha256": "53616113ab5a2401cc4d1c6049805aab3dc7701066b3699eee9a2fa7e8e2a916",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d1_5_kv_layer_micro.json": {
+      "path": "data/additional-records/model-diagnostics/d1_5_kv_layer_micro.json",
+      "bytes": 3081,
+      "sha256": "b568d0dcf505cebf8a931bd8caf46af2b183fd09c5f7e3f2d298c8d33bd5357e",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d1_jamba_substrate_xray.json": {
+      "path": "data/additional-records/model-diagnostics/d1_jamba_substrate_xray.json",
+      "bytes": 9281,
+      "sha256": "53834d147a1e887e03278ba95daf7be0a58a994e18e45f815692370ec7a32711",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d1_kv_risk_signals.json": {
+      "path": "data/additional-records/model-diagnostics/d1_kv_risk_signals.json",
+      "bytes": 11205,
+      "sha256": "5d7ebfd18fa1377485458ad9c4b7b1f3cef07d394c6e7d59b154f67441eef59e",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d1_substrate_map.json": {
+      "path": "data/additional-records/model-diagnostics/d1_substrate_map.json",
+      "bytes": 23698,
+      "sha256": "e54b130a089b836d7870b11919e02cf0318aca3fd3ed9b147807027f729793b0",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d20_paired_bootstrap.json": {
+      "path": "data/additional-records/model-diagnostics/d20_paired_bootstrap.json",
+      "bytes": 13563,
+      "sha256": "48a7b4961ebb3442edc1001af1748f8840037cd10e0c079d9af23f5d5dfdbd58",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d21_mixtral_branch_b_confirmer_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d21_mixtral_branch_b_confirmer_v0_3.json",
+      "bytes": 9382,
+      "sha256": "cfefd3f2e2f71bfe0257f4c8f95a51a491b7fee7c1f3e45b462ed7bae2d89699",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22a_jamba_hero_ci_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d22a_jamba_hero_ci_v0_3.json",
+      "bytes": 18851,
+      "sha256": "025aefdb7d624c3f383edbeaf9fddd03f6ab4a214c33426a80d1eaee201f4075",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22a_partial_after_J0_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d22a_partial_after_J0_v0_3.json",
+      "bytes": 1828,
+      "sha256": "146c83f2d8242b8f17f58588e32a124ecd71af95250aa1878981a8affea18619",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22a_partial_after_J6K4_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d22a_partial_after_J6K4_v0_3.json",
+      "bytes": 6341,
+      "sha256": "3599c48057aa9557169f9ef9f54001f3dd8551fb2e4b6f05db0b003132208127",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22a_partial_after_J6S7_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d22a_partial_after_J6S7_v0_3.json",
+      "bytes": 8597,
+      "sha256": "3e158656d8f0fd4e1bb7d0b5c60a41b111f4c4104ec950a0d83a437c22590895",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22a_partial_after_J6_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d22a_partial_after_J6_v0_3.json",
+      "bytes": 4088,
+      "sha256": "410028447c94bb37189237f326e01a3b1f873b83a0965cd0fcc7ca435f9b4712",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22b_partial_after_FP16.json": {
+      "path": "data/additional-records/model-diagnostics/d22b_partial_after_FP16.json",
+      "bytes": 1831,
+      "sha256": "88573c3bfd8e8031f5406c67823080edc76f6097985ae681a6fc4cc1aac8e720",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22b_partial_after_K5.json": {
+      "path": "data/additional-records/model-diagnostics/d22b_partial_after_K5.json",
+      "bytes": 6379,
+      "sha256": "20091ce9860532b9eaf62ffc2f6f1dec4d874fc67133d811d71c72b8ea012142",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22b_partial_after_KIVI.json": {
+      "path": "data/additional-records/model-diagnostics/d22b_partial_after_KIVI.json",
+      "bytes": 8706,
+      "sha256": "724a3e37c264a3565b4cfcf2a603f85417be90b967773c24bf73110b3e761fa2",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22b_partial_after_LABD.json": {
+      "path": "data/additional-records/model-diagnostics/d22b_partial_after_LABD.json",
+      "bytes": 4121,
+      "sha256": "457b66aef1571e88cb14427db7704681d48c5f884dab6d1caf560bc4f8d16a06",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22b_qwen36_ctx1024_ci_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d22b_qwen36_ctx1024_ci_v0_3.json",
+      "bytes": 20703,
+      "sha256": "bb5a9909982f325ad4940c32fa51ce426cc0225b95078a38756cd6d4309beec5",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_partial_after_FP16 (1).json": {
+      "path": "data/additional-records/model-diagnostics/d22c_partial_after_FP16 (1).json",
+      "bytes": 1836,
+      "sha256": "fa9ed0eceff0be9441c8690b3c83b6bc01c1b4a25e22b8313c06ddd1a31a6d27",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_partial_after_FP16.json": {
+      "path": "data/additional-records/model-diagnostics/d22c_partial_after_FP16.json",
+      "bytes": 1836,
+      "sha256": "fa9ed0eceff0be9441c8690b3c83b6bc01c1b4a25e22b8313c06ddd1a31a6d27",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_partial_after_K5 (1).json": {
+      "path": "data/additional-records/model-diagnostics/d22c_partial_after_K5 (1).json",
+      "bytes": 6472,
+      "sha256": "2e75f64baefa11e448ebf52c4cf432d39cb4004f323d28404cfb49d8970544d5",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_partial_after_K5.json": {
+      "path": "data/additional-records/model-diagnostics/d22c_partial_after_K5.json",
+      "bytes": 6472,
+      "sha256": "2e75f64baefa11e448ebf52c4cf432d39cb4004f323d28404cfb49d8970544d5",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_partial_after_KIVI (1).json": {
+      "path": "data/additional-records/model-diagnostics/d22c_partial_after_KIVI (1).json",
+      "bytes": 8833,
+      "sha256": "b163e36c7f98721b26db6aa8caae9c4b3b8763d4ff3ccaee94c7840a4d285cda",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_partial_after_KIVI.json": {
+      "path": "data/additional-records/model-diagnostics/d22c_partial_after_KIVI.json",
+      "bytes": 8833,
+      "sha256": "b163e36c7f98721b26db6aa8caae9c4b3b8763d4ff3ccaee94c7840a4d285cda",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_partial_after_LABD (1).json": {
+      "path": "data/additional-records/model-diagnostics/d22c_partial_after_LABD (1).json",
+      "bytes": 4164,
+      "sha256": "67a11055e8f5b1871f2e082a5fefb320b46a957ca1fe776d6fd8ab49adbcb8fc",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_partial_after_LABD.json": {
+      "path": "data/additional-records/model-diagnostics/d22c_partial_after_LABD.json",
+      "bytes": 4164,
+      "sha256": "67a11055e8f5b1871f2e082a5fefb320b46a957ca1fe776d6fd8ab49adbcb8fc",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_qwen36_ctx8192_ci.json": {
+      "path": "data/additional-records/model-diagnostics/d22c_qwen36_ctx8192_ci.json",
+      "bytes": 21035,
+      "sha256": "07a1342b6cd25f0bfde1611eb5f6e015ee1bf9e82e8633dfbc532be0c92a8aec",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d22c_qwen36_ctx8192_ci_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d22c_qwen36_ctx8192_ci_v0_3.json",
+      "bytes": 21035,
+      "sha256": "a9af03b400a3beb716a809154e37db8c72e81653df3beaa3d5edc65171c3c362",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d2_component_baseline_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d2_component_baseline_v0_3.json",
+      "bytes": 5000,
+      "sha256": "cff0686d7a95f65ed79cf9a5d367e7b9c54a39a817968fc5f2021ef6795c4655",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d2_ssm_jamba_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d2_ssm_jamba_v0_3.json",
+      "bytes": 3563,
+      "sha256": "c1a3d4935dcdbe874b0dfd32a6d3f358cb73a3dd79e3203623b6b8246322c2fd",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d2_ssm_zamba2_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d2_ssm_zamba2_v0_3.json",
+      "bytes": 3652,
+      "sha256": "f513a89ee2b6168813c5488e27f8e13166951122cc5b14603bf328dfb4e2159a",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d3a_jamba_per_layer_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d3a_jamba_per_layer_v0_3.json",
+      "bytes": 3435,
+      "sha256": "9ec6a70f3df558920acf922b62ca3ec4d661c653ab3541483c92113f4e0302d1",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d3b_zamba2_per_layer_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d3b_zamba2_per_layer_v0_3.json",
+      "bytes": 3358,
+      "sha256": "9fe1014a51bc252ccf59200c33d31979e0bd352c0f7417bafcd06b60df7597cb",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d5_policy_jamba_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d5_policy_jamba_v0_3.json",
+      "bytes": 1970,
+      "sha256": "c5495193a44b8575e6c39b23949973101a8b4b727cb1217e0ed8f13627235773",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d5_policy_zamba2_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d5_policy_zamba2_v0_3.json",
+      "bytes": 2260,
+      "sha256": "c55f2ac512f999ecde1b3801fc39aee41a5c6f6ef50aeb0cc0a20db737813d38",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d6_effective_memory_pareto.json": {
+      "path": "data/additional-records/model-diagnostics/d6_effective_memory_pareto.json",
+      "bytes": 4176,
+      "sha256": "51a646c9c884a689923fbde0d7b408b0bd8aec726012f835ab81b9ddad46211f",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d7_0_substrate_discovery_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d7_0_substrate_discovery_v0_3.json",
+      "bytes": 56213,
+      "sha256": "0aa0a8d6cc556be2dfb7ff9e8042498032018c99dd6d766494d39690829e9675",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d7_1_gemma4_base_ke_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d7_1_gemma4_base_ke_v0_3.json",
+      "bytes": 6382,
+      "sha256": "3f4a186a3397b0025e7509f25bb7754cc5e4cd63c0ffdfbbcb79213f579a9a2d",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d7_1_gemma4_ke_it_v0_2.json": {
+      "path": "data/additional-records/model-diagnostics/d7_1_gemma4_ke_it_v0_2.json",
+      "bytes": 4794,
+      "sha256": "585e55f5793dcc5d16fe46079da9df93724108ff6547ddbcfbfe88e90cb5b172",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d7_2_qwen36_km_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d7_2_qwen36_km_v0_3.json",
+      "bytes": 5287,
+      "sha256": "132913c2c5ffd1624902acd108b4c44306f33412f4f577057978ba6b613c274e",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d7_3_jamba_kse_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d7_3_jamba_kse_v0_3.json",
+      "bytes": 2914,
+      "sha256": "02633fdfc55b4d3a05058b601efa627c1aabfdf513274a330750c4d67aa798a6",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d8a_qwen36_per_k_layer_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d8a_qwen36_per_k_layer_v0_3.json",
+      "bytes": 4209,
+      "sha256": "e6243ff0ccb3d78326fbe43cb55093c684b93a9fbc115a1eb19c5e4b747b8e92",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d8b_gemma4_per_k_layer_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d8b_gemma4_per_k_layer_v0_3.json",
+      "bytes": 5860,
+      "sha256": "50621dc9222fab25e054f35696f65256ccaa8ec6e840d9a57a6d00f76ac63d20",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d9_mri_report_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d9_mri_report_v0_3.json",
+      "bytes": 6884,
+      "sha256": "7dc17c833cf7f83466d65b10e4bf29465e9c958b7e111e0bffb61b7736fc315c",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d9_prescriptions_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d9_prescriptions_v0_3.json",
+      "bytes": 5011,
+      "sha256": "ce4bab526a8f8b3b24129d952f375eb6ad53c683fe29356976cacbba7144d65c",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d_down_gemma4_smoke_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d_down_gemma4_smoke_v0_3.json",
+      "bytes": 242121,
+      "sha256": "6a4e5e335971d28abcb9e04896fe470f149fa0b833a89fe844c6caa460c64d13",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/d_down_qwen36_smoke_v0_3.json": {
+      "path": "data/additional-records/model-diagnostics/d_down_qwen36_smoke_v0_3.json",
+      "bytes": 200320,
+      "sha256": "dc3c1fc27e973696d715c43d0d0139eca38538df78be70b687d78afb364972c1",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/e1_causal_faithful_ci.json": {
+      "path": "data/additional-records/model-diagnostics/e1_causal_faithful_ci.json",
+      "bytes": 73901,
+      "sha256": "809263df4c07bea5c1a442dc873a80016007fd4a10c269d83f0220bd75801be7",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/e2_heavy_offload_ci.json": {
+      "path": "data/additional-records/model-diagnostics/e2_heavy_offload_ci.json",
+      "bytes": 10202,
+      "sha256": "dc513937d4145edd70ba7d172599101b31a02d817550c01332ae34ab5f2c4534",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/e3_deepseek_branch_b_ci.json": {
+      "path": "data/additional-records/model-diagnostics/e3_deepseek_branch_b_ci.json",
+      "bytes": 5410,
+      "sha256": "f3464ce8ecfd66d9ee0a18bf9e5069c673a5dc234026ac719964557be786f0da",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/e4_selector_ci.json": {
+      "path": "data/additional-records/model-diagnostics/e4_selector_ci.json",
+      "bytes": 7552,
+      "sha256": "6fb8fd228cd953d44d1db5ed266ce72dc1e0bc5bb0347fe0a856f34bd643fd13",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/e5_holdout_diagnostic.json": {
+      "path": "data/additional-records/model-diagnostics/e5_holdout_diagnostic.json",
+      "bytes": 7573,
+      "sha256": "801c679a601444ef57fc74b7730ca613af9cae3b96ab00b5243c7e26a968f7b3",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/e5_holdout_oracle.json": {
+      "path": "data/applicability/e5_holdout_oracle.json",
+      "bytes": 50217,
+      "sha256": "6ec3e8b264ce21b7641c61d88addff065c56a0e111c50d11ea155ee6388b3a84",
+      "category": "applicability"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/e5_holdout_predictions.json": {
+      "path": "data/additional-records/model-diagnostics/e5_holdout_predictions.json",
+      "bytes": 5272,
+      "sha256": "31e385ed8ebe91678fbe67b99af67e18a158530fd37935b24a9c5b6554454b3d",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/e5_holdout_verdict.json": {
+      "path": "data/additional-records/model-diagnostics/e5_holdout_verdict.json",
+      "bytes": 3777,
+      "sha256": "5b7a1bf5037ab77364d3cd7c756d64f0381627ddb05ab48c45726c4b812c34ee",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/holdout_causal_faithful.json": {
+      "path": "data/applicability/holdout_causal_faithful.json",
+      "bytes": 48044,
+      "sha256": "2ce32c2bccbb8e6c957602591f825357e3ec56b7db66aeb3414f03d08c020ed1",
+      "category": "applicability"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/k1_production_kernel.json": {
+      "path": "data/kernels/k1_production_kernel.json",
+      "bytes": 79177,
+      "sha256": "f999e28c1f7755defb3b66fe07633d721b7fe17393a0723655c7efb2b3c23862",
+      "category": "kernels"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/k1b_compile_corroboration.json": {
+      "path": "data/kernels/k1b_compile_corroboration.json",
+      "bytes": 80640,
+      "sha256": "0a68f528fed80d63a38a1d2ba4d1800c404ff355177333f02ffffd7c86228d19",
+      "category": "kernels"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/k1c_triton_fused.json": {
+      "path": "data/kernels/k1c_triton_fused.json",
+      "bytes": 87665,
+      "sha256": "2b31f1656dd8f5c9e1e6190a0bea9bf5da9fa75002572bbdfc572b8175b383c1",
+      "category": "kernels"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/manifest.json": {
+      "path": "data/additional-records/model-diagnostics/manifest.json",
+      "bytes": 13702,
+      "sha256": "523eea797a5c27dafc5ed88b3adae0042fcfbeed595f861f696e4704b2a6fdda",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/w1a_longctx_probe.json": {
+      "path": "data/additional-records/model-diagnostics/w1a_longctx_probe.json",
+      "bytes": 1979,
+      "sha256": "fa2b4a5bd0be96bee64f4c5e5e399b28489a96905ed6c9d0d03e70df8e3e69a1",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/w1b_longctx_oracle.json": {
+      "path": "data/additional-records/model-diagnostics/w1b_longctx_oracle.json",
+      "bytes": 26195,
+      "sha256": "ec450b2ef384646c09899629a7628a219d77b5daf26723f4b15dfafc2d90c277",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/w1c_gemma12b_extreme_ctx.json": {
+      "path": "data/additional-records/model-diagnostics/w1c_gemma12b_extreme_ctx.json",
+      "bytes": 2294,
+      "sha256": "5870b09a6ad124ff34364904a41a314a134f4d8f9baf6c494326b15e3dc73be6",
+      "category": "catalogued context, not reaggregated"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/w1d_causal_faithful_longctx.json": {
+      "path": "data/applicability/w1d_causal_faithful_longctx.json",
+      "bytes": 40964,
+      "sha256": "caeb1ef405498d3d9d0cf516d2585ae4be096792907397a06f89fdc230868ae4",
+      "category": "applicability"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/results/w1e_class_dependence.json": {
+      "path": "data/applicability/w1e_class_dependence.json",
+      "bytes": 15675,
+      "sha256": "bcd06259bc98df428a52c1975d7c4b5351d3228db3544f8b7be795045bff72d3",
+      "category": "applicability"
+    },
+    "throughline/audits/loop-kv-ac08-results-v0.1-2026-10-02/derived-metrics.json": {
+      "path": "data/validation/ac08/derived-metrics.json",
+      "bytes": 528,
+      "sha256": "219c0dd50580f3c17b67bb88f81f42ff2ca5d6ef89c6c3ac238f3d98bb123fdb",
+      "category": "scientific validation or publication metadata"
+    },
+    "throughline/audits/loop-kv-ac08-results-v0.1-2026-10-02/descriptive-statistics.json": {
+      "path": "data/validation/ac08/descriptive-statistics.json",
+      "bytes": 1536907,
+      "sha256": "cf71edd774b8b5e519d5ce4b962f27993081db604054927429b58efdc60c4e52",
+      "category": "scientific validation or publication metadata"
+    },
+    "throughline/audits/loop-kv-ac08-results-v0.1-2026-10-02/independent-summary.json": {
+      "path": "data/validation/ac08/independent-summary.json",
+      "bytes": 2304013,
+      "sha256": "5b780b314c5177f6151ee50436719e6afbb4cb0ec34731796418c2c42cf824d4",
+      "category": "scientific validation or publication metadata"
+    },
+    "throughline/audits/loop-kv-ac08-results-v0.1-2026-10-02/independent-verification.json": {
+      "path": "data/validation/ac08/independent-verification.json",
+      "bytes": 391,
+      "sha256": "f9be0d7c8b11037a15b8d8b74c71ac8c91dbbd2246d815c1447236d616a0d362",
+      "category": "scientific validation or publication metadata"
+    },
+    "throughline/audits/loop-kv-ac08-results-v0.1-2026-10-02/raw-unchanged.json": {
+      "path": "data/validation/ac08/raw-unchanged.json",
+      "bytes": 78,
+      "sha256": "d4b957da97166d6f7a1c0ceac862f840c37d67865538f5088088ef9031593a8d",
+      "category": "scientific validation or publication metadata"
+    },
+    "throughline/audits/loop-kv-iv01-results-v0.1-2026-10-01/audit-result.json": {
+      "path": "data/validation/iv01/audit-result.json",
+      "bytes": 392,
+      "sha256": "44c68bf3e55de436f5b217d2bbcfce58943cf82b04a4ebfef594449cdd7440ac",
+      "category": "scientific validation or publication metadata"
+    },
+    "throughline/audits/loop-kv-iv01-results-v0.1-2026-10-01/verified-summary.json": {
+      "path": "data/validation/iv01/verified-summary.json",
+      "bytes": 25321,
+      "sha256": "e34d74995af5b793ce1452064f9285a87922e19c0eeff9746b8c707a166ecdd8",
+      "category": "scientific validation or publication metadata"
+    },
+    "throughline/audits/loop-kv-nb05-results-v0.1-2026-10-03/supplementary-analysis.json": {
+      "path": "data/validation/nb05/supplementary-analysis.json",
+      "bytes": 69030,
+      "sha256": "cfb3c88504481096ba0066215a89e36fcab81f7739adf69b50609ed5360b6430",
+      "category": "scientific validation or publication metadata"
+    },
+    "throughline/audits/loop-kv-nb06-results-v0.1-2026-10-08/verification-summary.json": {
+      "path": "data/validation/nb06/verification-summary.json",
+      "bytes": 690,
+      "sha256": "6eacd73561d65cf0d48b99b5ed763bdda79f8447021eb179461aa4c67bf616bb",
+      "category": "scientific validation or publication metadata"
+    },
+    "throughline/audits/loop-kv-paper-revision-v0.3-2026-10-03/check_core.py": {
+      "path": "data/validation/qdq-core/check_core.py",
+      "bytes": 2791,
+      "sha256": "dc3c18f018f73d3a63eed41bfc43974794bfc49c4ec06c83cc60f54da2256464",
+      "category": "scientific validation or publication metadata"
+    },
+    "throughline/audits/loop-kv-paper-revision-v0.3-2026-10-03/core-validation.json": {
+      "path": "data/validation/qdq-core/core-validation.json",
+      "bytes": 5074,
+      "sha256": "91dbe3e0cf71039e39f4745074ad542a03ddb936354c091a604beb0f3cc9356b",
+      "category": "scientific validation or publication metadata"
+    },
+    "throughline/audits/loop-kv-paper-revision-v0.4-2026-10-03/nb05-nll-checks.json": {
+      "path": "data/validation/nb05/nb05-nll-checks.json",
+      "bytes": 51253,
+      "sha256": "40f3a1c55cd005c2c68c0b0c7c0aa860ae89121b7385bb71a70774dc21bb040c",
+      "category": "scientific validation or publication metadata"
+    },
+    "throughline/audits/loop-kv-vf01-results-v0.1-2026-10-02/analysis.json": {
+      "path": "data/validation/vf01/analysis.json",
+      "bytes": 82913,
+      "sha256": "4d5713b5590e61196de3d2552ee38afe76a311596c24462e75df31dac7838144",
+      "category": "scientific validation or publication metadata"
+    },
+    "throughline/audits/nsn-integrated-revision-v0.3-2026-10-03/datacite-doi.json": {
+      "path": "metadata/publication-provenance/datacite-doi.json",
+      "bytes": 20151,
+      "sha256": "e91b87d60ffbb0de4352c9c0814df56098a48f2709a45464634c54e229fbfbec",
+      "category": "scientific validation or publication metadata"
+    },
+    "throughline/audits/nsn-integrated-revision-v0.3-2026-10-03/pdf-identity.json": {
+      "path": "metadata/publication-provenance/pdf-identity.json",
+      "bytes": 289,
+      "sha256": "a698f9e62b5f8320f212d12f7075f9fd3b076b444c3994870bcad228579f735e",
+      "category": "scientific validation or publication metadata"
+    },
+    "throughline/audits/nsn-integrated-revision-v0.3-2026-10-03/zenodo-record.json": {
+      "path": "metadata/publication-provenance/zenodo-record.json",
+      "bytes": 11006,
+      "sha256": "edb7ee7b37e215b1976d9ae02f7a7b293b7291c0ea96479ae4e8417363617aea",
+      "category": "scientific validation or publication metadata"
+    },
+    "throughline/prereg/loop-kv-ac08-v0.1-2026-10-02.md": {
+      "path": "plans/prespecified/loop-kv-ac08-v0.1-2026-10-02.md",
+      "bytes": 2045,
+      "sha256": "f7203a165e636631bf949cd736f302d861debb496ebb8b537832b27a84086376",
+      "category": "prespecified scientific protocol"
+    },
+    "throughline/prereg/loop-kv-iv01-v0.1-2026-10-01.md": {
+      "path": "plans/prespecified/loop-kv-iv01-v0.1-2026-10-01.md",
+      "bytes": 1196,
+      "sha256": "b82a10d4ef3c5447de73fb7835dbb68b2feeb9dcbc84735777ab4b0393066b28",
+      "category": "prespecified scientific protocol"
+    },
+    "throughline/prereg/loop-kv-kv01-v0.1-2026-09-30.md": {
+      "path": "plans/prespecified/loop-kv-kv01-v0.1-2026-09-30.md",
+      "bytes": 4126,
+      "sha256": "90cbdaa85221fe9d75bb8b0d51bbe2d2639957827b6ec6444cd867f3434d4c9b",
+      "category": "prespecified scientific protocol"
+    },
+    "throughline/prereg/loop-kv-nb05-v0.1-2026-10-03.md": {
+      "path": "plans/prespecified/loop-kv-nb05-v0.1-2026-10-03.md",
+      "bytes": 2297,
+      "sha256": "e1e443558d17a84cf60839e82a47155738337a8d15a98a608004977ff012825f",
+      "category": "prespecified scientific protocol"
+    },
+    "throughline/prereg/loop-kv-nb06-v0.1-2026-10-08.md": {
+      "path": "plans/prespecified/loop-kv-nb06-v0.1-2026-10-08.md",
+      "bytes": 1998,
+      "sha256": "fd5ca02c1bbbf79f41096fdb330dcef546e0eb51f87e86affaf0f28b9fb9abcf",
+      "category": "prespecified scientific protocol"
+    },
+    "throughline/prereg/loop-kv-vf01-v0.1-2026-10-02.md": {
+      "path": "plans/prespecified/loop-kv-vf01-v0.1-2026-10-02.md",
+      "bytes": 3530,
+      "sha256": "e79a348567e53e129a8c0f43466095e572a5b598359322153055b54bb868c017",
+      "category": "prespecified scientific protocol"
+    }
+  },
+  "excluded_documents": {
+    "modeq/paper/nsn.md": {
+      "bytes": 113251,
+      "sha256": "f506b7c41fbedeb99bef85b662d0609c16fe787b13fe26251773fdf3fb767921",
+      "reason": "Historical manuscript is not needed for numerical reproduction; original is retained in the research archive.",
+      "replacement_url": "https://doi.org/10.5281/zenodo.19724817"
+    },
+    "modeq/paper/nsn.pdf": {
+      "bytes": 525735,
+      "sha256": "e68359fcc4c9de43dc43e631be7086caae1fd416de473bcf4f70cdcc5560f06f",
+      "reason": "Historical manuscript is not needed for numerical reproduction; original is retained in the research archive.",
+      "replacement_url": "https://doi.org/10.5281/zenodo.19724817"
+    },
+    "Substrate-Aware-Diagnostic-and-Prescription/Diagnostic-and-Transfer-Study.md": {
+      "bytes": 92193,
+      "sha256": "2e8c9942def5420e44c6325bb924f029b72d17ed38d53386c0c54afa39564704",
+      "reason": "Historical manuscript is not needed for numerical reproduction; original is retained in the research archive."
+    },
+    "nsn.md": {
+      "bytes": 113251,
+      "sha256": "f506b7c41fbedeb99bef85b662d0609c16fe787b13fe26251773fdf3fb767921",
+      "reason": "Historical manuscript is not needed for numerical reproduction; original is retained in the research archive.",
+      "replacement_url": "https://doi.org/10.5281/zenodo.19724817"
+    },
+    "throughline/audits/loop-kv-ac08-results-v0.1-2026-10-02/README.md": {
+      "bytes": 792,
+      "sha256": "cbe6ad6b8101a44144ffe5d4824b5638c455454f87e7b98d75cfc5d2e6a7fae1",
+      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
+    },
+    "throughline/audits/loop-kv-ac08-results-v0.1-2026-10-02/before-hashes.json": {
+      "bytes": 394,
+      "sha256": "175b322222408809d8766e01650939addcce8a17ea19071098759c6a32068513",
+      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
+    },
+    "throughline/audits/loop-kv-ac08-results-v0.1-2026-10-02/deployment-verification.json": {
+      "bytes": 3534,
+      "sha256": "fe0f46d076c5b24c53f0527a74a542e8dafc9673728ac6c48ed8590631e2b7d0",
+      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
+    },
+    "throughline/audits/loop-kv-ac08-results-v0.1-2026-10-02/ingestion.json": {
+      "bytes": 541,
+      "sha256": "02fb3f6174e381bee4e44dae2ed2dff959283941b45ba0aadeced918e3a15b80",
+      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
+    },
+    "throughline/audits/loop-kv-ac08-results-v0.1-2026-10-02/rescore.log": {
+      "bytes": 104,
+      "sha256": "6b7e39cf04224d400a7fd22a56725160eab5a5a83f3cb543205db413182caafd",
+      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
+    },
+    "throughline/audits/loop-kv-iv01-results-v0.1-2026-10-01/SHA256SUMS.json": {
+      "bytes": 3325,
+      "sha256": "8669b7fd88123eff8adbae2fcfa87cd072deea87444dbfea9c78eb499f8e52eb",
+      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
+    },
+    "throughline/audits/loop-kv-nb06-results-v0.1-2026-10-08/delivery.json": {
+      "bytes": 39318,
+      "sha256": "4afa0c853e47e05cca2db84563843d264944cd496eeb1cc79e25dbafb7728f01",
+      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
+    },
+    "throughline/audits/loop-kv-nb06-results-v0.1-2026-10-08/intake.json": {
+      "bytes": 198,
+      "sha256": "c3b652c55f57df37e79116a0617b0cd440695a6fb8dac1e91275df8cea6a97e2",
+      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
+    },
+    "throughline/audits/nsn-integrated-revision-v0.3-2026-10-03/before-sha256.json": {
+      "bytes": 312,
+      "sha256": "3e280425b1b61aed25fab22aea8ac2988e5350fa58341b941d6d961dfbd88cce",
+      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
+    },
+    "throughline/audits/nsn-integrated-revision-v0.3-2026-10-03/checks.json": {
+      "bytes": 18030,
+      "sha256": "e83b68f5e59668a48b4808da376f67ffb64b4608d37313a45293de2b800af0e0",
+      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
+    },
+    "throughline/audits/nsn-integrated-revision-v0.3-2026-10-03/delivery-manifest.json": {
+      "bytes": 3675,
+      "sha256": "8dfb92f1be5aa4a23f4e2699394557534e9ad3427a3f4a7120fed0aa63b2276a",
+      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
+    },
+    "throughline/audits/nsn-integrated-revision-v0.3-2026-10-03/delivery-verification.json": {
+      "bytes": 199,
+      "sha256": "b7dc6eea435d59c747ffb3f4bdcb78464d092c9324d9159dc2a3930d86a6d8d0",
+      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
+    },
+    "throughline/audits/nsn-integrated-revision-v0.3-2026-10-03/fetch-log.json": {
+      "bytes": 317,
+      "sha256": "bb251631d1aabd883c83aa3bad13b5697a0030b6545292146d2e3790a00cd118",
+      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
+    },
+    "throughline/audits/nsn-integrated-revision-v0.3-2026-10-03/preserved-assets.json": {
+      "bytes": 64204,
+      "sha256": "368c472c4f3a8e97d04c2a5fda34d51870411df88798e1a3ab0c84270d001ffb",
+      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
+    },
+    "throughline/audits/nsn-integrated-revision-v0.3-2026-10-03/regeneration-check.json": {
+      "bytes": 140,
+      "sha256": "6473524a34c008ac2cc07b4e4dd52883e4e2d8f2c65c8632e781dc6c5be260cf",
+      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
+    },
+    "throughline/fp-corpus.md": {
+      "bytes": 64525,
+      "sha256": "2881b1937f6f38b9b4753afdc0dcf20a0a5f99bfb13f42f2f995ac37df1cd6ca",
+      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
+    },
+    "throughline/ledger-2026-09.md": {
+      "bytes": 129504,
+      "sha256": "7cbabe445fb1398e63397ec694726bbb2b5f41ec275a44781e9ba666483d9771",
+      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
+    },
+    "throughline/ledger-2026-10.md": {
+      "bytes": 284700,
+      "sha256": "2d69eb073caaec42d3b3c0945f698161735ec844ca71dbc39fe073fd8a7ce216",
+      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
+    }
+  },
+  "removed_from_extraction_source_hashes": [
+    "modeq/paper/nsn.md",
+    "Substrate-Aware-Diagnostic-and-Prescription/Diagnostic-and-Transfer-Study.md"
+  ],
+  "directories": {
+    "throughline/audits/loop-kv-ac08-results-v0.1-2026-10-02": "data/validation/ac08",
+    "throughline/audits/loop-kv-iv01-results-v0.1-2026-10-01": "data/validation/iv01",
+    "throughline/audits/loop-kv-nb05-results-v0.1-2026-10-03": "data/validation/nb05",
+    "throughline/audits/loop-kv-nb06-results-v0.1-2026-10-08": "data/validation/nb06",
+    "throughline/audits/loop-kv-paper-revision-v0.3-2026-10-03": "data/validation/qdq-core",
+    "throughline/audits/loop-kv-paper-revision-v0.4-2026-10-03": "data/validation/nb05",
+    "throughline/audits/loop-kv-vf01-results-v0.1-2026-10-02": "data/validation/vf01",
+    "throughline/audits/nsn-integrated-revision-v0.3-2026-10-03": "metadata/publication-provenance"
+  },
+  "publication_text_replacements": {
+    "papers/loop-kv/evidence-index-v0.5-2026-10-08.md": [
+      [
+        "より古い停止と修正の対応は各報告と[10月台帳](../../throughline/ledger-2026-10.md)、[9月台帳](../../throughline/ledger-2026-09.md)、[誤判定標本台帳](../../throughline/fp-corpus.md)を参照。本文はその履歴を実験の独立標本数として積み上げない。",
+        "停止と修正の対応は上記の公開報告を参照。内部の運用台帳は公開対象に含めない。本文はこの履歴を実験の独立標本数として積み上げない。"
+      ],
+      [
+        "本索引は同じ研究フォルダ内の保存物へ辿るための資料であり、公開データパッケージではない。本文の相対リンクはこの配置で確認した。原ZIP・原run・取得前計画・正式集計を保持し、本文用の再表示をそれらへ上書きしない。",
+        "本索引は公開候補に収録した保存物への入口である。コード・集計・読めるログをリポジトリに、大きな保存配列を別配布ZIPに収録する（[収録範囲](../../DATA_COVERAGE.md)）。取得前計画と原記録を保持し、本文用の再表示をそれらへ上書きしない。リポジトリは[https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn)。公開範囲と別配布ZIPの提供状況は[README](../../README.ja.md)に記録する。統合稿の恒久アーカイブDOIは未割当である。"
+      ],
+      [
+        "今回稿はLooped Transformer系の到達点を閉じる内部草稿。旧NSNの `modeq/` と未公開SADPからNSN関連証拠を抽出し、版・重複・評価条件を照合する作業は次段階に残す。旧NSNの公開版と手元稿の一致、恒久アーカイブと公開ライセンスの選択も未完了である。今回、追加推論・PDF化・外部公開は行っていない。",
+        "本稿は再帰型モデルでの実装・評価を詳述し、[NSN統合稿 v1.0](../nsn-integrated/NSN-2026-10-29-JA.md)は構成・適用条件・実保存量・利用費用をまとめる。既公開NSNの版照合は[版対応記録](../nsn-integrated/publication-provenance-v0.1-2026-10-03.md)に保存済み。著者作成の論文・図・データはCC BY 4.0、コードはApache-2.0とし、第三者条件を保持する（[利用条件](../../LICENSES.md)）。リポジトリは[https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn)。公開範囲と別配布ZIPの提供状況は[README](../../README.ja.md)に記録する。統合稿の恒久アーカイブDOIは未割当である。"
+      ],
+      [
+        "2026-10-08 / 日本語S1 v0.5。[日本語本文v0.5](manuscript-ja-v0.5-2026-10-08.md)に対応。初回二モデル比較の証拠を保持し、§12にNB06の継続評価を追加。",
+        "2026-10-08 / 日本語S1 v0.5。[日本語本文v0.5](manuscript-ja-v0.5-2026-10-08.md)に対応。初回二モデル比較の証拠を保持し、§12にNB06の継続評価を追加。\n\n公開用案内更新：2026年10月29日。利用条件・著者申告・参照先を現行パッケージへ同期した。測定値と科学的な結論は元の版から変更していない。"
+      ]
+    ],
+    "papers/loop-kv/evidence-index-en-v0.3-2026-10-08.md": [
+      [
+        "Earlier stops and fixes are mapped in those reports, the [October ledger](../../throughline/ledger-2026-10.md), [September ledger](../../throughline/ledger-2026-09.md), and [misclassification corpus](../../throughline/fp-corpus.md). This history is not accumulated into an independent sample count.",
+        "Stops and fixes are described in the public reports above. Internal workflow ledgers are not distributed. This history is not accumulated into an independent sample count."
+      ],
+      [
+        "This index leads to saved artifacts in the research directory; it is not a public data package. Relative links are checked for this layout. Original ZIPs, runs, prespecified plans, and formal summaries are retained. Paper-specific presentations do not overwrite them. Linked research reports and logs remain in their original language, primarily Japanese.",
+        "This index is an entry point to retained artifacts in the release candidate. Code, summaries, and readable logs are in the repository; large saved arrays are in companion ZIPs (see [coverage](../../DATA_COVERAGE.md)). Prespecified plans and original records are preserved; paper-specific presentations do not overwrite them. The repository is [https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn); [README](../../README.md) records its access status and the availability of companion ZIPs. A permanent archive DOI for the integrated paper has not been assigned. Linked historical reports retain their original language, primarily Japanese."
+      ],
+      [
+        "This internal manuscript closes the current Looped Transformer series. Extracting NSN-related evidence from the earlier `modeq/` study and unpublished SADP, and checking versions, overlap, and evaluation conditions, are subsequent tasks. Correspondence between the earlier public NSN version and the local manuscript, permanent archiving, and the choice of a public license remain unresolved. No additional inference, PDF production, or external publication was performed for this translation.",
+        "This paper details implementation and evaluation in looped models; the [integrated NSN paper v1.0](../nsn-integrated/NSN-2026-10-29-EN.md) brings together configuration, applicability, actual storage, and readout costs. The earlier public NSN version has been checked in the [publication provenance record](../nsn-integrated/publication-provenance-v0.1-2026-10-03.md). Author-owned papers, figures, and data use CC BY 4.0, code uses Apache-2.0, and third-party terms are retained (see [licenses](../../LICENSES.md)). The repository is [https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn); [README](../../README.md) records its access status and the availability of companion ZIPs. A permanent archive DOI for the integrated paper has not been assigned."
+      ],
+      [
+        "## 6. Boundary Between This Manuscript and the Planned Integrated Paper",
+        "## 6. Relationship to the Integrated Paper"
+      ],
+      [
+        "October 8, 2026 / English S1 v0.3, corresponding to [English manuscript v0.3](manuscript-en-v0.3-2026-10-08.md) and [Japanese S1 v0.5](evidence-index-v0.5-2026-10-08.md). Evidence for the initial two-model comparison is retained; §12 adds the NB06 continuation evaluation.",
+        "October 8, 2026 / English S1 v0.3, corresponding to [English manuscript v0.3](manuscript-en-v0.3-2026-10-08.md) and [Japanese S1 v0.5](evidence-index-v0.5-2026-10-08.md). Evidence for the initial two-model comparison is retained; §12 adds the NB06 continuation evaluation.\n\nPublication metadata updated October 29, 2026: licenses, author declarations and navigation are synchronized with the current package. Measured values and scientific conclusions are unchanged from the original edition."
+      ]
+    ],
+    "papers/nsn-integrated/manuscript-ja-v0.8-2026-10-08.md": [
+      [
+        "2026年10月8日 · 日本語草稿 v0.8",
+        "2026年10月29日 · 日本語版 v1.0"
+      ],
+      [
+        "本稿の図表は保存済み記録から再生成し、原値の位置とhashへの入口を付録Dへ対応づけた。公開用の固定アーカイブと統合稿のライセンスは、現草稿では未設定である。既公開NSNの版と本稿の採用範囲は付録D.5に示す。",
+        "本稿の図表は保存済み記録から再生成し、原値の位置とhashへの入口を付録Dへ対応づけた。公開候補には固定したコード・記録・図表と別配布の保存配列を収録した。著者作成の論文・図・データはCC BY 4.0、コードはApache-2.0とし、第三者資料には元の条件を適用する（[利用条件](../../LICENSES.md)）。リポジトリは[https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn)。公開範囲と別配布ZIPの提供状況は[README](../../README.ja.md)に記録する。統合稿の恒久アーカイブDOIは未割当である。既公開NSNの版と本稿の採用範囲は付録D.5に示す。"
+      ],
+      [
+        "資金・利益相反の最終申告は著者確認後に確定する。",
+        "本研究は著者個人の自己資金で実施し、外部からの資金提供を受けていない。著者に申告すべき利益相反はない。"
+      ],
+      [
+        "方法と数値の解釈に必要な条件は、本文と付録A–Cに記した。以下のリンクは再計算・原記録の閲覧に使う。相対パスは現在の研究フォルダ配置を前提とし、公開用の固定アーカイブはまだ作成していない。",
+        "方法と数値の解釈に必要な条件は、本文と付録A–Cに記した。以下のリンクは公開候補内の資料を指す。大きな保存配列は別配布ZIPから新しい作業コピーへ復元する。[実行手順](../../RUNNING.md)と[再現手順](../../REPRODUCIBILITY.md)に、照合・復元・科学的再計算の入口を分けて示す。"
+      ],
+      [
+        "`source`の基準は研究ルートである。",
+        "`source`は取得時の識別子であり、現在の配置とは異なる場合がある。[対応表](../../metadata/source-layout.json)または研究ルートからの `.venv/bin/python -B tools/source_layout.py --resolve 識別子` で現在の保存先を確認する。"
+      ],
+      [
+        "この抽出では1,732照合・不一致0を確認済みである。",
+        "元の抽出では1,732照合・不一致0を確認した。公開用の再集計では非同梱の旧文書hash照合2件を除いた1,730照合を維持し、数値検査は省いていない（[再現手順](../../REPRODUCIBILITY.md)）。"
+      ],
+      [
+        "python3 papers/nsn-integrated/code/build_integrated_assets_v0_7.py \\",
+        ".venv/bin/python -B papers/nsn-integrated/code/build_integrated_assets_v0_7.py \\"
+      ],
+      [
+        "python3 papers/nsn-integrated/code/extract_existing_evidence.py \\",
+        ".venv/bin/python -B papers/nsn-integrated/code/extract_existing_evidence.py \\"
+      ],
+      [
+        "python3 papers/nsn-integrated/code/build_extraction_tables.py \\",
+        ".venv/bin/python -B papers/nsn-integrated/code/build_extraction_tables.py \\"
+      ],
+      [
+        "python3 scripts/build_nb06_paper_supplements.py \\",
+        ".venv/bin/python -B scripts/build_nb06_paper_supplements.py \\"
+      ],
+      [
+        "これは本文と表・図の再生成である。",
+        "上の生成器は2026-10-08の追補本文を再生成する。v1.0では、その出力へ[明示的な公開用補正](../../metadata/source-layout.json)を適用し、日英の新ファイル名と案内・申告を整える。別作業コピーのルートから `.venv/bin/python -B tools/reproduce.py --output-dir /tmp/nsn-v1-reproduced-new` を使うと、この公開版まで照合する（[依存と復元の手順](../../REPRODUCIBILITY.md)）。"
+      ]
+    ],
+    "papers/nsn-integrated/manuscript-en-v0.7-2026-10-08.md": [
+      [
+        "October 8, 2026 · English draft v0.7",
+        "October 29, 2026 · English version v1.0"
+      ],
+      [
+        "The figures and tables are regenerated from retained records, with links to original value locations and hashes in Appendix D. A fixed public archive and a license for the integrated manuscript have not yet been specified in this draft. Appendix D.5 identifies the published NSN version and the scope adopted here.",
+        "The figures and tables are regenerated from retained records, with links to original value locations and hashes in Appendix D. The release candidate contains fixed code, records, figures, and separately distributed saved arrays. Author-owned papers, figures, and data are licensed under CC BY 4.0, and code under Apache-2.0; third-party materials retain their original terms (see [licenses](../../LICENSES.md)). The repository is [https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn); [README](../../README.md) records its access status and the availability of companion ZIPs. A permanent archive DOI for the integrated paper has not been assigned. Appendix D.5 identifies the published NSN version and the scope adopted here."
+      ],
+      [
+        "Final funding and conflict-of-interest statements will be settled after author confirmation.",
+        "The research was self-funded by the author and received no external funding. The author declares no competing interests."
+      ],
+      [
+        "Conditions needed to interpret the methods and numbers are provided in the main text and Appendices A–C. The links below support recalculation and inspection of original records. Relative paths assume the current research-folder structure; a fixed public archive has not yet been created.",
+        "Conditions needed to interpret the methods and numbers are provided in the main text and Appendices A–C. The links below point to materials in the release candidate. Large saved arrays are restored from companion ZIPs into a new working copy. The [running instructions](../../RUNNING.md) and [reproduction guide](../../REPRODUCIBILITY.md) distinguish verification, restoration, and scientific recalculation."
+      ],
+      [
+        "`source` is relative to the research root.",
+        "`source` is an acquisition-time identifier and may differ from the current layout. Resolve it through the [source map](../../metadata/source-layout.json), or run `.venv/bin/python -B tools/source_layout.py --resolve IDENTIFIER` from the repository root to locate the current file."
+      ],
+      [
+        "The extraction has passed 1,732 checks with zero discrepancies.",
+        "The original extraction passed 1,732 checks with zero discrepancies. Public reproduction retains 1,730 checks after excluding two hashes of historical documents that are not distributed; no numerical check was removed (see the [reproduction guide](../../REPRODUCIBILITY.md))."
+      ],
+      [
+        "python3 papers/nsn-integrated/code/build_integrated_assets_v0_7.py \\",
+        ".venv/bin/python -B papers/nsn-integrated/code/build_integrated_assets_v0_7.py \\"
+      ],
+      [
+        "python3 papers/nsn-integrated/code/extract_existing_evidence.py \\",
+        ".venv/bin/python -B papers/nsn-integrated/code/extract_existing_evidence.py \\"
+      ],
+      [
+        "python3 papers/nsn-integrated/code/build_extraction_tables.py \\",
+        ".venv/bin/python -B papers/nsn-integrated/code/build_extraction_tables.py \\"
+      ],
+      [
+        "python3 scripts/build_nb06_paper_supplements.py \\",
+        ".venv/bin/python -B scripts/build_nb06_paper_supplements.py \\"
+      ],
+      [
+        "This regenerates manuscripts, tables, and figures.",
+        "The builder above regenerates the supplemented manuscripts dated October 8, 2026. Version 1.0 then applies [declared publication-only transformations](../../metadata/source-layout.json) to update filenames, navigation and declarations. From the root of a separate working copy, `.venv/bin/python -B tools/reproduce.py --output-dir /tmp/nsn-v1-reproduced-new` checks these public editions as well (see [dependencies and restoration](../../REPRODUCIBILITY.md))."
+      ]
+    ],
+    "papers/loop-kv/manuscript-ja-v0.5-2026-10-08.md": [
+      [
+        "設計、原実行記録、配布時のコード、数値再計算、本文の表との対応は[補足資料S1](evidence-index-v0.5-2026-10-08.md)に整理した。現時点のリンクは研究フォルダ内を指し、恒久公開アーカイブはまだ作成していない。公開版では固定版のコード・材料・ログ・hash一覧をまとめ、公開先と利用条件を追記する。",
+        "設計、原実行記録、配布時のコード、数値再計算、本文の表との対応は[補足資料S1](evidence-index-v0.5-2026-10-08.md)に整理した。公開候補には固定したコード・材料・ログ・hash一覧を収録し、大きな保存配列は別配布ZIPとした。著者作成の論文・図・データはCC BY 4.0、コードはApache-2.0、第三者資料は元の条件に従う（[利用条件](../../LICENSES.md)）。リポジトリは[https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn)。公開範囲と別配布ZIPの提供状況は[README](../../README.ja.md)に記録する。統合稿の恒久アーカイブDOIは未割当である。"
+      ],
+      [
+        "研究資金と利益相反の申告文は公開前に著者が確定する。",
+        "本研究は著者個人の自己資金で実施し、外部からの資金提供を受けていない。著者に申告すべき利益相反はない。"
+      ],
+      [
+        "公開版との版対応は統合稿作成時に照合する。",
+        "Zenodo v1.0.0との一致を[版対応記録](../nsn-integrated/publication-provenance-v0.1-2026-10-03.md)で確認済み。"
+      ],
+      [
+        "2026年10月8日 · 日本語草稿 v0.5",
+        "2026年10月8日 · 日本語草稿 v0.5\n\n公開用案内更新：2026年10月29日。利用条件・著者申告・参照先を現行パッケージへ同期した。測定値と科学的な結論は元の版から変更していない。"
+      ]
+    ],
+    "papers/loop-kv/manuscript-en-v0.3-2026-10-08.md": [
+      [
+        "Designs, original execution records, distributed code, numerical recalculations, and their correspondence to the paper's tables are indexed in [Supplement S1](evidence-index-en-v0.3-2026-10-08.md). Current links point into the research directory; no permanent public archive has yet been created. The public version will include pinned code, materials, logs, and hashes, together with the archive location and terms of use.",
+        "Designs, original execution records, distributed code, numerical recalculations, and their correspondence to the tables are indexed in [Supplement S1](evidence-index-en-v0.3-2026-10-08.md). The release candidate contains pinned code, materials, logs, and hashes, with large saved arrays in companion ZIPs. Author-owned papers, figures, and data use CC BY 4.0, code uses Apache-2.0, and third-party materials retain their original terms (see [licenses](../../LICENSES.md)). The repository is [https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn); [README](../../README.md) records its access status and the availability of companion ZIPs. A permanent archive DOI for the integrated paper has not been assigned."
+      ],
+      [
+        "Funding and competing-interest declarations will be finalized by the author before publication.",
+        "The research was self-funded by the author and received no external funding. The author declares no competing interests."
+      ],
+      [
+        "Correspondence with the public version remains to be checked when preparing the integrated manuscript.",
+        "Correspondence with Zenodo v1.0.0 was verified in the [publication provenance record](../nsn-integrated/publication-provenance-v0.1-2026-10-03.md)."
+      ],
+      [
+        "October 8, 2026 · English manuscript v0.3",
+        "October 8, 2026 · English manuscript v0.3\n\nPublication metadata updated October 29, 2026: licenses, author declarations and navigation are synchronized with the current package. Measured values and scientific conclusions are unchanged from the original edition."
+      ]
+    ],
+    "plans/loop-kv-nb05-design-v0.1-2026-10-03.md": [
+      [
+        "[材料履歴・復帰照合](../throughline/audits/loop-kv-nb05-design-v0.1-2026-10-03/material-history-and-resume.json)",
+        "材料履歴・復帰照合（内部の運用記録は非同梱。科学的入力は上記候補一覧と契約を参照）"
+      ],
+      [
+        "[論文化と統合方針](../throughline/checkpoints/loop-kv-paper-readiness-v0.2-2026-10-03.md)",
+        "論文化と統合方針（内部の執筆計画は非同梱）"
+      ]
+    ],
+    "plans/loop-kv-vf01-design-v0.1-2026-10-02.md": [
+      [
+        "[入力・コード照合](../throughline/audits/loop-kv-vf01-design-v0.1-2026-10-02/source-check.json)",
+        "入力・コード照合（内部の設営記録は非同梱。入力hashと実行コードは上記契約・原runを参照）"
+      ]
+    ],
+    "papers/nsn-integrated/related-work-review-v0.3-2026-10-03.md": [
+      [
+        "[日本語v0.4](Old/manuscript-ja-v0.4-2026-10-03.md)",
+        "日本語v0.4（当時の補助資料・旧稿は非同梱）"
+      ],
+      [
+        "[英語v0.2](Old/manuscript-en-v0.2-2026-10-03.md)",
+        "英語v0.2（当時の補助資料・旧稿は非同梱）"
+      ],
+      [
+        "[初回ギャップ調査](research/related-work/gap-scan-v0.1-2026-10-03.md)",
+        "初回ギャップ調査（当時の補助資料・旧稿は非同梱）"
+      ],
+      [
+        "[機械可読catalog](research/related-work/source-catalog-v0.1-2026-10-03.json)",
+        "機械可読catalog（当時の補助資料・旧稿は非同梱）"
+      ],
+      [
+        "[以前の一次確認記録](Old/related-work-review-v0.2-2026-10-03.md)",
+        "以前の一次確認記録（当時の補助資料・旧稿は非同梱）"
+      ],
+      [
+        "[初回調査](research/related-work/gap-scan-v0.1-2026-10-03.md)",
+        "初回調査（当時の補助資料・旧稿は非同梱）"
+      ]
+    ]
+  },
+  "publication_document_names": {
+    "papers/nsn-integrated/manuscript-ja-v0.8-2026-10-08.md": "papers/nsn-integrated/NSN-2026-10-29-JA.md",
+    "papers/nsn-integrated/manuscript-en-v0.7-2026-10-08.md": "papers/nsn-integrated/NSN-2026-10-29-EN.md"
+  },
+  "publication_navigation_copies": {
+    "plans/loop-kv-kv01-design-v0.1-2026-09-30.md": "plans/public/loop-kv-kv01-design-v0.1-2026-09-30.md",
+    "plans/loop-kv-nb05-design-v0.1-2026-10-03.md": "plans/public/loop-kv-nb05-design-v0.1-2026-10-03.md",
+    "plans/loop-kv-vf01-design-v0.1-2026-10-02.md": "plans/public/loop-kv-vf01-design-v0.1-2026-10-02.md",
+    "plans/prespecified/loop-kv-kv01-v0.1-2026-09-30.md": "plans/public/loop-kv-kv01-v0.1-2026-09-30.md",
+    "plans/prespecified/loop-kv-vf01-v0.1-2026-10-02.md": "plans/public/loop-kv-vf01-v0.1-2026-10-02.md",
+    "plans/prespecified/loop-kv-nb05-v0.1-2026-10-03.md": "plans/public/loop-kv-nb05-v0.1-2026-10-03.md",
+    "papers/nsn-integrated/related-work-review-v0.3-2026-10-03.md": "papers/nsn-integrated/public-notes/related-work-review-v0.3-2026-10-03.md"
+  },
+  "publication_link_targets": {
+    "plans/loop-kv-nb05-material-candidates-v0.1-2026-10-03.json": "scripts/loop_kv_nb05_candidates.json",
+    "plans/loop-kv-vf01-input-contract-v0.1-2026-10-02.json": "runs/loop-kv-vf01-20261002-072452-1d1c10c0/loop_kv_vf01_inputs.json",
+    "colab/kv01_README.md": "plans/README.md#kv01-colab"
+  },
+  "publication_edition": {
+    "version": "v1.0",
+    "date": "2026-10-29",
+    "scope": "Publication metadata, author declarations and navigation only; numerical records, scientific code and frozen baselines preserved.",
+    "github_repository": "https://github.com/metaSATOKEN/nsn",
+    "availability_update": "2026-10-30"
+  }
+}

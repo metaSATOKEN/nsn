@@ -1,0 +1,8 @@
+{
+  "selected_book_rank": 1,
+  "book_id": "26438",
+  "token_sha256": "35444ad4335d35de9b533ceb29a00116df8064ade7996b82fe4361b005efac98",
+  "selection_lock_sha256": "0a133a5fb2e7da7a32380734b9d51b2d14c2ffceb9abda9663e09770752fd3c6",
+  "started_monotonic": 965.000135788,
+  "deadline_monotonic": 2465.000101288
+}

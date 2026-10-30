@@ -1,0 +1,3019 @@
+{
+  "status": "COMPLETE_COMPARISON",
+  "hypotheses": {
+    "H1": false,
+    "H2": true,
+    "H3": true
+  },
+  "numerics": {
+    "RF01_MATERIALIZE": {
+      "unique_v_bit_differences": 0,
+      "unique_v_elements": 17688576,
+      "v_max_abs": 0.0,
+      "v_max_rmse": 0.0,
+      "score_max_abs": 0.005265298217297154,
+      "context_max_abs": 2.45790580555294e-07,
+      "combined_context_max_abs": 2.45790580555294e-07,
+      "output_bit_differences": 0,
+      "output_elements": 73728,
+      "output_max_abs": 0.0,
+      "output_changed_cases": []
+    },
+    "TILE_MATERIALIZE": {
+      "unique_v_bit_differences": 108,
+      "unique_v_elements": 17688576,
+      "v_max_abs": 0.0078125,
+      "v_max_rmse": 6.440619702571308e-06,
+      "score_max_abs": 0.005265298217297154,
+      "context_max_abs": 2.45790580555294e-07,
+      "combined_context_max_abs": 4.076867547597729e-05,
+      "output_bit_differences": 5,
+      "output_elements": 73728,
+      "output_max_abs": 3.0517578125e-05,
+      "output_changed_cases": [
+        {
+          "sample": "GATE-FUSED-s191",
+          "query": "zero",
+          "metrics": {
+            "pass_budget": true,
+            "bit_differences": 1,
+            "elements": 2048,
+            "max_abs": 3.814697265625e-06,
+            "rmse": 8.429369702178807e-08,
+            "token_exceed": 0,
+            "head_exceed": 0
+          }
+        },
+        {
+          "sample": "RF01-b3752-FUSED-s95",
+          "query": "one_hot",
+          "metrics": {
+            "pass_budget": true,
+            "bit_differences": 2,
+            "elements": 2048,
+            "max_abs": 3.0517578125e-05,
+            "rmse": 6.825317436813585e-07,
+            "token_exceed": 0,
+            "head_exceed": 0
+          }
+        },
+        {
+          "sample": "RF01-b3752-FUSED-s191",
+          "query": "one_hot",
+          "metrics": {
+            "pass_budget": true,
+            "bit_differences": 1,
+            "elements": 2048,
+            "max_abs": 1.52587890625e-05,
+            "rmse": 3.371747880871523e-07,
+            "token_exceed": 0,
+            "head_exceed": 0
+          }
+        },
+        {
+          "sample": "RF01-b3752-FUSED-s191",
+          "query": "zero",
+          "metrics": {
+            "pass_budget": true,
+            "bit_differences": 1,
+            "elements": 2048,
+            "max_abs": 1.9073486328125e-06,
+            "rmse": 4.2146848510894035e-08,
+            "token_exceed": 0,
+            "head_exceed": 0
+          }
+        }
+      ]
+    },
+    "V_FUSED": {
+      "unique_v_bit_differences": 108,
+      "unique_v_elements": 17688576,
+      "v_max_abs": 0.0078125,
+      "v_max_rmse": 6.440619702571308e-06,
+      "score_max_abs": 0.005265298217297154,
+      "context_max_abs": 2.45790580555294e-07,
+      "combined_context_max_abs": 4.076867547597729e-05,
+      "output_bit_differences": 5,
+      "output_elements": 73728,
+      "output_max_abs": 3.0517578125e-05,
+      "output_changed_cases": [
+        {
+          "sample": "GATE-FUSED-s191",
+          "query": "zero",
+          "metrics": {
+            "pass_budget": true,
+            "bit_differences": 1,
+            "elements": 2048,
+            "max_abs": 3.814697265625e-06,
+            "rmse": 8.429369702178807e-08,
+            "token_exceed": 0,
+            "head_exceed": 0
+          }
+        },
+        {
+          "sample": "RF01-b3752-FUSED-s95",
+          "query": "one_hot",
+          "metrics": {
+            "pass_budget": true,
+            "bit_differences": 2,
+            "elements": 2048,
+            "max_abs": 3.0517578125e-05,
+            "rmse": 6.825317436813585e-07,
+            "token_exceed": 0,
+            "head_exceed": 0
+          }
+        },
+        {
+          "sample": "RF01-b3752-FUSED-s191",
+          "query": "one_hot",
+          "metrics": {
+            "pass_budget": true,
+            "bit_differences": 1,
+            "elements": 2048,
+            "max_abs": 1.52587890625e-05,
+            "rmse": 3.371747880871523e-07,
+            "token_exceed": 0,
+            "head_exceed": 0
+          }
+        },
+        {
+          "sample": "RF01-b3752-FUSED-s191",
+          "query": "zero",
+          "metrics": {
+            "pass_budget": true,
+            "bit_differences": 1,
+            "elements": 2048,
+            "max_abs": 1.9073486328125e-06,
+            "rmse": 4.2146848510894035e-08,
+            "token_exceed": 0,
+            "head_exceed": 0
+          }
+        }
+      ]
+    }
+  },
+  "unique_inputs": [
+    {
+      "sample": "GATE-FUSED-s0",
+      "phase": "gate",
+      "book_id": "37013",
+      "slot": 0,
+      "v": {
+        "RF01_MATERIALIZE": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 1705984,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "TILE_MATERIALIZE": {
+          "pass_budget": true,
+          "bit_differences": 23,
+          "elements": 1705984,
+          "max_abs": 0.001953125,
+          "rmse": 3.2488665199617366e-06,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "V_FUSED": {
+          "pass_budget": true,
+          "bit_differences": 23,
+          "elements": 1705984,
+          "max_abs": 0.001953125,
+          "rmse": 3.2488665199617366e-06,
+          "token_exceed": 0,
+          "head_exceed": 0
+        }
+      },
+      "original_difference": {
+        "k": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 1705984,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "v": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 1705984,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "full_attention": {
+          "RF01_MATERIALIZE": {
+            "bit_equal": false,
+            "max_abs": 0.0019315116174344338,
+            "rmse": 0.00018642691617052563
+          },
+          "TILE_MATERIALIZE": {
+            "bit_equal": false,
+            "max_abs": 0.0019315116174344338,
+            "rmse": 0.00018642691617052563
+          },
+          "V_FUSED": {
+            "bit_equal": false,
+            "max_abs": 0.0019315116174344338,
+            "rmse": 0.00018642691617052563
+          }
+        }
+      }
+    },
+    {
+      "sample": "GATE-FUSED-s95",
+      "phase": "gate",
+      "book_id": "37013",
+      "slot": 95,
+      "v": {
+        "RF01_MATERIALIZE": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 1705984,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "TILE_MATERIALIZE": {
+          "pass_budget": true,
+          "bit_differences": 8,
+          "elements": 1705984,
+          "max_abs": 0.001953125,
+          "rmse": 2.7598204091856993e-06,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "V_FUSED": {
+          "pass_budget": true,
+          "bit_differences": 8,
+          "elements": 1705984,
+          "max_abs": 0.001953125,
+          "rmse": 2.7598204091856993e-06,
+          "token_exceed": 0,
+          "head_exceed": 0
+        }
+      },
+      "original_difference": {
+        "k": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 1705984,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "v": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 1705984,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "full_attention": {
+          "RF01_MATERIALIZE": {
+            "bit_equal": false,
+            "max_abs": 0.0019255175773842392,
+            "rmse": 0.00026403034896241686
+          },
+          "TILE_MATERIALIZE": {
+            "bit_equal": false,
+            "max_abs": 0.0019255175773842392,
+            "rmse": 0.00026403034896241686
+          },
+          "V_FUSED": {
+            "bit_equal": false,
+            "max_abs": 0.0019255175773842392,
+            "rmse": 0.00026403034896241686
+          }
+        }
+      }
+    },
+    {
+      "sample": "GATE-FUSED-s191",
+      "phase": "gate",
+      "book_id": "37013",
+      "slot": 191,
+      "v": {
+        "RF01_MATERIALIZE": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 1705984,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "TILE_MATERIALIZE": {
+          "pass_budget": true,
+          "bit_differences": 6,
+          "elements": 1705984,
+          "max_abs": 0.001953125,
+          "rmse": 3.013977908626025e-06,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "V_FUSED": {
+          "pass_budget": true,
+          "bit_differences": 6,
+          "elements": 1705984,
+          "max_abs": 0.001953125,
+          "rmse": 3.013977908626025e-06,
+          "token_exceed": 0,
+          "head_exceed": 0
+        }
+      },
+      "original_difference": {
+        "k": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 1705984,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "v": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 1705984,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "full_attention": {
+          "RF01_MATERIALIZE": {
+            "bit_equal": false,
+            "max_abs": 0.003676348595898604,
+            "rmse": 0.0002769640561577984
+          },
+          "TILE_MATERIALIZE": {
+            "bit_equal": false,
+            "max_abs": 0.003676348595898604,
+            "rmse": 0.0002769640561577984
+          },
+          "V_FUSED": {
+            "bit_equal": false,
+            "max_abs": 0.003676348595898604,
+            "rmse": 0.0002769640561577984
+          }
+        }
+      }
+    },
+    {
+      "sample": "RF01-b3752-FUSED-s0",
+      "phase": "main",
+      "book_id": "3752",
+      "slot": 0,
+      "v": {
+        "RF01_MATERIALIZE": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 2095104,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "TILE_MATERIALIZE": {
+          "pass_budget": true,
+          "bit_differences": 19,
+          "elements": 2095104,
+          "max_abs": 0.0009765625,
+          "rmse": 1.5395719086267989e-06,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "V_FUSED": {
+          "pass_budget": true,
+          "bit_differences": 19,
+          "elements": 2095104,
+          "max_abs": 0.0009765625,
+          "rmse": 1.5395719086267989e-06,
+          "token_exceed": 0,
+          "head_exceed": 0
+        }
+      },
+      "original_difference": {
+        "k": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 2095104,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "v": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 2095104,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "full_attention": {
+          "RF01_MATERIALIZE": {
+            "bit_equal": false,
+            "max_abs": 0.002999528689820119,
+            "rmse": 0.00019936987659794177
+          },
+          "TILE_MATERIALIZE": {
+            "bit_equal": false,
+            "max_abs": 0.002999528689820119,
+            "rmse": 0.00019936987659794177
+          },
+          "V_FUSED": {
+            "bit_equal": false,
+            "max_abs": 0.002999528689820119,
+            "rmse": 0.00019936987659794177
+          }
+        }
+      }
+    },
+    {
+      "sample": "RF01-b3752-FUSED-s95",
+      "phase": "main",
+      "book_id": "3752",
+      "slot": 95,
+      "v": {
+        "RF01_MATERIALIZE": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 2095104,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "TILE_MATERIALIZE": {
+          "pass_budget": true,
+          "bit_differences": 10,
+          "elements": 2095104,
+          "max_abs": 0.00390625,
+          "rmse": 4.86518010544912e-06,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "V_FUSED": {
+          "pass_budget": true,
+          "bit_differences": 10,
+          "elements": 2095104,
+          "max_abs": 0.00390625,
+          "rmse": 4.86518010544912e-06,
+          "token_exceed": 0,
+          "head_exceed": 0
+        }
+      },
+      "original_difference": {
+        "k": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 2095104,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "v": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 2095104,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "full_attention": {
+          "RF01_MATERIALIZE": {
+            "bit_equal": false,
+            "max_abs": 0.0030366244052721925,
+            "rmse": 0.0002800529777799595
+          },
+          "TILE_MATERIALIZE": {
+            "bit_equal": false,
+            "max_abs": 0.0030366244052721925,
+            "rmse": 0.0002800529777799595
+          },
+          "V_FUSED": {
+            "bit_equal": false,
+            "max_abs": 0.0030366244052721925,
+            "rmse": 0.0002800529777799595
+          }
+        }
+      }
+    },
+    {
+      "sample": "RF01-b3752-FUSED-s191",
+      "phase": "main",
+      "book_id": "3752",
+      "slot": 191,
+      "v": {
+        "RF01_MATERIALIZE": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 2095104,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "TILE_MATERIALIZE": {
+          "pass_budget": true,
+          "bit_differences": 14,
+          "elements": 2095104,
+          "max_abs": 0.0078125,
+          "rmse": 6.440619702571308e-06,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "V_FUSED": {
+          "pass_budget": true,
+          "bit_differences": 14,
+          "elements": 2095104,
+          "max_abs": 0.0078125,
+          "rmse": 6.440619702571308e-06,
+          "token_exceed": 0,
+          "head_exceed": 0
+        }
+      },
+      "original_difference": {
+        "k": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 2095104,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "v": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 2095104,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "full_attention": {
+          "RF01_MATERIALIZE": {
+            "bit_equal": false,
+            "max_abs": 0.003139740139331826,
+            "rmse": 0.00030359915208765507
+          },
+          "TILE_MATERIALIZE": {
+            "bit_equal": false,
+            "max_abs": 0.003139740139331826,
+            "rmse": 0.00030359915208765507
+          },
+          "V_FUSED": {
+            "bit_equal": false,
+            "max_abs": 0.003139740139331826,
+            "rmse": 0.00030359915208765507
+          }
+        }
+      }
+    },
+    {
+      "sample": "RF01-b31131-FUSED-s0",
+      "phase": "main",
+      "book_id": "31131",
+      "slot": 0,
+      "v": {
+        "RF01_MATERIALIZE": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 2095104,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "TILE_MATERIALIZE": {
+          "pass_budget": true,
+          "bit_differences": 3,
+          "elements": 2095104,
+          "max_abs": 0.0009765625,
+          "rmse": 1.0120186346863904e-06,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "V_FUSED": {
+          "pass_budget": true,
+          "bit_differences": 3,
+          "elements": 2095104,
+          "max_abs": 0.0009765625,
+          "rmse": 1.0120186346863904e-06,
+          "token_exceed": 0,
+          "head_exceed": 0
+        }
+      },
+      "original_difference": {
+        "k": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 2095104,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "v": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 2095104,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "full_attention": {
+          "RF01_MATERIALIZE": {
+            "bit_equal": false,
+            "max_abs": 0.003573499705721961,
+            "rmse": 0.0002003570675609599
+          },
+          "TILE_MATERIALIZE": {
+            "bit_equal": false,
+            "max_abs": 0.003573499705721961,
+            "rmse": 0.0002003570675609599
+          },
+          "V_FUSED": {
+            "bit_equal": false,
+            "max_abs": 0.003573499705721961,
+            "rmse": 0.0002003570675609599
+          }
+        }
+      }
+    },
+    {
+      "sample": "RF01-b31131-FUSED-s95",
+      "phase": "main",
+      "book_id": "31131",
+      "slot": 95,
+      "v": {
+        "RF01_MATERIALIZE": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 2095104,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "TILE_MATERIALIZE": {
+          "pass_budget": true,
+          "bit_differences": 12,
+          "elements": 2095104,
+          "max_abs": 0.00390625,
+          "rmse": 5.1104435993648235e-06,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "V_FUSED": {
+          "pass_budget": true,
+          "bit_differences": 12,
+          "elements": 2095104,
+          "max_abs": 0.00390625,
+          "rmse": 5.1104435993648235e-06,
+          "token_exceed": 0,
+          "head_exceed": 0
+        }
+      },
+      "original_difference": {
+        "k": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 2095104,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "v": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 2095104,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "full_attention": {
+          "RF01_MATERIALIZE": {
+            "bit_equal": false,
+            "max_abs": 0.0032785234842918065,
+            "rmse": 0.00028024811571611267
+          },
+          "TILE_MATERIALIZE": {
+            "bit_equal": false,
+            "max_abs": 0.0032785234842918065,
+            "rmse": 0.00028024811571611267
+          },
+          "V_FUSED": {
+            "bit_equal": false,
+            "max_abs": 0.0032785234842918065,
+            "rmse": 0.00028024811571611267
+          }
+        }
+      }
+    },
+    {
+      "sample": "RF01-b31131-FUSED-s191",
+      "phase": "main",
+      "book_id": "31131",
+      "slot": 191,
+      "v": {
+        "RF01_MATERIALIZE": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 2095104,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "TILE_MATERIALIZE": {
+          "pass_budget": true,
+          "bit_differences": 13,
+          "elements": 2095104,
+          "max_abs": 0.00390625,
+          "rmse": 3.6381487348656125e-06,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "V_FUSED": {
+          "pass_budget": true,
+          "bit_differences": 13,
+          "elements": 2095104,
+          "max_abs": 0.00390625,
+          "rmse": 3.6381487348656125e-06,
+          "token_exceed": 0,
+          "head_exceed": 0
+        }
+      },
+      "original_difference": {
+        "k": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 2095104,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "v": {
+          "pass_budget": true,
+          "bit_differences": 0,
+          "elements": 2095104,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "token_exceed": 0,
+          "head_exceed": 0
+        },
+        "full_attention": {
+          "RF01_MATERIALIZE": {
+            "bit_equal": false,
+            "max_abs": 0.0034529006337904455,
+            "rmse": 0.00027785327245525757
+          },
+          "TILE_MATERIALIZE": {
+            "bit_equal": false,
+            "max_abs": 0.0034529006337904455,
+            "rmse": 0.00027785327245525757
+          },
+          "V_FUSED": {
+            "bit_equal": false,
+            "max_abs": 0.0034529006337904455,
+            "rmse": 0.00027785327245525757
+          }
+        }
+      }
+    }
+  ],
+  "per_sample": [
+    {
+      "sample": "GATE-FUSED-s0",
+      "phase": "gate",
+      "book_id": "37013",
+      "slot": 0,
+      "time": {
+        "RF01_MATERIALIZE": {
+          "cuda_ms": 0.30053761005401614,
+          "wall_ms": 0.30141194999941945
+        },
+        "TILE_MATERIALIZE": {
+          "cuda_ms": 0.24223840236663818,
+          "wall_ms": 0.24314749999803098
+        },
+        "V_FUSED": {
+          "cuda_ms": 0.17370400428771973,
+          "wall_ms": 0.17459294999753183
+        }
+      },
+      "memory": {
+        "RF01_MATERIALIZE": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 39644160,
+            "max": 39644160,
+            "median": 39644160.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 17350656,
+            "max": 17350656,
+            "median": 17350656.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        },
+        "TILE_MATERIALIZE": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 34235392,
+            "max": 34235392,
+            "median": 34235392.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 11941888,
+            "max": 11941888,
+            "median": 11941888.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        },
+        "V_FUSED": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 22752256,
+            "max": 22752256,
+            "median": 22752256.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 458752,
+            "max": 458752,
+            "median": 458752.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        }
+      }
+    },
+    {
+      "sample": "GATE-FUSED-s95",
+      "phase": "gate",
+      "book_id": "37013",
+      "slot": 95,
+      "time": {
+        "RF01_MATERIALIZE": {
+          "cuda_ms": 0.2999216079711914,
+          "wall_ms": 0.3008379999982935
+        },
+        "TILE_MATERIALIZE": {
+          "cuda_ms": 0.24160799980163575,
+          "wall_ms": 0.24250899999742614
+        },
+        "V_FUSED": {
+          "cuda_ms": 0.17447199821472167,
+          "wall_ms": 0.1753684999982852
+        }
+      },
+      "memory": {
+        "RF01_MATERIALIZE": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 39644160,
+            "max": 39644160,
+            "median": 39644160.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 17350656,
+            "max": 17350656,
+            "median": 17350656.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        },
+        "TILE_MATERIALIZE": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 34235392,
+            "max": 34235392,
+            "median": 34235392.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 11941888,
+            "max": 11941888,
+            "median": 11941888.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        },
+        "V_FUSED": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 22752256,
+            "max": 22752256,
+            "median": 22752256.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 458752,
+            "max": 458752,
+            "median": 458752.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        }
+      }
+    },
+    {
+      "sample": "GATE-FUSED-s191",
+      "phase": "gate",
+      "book_id": "37013",
+      "slot": 191,
+      "time": {
+        "RF01_MATERIALIZE": {
+          "cuda_ms": 0.3007136106491089,
+          "wall_ms": 0.30160994999732793
+        },
+        "TILE_MATERIALIZE": {
+          "cuda_ms": 0.24162559509277343,
+          "wall_ms": 0.2425585000025876
+        },
+        "V_FUSED": {
+          "cuda_ms": 0.17394399642944336,
+          "wall_ms": 0.17477850000204853
+        }
+      },
+      "memory": {
+        "RF01_MATERIALIZE": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 39644160,
+            "max": 39644160,
+            "median": 39644160.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 17350656,
+            "max": 17350656,
+            "median": 17350656.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        },
+        "TILE_MATERIALIZE": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 34235392,
+            "max": 34235392,
+            "median": 34235392.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 11941888,
+            "max": 11941888,
+            "median": 11941888.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        },
+        "V_FUSED": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 22752256,
+            "max": 22752256,
+            "median": 22752256.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 458752,
+            "max": 458752,
+            "median": 458752.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        }
+      }
+    },
+    {
+      "sample": "RF01-b3752-FUSED-s0",
+      "phase": "main",
+      "book_id": "3752",
+      "slot": 0,
+      "time": {
+        "RF01_MATERIALIZE": {
+          "cuda_ms": 0.29838240146636963,
+          "wall_ms": 0.29930050000075425
+        },
+        "TILE_MATERIALIZE": {
+          "cuda_ms": 0.24407680034637452,
+          "wall_ms": 0.24496850000446102
+        },
+        "V_FUSED": {
+          "cuda_ms": 0.17391200065612794,
+          "wall_ms": 0.17480700000191973
+        }
+      },
+      "memory": {
+        "RF01_MATERIALIZE": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 43322368,
+            "max": 43322368,
+            "median": 43322368.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 21028864,
+            "max": 21028864,
+            "median": 21028864.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        },
+        "TILE_MATERIALIZE": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 36959232,
+            "max": 36959232,
+            "median": 36959232.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 14665728,
+            "max": 14665728,
+            "median": 14665728.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        },
+        "V_FUSED": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 22844928,
+            "max": 22844928,
+            "median": 22844928.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 551424,
+            "max": 551424,
+            "median": 551424.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        }
+      }
+    },
+    {
+      "sample": "RF01-b3752-FUSED-s95",
+      "phase": "main",
+      "book_id": "3752",
+      "slot": 95,
+      "time": {
+        "RF01_MATERIALIZE": {
+          "cuda_ms": 0.29918880462646485,
+          "wall_ms": 0.3000905000021703
+        },
+        "TILE_MATERIALIZE": {
+          "cuda_ms": 0.24303679466247557,
+          "wall_ms": 0.244300999997904
+        },
+        "V_FUSED": {
+          "cuda_ms": 0.1747215986251831,
+          "wall_ms": 0.17561500000056185
+        }
+      },
+      "memory": {
+        "RF01_MATERIALIZE": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 43322368,
+            "max": 43322368,
+            "median": 43322368.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 21028864,
+            "max": 21028864,
+            "median": 21028864.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        },
+        "TILE_MATERIALIZE": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 36959232,
+            "max": 36959232,
+            "median": 36959232.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 14665728,
+            "max": 14665728,
+            "median": 14665728.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        },
+        "V_FUSED": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 22844928,
+            "max": 22844928,
+            "median": 22844928.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 551424,
+            "max": 551424,
+            "median": 551424.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        }
+      }
+    },
+    {
+      "sample": "RF01-b3752-FUSED-s191",
+      "phase": "main",
+      "book_id": "3752",
+      "slot": 191,
+      "time": {
+        "RF01_MATERIALIZE": {
+          "cuda_ms": 0.29966559410095217,
+          "wall_ms": 0.3005590000043412
+        },
+        "TILE_MATERIALIZE": {
+          "cuda_ms": 0.24287838935852052,
+          "wall_ms": 0.2437844999974459
+        },
+        "V_FUSED": {
+          "cuda_ms": 0.17445600032806396,
+          "wall_ms": 0.17533800000251176
+        }
+      },
+      "memory": {
+        "RF01_MATERIALIZE": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 43322368,
+            "max": 43322368,
+            "median": 43322368.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 21028864,
+            "max": 21028864,
+            "median": 21028864.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        },
+        "TILE_MATERIALIZE": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 36959232,
+            "max": 36959232,
+            "median": 36959232.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 14665728,
+            "max": 14665728,
+            "median": 14665728.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        },
+        "V_FUSED": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 22844928,
+            "max": 22844928,
+            "median": 22844928.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 551424,
+            "max": 551424,
+            "median": 551424.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        }
+      }
+    },
+    {
+      "sample": "RF01-b31131-FUSED-s0",
+      "phase": "main",
+      "book_id": "31131",
+      "slot": 0,
+      "time": {
+        "RF01_MATERIALIZE": {
+          "cuda_ms": 0.2996880054473877,
+          "wall_ms": 0.3005764500016994
+        },
+        "TILE_MATERIALIZE": {
+          "cuda_ms": 0.24305760860443115,
+          "wall_ms": 0.2439330000015616
+        },
+        "V_FUSED": {
+          "cuda_ms": 0.17457120418548583,
+          "wall_ms": 0.17547799999988456
+        }
+      },
+      "memory": {
+        "RF01_MATERIALIZE": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 43322368,
+            "max": 43322368,
+            "median": 43322368.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 21028864,
+            "max": 21028864,
+            "median": 21028864.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        },
+        "TILE_MATERIALIZE": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 36959232,
+            "max": 36959232,
+            "median": 36959232.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 14665728,
+            "max": 14665728,
+            "median": 14665728.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        },
+        "V_FUSED": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 22844928,
+            "max": 22844928,
+            "median": 22844928.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 551424,
+            "max": 551424,
+            "median": 551424.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        }
+      }
+    },
+    {
+      "sample": "RF01-b31131-FUSED-s95",
+      "phase": "main",
+      "book_id": "31131",
+      "slot": 95,
+      "time": {
+        "RF01_MATERIALIZE": {
+          "cuda_ms": 0.29971039295196533,
+          "wall_ms": 0.30061150000051384
+        },
+        "TILE_MATERIALIZE": {
+          "cuda_ms": 0.24343039989471435,
+          "wall_ms": 0.24430949999896256
+        },
+        "V_FUSED": {
+          "cuda_ms": 0.17359039783477784,
+          "wall_ms": 0.1744945000041298
+        }
+      },
+      "memory": {
+        "RF01_MATERIALIZE": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 43322368,
+            "max": 43322368,
+            "median": 43322368.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 21028864,
+            "max": 21028864,
+            "median": 21028864.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        },
+        "TILE_MATERIALIZE": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 36959232,
+            "max": 36959232,
+            "median": 36959232.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 14665728,
+            "max": 14665728,
+            "median": 14665728.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        },
+        "V_FUSED": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 22844928,
+            "max": 22844928,
+            "median": 22844928.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 551424,
+            "max": 551424,
+            "median": 551424.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        }
+      }
+    },
+    {
+      "sample": "RF01-b31131-FUSED-s191",
+      "phase": "main",
+      "book_id": "31131",
+      "slot": 191,
+      "time": {
+        "RF01_MATERIALIZE": {
+          "cuda_ms": 0.2992288112640381,
+          "wall_ms": 0.30013649999887093
+        },
+        "TILE_MATERIALIZE": {
+          "cuda_ms": 0.24365921020507814,
+          "wall_ms": 0.24456100000520564
+        },
+        "V_FUSED": {
+          "cuda_ms": 0.17462559938430786,
+          "wall_ms": 0.1755174999971132
+        }
+      },
+      "memory": {
+        "RF01_MATERIALIZE": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 43322368,
+            "max": 43322368,
+            "median": 43322368.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 21028864,
+            "max": 21028864,
+            "median": 21028864.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        },
+        "TILE_MATERIALIZE": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 36959232,
+            "max": 36959232,
+            "median": 36959232.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 14665728,
+            "max": 14665728,
+            "median": 14665728.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        },
+        "V_FUSED": {
+          "allocated_before": {
+            "min": 22293504,
+            "max": 22293504,
+            "median": 22293504.0
+          },
+          "allocated_peak": {
+            "min": 22844928,
+            "max": 22844928,
+            "median": 22844928.0
+          },
+          "reserved_before": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "reserved_peak": {
+            "min": 46137344,
+            "max": 46137344,
+            "median": 46137344.0
+          },
+          "output_storage_bytes": {
+            "min": 4096,
+            "max": 4096,
+            "median": 4096.0
+          },
+          "allocated_extra": {
+            "min": 551424,
+            "max": 551424,
+            "median": 551424.0
+          },
+          "reserved_extra": {
+            "min": 0,
+            "max": 0,
+            "median": 0.0
+          }
+        }
+      }
+    }
+  ],
+  "main_time_ms": {
+    "RF01_MATERIALIZE": {
+      "cuda_ms": 0.29944720268249514,
+      "wall_ms": 0.3003477500016061
+    },
+    "TILE_MATERIALIZE": {
+      "cuda_ms": 0.24324400424957277,
+      "wall_ms": 0.24430524999843328
+    },
+    "V_FUSED": {
+      "cuda_ms": 0.1745136022567749,
+      "wall_ms": 0.17540800000119816
+    }
+  },
+  "timing": {
+    "cuda_ms": {
+      "V_FUSED/TILE_MATERIALIZE": {
+        "samples": [
+          {
+            "sample": "GATE-FUSED-s0",
+            "book_id": "37013",
+            "phase": "gate",
+            "slot": 0,
+            "query_ratios": {
+              "gaussian": 0.7204959998188559,
+              "one_hot": 0.7128118351826217,
+              "alternating": 0.7144784564221209,
+              "zero": 0.7165558200338041
+            },
+            "nonzero_query_median": 0.7144784564221209
+          },
+          {
+            "sample": "GATE-FUSED-s95",
+            "book_id": "37013",
+            "phase": "gate",
+            "slot": 95,
+            "query_ratios": {
+              "gaussian": 0.7191086459990127,
+              "one_hot": 0.7229422449257417,
+              "alternating": 0.7281106238593811,
+              "zero": 0.7224817390867103
+            },
+            "nonzero_query_median": 0.7229422449257417
+          },
+          {
+            "sample": "GATE-FUSED-s191",
+            "book_id": "37013",
+            "phase": "gate",
+            "slot": 191,
+            "query_ratios": {
+              "gaussian": 0.7198807749156645,
+              "one_hot": 0.7190954135433871,
+              "alternating": 0.7219764997071393,
+              "zero": 0.7175086577376408
+            },
+            "nonzero_query_median": 0.7198807749156645
+          },
+          {
+            "sample": "RF01-b3752-FUSED-s0",
+            "book_id": "3752",
+            "phase": "main",
+            "slot": 0,
+            "query_ratios": {
+              "gaussian": 0.7195559066998969,
+              "one_hot": 0.7109080619144332,
+              "alternating": 0.7099273901976131,
+              "zero": 0.7129431960844607
+            },
+            "nonzero_query_median": 0.7109080619144332
+          },
+          {
+            "sample": "RF01-b3752-FUSED-s95",
+            "book_id": "3752",
+            "phase": "main",
+            "slot": 95,
+            "query_ratios": {
+              "gaussian": 0.7216084274424789,
+              "one_hot": 0.7189956602616008,
+              "alternating": 0.7125897670750281,
+              "zero": 0.7177628832654038
+            },
+            "nonzero_query_median": 0.7189956602616008
+          },
+          {
+            "sample": "RF01-b3752-FUSED-s191",
+            "book_id": "3752",
+            "phase": "main",
+            "slot": 191,
+            "query_ratios": {
+              "gaussian": 0.7127707719479671,
+              "one_hot": 0.7182853970204155,
+              "alternating": 0.7210904997587443,
+              "zero": 0.7151780806525871
+            },
+            "nonzero_query_median": 0.7182853970204155
+          },
+          {
+            "sample": "RF01-b31131-FUSED-s0",
+            "book_id": "31131",
+            "phase": "main",
+            "slot": 0,
+            "query_ratios": {
+              "gaussian": 0.7185561569327564,
+              "one_hot": 0.7179749899903183,
+              "alternating": 0.7168407707040264,
+              "zero": 0.7159645838491602
+            },
+            "nonzero_query_median": 0.7179749899903183
+          },
+          {
+            "sample": "RF01-b31131-FUSED-s95",
+            "book_id": "31131",
+            "phase": "main",
+            "slot": 95,
+            "query_ratios": {
+              "gaussian": 0.7145512141007535,
+              "one_hot": 0.7131007380748547,
+              "alternating": 0.7140663462147538,
+              "zero": 0.7209329886372644
+            },
+            "nonzero_query_median": 0.7140663462147538
+          },
+          {
+            "sample": "RF01-b31131-FUSED-s191",
+            "book_id": "31131",
+            "phase": "main",
+            "slot": 191,
+            "query_ratios": {
+              "gaussian": 0.7164162191548429,
+              "one_hot": 0.722390121100084,
+              "alternating": 0.7151299711305731,
+              "zero": 0.7196248729783665
+            },
+            "nonzero_query_median": 0.7164162191548429
+          }
+        ],
+        "main": {
+          "n_pairs": 6,
+          "independent_books": 2,
+          "median": 0.7171956045725806,
+          "min": 0.7109080619144332,
+          "max": 0.7189956602616008,
+          "faster_count": 6
+        }
+      },
+      "V_FUSED/RF01_MATERIALIZE": {
+        "samples": [
+          {
+            "sample": "GATE-FUSED-s0",
+            "book_id": "37013",
+            "phase": "gate",
+            "slot": 0,
+            "query_ratios": {
+              "gaussian": 0.579244796038324,
+              "one_hot": 0.5746822446622071,
+              "alternating": 0.5779775924101467,
+              "zero": 0.5780220467680078
+            },
+            "nonzero_query_median": 0.5779775924101467
+          },
+          {
+            "sample": "GATE-FUSED-s95",
+            "book_id": "37013",
+            "phase": "gate",
+            "slot": 95,
+            "query_ratios": {
+              "gaussian": 0.5792927117694456,
+              "one_hot": 0.5793147529098591,
+              "alternating": 0.5879144946727675,
+              "zero": 0.5819250603579595
+            },
+            "nonzero_query_median": 0.5793147529098591
+          },
+          {
+            "sample": "GATE-FUSED-s191",
+            "book_id": "37013",
+            "phase": "gate",
+            "slot": 191,
+            "query_ratios": {
+              "gaussian": 0.577310521956271,
+              "one_hot": 0.5821013570641705,
+              "alternating": 0.5801134208996338,
+              "zero": 0.5779008346945634
+            },
+            "nonzero_query_median": 0.5801134208996338
+          },
+          {
+            "sample": "RF01-b3752-FUSED-s0",
+            "book_id": "3752",
+            "phase": "main",
+            "slot": 0,
+            "query_ratios": {
+              "gaussian": 0.5819531307756034,
+              "one_hot": 0.5855433431753405,
+              "alternating": 0.5807205955382573,
+              "zero": 0.5806335866666592
+            },
+            "nonzero_query_median": 0.5819531307756034
+          },
+          {
+            "sample": "RF01-b3752-FUSED-s95",
+            "book_id": "3752",
+            "phase": "main",
+            "slot": 95,
+            "query_ratios": {
+              "gaussian": 0.5839844135990376,
+              "one_hot": 0.5842038928659592,
+              "alternating": 0.5786428455303436,
+              "zero": 0.5843436696343062
+            },
+            "nonzero_query_median": 0.5839844135990376
+          },
+          {
+            "sample": "RF01-b3752-FUSED-s191",
+            "book_id": "3752",
+            "phase": "main",
+            "slot": 191,
+            "query_ratios": {
+              "gaussian": 0.5802948646363727,
+              "one_hot": 0.5821129897676184,
+              "alternating": 0.5832790326386985,
+              "zero": 0.5803224384835212
+            },
+            "nonzero_query_median": 0.5821129897676184
+          },
+          {
+            "sample": "RF01-b31131-FUSED-s0",
+            "book_id": "31131",
+            "phase": "main",
+            "slot": 0,
+            "query_ratios": {
+              "gaussian": 0.5815473093880131,
+              "one_hot": 0.5834761356282895,
+              "alternating": 0.5852767309338431,
+              "zero": 0.5821344463440752
+            },
+            "nonzero_query_median": 0.5834761356282895
+          },
+          {
+            "sample": "RF01-b31131-FUSED-s95",
+            "book_id": "31131",
+            "phase": "main",
+            "slot": 95,
+            "query_ratios": {
+              "gaussian": 0.5809021169356042,
+              "one_hot": 0.57902686166302,
+              "alternating": 0.5793717967514916,
+              "zero": 0.5848494780532477
+            },
+            "nonzero_query_median": 0.5793717967514916
+          },
+          {
+            "sample": "RF01-b31131-FUSED-s191",
+            "book_id": "31131",
+            "phase": "main",
+            "slot": 191,
+            "query_ratios": {
+              "gaussian": 0.5835855131951817,
+              "one_hot": 0.5860705130634744,
+              "alternating": 0.5803840203727471,
+              "zero": 0.5857180484525898
+            },
+            "nonzero_query_median": 0.5835855131951817
+          }
+        ],
+        "main": {
+          "n_pairs": 6,
+          "independent_books": 2,
+          "median": 0.5827945626979539,
+          "min": 0.5793717967514916,
+          "max": 0.5839844135990376,
+          "faster_count": 6
+        }
+      },
+      "TILE_MATERIALIZE/RF01_MATERIALIZE": {
+        "samples": [
+          {
+            "sample": "GATE-FUSED-s0",
+            "book_id": "37013",
+            "phase": "gate",
+            "slot": 0,
+            "query_ratios": {
+              "gaussian": 0.803952827196758,
+              "one_hot": 0.8062187190185669,
+              "alternating": 0.8089503430298978,
+              "zero": 0.8066671578227348
+            },
+            "nonzero_query_median": 0.8062187190185669
+          },
+          {
+            "sample": "GATE-FUSED-s95",
+            "book_id": "37013",
+            "phase": "gate",
+            "slot": 95,
+            "query_ratios": {
+              "gaussian": 0.8055705003583574,
+              "one_hot": 0.8013292306211328,
+              "alternating": 0.8074521582400515,
+              "zero": 0.8054529670100333
+            },
+            "nonzero_query_median": 0.8055705003583574
+          },
+          {
+            "sample": "GATE-FUSED-s191",
+            "book_id": "37013",
+            "phase": "gate",
+            "slot": 191,
+            "query_ratios": {
+              "gaussian": 0.801952965091899,
+              "one_hot": 0.8094911274650329,
+              "alternating": 0.803507345647607,
+              "zero": 0.8054269846955276
+            },
+            "nonzero_query_median": 0.803507345647607
+          },
+          {
+            "sample": "RF01-b3752-FUSED-s0",
+            "book_id": "3752",
+            "phase": "main",
+            "slot": 0,
+            "query_ratios": {
+              "gaussian": 0.8087670816915647,
+              "one_hot": 0.8236555112323625,
+              "alternating": 0.8179999864163711,
+              "zero": 0.8144177402288765
+            },
+            "nonzero_query_median": 0.8179999864163711
+          },
+          {
+            "sample": "RF01-b3752-FUSED-s95",
+            "book_id": "3752",
+            "phase": "main",
+            "slot": 95,
+            "query_ratios": {
+              "gaussian": 0.8092815873406473,
+              "one_hot": 0.8125277037880887,
+              "alternating": 0.81202800301989,
+              "zero": 0.8141179813810965
+            },
+            "nonzero_query_median": 0.81202800301989
+          },
+          {
+            "sample": "RF01-b3752-FUSED-s191",
+            "book_id": "3752",
+            "phase": "main",
+            "slot": 191,
+            "query_ratios": {
+              "gaussian": 0.8141395347208972,
+              "one_hot": 0.810420192561806,
+              "alternating": 0.808884644623451,
+              "zero": 0.8114376743118125
+            },
+            "nonzero_query_median": 0.810420192561806
+          },
+          {
+            "sample": "RF01-b31131-FUSED-s0",
+            "book_id": "31131",
+            "phase": "main",
+            "slot": 0,
+            "query_ratios": {
+              "gaussian": 0.8093275713764919,
+              "one_hot": 0.8126691650306058,
+              "alternating": 0.8164668568711974,
+              "zero": 0.8130771542000178
+            },
+            "nonzero_query_median": 0.8126691650306058
+          },
+          {
+            "sample": "RF01-b31131-FUSED-s95",
+            "book_id": "31131",
+            "phase": "main",
+            "slot": 95,
+            "query_ratios": {
+              "gaussian": 0.8129607863960546,
+              "one_hot": 0.8119846618392353,
+              "alternating": 0.8113696995002295,
+              "zero": 0.8112397230687876
+            },
+            "nonzero_query_median": 0.8119846618392353
+          },
+          {
+            "sample": "RF01-b31131-FUSED-s191",
+            "book_id": "31131",
+            "phase": "main",
+            "slot": 191,
+            "query_ratios": {
+              "gaussian": 0.8145900352223158,
+              "one_hot": 0.811293643067797,
+              "alternating": 0.8115783756835117,
+              "zero": 0.8139213504786649
+            },
+            "nonzero_query_median": 0.8115783756835117
+          }
+        ],
+        "main": {
+          "n_pairs": 6,
+          "independent_books": 2,
+          "median": 0.8120063324295627,
+          "min": 0.810420192561806,
+          "max": 0.8179999864163711,
+          "faster_count": 6
+        }
+      }
+    },
+    "wall_ms": {
+      "V_FUSED/TILE_MATERIALIZE": {
+        "samples": [
+          {
+            "sample": "GATE-FUSED-s0",
+            "book_id": "37013",
+            "phase": "gate",
+            "slot": 0,
+            "query_ratios": {
+              "gaussian": 0.7214571018427609,
+              "one_hot": 0.7138691534908632,
+              "alternating": 0.7154671726071449,
+              "zero": 0.717735499791858
+            },
+            "nonzero_query_median": 0.7154671726071449
+          },
+          {
+            "sample": "GATE-FUSED-s95",
+            "book_id": "37013",
+            "phase": "gate",
+            "slot": 95,
+            "query_ratios": {
+              "gaussian": 0.7201753337133473,
+              "one_hot": 0.723872048923937,
+              "alternating": 0.7291199366793527,
+              "zero": 0.7234953396042397
+            },
+            "nonzero_query_median": 0.723872048923937
+          },
+          {
+            "sample": "GATE-FUSED-s191",
+            "book_id": "37013",
+            "phase": "gate",
+            "slot": 191,
+            "query_ratios": {
+              "gaussian": 0.7208168316782856,
+              "one_hot": 0.7197877435813121,
+              "alternating": 0.7229060206181039,
+              "zero": 0.7187086085881728
+            },
+            "nonzero_query_median": 0.7208168316782856
+          },
+          {
+            "sample": "RF01-b3752-FUSED-s0",
+            "book_id": "3752",
+            "phase": "main",
+            "slot": 0,
+            "query_ratios": {
+              "gaussian": 0.7207465252877246,
+              "one_hot": 0.7120435013517404,
+              "alternating": 0.7109403861945444,
+              "zero": 0.7138831935795485
+            },
+            "nonzero_query_median": 0.7120435013517404
+          },
+          {
+            "sample": "RF01-b3752-FUSED-s95",
+            "book_id": "3752",
+            "phase": "main",
+            "slot": 95,
+            "query_ratios": {
+              "gaussian": 0.7226493783302212,
+              "one_hot": 0.7186307664141939,
+              "alternating": 0.7136299073566904,
+              "zero": 0.7188990877486061
+            },
+            "nonzero_query_median": 0.7186307664141939
+          },
+          {
+            "sample": "RF01-b3752-FUSED-s191",
+            "book_id": "3752",
+            "phase": "main",
+            "slot": 191,
+            "query_ratios": {
+              "gaussian": 0.7138362083030001,
+              "one_hot": 0.7192335854180588,
+              "alternating": 0.7222930722412331,
+              "zero": 0.7161464084988566
+            },
+            "nonzero_query_median": 0.7192335854180588
+          },
+          {
+            "sample": "RF01-b31131-FUSED-s0",
+            "book_id": "31131",
+            "phase": "main",
+            "slot": 0,
+            "query_ratios": {
+              "gaussian": 0.7195746801043229,
+              "one_hot": 0.7190441027513333,
+              "alternating": 0.7180045340391178,
+              "zero": 0.7169971943894595
+            },
+            "nonzero_query_median": 0.7190441027513333
+          },
+          {
+            "sample": "RF01-b31131-FUSED-s95",
+            "book_id": "31131",
+            "phase": "main",
+            "slot": 95,
+            "query_ratios": {
+              "gaussian": 0.7156688744601748,
+              "one_hot": 0.714235426804405,
+              "alternating": 0.7149203079349655,
+              "zero": 0.721886949853283
+            },
+            "nonzero_query_median": 0.7149203079349655
+          },
+          {
+            "sample": "RF01-b31131-FUSED-s191",
+            "book_id": "31131",
+            "phase": "main",
+            "slot": 191,
+            "query_ratios": {
+              "gaussian": 0.717323159654012,
+              "one_hot": 0.723433262148928,
+              "alternating": 0.7162301020854448,
+              "zero": 0.7206737066163866
+            },
+            "nonzero_query_median": 0.717323159654012
+          }
+        ],
+        "main": {
+          "n_pairs": 6,
+          "independent_books": 2,
+          "median": 0.717976963034103,
+          "min": 0.7120435013517404,
+          "max": 0.7192335854180588,
+          "faster_count": 6
+        }
+      },
+      "V_FUSED/RF01_MATERIALIZE": {
+        "samples": [
+          {
+            "sample": "GATE-FUSED-s0",
+            "book_id": "37013",
+            "phase": "gate",
+            "slot": 0,
+            "query_ratios": {
+              "gaussian": 0.5805688655003113,
+              "one_hot": 0.5759758294889186,
+              "alternating": 0.5792502586505549,
+              "zero": 0.5793099670056433
+            },
+            "nonzero_query_median": 0.5792502586505549
+          },
+          {
+            "sample": "GATE-FUSED-s95",
+            "book_id": "37013",
+            "phase": "gate",
+            "slot": 95,
+            "query_ratios": {
+              "gaussian": 0.5805416868966926,
+              "one_hot": 0.5805933113786539,
+              "alternating": 0.5892583120230764,
+              "zero": 0.5832208089758077
+            },
+            "nonzero_query_median": 0.5805933113786539
+          },
+          {
+            "sample": "GATE-FUSED-s191",
+            "book_id": "37013",
+            "phase": "gate",
+            "slot": 191,
+            "query_ratios": {
+              "gaussian": 0.5783819301576876,
+              "one_hot": 0.5831295354101538,
+              "alternating": 0.581370077497511,
+              "zero": 0.5793186242395791
+            },
+            "nonzero_query_median": 0.581370077497511
+          },
+          {
+            "sample": "RF01-b3752-FUSED-s0",
+            "book_id": "3752",
+            "phase": "main",
+            "slot": 0,
+            "query_ratios": {
+              "gaussian": 0.5832959719490586,
+              "one_hot": 0.5867808404337242,
+              "alternating": 0.5818834248463697,
+              "zero": 0.5818063263770101
+            },
+            "nonzero_query_median": 0.5832959719490586
+          },
+          {
+            "sample": "RF01-b3752-FUSED-s95",
+            "book_id": "3752",
+            "phase": "main",
+            "slot": 95,
+            "query_ratios": {
+              "gaussian": 0.5852067959475284,
+              "one_hot": 0.5854950520549614,
+              "alternating": 0.5798853470628593,
+              "zero": 0.5850556512956591
+            },
+            "nonzero_query_median": 0.5852067959475284
+          },
+          {
+            "sample": "RF01-b3752-FUSED-s191",
+            "book_id": "3752",
+            "phase": "main",
+            "slot": 191,
+            "query_ratios": {
+              "gaussian": 0.5815779930008298,
+              "one_hot": 0.5833147586993411,
+              "alternating": 0.5845796819471321,
+              "zero": 0.5815098895341421
+            },
+            "nonzero_query_median": 0.5833147586993411
+          },
+          {
+            "sample": "RF01-b31131-FUSED-s0",
+            "book_id": "31131",
+            "phase": "main",
+            "slot": 0,
+            "query_ratios": {
+              "gaussian": 0.5828449388342963,
+              "one_hot": 0.5847547271185067,
+              "alternating": 0.5866001823059417,
+              "zero": 0.5834025739194324
+            },
+            "nonzero_query_median": 0.5847547271185067
+          },
+          {
+            "sample": "RF01-b31131-FUSED-s95",
+            "book_id": "31131",
+            "phase": "main",
+            "slot": 95,
+            "query_ratios": {
+              "gaussian": 0.5822979160935761,
+              "one_hot": 0.5803068573336871,
+              "alternating": 0.5805334239761574,
+              "zero": 0.5860852302620386
+            },
+            "nonzero_query_median": 0.5805334239761574
+          },
+          {
+            "sample": "RF01-b31131-FUSED-s191",
+            "book_id": "31131",
+            "phase": "main",
+            "slot": 191,
+            "query_ratios": {
+              "gaussian": 0.5847922528508644,
+              "one_hot": 0.5873823258823035,
+              "alternating": 0.5813858044010713,
+              "zero": 0.5870467953733101
+            },
+            "nonzero_query_median": 0.5847922528508644
+          }
+        ],
+        "main": {
+          "n_pairs": 6,
+          "independent_books": 2,
+          "median": 0.5840347429089239,
+          "min": 0.5805334239761574,
+          "max": 0.5852067959475284,
+          "faster_count": 6
+        }
+      },
+      "TILE_MATERIALIZE/RF01_MATERIALIZE": {
+        "samples": [
+          {
+            "sample": "GATE-FUSED-s0",
+            "book_id": "37013",
+            "phase": "gate",
+            "slot": 0,
+            "query_ratios": {
+              "gaussian": 0.8047170982410597,
+              "one_hot": 0.8068366964343003,
+              "alternating": 0.8096112314137085,
+              "zero": 0.807135730604996
+            },
+            "nonzero_query_median": 0.8068366964343003
+          },
+          {
+            "sample": "GATE-FUSED-s95",
+            "book_id": "37013",
+            "phase": "gate",
+            "slot": 95,
+            "query_ratios": {
+              "gaussian": 0.8061115949408045,
+              "one_hot": 0.8020662107919868,
+              "alternating": 0.8081774786007756,
+              "zero": 0.8061155021327936
+            },
+            "nonzero_query_median": 0.8061115949408045
+          },
+          {
+            "sample": "GATE-FUSED-s191",
+            "book_id": "37013",
+            "phase": "gate",
+            "slot": 191,
+            "query_ratios": {
+              "gaussian": 0.8023979251580943,
+              "one_hot": 0.8101409625409655,
+              "alternating": 0.8042125268239212,
+              "zero": 0.8060549398143282
+            },
+            "nonzero_query_median": 0.8042125268239212
+          },
+          {
+            "sample": "RF01-b3752-FUSED-s0",
+            "book_id": "3752",
+            "phase": "main",
+            "slot": 0,
+            "query_ratios": {
+              "gaussian": 0.8092941852424536,
+              "one_hot": 0.8240800447160629,
+              "alternating": 0.8184700660501526,
+              "zero": 0.8149881263624104
+            },
+            "nonzero_query_median": 0.8184700660501526
+          },
+          {
+            "sample": "RF01-b3752-FUSED-s95",
+            "book_id": "3752",
+            "phase": "main",
+            "slot": 95,
+            "query_ratios": {
+              "gaussian": 0.8098073747738185,
+              "one_hot": 0.8147369684385352,
+              "alternating": 0.8125855448109995,
+              "zero": 0.8138216632432963
+            },
+            "nonzero_query_median": 0.8125855448109995
+          },
+          {
+            "sample": "RF01-b3752-FUSED-s191",
+            "book_id": "3752",
+            "phase": "main",
+            "slot": 191,
+            "query_ratios": {
+              "gaussian": 0.8147219015177345,
+              "one_hot": 0.8110226921067457,
+              "alternating": 0.8093386250171493,
+              "zero": 0.8119986117825662
+            },
+            "nonzero_query_median": 0.8110226921067457
+          },
+          {
+            "sample": "RF01-b31131-FUSED-s0",
+            "book_id": "31131",
+            "phase": "main",
+            "slot": 0,
+            "query_ratios": {
+              "gaussian": 0.8099853357121964,
+              "one_hot": 0.8132390278718857,
+              "alternating": 0.8169867382397099,
+              "zero": 0.8136748351103574
+            },
+            "nonzero_query_median": 0.8132390278718857
+          },
+          {
+            "sample": "RF01-b31131-FUSED-s95",
+            "book_id": "31131",
+            "phase": "main",
+            "slot": 95,
+            "query_ratios": {
+              "gaussian": 0.8136415273513191,
+              "one_hot": 0.8124868013479336,
+              "alternating": 0.8120253649711221,
+              "zero": 0.8118795198904137
+            },
+            "nonzero_query_median": 0.8124868013479336
+          },
+          {
+            "sample": "RF01-b31131-FUSED-s191",
+            "book_id": "31131",
+            "phase": "main",
+            "slot": 191,
+            "query_ratios": {
+              "gaussian": 0.815242398046828,
+              "one_hot": 0.811937128986175,
+              "alternating": 0.8117304797833158,
+              "zero": 0.8145805653567352
+            },
+            "nonzero_query_median": 0.811937128986175
+          }
+        ],
+        "main": {
+          "n_pairs": 6,
+          "independent_books": 2,
+          "median": 0.8125361730794666,
+          "min": 0.8110226921067457,
+          "max": 0.8184700660501526,
+          "faster_count": 6
+        }
+      }
+    }
+  },
+  "main_memory_bytes": {
+    "RF01_MATERIALIZE": {
+      "allocated_before": {
+        "min": 22293504,
+        "max": 22293504
+      },
+      "allocated_peak": {
+        "min": 43322368,
+        "max": 43322368
+      },
+      "reserved_before": {
+        "min": 46137344,
+        "max": 46137344
+      },
+      "reserved_peak": {
+        "min": 46137344,
+        "max": 46137344
+      },
+      "output_storage_bytes": {
+        "min": 4096,
+        "max": 4096
+      },
+      "allocated_extra": {
+        "min": 21028864,
+        "max": 21028864
+      },
+      "reserved_extra": {
+        "min": 0,
+        "max": 0
+      }
+    },
+    "TILE_MATERIALIZE": {
+      "allocated_before": {
+        "min": 22293504,
+        "max": 22293504
+      },
+      "allocated_peak": {
+        "min": 36959232,
+        "max": 36959232
+      },
+      "reserved_before": {
+        "min": 46137344,
+        "max": 46137344
+      },
+      "reserved_peak": {
+        "min": 46137344,
+        "max": 46137344
+      },
+      "output_storage_bytes": {
+        "min": 4096,
+        "max": 4096
+      },
+      "allocated_extra": {
+        "min": 14665728,
+        "max": 14665728
+      },
+      "reserved_extra": {
+        "min": 0,
+        "max": 0
+      }
+    },
+    "V_FUSED": {
+      "allocated_before": {
+        "min": 22293504,
+        "max": 22293504
+      },
+      "allocated_peak": {
+        "min": 22844928,
+        "max": 22844928
+      },
+      "reserved_before": {
+        "min": 46137344,
+        "max": 46137344
+      },
+      "reserved_peak": {
+        "min": 46137344,
+        "max": 46137344
+      },
+      "output_storage_bytes": {
+        "min": 4096,
+        "max": 4096
+      },
+      "allocated_extra": {
+        "min": 551424,
+        "max": 551424
+      },
+      "reserved_extra": {
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  "route_counts": {
+    "complete": {
+      "pass_count": 52,
+      "total": 52
+    },
+    "scores_equal": {
+      "pass_count": 52,
+      "total": 52
+    },
+    "bridge_v_equal": {
+      "pass_count": 52,
+      "total": 52
+    },
+    "bridge_context_equal": {
+      "pass_count": 52,
+      "total": 52
+    },
+    "bridge_output_equal": {
+      "pass_count": 52,
+      "total": 52
+    },
+    "trace_normal_equal": {
+      "pass_count": 52,
+      "total": 52
+    },
+    "rounding": {
+      "pass_count": 52,
+      "total": 52
+    },
+    "direct_baseline_equal": {
+      "pass_count": 52,
+      "total": 52
+    }
+  },
+  "rejection_counts": {
+    "planned_decisions": 72,
+    "correct_stage_cases": 23,
+    "correct_stage_decisions": 69,
+    "fixture_setup_unmeasured": 3
+  },
+  "failed_rejection_records": [
+    {
+      "kind": "v_tail_noncontiguous",
+      "mutation": "v_tail_noncontiguous",
+      "results": [
+        {
+          "arm": "RF01_MATERIALIZE",
+          "rejected": true,
+          "stage": "cpu_structure",
+          "error_type": "ContractError",
+          "input_unchanged": false
+        },
+        {
+          "arm": "TILE_MATERIALIZE",
+          "rejected": true,
+          "stage": "cpu_structure",
+          "error_type": "ContractError",
+          "input_unchanged": false
+        },
+        {
+          "arm": "V_FUSED",
+          "rejected": true,
+          "stage": "cpu_structure",
+          "error_type": "ContractError",
+          "input_unchanged": false
+        }
+      ],
+      "file": "negative_arrays/v_tail_noncontiguous.npz",
+      "sha256": "6b9152a69c169a3fde725e04f7c08a0cddaa8dc9ca15372515b3fa3c80487c00"
+    }
+  ],
+  "planned": {
+    "pairs": 9,
+    "cases": 36,
+    "first_calls": 108,
+    "warmup_calls": 540,
+    "intervals": 540,
+    "measured_calls": 10800,
+    "normal_outputs": 48,
+    "rejection_decisions": 72
+  },
+  "environment": {
+    "torch": "2.11.0+cu128",
+    "numpy": "2.1.3",
+    "cuda": "12.8",
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "kernel": {
+      "reference": {
+        "baseline": {
+          "triton": "3.6.0",
+          "torch_requirement": "triton==3.6.0; platform_system == \"Linux\"",
+          "block": 1024,
+          "num_warps": 4,
+          "autotune": false
+        },
+        "block": 1024,
+        "num_warps": 4,
+        "autotune": false,
+        "enable_fp_fusion": false,
+        "division": "div_rn",
+        "output_rounding": "rtne",
+        "norm": "torch_vector_norm_clamp"
+      },
+      "token_tile": 16,
+      "num_warps": 4,
+      "autotune": false,
+      "enable_fp_fusion": false,
+      "normalization": "FP32 sum-of-squares/sqrt in token row",
+      "division": "div_rn",
+      "kv_rounding": "BF16 rtne before QK",
+      "accumulation": "FP32 reduction",
+      "scale": 0.08838834764831843,
+      "mask": "all stored positions; single decode query"
+    },
+    "model_loaded": false
+  },
+  "run_status": {
+    "status": "COMPLETE_COMPARISON",
+    "experiment": "LOOP-KV-VF01",
+    "model_loaded": false,
+    "seconds": 82.50935095799991
+  },
+  "cache_files": 504,
+  "cache_unchanged": true,
+  "resident_inputs": {
+    "unique_storage_bytes": 22287360,
+    "unique_storages": 144
+  },
+  "local_gpu_used": false
+}

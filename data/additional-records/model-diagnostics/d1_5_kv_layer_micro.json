@@ -1,0 +1,114 @@
+{
+  "schema_version": "0.1.0",
+  "generated_at": "2026-05-04T05:52:40+00:00",
+  "generator": "phase_d1_5_jamba_l28_microtest.py",
+  "transformers_version": "5.7.0",
+  "purpose": "Validate D-1 Finding 3: the layer with highest D_V (per-token L2 norm CV of V cache) is the most KV-INT3-fragile attention layer. Apply NSN qa_nsep_pchan_asym INT3 to one attention layer at a time and rank the resulting ΔPPL.",
+  "protocol": {
+    "ctx": 1024,
+    "n_windows": 5,
+    "bits": 3,
+    "recipe": "qa_nsep_pchan_asym (NSN v0.3 hero, modeq Paper B)",
+    "fakequant_via": "forward hook on k_proj and v_proj outputs",
+    "calib_corpus": "WikiText-2 test (model's own tokenizer)"
+  },
+  "results": {
+    "Jamba-1.5-Mini": {
+      "model_id": "ai21labs/AI21-Jamba-Mini-1.6",
+      "model_label": "Jamba-1.5-Mini",
+      "predicted_max_layer": 28,
+      "fp16_baseline_ppl": 6.689885270252582,
+      "conditions": {
+        "FP16_baseline": {
+          "ppl": 6.689885270252582,
+          "delta_pct": 0.0,
+          "target_layers": []
+        },
+        "L4_only_INT3": {
+          "ppl": 6.514287270217326,
+          "delta_pct": -2.624828273454476,
+          "target_layers": [
+            4
+          ]
+        },
+        "L12_only_INT3": {
+          "ppl": 6.559525384133302,
+          "delta_pct": -1.9486116854491087,
+          "target_layers": [
+            12
+          ]
+        },
+        "L20_only_INT3": {
+          "ppl": 6.7325429456032655,
+          "delta_pct": 0.6376443485565564,
+          "target_layers": [
+            20
+          ]
+        },
+        "L28_only_INT3": {
+          "ppl": 6.672908994983405,
+          "delta_pct": -0.2537603349442317,
+          "target_layers": [
+            28
+          ]
+        },
+        "all_attn_INT3": {
+          "ppl": 6.428042394308874,
+          "delta_pct": -3.914011457087698,
+          "target_layers": [
+            4,
+            12,
+            20,
+            28
+          ]
+        }
+      }
+    },
+    "Zamba2-1.2B": {
+      "model_id": "Zyphra/Zamba2-1.2B",
+      "model_label": "Zamba2-1.2B",
+      "predicted_max_layer": 29,
+      "fp16_baseline_ppl": 6.82862553808825,
+      "conditions": {
+        "FP16_baseline": {
+          "ppl": 6.82862553808825,
+          "delta_pct": 0.0,
+          "target_layers": []
+        },
+        "L17_only_INT3": {
+          "ppl": 6.982621751173484,
+          "delta_pct": 2.255156798777212,
+          "target_layers": [
+            17
+          ]
+        },
+        "L29_only_INT3": {
+          "ppl": 6.833277690408167,
+          "delta_pct": 0.06812721379973637,
+          "target_layers": [
+            29
+          ]
+        },
+        "L35_only_INT3": {
+          "ppl": 6.836194624002969,
+          "delta_pct": 0.11084347607729715,
+          "target_layers": [
+            35
+          ]
+        },
+        "all_attn_INT3": {
+          "ppl": 7.073520971484928,
+          "delta_pct": 3.586306380848047,
+          "target_layers": [
+            5,
+            11,
+            17,
+            23,
+            29,
+            35
+          ]
+        }
+      }
+    }
+  }
+}

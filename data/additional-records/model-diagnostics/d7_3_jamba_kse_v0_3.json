@@ -1,0 +1,100 @@
+{
+  "schema_version": "0.1.0",
+  "generated_at": "2026-05-14T07:09:31+00:00",
+  "generator": "phase_d7_3_jamba_kse.py",
+  "transformers_version": "5.8.1",
+  "model_id": "ai21labs/AI21-Jamba-Mini-1.6",
+  "model_label": "Jamba-1.5-Mini",
+  "geometry": "between_layer_KSE",
+  "purpose": "Paper D Phase D-7.3 — first 3-substrate K+S+E composition test. Jamba-1.5-Mini has K (4 attn), S (28 mamba), E (16 sparse MoE) in between-layer K geom + MoE co-located on top of S. We compute pairwise I_KE, I_SE plus the triangular I_KSE, joining D-2 v0.1 / v0.2 results for Δ_K, Δ_S, Δ_KS. CPU originals cache is too large (~89 GB) so E is quantised destructively in place once; subsequent conditions test E INT4 baked in. Tests F11 sub-additive cancellation and F25 internal-redundancy mechanism in the most complex substrate composition in the testbed.",
+  "protocol": {
+    "ctx": 1024,
+    "n_windows": 5,
+    "kv_recipe": "qa_nsep_pchan_asym (NSN v0.3 hero)",
+    "ssm_recipe": "LAB half_slope_rg b_0=6, k=7.0",
+    "e_recipe": "weight-side per-channel asym INT4 (in-place destructive, no restore)",
+    "calib_corpus": "WikiText-2 train (8000 chars, first 1024 toks)",
+    "test_corpus": "WikiText-2 test"
+  },
+  "fp16_baseline_ppl_thisrun": 6.689885270252582,
+  "fp16_baseline_ppl_reference": 6.689885270252582,
+  "fp16_drift": 0.0,
+  "n_attn_layers": 4,
+  "n_mamba_mixers": 28,
+  "n_experts_blocks": 16,
+  "attn_layers": [
+    4,
+    12,
+    20,
+    28
+  ],
+  "experts_layers": [
+    1,
+    3,
+    5,
+    7,
+    9,
+    11,
+    13,
+    15,
+    17,
+    19,
+    21,
+    23,
+    25,
+    27,
+    29,
+    31
+  ],
+  "forward_path_selected": "direct",
+  "forward_sanity_ppl": 3.929148074513104,
+  "results": {
+    "pi_J70_FP16": {
+      "ppl": 6.689885270252582,
+      "delta_pct": 0.0,
+      "K": "FP16",
+      "S": "FP16",
+      "E": "FP16"
+    },
+    "pi_J71_E_INT4_alone": {
+      "ppl": 6.775811067081695,
+      "delta_pct": 1.284413608872971,
+      "K": "FP16",
+      "S": "FP16",
+      "E": "INT4 all"
+    },
+    "pi_J72_KE": {
+      "ppl": 6.641186064661534,
+      "delta_pct": -0.727952776822577,
+      "K": "INT3 all",
+      "S": "FP16",
+      "E": "INT4 all"
+    },
+    "pi_J73_SE": {
+      "ppl": 6.948132946711968,
+      "delta_pct": 3.8602706328569805,
+      "K": "FP16",
+      "S": "LAB b6",
+      "E": "INT4 all"
+    },
+    "pi_J74_KSE": {
+      "ppl": 6.87305094478385,
+      "delta_pct": 2.7379494136579177,
+      "K": "INT3 all",
+      "S": "LAB b6",
+      "E": "INT4 all"
+    }
+  },
+  "delta_K_reused": -3.914011457087698,
+  "delta_S_reused": 4.556197924020196,
+  "delta_KS_reused": 0.283015176368393,
+  "delta_E": 1.284413608872971,
+  "delta_KE": -0.727952776822577,
+  "delta_SE": 3.8602706328569805,
+  "delta_KSE": 2.7379494136579177,
+  "I_KS": -0.359171290564106,
+  "I_KE": 1.9016450713921498,
+  "I_SE": -1.980340900036187,
+  "I_KSE_raw": 0.8113493378524477,
+  "I_KSE_true_3way": 1.2492164570605908
+}

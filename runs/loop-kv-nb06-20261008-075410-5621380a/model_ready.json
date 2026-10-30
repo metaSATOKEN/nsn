@@ -1,0 +1,17 @@
+{
+  "revision": "4a38e817c14b9f2c4b69b1e05cbda90395872f6b",
+  "loaded_contract_ok": true,
+  "model_calls_before_measurement": 0,
+  "input_lock_sha256": "0a133a5fb2e7da7a32380734b9d51b2d14c2ffceb9abda9663e09770752fd3c6",
+  "input_frozen_monotonic": 607.645351906,
+  "weights_started_monotonic": 607.652037576,
+  "loaded_monotonic": 633.752096541,
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "parameter_count": 4169800704,
+  "deterministic_algorithms": true,
+  "tf32": false,
+  "attention": "NanbeigeSdpaAttention",
+  "kv_compression_planned": true,
+  "weight_quantization": false,
+  "fusion": true
+}

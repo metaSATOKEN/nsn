@@ -1,0 +1,122 @@
+{
+  "schema_version": "0.2.0",
+  "generated_at": "2026-05-14T04:22:14+00:00",
+  "generator": "phase_d2_ssm_zamba2.py (v0.3 Realisation A + B)",
+  "transformers_version": "5.8.1",
+  "model_id": "Zyphra/Zamba2-1.2B",
+  "model_label": "Zamba2-1.2B",
+  "geometry": "within_layer_coupled",
+  "purpose": "Paper D Phase D-2 v0.3 SSM-side baseline on Zamba2-1.2B. Vendors lab-ssm Phase C-5b chunk-boundary state quantisation patch. Produces BOTH Realisation A (`half_slope_rg`, recommended state-cache memory recipe per lab-ssm SS 3.5 / SS 6.2, with the Mamba-2 SSD adaptation of root-mean-square reducing rms_h over head_dim to per-(head, state) granularity) and Realisation B (`full_slope`, slope-1 simplification, sanity vs lab-ssm phase_c5b). Resolves the LAB-D paper label-vs-numbers disconnect on Day 15.",
+  "protocol": {
+    "ctx": 1024,
+    "n_windows": 5,
+    "kv_recipe": "qa_nsep_pchan_asym (NSN v0.3 hero)",
+    "ssm_recipes": [
+      "Realisation A: b_g = b_0 + ceil((1/2) log_2 R_g + log_2 r_g - mean(log_2 r_g))_+ (per-(head, state); r_g reduced from rms_h over head_dim via root-mean-square)",
+      "Realisation B: b_g = b_0 + ceil(log_2 R_g)_+ (slope-1 simplification, sanity)"
+    ],
+    "fakequant_via": "k/v_proj forward hooks + Mamba2.torch_forward patch",
+    "calib_corpus": "WikiText-2 train (8000 chars, first 1024 toks)",
+    "test_corpus": "WikiText-2 test",
+    "range_k": 7.0,
+    "b_min": 2
+  },
+  "fp16_baseline_ppl": 6.82862553808825,
+  "delta_K_from_v1": 3.586306380848047,
+  "delta_S_C3": -0.7494906942347604,
+  "delta_both_C7": 2.1589552261696467,
+  "interaction_I": -0.6778604604436397,
+  "composition_regime": "cancellation",
+  "delta_S_C3_A": -0.6816655059300596,
+  "delta_both_C7_A": 2.356021676134696,
+  "interaction_I_A": -0.5486191987832914,
+  "composition_regime_A": "cancellation",
+  "attn_layers": [
+    5,
+    11,
+    17,
+    23,
+    29,
+    35
+  ],
+  "n_ssm_layers": 38,
+  "conditions": {
+    "C0_FP16": {
+      "ppl": 6.82862553808825,
+      "delta_pct": 0.0,
+      "ssm_profile": null,
+      "kv_bits": null,
+      "kv_layers": []
+    },
+    "C3_SSM_LAB_full_b6": {
+      "ppl": 6.77744562513614,
+      "delta_pct": -0.7494906942347604,
+      "ssm_profile": "full_b6",
+      "kv_bits": null,
+      "kv_layers": []
+    },
+    "C4_SSM_LAB_full_b4": {
+      "ppl": 6.7844604068407985,
+      "delta_pct": -0.6467645795059382,
+      "ssm_profile": "full_b4",
+      "kv_bits": null,
+      "kv_layers": []
+    },
+    "C5_global_INT4": {
+      "ppl": 6.884774719882809,
+      "delta_pct": 0.8222618370471976,
+      "ssm_profile": "uniform_b4",
+      "kv_bits": 4,
+      "kv_layers": [
+        5,
+        11,
+        17,
+        23,
+        29,
+        35
+      ]
+    },
+    "C7_KV_INT3_SSM_full_b6": {
+      "ppl": 6.976052506018362,
+      "delta_pct": 2.1589552261696467,
+      "ssm_profile": "full_b6",
+      "kv_bits": 3,
+      "kv_layers": [
+        5,
+        11,
+        17,
+        23,
+        29,
+        35
+      ]
+    },
+    "C3_SSM_LAB_half_slope_rg_b6": {
+      "ppl": 6.782077153265972,
+      "delta_pct": -0.6816655059300596,
+      "ssm_profile": "half_slope_rg_b6",
+      "kv_bits": null,
+      "kv_layers": []
+    },
+    "C4_SSM_LAB_half_slope_rg_b4": {
+      "ppl": 6.783346380063478,
+      "delta_pct": -0.6630786499013122,
+      "ssm_profile": "half_slope_rg_b4",
+      "kv_bits": null,
+      "kv_layers": []
+    },
+    "C7_KV_INT3_SSM_half_slope_rg_b6": {
+      "ppl": 6.989509435947679,
+      "delta_pct": 2.356021676134696,
+      "ssm_profile": "half_slope_rg_b6",
+      "kv_bits": 3,
+      "kv_layers": [
+        5,
+        11,
+        17,
+        23,
+        29,
+        35
+      ]
+    }
+  }
+}

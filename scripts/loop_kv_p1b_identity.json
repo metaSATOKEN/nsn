@@ -1,0 +1,7 @@
+{
+  "experiment": "LOOP-KV-P0RB-P1B",
+  "run_id": "loop-kv-p0rb-p1b-20260930-095916-69e9e0c0",
+  "archive_sha256": "0b5c4774f29caec1ed1e28765e1967904969c8adef09ffe761ff4c14e4ed98e6",
+  "worker_sha256": "0f2dae405ceffb524a83a7cdc2467425071877c22134d674e2d4a682e1a062b8",
+  "use": "Historical identity only. No outcome reuse or pooling."
+}

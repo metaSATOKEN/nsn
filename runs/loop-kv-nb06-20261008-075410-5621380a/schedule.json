@@ -1,0 +1,1010 @@
+[
+  {
+    "id": "b0-gate-official",
+    "phase": "gate",
+    "arm": "OFFICIAL",
+    "raw_logits": true,
+    "selected_book_rank": 0,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "9667"
+  },
+  {
+    "id": "b0-gate-native",
+    "phase": "gate",
+    "arm": "NATIVE",
+    "raw_logits": true,
+    "selected_book_rank": 0,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "9667"
+  },
+  {
+    "id": "b0-diagnostic-fused",
+    "phase": "diagnostic",
+    "arm": "GQA_FUSED",
+    "raw_logits": true,
+    "selected_book_rank": 0,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "9667"
+  },
+  {
+    "id": "b0-warm-native",
+    "phase": "warmup",
+    "arm": "NATIVE",
+    "raw_logits": false,
+    "selected_book_rank": 0,
+    "raw_logit_steps": [],
+    "book_id": "9667"
+  },
+  {
+    "id": "b0-warm-packed_sdpa",
+    "phase": "warmup",
+    "arm": "PACKED_SDPA",
+    "raw_logits": false,
+    "selected_book_rank": 0,
+    "raw_logit_steps": [],
+    "book_id": "9667"
+  },
+  {
+    "id": "b0-warm-gqa_fused",
+    "phase": "warmup",
+    "arm": "GQA_FUSED",
+    "raw_logits": false,
+    "selected_book_rank": 0,
+    "raw_logit_steps": [],
+    "book_id": "9667"
+  },
+  {
+    "id": "b0-main-r0-native",
+    "phase": "main",
+    "round": 0,
+    "arm": "NATIVE",
+    "raw_logits": true,
+    "selected_book_rank": 0,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "9667"
+  },
+  {
+    "id": "b0-main-r0-packed_sdpa",
+    "phase": "main",
+    "round": 0,
+    "arm": "PACKED_SDPA",
+    "raw_logits": true,
+    "selected_book_rank": 0,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "9667"
+  },
+  {
+    "id": "b0-main-r0-gqa_fused",
+    "phase": "main",
+    "round": 0,
+    "arm": "GQA_FUSED",
+    "raw_logits": true,
+    "selected_book_rank": 0,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "9667"
+  },
+  {
+    "id": "b0-main-r1-packed_sdpa",
+    "phase": "main",
+    "round": 1,
+    "arm": "PACKED_SDPA",
+    "raw_logits": true,
+    "selected_book_rank": 0,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "9667"
+  },
+  {
+    "id": "b0-main-r1-gqa_fused",
+    "phase": "main",
+    "round": 1,
+    "arm": "GQA_FUSED",
+    "raw_logits": true,
+    "selected_book_rank": 0,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "9667"
+  },
+  {
+    "id": "b0-main-r1-native",
+    "phase": "main",
+    "round": 1,
+    "arm": "NATIVE",
+    "raw_logits": true,
+    "selected_book_rank": 0,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "9667"
+  },
+  {
+    "id": "b0-main-r2-gqa_fused",
+    "phase": "main",
+    "round": 2,
+    "arm": "GQA_FUSED",
+    "raw_logits": true,
+    "selected_book_rank": 0,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "9667"
+  },
+  {
+    "id": "b0-main-r2-native",
+    "phase": "main",
+    "round": 2,
+    "arm": "NATIVE",
+    "raw_logits": true,
+    "selected_book_rank": 0,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "9667"
+  },
+  {
+    "id": "b0-main-r2-packed_sdpa",
+    "phase": "main",
+    "round": 2,
+    "arm": "PACKED_SDPA",
+    "raw_logits": true,
+    "selected_book_rank": 0,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "9667"
+  },
+  {
+    "id": "b1-gate-official",
+    "phase": "gate",
+    "arm": "OFFICIAL",
+    "raw_logits": true,
+    "selected_book_rank": 1,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "26438"
+  },
+  {
+    "id": "b1-gate-native",
+    "phase": "gate",
+    "arm": "NATIVE",
+    "raw_logits": true,
+    "selected_book_rank": 1,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "26438"
+  },
+  {
+    "id": "b1-diagnostic-fused",
+    "phase": "diagnostic",
+    "arm": "GQA_FUSED",
+    "raw_logits": true,
+    "selected_book_rank": 1,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "26438"
+  },
+  {
+    "id": "b1-warm-native",
+    "phase": "warmup",
+    "arm": "NATIVE",
+    "raw_logits": false,
+    "selected_book_rank": 1,
+    "raw_logit_steps": [],
+    "book_id": "26438"
+  },
+  {
+    "id": "b1-warm-packed_sdpa",
+    "phase": "warmup",
+    "arm": "PACKED_SDPA",
+    "raw_logits": false,
+    "selected_book_rank": 1,
+    "raw_logit_steps": [],
+    "book_id": "26438"
+  },
+  {
+    "id": "b1-warm-gqa_fused",
+    "phase": "warmup",
+    "arm": "GQA_FUSED",
+    "raw_logits": false,
+    "selected_book_rank": 1,
+    "raw_logit_steps": [],
+    "book_id": "26438"
+  },
+  {
+    "id": "b1-main-r0-native",
+    "phase": "main",
+    "round": 0,
+    "arm": "NATIVE",
+    "raw_logits": true,
+    "selected_book_rank": 1,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "26438"
+  },
+  {
+    "id": "b1-main-r0-packed_sdpa",
+    "phase": "main",
+    "round": 0,
+    "arm": "PACKED_SDPA",
+    "raw_logits": true,
+    "selected_book_rank": 1,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "26438"
+  },
+  {
+    "id": "b1-main-r0-gqa_fused",
+    "phase": "main",
+    "round": 0,
+    "arm": "GQA_FUSED",
+    "raw_logits": true,
+    "selected_book_rank": 1,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "26438"
+  },
+  {
+    "id": "b1-main-r1-packed_sdpa",
+    "phase": "main",
+    "round": 1,
+    "arm": "PACKED_SDPA",
+    "raw_logits": true,
+    "selected_book_rank": 1,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "26438"
+  },
+  {
+    "id": "b1-main-r1-gqa_fused",
+    "phase": "main",
+    "round": 1,
+    "arm": "GQA_FUSED",
+    "raw_logits": true,
+    "selected_book_rank": 1,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "26438"
+  },
+  {
+    "id": "b1-main-r1-native",
+    "phase": "main",
+    "round": 1,
+    "arm": "NATIVE",
+    "raw_logits": true,
+    "selected_book_rank": 1,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "26438"
+  },
+  {
+    "id": "b1-main-r2-gqa_fused",
+    "phase": "main",
+    "round": 2,
+    "arm": "GQA_FUSED",
+    "raw_logits": true,
+    "selected_book_rank": 1,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "26438"
+  },
+  {
+    "id": "b1-main-r2-native",
+    "phase": "main",
+    "round": 2,
+    "arm": "NATIVE",
+    "raw_logits": true,
+    "selected_book_rank": 1,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "26438"
+  },
+  {
+    "id": "b1-main-r2-packed_sdpa",
+    "phase": "main",
+    "round": 2,
+    "arm": "PACKED_SDPA",
+    "raw_logits": true,
+    "selected_book_rank": 1,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "26438"
+  },
+  {
+    "id": "b2-gate-official",
+    "phase": "gate",
+    "arm": "OFFICIAL",
+    "raw_logits": true,
+    "selected_book_rank": 2,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "45277"
+  },
+  {
+    "id": "b2-gate-native",
+    "phase": "gate",
+    "arm": "NATIVE",
+    "raw_logits": true,
+    "selected_book_rank": 2,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "45277"
+  },
+  {
+    "id": "b2-diagnostic-fused",
+    "phase": "diagnostic",
+    "arm": "GQA_FUSED",
+    "raw_logits": true,
+    "selected_book_rank": 2,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "45277"
+  },
+  {
+    "id": "b2-warm-native",
+    "phase": "warmup",
+    "arm": "NATIVE",
+    "raw_logits": false,
+    "selected_book_rank": 2,
+    "raw_logit_steps": [],
+    "book_id": "45277"
+  },
+  {
+    "id": "b2-warm-packed_sdpa",
+    "phase": "warmup",
+    "arm": "PACKED_SDPA",
+    "raw_logits": false,
+    "selected_book_rank": 2,
+    "raw_logit_steps": [],
+    "book_id": "45277"
+  },
+  {
+    "id": "b2-warm-gqa_fused",
+    "phase": "warmup",
+    "arm": "GQA_FUSED",
+    "raw_logits": false,
+    "selected_book_rank": 2,
+    "raw_logit_steps": [],
+    "book_id": "45277"
+  },
+  {
+    "id": "b2-main-r0-native",
+    "phase": "main",
+    "round": 0,
+    "arm": "NATIVE",
+    "raw_logits": true,
+    "selected_book_rank": 2,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "45277"
+  },
+  {
+    "id": "b2-main-r0-packed_sdpa",
+    "phase": "main",
+    "round": 0,
+    "arm": "PACKED_SDPA",
+    "raw_logits": true,
+    "selected_book_rank": 2,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "45277"
+  },
+  {
+    "id": "b2-main-r0-gqa_fused",
+    "phase": "main",
+    "round": 0,
+    "arm": "GQA_FUSED",
+    "raw_logits": true,
+    "selected_book_rank": 2,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "45277"
+  },
+  {
+    "id": "b2-main-r1-packed_sdpa",
+    "phase": "main",
+    "round": 1,
+    "arm": "PACKED_SDPA",
+    "raw_logits": true,
+    "selected_book_rank": 2,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "45277"
+  },
+  {
+    "id": "b2-main-r1-gqa_fused",
+    "phase": "main",
+    "round": 1,
+    "arm": "GQA_FUSED",
+    "raw_logits": true,
+    "selected_book_rank": 2,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "45277"
+  },
+  {
+    "id": "b2-main-r1-native",
+    "phase": "main",
+    "round": 1,
+    "arm": "NATIVE",
+    "raw_logits": true,
+    "selected_book_rank": 2,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "45277"
+  },
+  {
+    "id": "b2-main-r2-gqa_fused",
+    "phase": "main",
+    "round": 2,
+    "arm": "GQA_FUSED",
+    "raw_logits": true,
+    "selected_book_rank": 2,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "45277"
+  },
+  {
+    "id": "b2-main-r2-native",
+    "phase": "main",
+    "round": 2,
+    "arm": "NATIVE",
+    "raw_logits": true,
+    "selected_book_rank": 2,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "45277"
+  },
+  {
+    "id": "b2-main-r2-packed_sdpa",
+    "phase": "main",
+    "round": 2,
+    "arm": "PACKED_SDPA",
+    "raw_logits": true,
+    "selected_book_rank": 2,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "45277"
+  },
+  {
+    "id": "b3-gate-official",
+    "phase": "gate",
+    "arm": "OFFICIAL",
+    "raw_logits": true,
+    "selected_book_rank": 3,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "28881"
+  },
+  {
+    "id": "b3-gate-native",
+    "phase": "gate",
+    "arm": "NATIVE",
+    "raw_logits": true,
+    "selected_book_rank": 3,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "28881"
+  },
+  {
+    "id": "b3-diagnostic-fused",
+    "phase": "diagnostic",
+    "arm": "GQA_FUSED",
+    "raw_logits": true,
+    "selected_book_rank": 3,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "28881"
+  },
+  {
+    "id": "b3-warm-native",
+    "phase": "warmup",
+    "arm": "NATIVE",
+    "raw_logits": false,
+    "selected_book_rank": 3,
+    "raw_logit_steps": [],
+    "book_id": "28881"
+  },
+  {
+    "id": "b3-warm-packed_sdpa",
+    "phase": "warmup",
+    "arm": "PACKED_SDPA",
+    "raw_logits": false,
+    "selected_book_rank": 3,
+    "raw_logit_steps": [],
+    "book_id": "28881"
+  },
+  {
+    "id": "b3-warm-gqa_fused",
+    "phase": "warmup",
+    "arm": "GQA_FUSED",
+    "raw_logits": false,
+    "selected_book_rank": 3,
+    "raw_logit_steps": [],
+    "book_id": "28881"
+  },
+  {
+    "id": "b3-main-r0-native",
+    "phase": "main",
+    "round": 0,
+    "arm": "NATIVE",
+    "raw_logits": true,
+    "selected_book_rank": 3,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "28881"
+  },
+  {
+    "id": "b3-main-r0-packed_sdpa",
+    "phase": "main",
+    "round": 0,
+    "arm": "PACKED_SDPA",
+    "raw_logits": true,
+    "selected_book_rank": 3,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "28881"
+  },
+  {
+    "id": "b3-main-r0-gqa_fused",
+    "phase": "main",
+    "round": 0,
+    "arm": "GQA_FUSED",
+    "raw_logits": true,
+    "selected_book_rank": 3,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "28881"
+  },
+  {
+    "id": "b3-main-r1-packed_sdpa",
+    "phase": "main",
+    "round": 1,
+    "arm": "PACKED_SDPA",
+    "raw_logits": true,
+    "selected_book_rank": 3,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "28881"
+  },
+  {
+    "id": "b3-main-r1-gqa_fused",
+    "phase": "main",
+    "round": 1,
+    "arm": "GQA_FUSED",
+    "raw_logits": true,
+    "selected_book_rank": 3,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "28881"
+  },
+  {
+    "id": "b3-main-r1-native",
+    "phase": "main",
+    "round": 1,
+    "arm": "NATIVE",
+    "raw_logits": true,
+    "selected_book_rank": 3,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "28881"
+  },
+  {
+    "id": "b3-main-r2-gqa_fused",
+    "phase": "main",
+    "round": 2,
+    "arm": "GQA_FUSED",
+    "raw_logits": true,
+    "selected_book_rank": 3,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "28881"
+  },
+  {
+    "id": "b3-main-r2-native",
+    "phase": "main",
+    "round": 2,
+    "arm": "NATIVE",
+    "raw_logits": true,
+    "selected_book_rank": 3,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "28881"
+  },
+  {
+    "id": "b3-main-r2-packed_sdpa",
+    "phase": "main",
+    "round": 2,
+    "arm": "PACKED_SDPA",
+    "raw_logits": true,
+    "selected_book_rank": 3,
+    "raw_logit_steps": [
+      0,
+      1,
+      8,
+      64,
+      65,
+      129,
+      193,
+      256
+    ],
+    "book_id": "28881"
+  }
+]

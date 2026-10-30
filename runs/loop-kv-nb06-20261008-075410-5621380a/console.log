@@ -1,0 +1,321 @@
+NB06 runtime: venv
+NB06 runtime: install
+NB06 runtime: pip_check
+NB06 runtime: versions
+NB06 runtime: cuda_probe
+NB06 runtime ready: torch 2.11.0+cu128; starting the fixed experiment.
+
+Fetching 6 files:   0%|          | 0/6 [00:00<?, ?it/s]
+Fetching 6 files:  17%|█▋        | 1/6 [00:00<00:00,  9.01it/s]
+Fetching 6 files:  50%|█████     | 3/6 [00:00<00:00, 13.09it/s]
+Fetching 6 files:  83%|████████▎ | 5/6 [00:01<00:00,  4.90it/s]
+Fetching 6 files: 100%|██████████| 6/6 [00:01<00:00,  5.57it/s]
+
+Fetching 1 files:   0%|          | 0/1 [00:00<?, ?it/s]
+Fetching 1 files: 100%|██████████| 1/1 [00:19<00:00, 19.85s/it]
+Fetching 1 files: 100%|██████████| 1/1 [00:19<00:00, 19.85s/it]
+NB06 book 1/4: 9667; 3855 forwards.
+NB06 b0/gate-official: decode 8/256
+NB06 b0/gate-official: decode 64/256
+NB06 b0/gate-official: decode 128/256
+NB06 b0/gate-official: decode 256/256
+NB06 b0/gate-official: 257 forwards saved.
+NB06 b0/gate-native: decode 8/256
+NB06 b0/gate-native: decode 64/256
+NB06 b0/gate-native: decode 128/256
+NB06 b0/gate-native: decode 256/256
+NB06 b0/gate-native: 257 forwards saved.
+NB06 b0/diagnostic-fused: decode 8/256
+NB06 b0/diagnostic-fused: decode 64/256
+NB06 b0/diagnostic-fused: decode 128/256
+NB06 b0/diagnostic-fused: decode 256/256
+NB06 b0/diagnostic-fused: 257 forwards saved.
+NB06 b0/warm-native: decode 8/256
+NB06 b0/warm-native: decode 64/256
+NB06 b0/warm-native: decode 128/256
+NB06 b0/warm-native: decode 256/256
+NB06 b0/warm-native: 257 forwards saved.
+NB06 b0/warm-packed_sdpa: decode 8/256
+NB06 b0/warm-packed_sdpa: decode 64/256
+NB06 b0/warm-packed_sdpa: decode 128/256
+NB06 b0/warm-packed_sdpa: decode 256/256
+NB06 b0/warm-packed_sdpa: 257 forwards saved.
+NB06 b0/warm-gqa_fused: decode 8/256
+NB06 b0/warm-gqa_fused: decode 64/256
+NB06 b0/warm-gqa_fused: decode 128/256
+NB06 b0/warm-gqa_fused: decode 256/256
+NB06 b0/warm-gqa_fused: 257 forwards saved.
+NB06 b0/main-r0-native: decode 8/256
+NB06 b0/main-r0-native: decode 64/256
+NB06 b0/main-r0-native: decode 128/256
+NB06 b0/main-r0-native: decode 256/256
+NB06 b0/main-r0-native: 257 forwards saved.
+NB06 b0/main-r0-packed_sdpa: decode 8/256
+NB06 b0/main-r0-packed_sdpa: decode 64/256
+NB06 b0/main-r0-packed_sdpa: decode 128/256
+NB06 b0/main-r0-packed_sdpa: decode 256/256
+NB06 b0/main-r0-packed_sdpa: 257 forwards saved.
+NB06 b0/main-r0-gqa_fused: decode 8/256
+NB06 b0/main-r0-gqa_fused: decode 64/256
+NB06 b0/main-r0-gqa_fused: decode 128/256
+NB06 b0/main-r0-gqa_fused: decode 256/256
+NB06 b0/main-r0-gqa_fused: 257 forwards saved.
+NB06 b0/main-r1-packed_sdpa: decode 8/256
+NB06 b0/main-r1-packed_sdpa: decode 64/256
+NB06 b0/main-r1-packed_sdpa: decode 128/256
+NB06 b0/main-r1-packed_sdpa: decode 256/256
+NB06 b0/main-r1-packed_sdpa: 257 forwards saved.
+NB06 b0/main-r1-gqa_fused: decode 8/256
+NB06 b0/main-r1-gqa_fused: decode 64/256
+NB06 b0/main-r1-gqa_fused: decode 128/256
+NB06 b0/main-r1-gqa_fused: decode 256/256
+NB06 b0/main-r1-gqa_fused: 257 forwards saved.
+NB06 b0/main-r1-native: decode 8/256
+NB06 b0/main-r1-native: decode 64/256
+NB06 b0/main-r1-native: decode 128/256
+NB06 b0/main-r1-native: decode 256/256
+NB06 b0/main-r1-native: 257 forwards saved.
+NB06 b0/main-r2-gqa_fused: decode 8/256
+NB06 b0/main-r2-gqa_fused: decode 64/256
+NB06 b0/main-r2-gqa_fused: decode 128/256
+NB06 b0/main-r2-gqa_fused: decode 256/256
+NB06 b0/main-r2-gqa_fused: 257 forwards saved.
+NB06 b0/main-r2-native: decode 8/256
+NB06 b0/main-r2-native: decode 64/256
+NB06 b0/main-r2-native: decode 128/256
+NB06 b0/main-r2-native: decode 256/256
+NB06 b0/main-r2-native: 257 forwards saved.
+NB06 b0/main-r2-packed_sdpa: decode 8/256
+NB06 b0/main-r2-packed_sdpa: decode 64/256
+NB06 b0/main-r2-packed_sdpa: decode 128/256
+NB06 b0/main-r2-packed_sdpa: decode 256/256
+NB06 b0/main-r2-packed_sdpa: 257 forwards saved.
+NB06 book 2/4: 26438; 3855 forwards.
+NB06 b1/gate-official: decode 8/256
+NB06 b1/gate-official: decode 64/256
+NB06 b1/gate-official: decode 128/256
+NB06 b1/gate-official: decode 256/256
+NB06 b1/gate-official: 257 forwards saved.
+NB06 b1/gate-native: decode 8/256
+NB06 b1/gate-native: decode 64/256
+NB06 b1/gate-native: decode 128/256
+NB06 b1/gate-native: decode 256/256
+NB06 b1/gate-native: 257 forwards saved.
+NB06 b1/diagnostic-fused: decode 8/256
+NB06 b1/diagnostic-fused: decode 64/256
+NB06 b1/diagnostic-fused: decode 128/256
+NB06 b1/diagnostic-fused: decode 256/256
+NB06 b1/diagnostic-fused: 257 forwards saved.
+NB06 b1/warm-native: decode 8/256
+NB06 b1/warm-native: decode 64/256
+NB06 b1/warm-native: decode 128/256
+NB06 b1/warm-native: decode 256/256
+NB06 b1/warm-native: 257 forwards saved.
+NB06 b1/warm-packed_sdpa: decode 8/256
+NB06 b1/warm-packed_sdpa: decode 64/256
+NB06 b1/warm-packed_sdpa: decode 128/256
+NB06 b1/warm-packed_sdpa: decode 256/256
+NB06 b1/warm-packed_sdpa: 257 forwards saved.
+NB06 b1/warm-gqa_fused: decode 8/256
+NB06 b1/warm-gqa_fused: decode 64/256
+NB06 b1/warm-gqa_fused: decode 128/256
+NB06 b1/warm-gqa_fused: decode 256/256
+NB06 b1/warm-gqa_fused: 257 forwards saved.
+NB06 b1/main-r0-native: decode 8/256
+NB06 b1/main-r0-native: decode 64/256
+NB06 b1/main-r0-native: decode 128/256
+NB06 b1/main-r0-native: decode 256/256
+NB06 b1/main-r0-native: 257 forwards saved.
+NB06 b1/main-r0-packed_sdpa: decode 8/256
+NB06 b1/main-r0-packed_sdpa: decode 64/256
+NB06 b1/main-r0-packed_sdpa: decode 128/256
+NB06 b1/main-r0-packed_sdpa: decode 256/256
+NB06 b1/main-r0-packed_sdpa: 257 forwards saved.
+NB06 b1/main-r0-gqa_fused: decode 8/256
+NB06 b1/main-r0-gqa_fused: decode 64/256
+NB06 b1/main-r0-gqa_fused: decode 128/256
+NB06 b1/main-r0-gqa_fused: decode 256/256
+NB06 b1/main-r0-gqa_fused: 257 forwards saved.
+NB06 b1/main-r1-packed_sdpa: decode 8/256
+NB06 b1/main-r1-packed_sdpa: decode 64/256
+NB06 b1/main-r1-packed_sdpa: decode 128/256
+NB06 b1/main-r1-packed_sdpa: decode 256/256
+NB06 b1/main-r1-packed_sdpa: 257 forwards saved.
+NB06 b1/main-r1-gqa_fused: decode 8/256
+NB06 b1/main-r1-gqa_fused: decode 64/256
+NB06 b1/main-r1-gqa_fused: decode 128/256
+NB06 b1/main-r1-gqa_fused: decode 256/256
+NB06 b1/main-r1-gqa_fused: 257 forwards saved.
+NB06 b1/main-r1-native: decode 8/256
+NB06 b1/main-r1-native: decode 64/256
+NB06 b1/main-r1-native: decode 128/256
+NB06 b1/main-r1-native: decode 256/256
+NB06 b1/main-r1-native: 257 forwards saved.
+NB06 b1/main-r2-gqa_fused: decode 8/256
+NB06 b1/main-r2-gqa_fused: decode 64/256
+NB06 b1/main-r2-gqa_fused: decode 128/256
+NB06 b1/main-r2-gqa_fused: decode 256/256
+NB06 b1/main-r2-gqa_fused: 257 forwards saved.
+NB06 b1/main-r2-native: decode 8/256
+NB06 b1/main-r2-native: decode 64/256
+NB06 b1/main-r2-native: decode 128/256
+NB06 b1/main-r2-native: decode 256/256
+NB06 b1/main-r2-native: 257 forwards saved.
+NB06 b1/main-r2-packed_sdpa: decode 8/256
+NB06 b1/main-r2-packed_sdpa: decode 64/256
+NB06 b1/main-r2-packed_sdpa: decode 128/256
+NB06 b1/main-r2-packed_sdpa: decode 256/256
+NB06 b1/main-r2-packed_sdpa: 257 forwards saved.
+NB06 book 3/4: 45277; 3855 forwards.
+NB06 b2/gate-official: decode 8/256
+NB06 b2/gate-official: decode 64/256
+NB06 b2/gate-official: decode 128/256
+NB06 b2/gate-official: decode 256/256
+NB06 b2/gate-official: 257 forwards saved.
+NB06 b2/gate-native: decode 8/256
+NB06 b2/gate-native: decode 64/256
+NB06 b2/gate-native: decode 128/256
+NB06 b2/gate-native: decode 256/256
+NB06 b2/gate-native: 257 forwards saved.
+NB06 b2/diagnostic-fused: decode 8/256
+NB06 b2/diagnostic-fused: decode 64/256
+NB06 b2/diagnostic-fused: decode 128/256
+NB06 b2/diagnostic-fused: decode 256/256
+NB06 b2/diagnostic-fused: 257 forwards saved.
+NB06 b2/warm-native: decode 8/256
+NB06 b2/warm-native: decode 64/256
+NB06 b2/warm-native: decode 128/256
+NB06 b2/warm-native: decode 256/256
+NB06 b2/warm-native: 257 forwards saved.
+NB06 b2/warm-packed_sdpa: decode 8/256
+NB06 b2/warm-packed_sdpa: decode 64/256
+NB06 b2/warm-packed_sdpa: decode 128/256
+NB06 b2/warm-packed_sdpa: decode 256/256
+NB06 b2/warm-packed_sdpa: 257 forwards saved.
+NB06 b2/warm-gqa_fused: decode 8/256
+NB06 b2/warm-gqa_fused: decode 64/256
+NB06 b2/warm-gqa_fused: decode 128/256
+NB06 b2/warm-gqa_fused: decode 256/256
+NB06 b2/warm-gqa_fused: 257 forwards saved.
+NB06 b2/main-r0-native: decode 8/256
+NB06 b2/main-r0-native: decode 64/256
+NB06 b2/main-r0-native: decode 128/256
+NB06 b2/main-r0-native: decode 256/256
+NB06 b2/main-r0-native: 257 forwards saved.
+NB06 b2/main-r0-packed_sdpa: decode 8/256
+NB06 b2/main-r0-packed_sdpa: decode 64/256
+NB06 b2/main-r0-packed_sdpa: decode 128/256
+NB06 b2/main-r0-packed_sdpa: decode 256/256
+NB06 b2/main-r0-packed_sdpa: 257 forwards saved.
+NB06 b2/main-r0-gqa_fused: decode 8/256
+NB06 b2/main-r0-gqa_fused: decode 64/256
+NB06 b2/main-r0-gqa_fused: decode 128/256
+NB06 b2/main-r0-gqa_fused: decode 256/256
+NB06 b2/main-r0-gqa_fused: 257 forwards saved.
+NB06 b2/main-r1-packed_sdpa: decode 8/256
+NB06 b2/main-r1-packed_sdpa: decode 64/256
+NB06 b2/main-r1-packed_sdpa: decode 128/256
+NB06 b2/main-r1-packed_sdpa: decode 256/256
+NB06 b2/main-r1-packed_sdpa: 257 forwards saved.
+NB06 b2/main-r1-gqa_fused: decode 8/256
+NB06 b2/main-r1-gqa_fused: decode 64/256
+NB06 b2/main-r1-gqa_fused: decode 128/256
+NB06 b2/main-r1-gqa_fused: decode 256/256
+NB06 b2/main-r1-gqa_fused: 257 forwards saved.
+NB06 b2/main-r1-native: decode 8/256
+NB06 b2/main-r1-native: decode 64/256
+NB06 b2/main-r1-native: decode 128/256
+NB06 b2/main-r1-native: decode 256/256
+NB06 b2/main-r1-native: 257 forwards saved.
+NB06 b2/main-r2-gqa_fused: decode 8/256
+NB06 b2/main-r2-gqa_fused: decode 64/256
+NB06 b2/main-r2-gqa_fused: decode 128/256
+NB06 b2/main-r2-gqa_fused: decode 256/256
+NB06 b2/main-r2-gqa_fused: 257 forwards saved.
+NB06 b2/main-r2-native: decode 8/256
+NB06 b2/main-r2-native: decode 64/256
+NB06 b2/main-r2-native: decode 128/256
+NB06 b2/main-r2-native: decode 256/256
+NB06 b2/main-r2-native: 257 forwards saved.
+NB06 b2/main-r2-packed_sdpa: decode 8/256
+NB06 b2/main-r2-packed_sdpa: decode 64/256
+NB06 b2/main-r2-packed_sdpa: decode 128/256
+NB06 b2/main-r2-packed_sdpa: decode 256/256
+NB06 b2/main-r2-packed_sdpa: 257 forwards saved.
+NB06 book 4/4: 28881; 3855 forwards.
+NB06 b3/gate-official: decode 8/256
+NB06 b3/gate-official: decode 64/256
+NB06 b3/gate-official: decode 128/256
+NB06 b3/gate-official: decode 256/256
+NB06 b3/gate-official: 257 forwards saved.
+NB06 b3/gate-native: decode 8/256
+NB06 b3/gate-native: decode 64/256
+NB06 b3/gate-native: decode 128/256
+NB06 b3/gate-native: decode 256/256
+NB06 b3/gate-native: 257 forwards saved.
+NB06 b3/diagnostic-fused: decode 8/256
+NB06 b3/diagnostic-fused: decode 64/256
+NB06 b3/diagnostic-fused: decode 128/256
+NB06 b3/diagnostic-fused: decode 256/256
+NB06 b3/diagnostic-fused: 257 forwards saved.
+NB06 b3/warm-native: decode 8/256
+NB06 b3/warm-native: decode 64/256
+NB06 b3/warm-native: decode 128/256
+NB06 b3/warm-native: decode 256/256
+NB06 b3/warm-native: 257 forwards saved.
+NB06 b3/warm-packed_sdpa: decode 8/256
+NB06 b3/warm-packed_sdpa: decode 64/256
+NB06 b3/warm-packed_sdpa: decode 128/256
+NB06 b3/warm-packed_sdpa: decode 256/256
+NB06 b3/warm-packed_sdpa: 257 forwards saved.
+NB06 b3/warm-gqa_fused: decode 8/256
+NB06 b3/warm-gqa_fused: decode 64/256
+NB06 b3/warm-gqa_fused: decode 128/256
+NB06 b3/warm-gqa_fused: decode 256/256
+NB06 b3/warm-gqa_fused: 257 forwards saved.
+NB06 b3/main-r0-native: decode 8/256
+NB06 b3/main-r0-native: decode 64/256
+NB06 b3/main-r0-native: decode 128/256
+NB06 b3/main-r0-native: decode 256/256
+NB06 b3/main-r0-native: 257 forwards saved.
+NB06 b3/main-r0-packed_sdpa: decode 8/256
+NB06 b3/main-r0-packed_sdpa: decode 64/256
+NB06 b3/main-r0-packed_sdpa: decode 128/256
+NB06 b3/main-r0-packed_sdpa: decode 256/256
+NB06 b3/main-r0-packed_sdpa: 257 forwards saved.
+NB06 b3/main-r0-gqa_fused: decode 8/256
+NB06 b3/main-r0-gqa_fused: decode 64/256
+NB06 b3/main-r0-gqa_fused: decode 128/256
+NB06 b3/main-r0-gqa_fused: decode 256/256
+NB06 b3/main-r0-gqa_fused: 257 forwards saved.
+NB06 b3/main-r1-packed_sdpa: decode 8/256
+NB06 b3/main-r1-packed_sdpa: decode 64/256
+NB06 b3/main-r1-packed_sdpa: decode 128/256
+NB06 b3/main-r1-packed_sdpa: decode 256/256
+NB06 b3/main-r1-packed_sdpa: 257 forwards saved.
+NB06 b3/main-r1-gqa_fused: decode 8/256
+NB06 b3/main-r1-gqa_fused: decode 64/256
+NB06 b3/main-r1-gqa_fused: decode 128/256
+NB06 b3/main-r1-gqa_fused: decode 256/256
+NB06 b3/main-r1-gqa_fused: 257 forwards saved.
+NB06 b3/main-r1-native: decode 8/256
+NB06 b3/main-r1-native: decode 64/256
+NB06 b3/main-r1-native: decode 128/256
+NB06 b3/main-r1-native: decode 256/256
+NB06 b3/main-r1-native: 257 forwards saved.
+NB06 b3/main-r2-gqa_fused: decode 8/256
+NB06 b3/main-r2-gqa_fused: decode 64/256
+NB06 b3/main-r2-gqa_fused: decode 128/256
+NB06 b3/main-r2-gqa_fused: decode 256/256
+NB06 b3/main-r2-gqa_fused: 257 forwards saved.
+NB06 b3/main-r2-native: decode 8/256
+NB06 b3/main-r2-native: decode 64/256
+NB06 b3/main-r2-native: decode 128/256
+NB06 b3/main-r2-native: decode 256/256
+NB06 b3/main-r2-native: 257 forwards saved.
+NB06 b3/main-r2-packed_sdpa: decode 8/256
+NB06 b3/main-r2-packed_sdpa: decode 64/256
+NB06 b3/main-r2-packed_sdpa: decode 128/256
+NB06 b3/main-r2-packed_sdpa: decode 256/256
+NB06 b3/main-r2-packed_sdpa: 257 forwards saved.
+NB06 connection: PASS_MODEL_CONNECTION

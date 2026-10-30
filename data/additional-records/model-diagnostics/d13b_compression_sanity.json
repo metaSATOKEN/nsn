@@ -1,0 +1,95 @@
+{
+  "phase": "D-13b",
+  "title": "compression-ratio analytical sanity check",
+  "timestamp_utc": "2026-05-07T04:22:37.043043+00:00",
+  "threshold_pp": 0.1,
+  "results": {
+    "k_substrate": [
+      {
+        "label": "Gemma4-26B-A4B-base K-INT5 @ ctx=8192",
+        "bits": 5,
+        "B": 1,
+        "T": 8192,
+        "n_kv": 8,
+        "head_dim": 256,
+        "n_elements": 16777216,
+        "codes_bytes": 10485760,
+        "norm_bytes": 131072,
+        "scale_bytes": 8192,
+        "total_bytes_real": 10625024,
+        "total_bytes_fp16": 33554432,
+        "bpv_observed": 5.06640625,
+        "bpv_full_formula": 5.06640625,
+        "bpv_simple_formula": 5.00390625,
+        "ratio_observed": 3.1580570547417115,
+        "ratio_full_formula": 3.1580570547417115,
+        "ratio_simple_formula": 3.1975019516003123,
+        "agreement_full_pp": 0.0,
+        "agreement_simple_pp": 1.2336160370084854
+      },
+      {
+        "label": "Qwen3.6-27B K-INT4 @ ctx=1024",
+        "bits": 4,
+        "B": 1,
+        "T": 1024,
+        "n_kv": 8,
+        "head_dim": 256,
+        "n_elements": 2097152,
+        "codes_bytes": 1048576,
+        "norm_bytes": 16384,
+        "scale_bytes": 8192,
+        "total_bytes_real": 1073152,
+        "total_bytes_fp16": 4194304,
+        "bpv_observed": 4.09375,
+        "bpv_full_formula": 4.09375,
+        "bpv_simple_formula": 4.03125,
+        "ratio_observed": 3.9083969465648853,
+        "ratio_full_formula": 3.9083969465648853,
+        "ratio_simple_formula": 3.9689922480620154,
+        "agreement_full_pp": 0.0,
+        "agreement_simple_pp": 1.526717557251911
+      }
+    ],
+    "m_substrate": [
+      {
+        "label": "Qwen3.6-27B GatedDeltaNet M-INT5 (representative Linear)",
+        "bits": 5,
+        "out_features": 4096,
+        "in_features": 4096,
+        "n_elements": 16777216,
+        "codes_bytes": 10485760,
+        "scale_bytes": 16384,
+        "total_bytes_real": 10502144,
+        "total_bytes_fp16": 33554432,
+        "bpv_observed": 5.0078125,
+        "bpv_full_formula": 5.0078125,
+        "ratio_observed": 3.1950078003120126,
+        "ratio_full_formula": 3.1950078003120126,
+        "agreement_pp": 0.0
+      }
+    ]
+  },
+  "criteria": {
+    "K Gemma4-26B-A4B-base K-INT5 @ ctx=8192 vs full formula": {
+      "observed": 3.1580570547417115,
+      "expected": 3.1580570547417115,
+      "agreement_pp": 0.0,
+      "pass": true
+    },
+    "K Qwen3.6-27B K-INT4 @ ctx=1024 vs full formula": {
+      "observed": 3.9083969465648853,
+      "expected": 3.9083969465648853,
+      "agreement_pp": 0.0,
+      "pass": true
+    },
+    "M Qwen3.6-27B GatedDeltaNet M-INT5 (representative Linear) vs full formula": {
+      "observed": 3.1950078003120126,
+      "expected": 3.1950078003120126,
+      "agreement_pp": 0.0,
+      "pass": true
+    }
+  },
+  "n_pass": 3,
+  "n_total": 3,
+  "notes": "D-14 used the simplified formula bpv = b + 32/T which omits the 16/head_dim per-token-norm overhead of NSN qa_nsep_pchan_asym. The full formula bpv = b + 16/head_dim + 32/T should be used in section 6 of the manuscript. The under-reporting on the two D-13 hero cells is < 2 percentage points, which does not change the qualitative compression ranking against industry baselines but is an honest correction worth documenting."
+}

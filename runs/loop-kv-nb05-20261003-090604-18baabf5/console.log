@@ -1,0 +1,85 @@
+NB05 runtime: venv
+NB05 runtime: install
+NB05 runtime: pip_check
+NB05 runtime: versions
+NB05 runtime: cuda_probe
+NB05 runtime ready: torch 2.11.0+cu128; starting the fixed experiment.
+
+Fetching 6 files:   0%|          | 0/6 [00:00<?, ?it/s]
+Fetching 6 files:  33%|███▎      | 2/6 [00:00<00:00, 14.03it/s]
+Fetching 6 files:  67%|██████▋   | 4/6 [00:00<00:00, 15.48it/s]
+Fetching 6 files: 100%|██████████| 6/6 [00:01<00:00,  5.72it/s]
+Fetching 6 files: 100%|██████████| 6/6 [00:01<00:00,  5.72it/s]
+Materials: 1/4, candidate 1: SELECTED
+Materials: 2/4, candidate 2: SELECTED
+Materials: 3/4, candidate 3: SELECTED
+Materials: 4/4, candidate 4: SELECTED
+
+Fetching 1 files:   0%|          | 0/1 [00:00<?, ?it/s]
+Fetching 1 files: 100%|██████████| 1/1 [00:19<00:00, 19.84s/it]
+Fetching 1 files: 100%|██████████| 1/1 [00:19<00:00, 19.84s/it]
+NB05 book 1/4: 9667; 135 forwards.
+NB05 b0/gate-official: 9/9 model forwards saved.
+NB05 b0/gate-native: 9/9 model forwards saved.
+NB05 b0/diagnostic-fused: 9/9 model forwards saved.
+NB05 b0/warm-native: 9/9 model forwards saved.
+NB05 b0/warm-packed_sdpa: 9/9 model forwards saved.
+NB05 b0/warm-gqa_fused: 9/9 model forwards saved.
+NB05 b0/main-r0-native: 9/9 model forwards saved.
+NB05 b0/main-r0-packed_sdpa: 9/9 model forwards saved.
+NB05 b0/main-r0-gqa_fused: 9/9 model forwards saved.
+NB05 b0/main-r1-packed_sdpa: 9/9 model forwards saved.
+NB05 b0/main-r1-gqa_fused: 9/9 model forwards saved.
+NB05 b0/main-r1-native: 9/9 model forwards saved.
+NB05 b0/main-r2-gqa_fused: 9/9 model forwards saved.
+NB05 b0/main-r2-native: 9/9 model forwards saved.
+NB05 b0/main-r2-packed_sdpa: 9/9 model forwards saved.
+NB05 book 2/4: 26438; 135 forwards.
+NB05 b1/gate-official: 9/9 model forwards saved.
+NB05 b1/gate-native: 9/9 model forwards saved.
+NB05 b1/diagnostic-fused: 9/9 model forwards saved.
+NB05 b1/warm-native: 9/9 model forwards saved.
+NB05 b1/warm-packed_sdpa: 9/9 model forwards saved.
+NB05 b1/warm-gqa_fused: 9/9 model forwards saved.
+NB05 b1/main-r0-native: 9/9 model forwards saved.
+NB05 b1/main-r0-packed_sdpa: 9/9 model forwards saved.
+NB05 b1/main-r0-gqa_fused: 9/9 model forwards saved.
+NB05 b1/main-r1-packed_sdpa: 9/9 model forwards saved.
+NB05 b1/main-r1-gqa_fused: 9/9 model forwards saved.
+NB05 b1/main-r1-native: 9/9 model forwards saved.
+NB05 b1/main-r2-gqa_fused: 9/9 model forwards saved.
+NB05 b1/main-r2-native: 9/9 model forwards saved.
+NB05 b1/main-r2-packed_sdpa: 9/9 model forwards saved.
+NB05 book 3/4: 45277; 135 forwards.
+NB05 b2/gate-official: 9/9 model forwards saved.
+NB05 b2/gate-native: 9/9 model forwards saved.
+NB05 b2/diagnostic-fused: 9/9 model forwards saved.
+NB05 b2/warm-native: 9/9 model forwards saved.
+NB05 b2/warm-packed_sdpa: 9/9 model forwards saved.
+NB05 b2/warm-gqa_fused: 9/9 model forwards saved.
+NB05 b2/main-r0-native: 9/9 model forwards saved.
+NB05 b2/main-r0-packed_sdpa: 9/9 model forwards saved.
+NB05 b2/main-r0-gqa_fused: 9/9 model forwards saved.
+NB05 b2/main-r1-packed_sdpa: 9/9 model forwards saved.
+NB05 b2/main-r1-gqa_fused: 9/9 model forwards saved.
+NB05 b2/main-r1-native: 9/9 model forwards saved.
+NB05 b2/main-r2-gqa_fused: 9/9 model forwards saved.
+NB05 b2/main-r2-native: 9/9 model forwards saved.
+NB05 b2/main-r2-packed_sdpa: 9/9 model forwards saved.
+NB05 book 4/4: 28881; 135 forwards.
+NB05 b3/gate-official: 9/9 model forwards saved.
+NB05 b3/gate-native: 9/9 model forwards saved.
+NB05 b3/diagnostic-fused: 9/9 model forwards saved.
+NB05 b3/warm-native: 9/9 model forwards saved.
+NB05 b3/warm-packed_sdpa: 9/9 model forwards saved.
+NB05 b3/warm-gqa_fused: 9/9 model forwards saved.
+NB05 b3/main-r0-native: 9/9 model forwards saved.
+NB05 b3/main-r0-packed_sdpa: 9/9 model forwards saved.
+NB05 b3/main-r0-gqa_fused: 9/9 model forwards saved.
+NB05 b3/main-r1-packed_sdpa: 9/9 model forwards saved.
+NB05 b3/main-r1-gqa_fused: 9/9 model forwards saved.
+NB05 b3/main-r1-native: 9/9 model forwards saved.
+NB05 b3/main-r2-gqa_fused: 9/9 model forwards saved.
+NB05 b3/main-r2-native: 9/9 model forwards saved.
+NB05 b3/main-r2-packed_sdpa: 9/9 model forwards saved.
+NB05 connection: PASS_MODEL_CONNECTION

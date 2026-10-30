@@ -1,0 +1,652 @@
+{
+  "experiment": "LOOP-KV-AC08-NC-PREFLIGHT",
+  "version": "0.1.0",
+  "status": "PASS",
+  "complete": true,
+  "planned": {
+    "control_fixtures": 3,
+    "control_arm_outputs": 9,
+    "control_trace_and_plain_calls": 18,
+    "direct_baseline_calls": 3,
+    "negative_attempts": 9,
+    "old_layout_witnesses": 3
+  },
+  "observed": {
+    "control_fixtures": 3,
+    "control_arm_outputs": 9,
+    "negative_attempts": 9,
+    "old_layout_witnesses": 3
+  },
+  "gates": {
+    "normal_route": true,
+    "normal_numeric": true,
+    "construction": true,
+    "negative_rejection": true,
+    "input_unchanged": true,
+    "old_layout_prediction": true
+  },
+  "controls": [
+    {
+      "id": "C64T65-mixed_codes",
+      "complete": true,
+      "unchanged": true,
+      "numerics": {
+        "complete": true,
+        "route": {
+          "complete": true,
+          "scores_equal": true,
+          "bridge_v_equal": true,
+          "bridge_context_equal": true,
+          "bridge_output_equal": true,
+          "trace_normal_equal": true,
+          "rounding": true,
+          "direct_baseline_equal": true
+        },
+        "metrics": {
+          "RF01_MATERIALIZE": {
+            "complete": true,
+            "rounding": true,
+            "trace_normal_equal": true,
+            "v_restore": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 16640,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "score": {
+              "pass_budget": true,
+              "max_abs": 8.995044292747778e-09,
+              "rmse": 8.925818498535775e-09,
+              "element_exceed": 0,
+              "head_exceed": 0,
+              "elements": 130
+            },
+            "context": {
+              "pass_budget": true,
+              "elements": 256,
+              "exceed": 0,
+              "max_abs": 8.393526679251195e-09,
+              "rmse": 2.560112997645018e-09
+            },
+            "combined_context": {
+              "pass_budget": true,
+              "exceed": 0,
+              "max_abs": 8.393526679251195e-09,
+              "v_error_bound_max": 0.0
+            },
+            "fp64_full_attention": {
+              "bit_equal": false,
+              "max_abs": 0.0004813898221217028,
+              "rmse": 0.0001452049941892532
+            }
+          },
+          "TILE_MATERIALIZE": {
+            "complete": true,
+            "rounding": true,
+            "trace_normal_equal": true,
+            "v_restore": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 16640,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "score": {
+              "pass_budget": true,
+              "max_abs": 8.995044292747778e-09,
+              "rmse": 8.925818498535775e-09,
+              "element_exceed": 0,
+              "head_exceed": 0,
+              "elements": 130
+            },
+            "context": {
+              "pass_budget": true,
+              "elements": 256,
+              "exceed": 0,
+              "max_abs": 8.393526679251195e-09,
+              "rmse": 2.560112997645018e-09
+            },
+            "combined_context": {
+              "pass_budget": true,
+              "exceed": 0,
+              "max_abs": 8.393526679251195e-09,
+              "v_error_bound_max": 0.0
+            },
+            "fp64_full_attention": {
+              "bit_equal": false,
+              "max_abs": 0.0004813898221217028,
+              "rmse": 0.0001452049941892532
+            }
+          },
+          "V_FUSED": {
+            "complete": true,
+            "rounding": true,
+            "trace_normal_equal": true,
+            "v_restore": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 16640,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "score": {
+              "pass_budget": true,
+              "max_abs": 8.995044292747778e-09,
+              "rmse": 8.925818498535775e-09,
+              "element_exceed": 0,
+              "head_exceed": 0,
+              "elements": 130
+            },
+            "context": {
+              "pass_budget": true,
+              "elements": 256,
+              "exceed": 0,
+              "max_abs": 8.393526679251195e-09,
+              "rmse": 2.560112997645018e-09
+            },
+            "combined_context": {
+              "pass_budget": true,
+              "exceed": 0,
+              "max_abs": 8.393526679251195e-09,
+              "v_error_bound_max": 0.0
+            },
+            "fp64_full_attention": {
+              "bit_equal": false,
+              "max_abs": 0.0004813898221217028,
+              "rmse": 0.0001452049941892532
+            }
+          },
+          "final_vs_reference": {
+            "RF01_MATERIALIZE": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 256,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "TILE_MATERIALIZE": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 256,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "V_FUSED": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 256,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          }
+        },
+        "old_reference_difference": {}
+      },
+      "route_pass": true,
+      "numeric_pass": true
+    },
+    {
+      "id": "C768T833-mixed_codes",
+      "complete": true,
+      "unchanged": true,
+      "numerics": {
+        "complete": true,
+        "route": {
+          "complete": true,
+          "scores_equal": true,
+          "bridge_v_equal": true,
+          "bridge_context_equal": true,
+          "bridge_output_equal": true,
+          "trace_normal_equal": true,
+          "rounding": true,
+          "direct_baseline_equal": true
+        },
+        "metrics": {
+          "RF01_MATERIALIZE": {
+            "complete": true,
+            "rounding": true,
+            "trace_normal_equal": true,
+            "v_restore": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 213248,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "score": {
+              "pass_budget": true,
+              "max_abs": 8.995044292747778e-09,
+              "rmse": 8.636970306893034e-09,
+              "element_exceed": 0,
+              "head_exceed": 0,
+              "elements": 1666
+            },
+            "context": {
+              "pass_budget": true,
+              "elements": 256,
+              "exceed": 0,
+              "max_abs": 2.4135294221516723e-08,
+              "rmse": 7.168729882786106e-09
+            },
+            "combined_context": {
+              "pass_budget": true,
+              "exceed": 0,
+              "max_abs": 2.4135294221516723e-08,
+              "v_error_bound_max": 0.0
+            },
+            "fp64_full_attention": {
+              "bit_equal": false,
+              "max_abs": 0.0004851070088176812,
+              "rmse": 0.00015651912341023682
+            }
+          },
+          "TILE_MATERIALIZE": {
+            "complete": true,
+            "rounding": true,
+            "trace_normal_equal": true,
+            "v_restore": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 213248,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "score": {
+              "pass_budget": true,
+              "max_abs": 8.995044292747778e-09,
+              "rmse": 8.636970306893034e-09,
+              "element_exceed": 0,
+              "head_exceed": 0,
+              "elements": 1666
+            },
+            "context": {
+              "pass_budget": true,
+              "elements": 256,
+              "exceed": 0,
+              "max_abs": 2.4135294221516723e-08,
+              "rmse": 7.168729882786106e-09
+            },
+            "combined_context": {
+              "pass_budget": true,
+              "exceed": 0,
+              "max_abs": 2.4135294221516723e-08,
+              "v_error_bound_max": 0.0
+            },
+            "fp64_full_attention": {
+              "bit_equal": false,
+              "max_abs": 0.0004851070088176812,
+              "rmse": 0.00015651912341023682
+            }
+          },
+          "V_FUSED": {
+            "complete": true,
+            "rounding": true,
+            "trace_normal_equal": true,
+            "v_restore": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 213248,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "score": {
+              "pass_budget": true,
+              "max_abs": 8.995044292747778e-09,
+              "rmse": 8.636970306893034e-09,
+              "element_exceed": 0,
+              "head_exceed": 0,
+              "elements": 1666
+            },
+            "context": {
+              "pass_budget": true,
+              "elements": 256,
+              "exceed": 0,
+              "max_abs": 2.4135294221516723e-08,
+              "rmse": 7.168729882786106e-09
+            },
+            "combined_context": {
+              "pass_budget": true,
+              "exceed": 0,
+              "max_abs": 2.4135294221516723e-08,
+              "v_error_bound_max": 0.0
+            },
+            "fp64_full_attention": {
+              "bit_equal": false,
+              "max_abs": 0.0004851070088176812,
+              "rmse": 0.00015651912341023682
+            }
+          },
+          "final_vs_reference": {
+            "RF01_MATERIALIZE": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 256,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "TILE_MATERIALIZE": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 256,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "V_FUSED": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 256,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          }
+        },
+        "old_reference_difference": {}
+      },
+      "route_pass": true,
+      "numeric_pass": true
+    },
+    {
+      "id": "C896T1023-mixed_codes",
+      "complete": true,
+      "unchanged": true,
+      "numerics": {
+        "complete": true,
+        "route": {
+          "complete": true,
+          "scores_equal": true,
+          "bridge_v_equal": true,
+          "bridge_context_equal": true,
+          "bridge_output_equal": true,
+          "trace_normal_equal": true,
+          "rounding": true,
+          "direct_baseline_equal": true
+        },
+        "metrics": {
+          "RF01_MATERIALIZE": {
+            "complete": true,
+            "rounding": true,
+            "trace_normal_equal": true,
+            "v_restore": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 261888,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "score": {
+              "pass_budget": true,
+              "max_abs": 8.995044292747778e-09,
+              "rmse": 8.418205127753723e-09,
+              "element_exceed": 0,
+              "head_exceed": 0,
+              "elements": 2046
+            },
+            "context": {
+              "pass_budget": true,
+              "elements": 256,
+              "exceed": 0,
+              "max_abs": 2.8612583774512146e-08,
+              "rmse": 9.266426587197475e-09
+            },
+            "combined_context": {
+              "pass_budget": true,
+              "exceed": 0,
+              "max_abs": 2.8612583774512146e-08,
+              "v_error_bound_max": 0.0
+            },
+            "fp64_full_attention": {
+              "bit_equal": false,
+              "max_abs": 0.0004752138954742524,
+              "rmse": 0.0001310444353748152
+            }
+          },
+          "TILE_MATERIALIZE": {
+            "complete": true,
+            "rounding": true,
+            "trace_normal_equal": true,
+            "v_restore": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 261888,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "score": {
+              "pass_budget": true,
+              "max_abs": 8.995044292747778e-09,
+              "rmse": 8.418205127753723e-09,
+              "element_exceed": 0,
+              "head_exceed": 0,
+              "elements": 2046
+            },
+            "context": {
+              "pass_budget": true,
+              "elements": 256,
+              "exceed": 0,
+              "max_abs": 2.8612583774512146e-08,
+              "rmse": 9.266426587197475e-09
+            },
+            "combined_context": {
+              "pass_budget": true,
+              "exceed": 0,
+              "max_abs": 2.8612583774512146e-08,
+              "v_error_bound_max": 0.0
+            },
+            "fp64_full_attention": {
+              "bit_equal": false,
+              "max_abs": 0.0004752138954742524,
+              "rmse": 0.0001310444353748152
+            }
+          },
+          "V_FUSED": {
+            "complete": true,
+            "rounding": true,
+            "trace_normal_equal": true,
+            "v_restore": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 261888,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "score": {
+              "pass_budget": true,
+              "max_abs": 8.995044292747778e-09,
+              "rmse": 8.418205127753723e-09,
+              "element_exceed": 0,
+              "head_exceed": 0,
+              "elements": 2046
+            },
+            "context": {
+              "pass_budget": true,
+              "elements": 256,
+              "exceed": 0,
+              "max_abs": 2.8612583774512146e-08,
+              "rmse": 9.266426587197475e-09
+            },
+            "combined_context": {
+              "pass_budget": true,
+              "exceed": 0,
+              "max_abs": 2.8612583774512146e-08,
+              "v_error_bound_max": 0.0
+            },
+            "fp64_full_attention": {
+              "bit_equal": false,
+              "max_abs": 0.0004752138954742524,
+              "rmse": 0.0001310444353748152
+            }
+          },
+          "final_vs_reference": {
+            "RF01_MATERIALIZE": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 256,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "TILE_MATERIALIZE": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 256,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            },
+            "V_FUSED": {
+              "pass_budget": true,
+              "bit_differences": 0,
+              "elements": 256,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "token_exceed": 0,
+              "head_exceed": 0
+            }
+          }
+        },
+        "old_reference_difference": {}
+      },
+      "route_pass": true,
+      "numeric_pass": true
+    }
+  ],
+  "old_layouts": [
+    {
+      "fixture": "C64T65-mixed_codes",
+      "values_equal": true,
+      "contiguous": true,
+      "prediction_pass": true
+    },
+    {
+      "fixture": "C768T833-mixed_codes",
+      "values_equal": true,
+      "contiguous": false,
+      "prediction_pass": true
+    },
+    {
+      "fixture": "C896T1023-mixed_codes",
+      "values_equal": true,
+      "contiguous": false,
+      "prediction_pass": true
+    }
+  ],
+  "attempts": [
+    {
+      "id": "C64T65-RF01_MATERIALIZE",
+      "construction": "READY",
+      "result": "REJECTED",
+      "stage": "structural",
+      "finite_launch_delta": 0,
+      "rejection_pass": true,
+      "unchanged": true
+    },
+    {
+      "id": "C64T65-TILE_MATERIALIZE",
+      "construction": "READY",
+      "result": "REJECTED",
+      "stage": "structural",
+      "finite_launch_delta": 0,
+      "rejection_pass": true,
+      "unchanged": true
+    },
+    {
+      "id": "C64T65-V_FUSED",
+      "construction": "READY",
+      "result": "REJECTED",
+      "stage": "structural",
+      "finite_launch_delta": 0,
+      "rejection_pass": true,
+      "unchanged": true
+    },
+    {
+      "id": "C768T833-RF01_MATERIALIZE",
+      "construction": "READY",
+      "result": "REJECTED",
+      "stage": "structural",
+      "finite_launch_delta": 0,
+      "rejection_pass": true,
+      "unchanged": true
+    },
+    {
+      "id": "C768T833-TILE_MATERIALIZE",
+      "construction": "READY",
+      "result": "REJECTED",
+      "stage": "structural",
+      "finite_launch_delta": 0,
+      "rejection_pass": true,
+      "unchanged": true
+    },
+    {
+      "id": "C768T833-V_FUSED",
+      "construction": "READY",
+      "result": "REJECTED",
+      "stage": "structural",
+      "finite_launch_delta": 0,
+      "rejection_pass": true,
+      "unchanged": true
+    },
+    {
+      "id": "C896T1023-RF01_MATERIALIZE",
+      "construction": "READY",
+      "result": "REJECTED",
+      "stage": "structural",
+      "finite_launch_delta": 0,
+      "rejection_pass": true,
+      "unchanged": true
+    },
+    {
+      "id": "C896T1023-TILE_MATERIALIZE",
+      "construction": "READY",
+      "result": "REJECTED",
+      "stage": "structural",
+      "finite_launch_delta": 0,
+      "rejection_pass": true,
+      "unchanged": true
+    },
+    {
+      "id": "C896T1023-V_FUSED",
+      "construction": "READY",
+      "result": "REJECTED",
+      "stage": "structural",
+      "finite_launch_delta": 0,
+      "rejection_pass": true,
+      "unchanged": true
+    }
+  ],
+  "model_loaded": true,
+  "timing_comparison": false,
+  "parent_h1_rewritten": false
+}

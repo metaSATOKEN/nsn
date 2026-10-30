@@ -1,0 +1,99 @@
+{
+  "phase": "D-13",
+  "title": "real-pack sanity check (Paper B Phase 26 inheritance)",
+  "timestamp_utc": "2026-05-07T04:07:41.549046+00:00",
+  "transformers_version": "5.8.0",
+  "ppl_rel_diff_threshold": 0.0001,
+  "selftest_int4": {
+    "trials": 5,
+    "passed": 5,
+    "failed": 0,
+    "fail_msgs": [],
+    "pass": true
+  },
+  "selftest_int5": {
+    "trials": 5,
+    "passed": 5,
+    "failed": 0,
+    "fail_msgs": [],
+    "pass": true
+  },
+  "cell_results": [
+    {
+      "model_label": "Gemma4-26B-A4B-base",
+      "recipe": "K-INT5 uniform",
+      "ctx": 8192,
+      "k_bits": 5,
+      "m_bits": null,
+      "fp16_ppl": 4.67674974004223,
+      "sim_ppl": 4.697188320160833,
+      "sim_delta_pct": 0.4370253114809151,
+      "real_ppl": 4.697188320160833,
+      "real_delta_pct": 0.4370253114809151,
+      "abs_diff": 0.0,
+      "rel_diff": 0.0,
+      "pass": true,
+      "historical_delta_pct": 0.437,
+      "historical_src": "D-16, D-14b"
+    },
+    {
+      "model_label": "Qwen3.6-27B",
+      "recipe": "K-INT4 + M-INT5",
+      "ctx": 1024,
+      "k_bits": 4,
+      "m_bits": 5,
+      "fp16_ppl": 6.5840378253180925,
+      "sim_ppl": 6.527119861283524,
+      "sim_delta_pct": -0.8644841591841583,
+      "real_ppl": 6.527119861283524,
+      "real_delta_pct": -0.8644841591841583,
+      "abs_diff": 0.0,
+      "rel_diff": 0.0,
+      "pass": true,
+      "historical_delta_pct": -0.282,
+      "historical_src": "D-10b"
+    }
+  ],
+  "criteria": {
+    "D13-A": {
+      "name": "INT4 pack/unpack codes-roundtrip identity",
+      "pass": true,
+      "details": {
+        "trials": 5,
+        "passed": 5,
+        "failed": 0,
+        "fail_msgs": [],
+        "pass": true
+      }
+    },
+    "D13-B": {
+      "name": "INT5 pack/unpack codes-roundtrip identity",
+      "pass": true,
+      "details": {
+        "trials": 5,
+        "passed": 5,
+        "failed": 0,
+        "fail_msgs": [],
+        "pass": true
+      }
+    },
+    "D13-C": {
+      "name": "C1 Gemma4 K-INT5 sim \u2261 real (rel_diff < 1e-4)",
+      "pass": true,
+      "details": {
+        "rel_diff": 0.0
+      }
+    },
+    "D13-D": {
+      "name": "C2 Qwen3.6 K-INT4 + M-INT5 sim \u2261 real (rel_diff < 1e-4)",
+      "pass": true,
+      "details": {
+        "rel_diff": 0.0
+      }
+    }
+  },
+  "n_passed": 4,
+  "n_total": 4,
+  "overall": "FULL PASS",
+  "interpretation": "Inheritance argument empirically supported on the Paper D testbed. Section 6 effective memory accounting can carry the direct empirical claim that fake-quant \u0394PPL transfers to real-packed deployment with bit-exact code reproducibility on INT4 (K substrate) and INT5 (K and M substrates), at the Gemma4 K-INT5 long-context hero and Qwen3.6 K-INT4 + M-INT5 short-context hero cells."
+}

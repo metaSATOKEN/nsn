@@ -1,0 +1,201 @@
+{
+  "scope": "Extracted saved diagnostic summaries and frozen contracts; NB05 NLL recalculated from saved logits on CPU. No GPU rerun.",
+  "ac08": {
+    "points": 192,
+    "metrics": {
+      "v_restore": {
+        "max_abs": 0.00390625,
+        "pass_count": 192
+      },
+      "score": {
+        "max_abs": 0.016313866387768883,
+        "pass_count": 192
+      },
+      "context": {
+        "max_abs": 4.600033411961135e-07,
+        "pass_count": 192
+      },
+      "combined_context": {
+        "max_abs": 1.431140084251492e-05,
+        "pass_count": 192
+      },
+      "bridge_equal_count": 192,
+      "rounding_equal_count": 192,
+      "final_vs_reference": {
+        "max_abs": 1.52587890625e-05,
+        "role": "descriptive, not an additional gate"
+      }
+    },
+    "nll": {
+      "count": 8925,
+      "max_abs": 3.900589432611484e-14,
+      "absolute_limit": 2e-05,
+      "source": "prior independent verification summary"
+    }
+  },
+  "nb05": {
+    "points": 16,
+    "metrics": {
+      "score": {
+        "max_abs": 3.5216028919649034e-06,
+        "pass_count": 16
+      },
+      "context": {
+        "max_abs": 3.9875149617785155e-06,
+        "pass_count": 16
+      },
+      "restoration": {
+        "k": {
+          "max_abs": 0.015625,
+          "pass_count": 16
+        },
+        "v": {
+          "max_abs": 0.0078125,
+          "pass_count": 16
+        }
+      },
+      "bridge_equal_count": 16,
+      "rounding_equal_count": 16,
+      "sdpa": {
+        "TORCH_SDPA": {
+          "max_abs": 0.0657809991509346,
+          "pass_count": 16
+        },
+        "TILE_SDPA": {
+          "max_abs": 0.0657809991509346,
+          "pass_count": 16
+        }
+      },
+      "fused_vs_sdpa": {
+        "TORCH_SDPA": 0.125,
+        "TILE_SDPA": 0.125
+      }
+    },
+    "nll": {
+      "raw_trajectories": 48,
+      "count": 432,
+      "max_abs": 7.105427357601002e-15,
+      "relative_tolerance": 1e-12,
+      "absolute_tolerance": 1e-12,
+      "source": "CPU recalculation in this revision"
+    }
+  },
+  "vf01": {
+    "normal_fixtures": 16,
+    "saved_input_query_cases": 36,
+    "bridge_exact_cases": 52
+  },
+  "timing_ac08": {
+    "all_count": 255,
+    "initial_exclusions": [
+      769,
+      770,
+      771,
+      772,
+      773,
+      774,
+      775,
+      776
+    ],
+    "capture_exclusions": [
+      769,
+      831,
+      833,
+      895,
+      897,
+      959,
+      961,
+      1023
+    ],
+    "overlap": [
+      769
+    ],
+    "timed_count": 240,
+    "flush": [
+      832,
+      896,
+      960
+    ]
+  },
+  "source_sha256": {
+    "runs/loop-kv-ac08-20261002-095022-41c2554c/summary.json": "f3be4102ab3496c2d43bd7af95a34a4e12b0519f580dfaebcecef299b93ff12f",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/summary.json": "f45899b65367979157c0fb3f78d19648713f36cab35c4d3228991766e7160885",
+    "runs/loop-kv-vf01-20261002-072452-1d1c10c0/summary.json": "c56e607d7dc192e5d1ad6b25b0bdfc186ee21971509f74d313a27c5a40ca07d7"
+  },
+  "raw_logit_sha256": {
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b0/series/gate-official/logits.npz": "d2e7a08b0591b4b76e9fa56e0edd42564b9049ca43e7c054d058837b027e7c31",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b0/series/gate-native/logits.npz": "d2e7a08b0591b4b76e9fa56e0edd42564b9049ca43e7c054d058837b027e7c31",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b0/series/diagnostic-fused/logits.npz": "fd2d9fa616422fa3dfc1ed455cbec9124e53cfab75737d5f306ccf7c6f14c871",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b0/series/main-r0-native/logits.npz": "d2e7a08b0591b4b76e9fa56e0edd42564b9049ca43e7c054d058837b027e7c31",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b0/series/main-r0-packed_sdpa/logits.npz": "984ffdec5064b2604e39d72c49ac6635f0dae421341c4acdb5aa06e07bf8e591",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b0/series/main-r0-gqa_fused/logits.npz": "fd2d9fa616422fa3dfc1ed455cbec9124e53cfab75737d5f306ccf7c6f14c871",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b0/series/main-r1-packed_sdpa/logits.npz": "984ffdec5064b2604e39d72c49ac6635f0dae421341c4acdb5aa06e07bf8e591",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b0/series/main-r1-gqa_fused/logits.npz": "fd2d9fa616422fa3dfc1ed455cbec9124e53cfab75737d5f306ccf7c6f14c871",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b0/series/main-r1-native/logits.npz": "d2e7a08b0591b4b76e9fa56e0edd42564b9049ca43e7c054d058837b027e7c31",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b0/series/main-r2-gqa_fused/logits.npz": "fd2d9fa616422fa3dfc1ed455cbec9124e53cfab75737d5f306ccf7c6f14c871",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b0/series/main-r2-native/logits.npz": "d2e7a08b0591b4b76e9fa56e0edd42564b9049ca43e7c054d058837b027e7c31",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b0/series/main-r2-packed_sdpa/logits.npz": "984ffdec5064b2604e39d72c49ac6635f0dae421341c4acdb5aa06e07bf8e591",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b1/series/gate-official/logits.npz": "cefa9f9e67b338d307b6a83cadf67e59cb01e7ca645f34050eede6c4c5bd93bd",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b1/series/gate-native/logits.npz": "cefa9f9e67b338d307b6a83cadf67e59cb01e7ca645f34050eede6c4c5bd93bd",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b1/series/diagnostic-fused/logits.npz": "1c305726ae92e8698738c235aeb74ec5746332023bfdb87a80086a25660e0665",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b1/series/main-r0-native/logits.npz": "cefa9f9e67b338d307b6a83cadf67e59cb01e7ca645f34050eede6c4c5bd93bd",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b1/series/main-r0-packed_sdpa/logits.npz": "b65c40bb3aee6d413b310f5b84a607b062bbe2c4bdec1a34d7a261e831a4da9c",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b1/series/main-r0-gqa_fused/logits.npz": "1c305726ae92e8698738c235aeb74ec5746332023bfdb87a80086a25660e0665",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b1/series/main-r1-packed_sdpa/logits.npz": "b65c40bb3aee6d413b310f5b84a607b062bbe2c4bdec1a34d7a261e831a4da9c",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b1/series/main-r1-gqa_fused/logits.npz": "1c305726ae92e8698738c235aeb74ec5746332023bfdb87a80086a25660e0665",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b1/series/main-r1-native/logits.npz": "cefa9f9e67b338d307b6a83cadf67e59cb01e7ca645f34050eede6c4c5bd93bd",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b1/series/main-r2-gqa_fused/logits.npz": "1c305726ae92e8698738c235aeb74ec5746332023bfdb87a80086a25660e0665",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b1/series/main-r2-native/logits.npz": "cefa9f9e67b338d307b6a83cadf67e59cb01e7ca645f34050eede6c4c5bd93bd",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b1/series/main-r2-packed_sdpa/logits.npz": "b65c40bb3aee6d413b310f5b84a607b062bbe2c4bdec1a34d7a261e831a4da9c",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b2/series/gate-official/logits.npz": "875fca7b8476373002c535c824b6776c00e1edd71a08634764413849c8dd746d",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b2/series/gate-native/logits.npz": "875fca7b8476373002c535c824b6776c00e1edd71a08634764413849c8dd746d",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b2/series/diagnostic-fused/logits.npz": "ed039bf339417e59e2852f73b94ddbe961ad0f3360cc7ec6eff6b773fc3c2587",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b2/series/main-r0-native/logits.npz": "875fca7b8476373002c535c824b6776c00e1edd71a08634764413849c8dd746d",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b2/series/main-r0-packed_sdpa/logits.npz": "0bbb0514ad07a1395e246822e5668ecc6568b00fe45b4d660a39340e2417d135",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b2/series/main-r0-gqa_fused/logits.npz": "ed039bf339417e59e2852f73b94ddbe961ad0f3360cc7ec6eff6b773fc3c2587",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b2/series/main-r1-packed_sdpa/logits.npz": "0bbb0514ad07a1395e246822e5668ecc6568b00fe45b4d660a39340e2417d135",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b2/series/main-r1-gqa_fused/logits.npz": "ed039bf339417e59e2852f73b94ddbe961ad0f3360cc7ec6eff6b773fc3c2587",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b2/series/main-r1-native/logits.npz": "875fca7b8476373002c535c824b6776c00e1edd71a08634764413849c8dd746d",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b2/series/main-r2-gqa_fused/logits.npz": "ed039bf339417e59e2852f73b94ddbe961ad0f3360cc7ec6eff6b773fc3c2587",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b2/series/main-r2-native/logits.npz": "875fca7b8476373002c535c824b6776c00e1edd71a08634764413849c8dd746d",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b2/series/main-r2-packed_sdpa/logits.npz": "0bbb0514ad07a1395e246822e5668ecc6568b00fe45b4d660a39340e2417d135",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b3/series/gate-official/logits.npz": "2da158024dee614225fc7efc620ebd5237d27b133dea88701f995702b770ee12",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b3/series/gate-native/logits.npz": "2da158024dee614225fc7efc620ebd5237d27b133dea88701f995702b770ee12",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b3/series/diagnostic-fused/logits.npz": "44deb3204d84fdeb4ee859b1d828f5cf5b7df71287e42006d3b8592a727093c5",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b3/series/main-r0-native/logits.npz": "2da158024dee614225fc7efc620ebd5237d27b133dea88701f995702b770ee12",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b3/series/main-r0-packed_sdpa/logits.npz": "163989236943d03d00f543c869a0a86a6ff6acdd9b73b03d58aa3039626c7d76",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b3/series/main-r0-gqa_fused/logits.npz": "44deb3204d84fdeb4ee859b1d828f5cf5b7df71287e42006d3b8592a727093c5",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b3/series/main-r1-packed_sdpa/logits.npz": "163989236943d03d00f543c869a0a86a6ff6acdd9b73b03d58aa3039626c7d76",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b3/series/main-r1-gqa_fused/logits.npz": "44deb3204d84fdeb4ee859b1d828f5cf5b7df71287e42006d3b8592a727093c5",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b3/series/main-r1-native/logits.npz": "2da158024dee614225fc7efc620ebd5237d27b133dea88701f995702b770ee12",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b3/series/main-r2-gqa_fused/logits.npz": "44deb3204d84fdeb4ee859b1d828f5cf5b7df71287e42006d3b8592a727093c5",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b3/series/main-r2-native/logits.npz": "2da158024dee614225fc7efc620ebd5237d27b133dea88701f995702b770ee12",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/books/b3/series/main-r2-packed_sdpa/logits.npz": "163989236943d03d00f543c869a0a86a6ff6acdd9b73b03d58aa3039626c7d76"
+  },
+  "new_gpu_calls": 0,
+  "contract_source_sha256": {
+    "scripts/loop_kv_ac08_audit.py": "7fddbe52e09cd16b47d998a17163a92b01f9a49da05b80cf2b2569b2c691359e",
+    "scripts/loop_kv_ac08_attention.py": "1f906baf3809e2cd7aa55b9a6a851abfcd311b1dbb61ea5ddc4da2b7ae687ace",
+    "scripts/loop_kv_ac08_contract.py": "fb21dca7cd6cda2478797af4c3e316be800ec8daf3364f53fb0afef9776a8638",
+    "scripts/loop_kv_ac08_inputs.json": "9d04a77dba9b3f467bfc9840b4444862523e04ecf7126b93ddcca1f6a1338bfb",
+    "scripts/loop_kv_ac08.py": "83581a6f15bb1b8def5b3126151dd4acd2a7281e3a704ada803931ed5ab72446",
+    "scripts/loop_kv_ac08_materials.py": "c4bc4c0726f820a3f35fb1f716f14cd8fb2b0e976376087e37758320c9f0bd42",
+    "scripts/loop_kv_nb05_attention.py": "fdb94e38248dd9dc63726f731ba2aae4b31b32f62fdaa029bc205f2831f3ebc0",
+    "scripts/loop_kv_nb05_kernel.py": "636345c21655f99dc231aae736e16f9e88e466de70e86ba035e5768a52857d96",
+    "scripts/loop_kv_nb05_numeric.py": "47054ba0a547565d4e602850a3506aa12889aa29d4928e8316f5d6f35bf69d89",
+    "scripts/loop_kv_nb05_diagnostic.py": "e8bfd9fdab0609c458e6b578bbc08d5c7d64dba71dc793cbd2603be95680271f",
+    "scripts/loop_kv_nb05_contract.py": "0532b108f1a00715dc9a0752d40f0ae588a3a593475f7bffbe342638484ce93f",
+    "scripts/loop_kv_nb05_inputs.json": "d0d924aeaa5384d2b9f7b5a20e00887278c4623464259f1b404c77fc926689a1",
+    "scripts/loop_kv_nb05_measure.py": "a5fd83c015ab53d33833335e4c48804762f6d1e150bd7afdccfcace09ce7ee68",
+    "scripts/loop_kv_nb05_materials.py": "ba8c38762abd4c8efd9d3821c5f11351c35332633c5f2bcfb9f5deee6a484efe",
+    "scripts/loop_kv_nb05_packed.py": "dcf720457f8003acaaeb497f4442db530f9cb31f1015a3b9d4193a2074eb57e7",
+    "scripts/loop_kv_vf01_contract.py": "40f550964d12efe941a3d37b408f1b6ffe81eefe95fb473d472e20ff2736baf3",
+    "scripts/loop_kv_af01_contract.py": "7a814a399259169037957380c98643f07ec006dddb489d4043e27bd8db3c593b",
+    "scripts/loop_kv_qk01_contract.py": "b445dfb82b45aa4a95d29131ef9a5f6ca3fe37c7fdaee621d2e9fd51ec3709ae",
+    "scripts/loop_kv_vf01_kernel.py": "adbd37d0f6abbdad5d2a7e2bfecebdf49642cc2a00c6d3e531f2599e18a377bc",
+    "scripts/loop_kv_rf01_kernel.py": "23c0845313ffbcd11199cdf7f19a8e4413902364548d2b0b22168e6941812809",
+    "scripts/verify_loop_kv_ac08.py": "0c7387b99b844be16ac6e17a505032fa65a51f245362c94664a4e675cb8824f9",
+    "scripts/verify_loop_kv_nb05.py": "8aa10c9efb968163b1e6c62b0b75f74fcd1cc296db5228736c5bdde2b9f2c1af",
+    "scripts/verify_loop_kv_vf01.py": "c9e61528f0c6fec1ba1e9a3185f50c6394377208ee766f64a1b0262f4364ac60"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "phase": "W-1a long-context anchor probe",
+  "generated_at": "2026-06-21T12:57:55+00:00",
+  "generator": "phase_w1a_longctx_probe.py",
+  "transformers_version": "5.12.1",
+  "preregistration": "experiments/W1_longctx_preregistration.md (Lock #1)",
+  "repo_sha_at_lock1": "cb899b2",
+  "model_id": "google/gemma-4-26B-A4B",
+  "model_label": "Gemma4-26B-A4B-base",
+  "n_attn_layers": 25,
+  "knobs": {
+    "ctx_ladder": [
+      8192,
+      16384,
+      32768
+    ],
+    "n_windows": 4,
+    "anchor_bits": 5,
+    "clean_band_pp": 0.5,
+    "seed": 20260510
+  },
+  "nsn_int5_at_8k_ref_pp": 0.437,
+  "results": {
+    "8192": {
+      "ctx": 8192,
+      "stride": 4096,
+      "n_windows": 4,
+      "fp16_ppl": 4.6640088117458545,
+      "fp16_vram_peak_gb": 73.097675264,
+      "nsn_int5_ppl": 4.703346331641527,
+      "nsn_int5_delta_pct": 0.8434272207334853,
+      "nsn_int5_vram_peak_gb": 73.097675264,
+      "out_of_band": true
+    },
+    "16384": {
+      "ctx": 16384,
+      "stride": 8192,
+      "n_windows": 4,
+      "fp16_ppl": 4.94070588567707,
+      "fp16_vram_peak_gb": 94.572544512,
+      "nsn_int5_ppl": 4.981181126709613,
+      "nsn_int5_delta_pct": 0.8192198031839814,
+      "nsn_int5_vram_peak_gb": 94.572544512,
+      "out_of_band": true
+    }
+  },
+  "ctx_errors": {
+    "32768": "OutOfMemoryError: CUDA out of memory. Tried to allocate 32.00 GiB. GPU 0 has a total capacity of 94.97 GiB of which 30.23 GiB is free. Including non-PyTorch memory, this process has 64.73 GiB memory in use. Of the allocated memory 64.08 GiB is allocated by PyTorch, and 18.66 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)"
+  },
+  "L_star_point_estimate": 8192,
+  "H1_preliminary": "fires (NSN-INT5 exits band)"
+}

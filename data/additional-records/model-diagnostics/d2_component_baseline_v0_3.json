@@ -1,0 +1,196 @@
+{
+  "schema_version": "0.1.0",
+  "generated_at": "2026-05-15T08:32:57+00:00",
+  "generator": "phase_d2_component_baseline.py",
+  "transformers_version": "5.8.1",
+  "purpose": "Paper D Phase D-2 component baseline (revised post-D-1.5). v0.1 covers KV-side conditions C0/C1/C2/C6.k across both hybrid models. SSM-side conditions C3/C4/C5/C7 are stubbed; v0.2 will port the LAB half_slope_rg recipe from lab-ssm Phase C-5b. The KV-side run validates Findings 4 + 5 (cancellation regime reproducibility, sign reversal between within-layer and between-layer coupled hybrids).",
+  "protocol": {
+    "ctx": 1024,
+    "n_windows": 5,
+    "kv_recipe": "qa_nsep_pchan_asym (NSN v0.3 hero, modeq Paper B)",
+    "fakequant_via": "forward hook on k_proj and v_proj outputs",
+    "calib_corpus": "WikiText-2 test (model's own tokenizer)"
+  },
+  "active_conditions": {
+    "C0_FP16": true,
+    "C1_KV_INT3_all": true,
+    "C2_KV_INT4_all": true,
+    "C3_SSM_LAB_b6": false,
+    "C4_SSM_LAB_b4": false,
+    "C5_global_INT4": false,
+    "C6k_single": true,
+    "C7_both": false
+  },
+  "results": {
+    "Jamba-1.5-Mini": {
+      "model_id": "ai21labs/AI21-Jamba-Mini-1.6",
+      "model_label": "Jamba-1.5-Mini",
+      "geometry": "between_layer_coupled",
+      "fp16_baseline_ppl": 6.689885270252582,
+      "attn_layers": [
+        4,
+        12,
+        20,
+        28
+      ],
+      "conditions": {
+        "C0_FP16": {
+          "ppl": 6.689885270252582,
+          "delta_pct": 0.0,
+          "target_layers": [],
+          "bits": 16
+        },
+        "C1_KV_INT3_all": {
+          "ppl": 6.428042394308874,
+          "delta_pct": -3.914011457087698,
+          "target_layers": [
+            4,
+            12,
+            20,
+            28
+          ],
+          "bits": 3
+        },
+        "C2_KV_INT4_all": {
+          "ppl": 6.576884167795733,
+          "delta_pct": -1.6891336382003954,
+          "target_layers": [
+            4,
+            12,
+            20,
+            28
+          ],
+          "bits": 4
+        },
+        "C6_L4_KV_INT3": {
+          "ppl": 6.514287270217326,
+          "delta_pct": -2.624828273454476,
+          "target_layers": [
+            4
+          ],
+          "bits": 3
+        },
+        "C6_L12_KV_INT3": {
+          "ppl": 6.559525384133302,
+          "delta_pct": -1.9486116854491087,
+          "target_layers": [
+            12
+          ],
+          "bits": 3
+        },
+        "C6_L20_KV_INT3": {
+          "ppl": 6.7325429456032655,
+          "delta_pct": 0.6376443485565564,
+          "target_layers": [
+            20
+          ],
+          "bits": 3
+        },
+        "C6_L28_KV_INT3": {
+          "ppl": 6.672908994983405,
+          "delta_pct": -0.2537603349442317,
+          "target_layers": [
+            28
+          ],
+          "bits": 3
+        }
+      }
+    },
+    "Zamba2-1.2B": {
+      "model_id": "Zyphra/Zamba2-1.2B",
+      "model_label": "Zamba2-1.2B",
+      "geometry": "within_layer_coupled",
+      "fp16_baseline_ppl": 6.82862553808825,
+      "attn_layers": [
+        5,
+        11,
+        17,
+        23,
+        29,
+        35
+      ],
+      "conditions": {
+        "C0_FP16": {
+          "ppl": 6.82862553808825,
+          "delta_pct": 0.0,
+          "target_layers": [],
+          "bits": 16
+        },
+        "C1_KV_INT3_all": {
+          "ppl": 7.073520971484928,
+          "delta_pct": 3.586306380848047,
+          "target_layers": [
+            5,
+            11,
+            17,
+            23,
+            29,
+            35
+          ],
+          "bits": 3
+        },
+        "C2_KV_INT4_all": {
+          "ppl": 6.862865892921683,
+          "delta_pct": 0.5014238171715363,
+          "target_layers": [
+            5,
+            11,
+            17,
+            23,
+            29,
+            35
+          ],
+          "bits": 4
+        },
+        "C6_L5_KV_INT3": {
+          "ppl": 6.878481381496654,
+          "delta_pct": 0.730100708119386,
+          "target_layers": [
+            5
+          ],
+          "bits": 3
+        },
+        "C6_L11_KV_INT3": {
+          "ppl": 6.881089166795162,
+          "delta_pct": 0.7682897299651837,
+          "target_layers": [
+            11
+          ],
+          "bits": 3
+        },
+        "C6_L17_KV_INT3": {
+          "ppl": 6.982621751173484,
+          "delta_pct": 2.255156798777212,
+          "target_layers": [
+            17
+          ],
+          "bits": 3
+        },
+        "C6_L23_KV_INT3": {
+          "ppl": 6.9224308393879745,
+          "delta_pct": 1.3737069162235283,
+          "target_layers": [
+            23
+          ],
+          "bits": 3
+        },
+        "C6_L29_KV_INT3": {
+          "ppl": 6.833277690408167,
+          "delta_pct": 0.06812721379973637,
+          "target_layers": [
+            29
+          ],
+          "bits": 3
+        },
+        "C6_L35_KV_INT3": {
+          "ppl": 6.836194624002969,
+          "delta_pct": 0.11084347607729715,
+          "target_layers": [
+            35
+          ],
+          "bits": 3
+        }
+      }
+    }
+  }
+}

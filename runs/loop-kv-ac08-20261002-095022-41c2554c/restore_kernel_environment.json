@@ -1,0 +1,16 @@
+{
+  "baseline": {
+    "triton": "3.6.0",
+    "torch_requirement": "triton==3.6.0; platform_system == \"Linux\"",
+    "block": 1024,
+    "num_warps": 4,
+    "autotune": false
+  },
+  "block": 1024,
+  "num_warps": 4,
+  "autotune": false,
+  "enable_fp_fusion": false,
+  "division": "div_rn",
+  "output_rounding": "rtne",
+  "norm": "torch_vector_norm_clamp"
+}

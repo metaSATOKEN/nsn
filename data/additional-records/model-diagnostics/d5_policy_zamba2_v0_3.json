@@ -1,0 +1,93 @@
+{
+  "schema_version": "0.1.0",
+  "generated_at": "2026-05-14T06:32:35+00:00",
+  "generator": "phase_d5_policy_zamba2.py",
+  "transformers_version": "5.8.1",
+  "model_id": "Zyphra/Zamba2-1.2B",
+  "model_label": "Zamba2-1.2B",
+  "geometry": "within_layer_coupled",
+  "purpose": "Paper D Phase D-5 policy prototype on Zamba2-1.2B. Three new policy cells (π_Z1, π_Z2, π_Z4); other candidates reused from D-2 v0.2 / D-3b. Policy table feeds compute_d6_effective_memory.py for the matched-memory Pareto comparison.",
+  "fp16_baseline_ppl": 6.82862553808825,
+  "attn_layers": [
+    5,
+    11,
+    17,
+    23,
+    29,
+    35
+  ],
+  "n_ssm_layers": 38,
+  "results": {
+    "pi_Z0_FP16": {
+      "ppl": 6.82862553808825,
+      "delta_pct": 0.0,
+      "K": "FP16",
+      "S": "FP16"
+    },
+    "pi_Z1_K_INT4_S_LAB_b3": {
+      "ppl": 6.829491106783214,
+      "delta_pct": 0.01267559174443252,
+      "K": "INT4 all",
+      "S": "LAB b3",
+      "kv_layer_bits": {
+        "5": 4,
+        "11": 4,
+        "17": 4,
+        "23": 4,
+        "29": 4,
+        "35": 4
+      },
+      "ssm_profile_label": "full_b3"
+    },
+    "pi_Z2_K_INT4_S_LAB_b4": {
+      "ppl": 6.809783672279115,
+      "delta_pct": -0.27592471873058233,
+      "K": "INT4 all",
+      "S": "LAB b4",
+      "kv_layer_bits": {
+        "5": 4,
+        "11": 4,
+        "17": 4,
+        "23": 4,
+        "29": 4,
+        "35": 4
+      },
+      "ssm_profile_label": "full_b4"
+    },
+    "pi_Z4_K_INT3_L17_INT4_S_LAB_b3": {
+      "ppl": 6.985215506434612,
+      "delta_pct": 2.2931403614526027,
+      "K": "INT3 except L17 INT4",
+      "S": "LAB b3",
+      "kv_layer_bits": {
+        "5": 3,
+        "11": 3,
+        "17": 4,
+        "23": 3,
+        "29": 3,
+        "35": 3
+      },
+      "ssm_profile_label": "full_b3"
+    }
+  },
+  "reused_from_earlier_phases": {
+    "pi_Z3_K_INT3_L17_INT4_S_LAB_b6": {
+      "delta_pct": 1.92,
+      "source": "D-3b C10",
+      "K": "INT3 except L17 INT4",
+      "S": "LAB b6"
+    },
+    "pi_Z5_global_INT4": {
+      "delta_pct": 0.822,
+      "source": "D-2 v0.2 C5",
+      "K": "INT4 all (uniform)",
+      "S": "uniform b4"
+    },
+    "pi_Z6_K_INT3_S_LAB_b6": {
+      "delta_pct": 2.159,
+      "source": "D-2 v0.2 C7",
+      "K": "INT3 all",
+      "S": "LAB b6"
+    }
+  }
+}

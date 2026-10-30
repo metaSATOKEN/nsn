@@ -1,0 +1,51 @@
+{
+  "repo": "Nanbeige/Nanbeige4.2-3B-Base",
+  "revision": "4a38e817c14b9f2c4b69b1e05cbda90395872f6b",
+  "files": {
+    "config.json": {
+      "rfilename": "config.json",
+      "blobId": "69c78ebceba41ff5ad8e31bbb9fd26e85ba66a6f",
+      "size": 959
+    },
+    "configuration_nanbeige.py": {
+      "rfilename": "configuration_nanbeige.py",
+      "blobId": "f8980cc060c0731eed535c95960ad425cfd917af",
+      "size": 26023
+    },
+    "model.safetensors": {
+      "rfilename": "model.safetensors",
+      "blobId": "857c9481a6d20479c958756fdd934a0c8de6711a",
+      "size": 8339624768,
+      "lfs": {
+        "sha256": "8fff9061c4c8a16832e0fd8e484ec6375dec9821743539d469d4130d46d404a8",
+        "size": 8339624768,
+        "pointerSize": 135
+      }
+    },
+    "modeling_nanbeige.py": {
+      "rfilename": "modeling_nanbeige.py",
+      "blobId": "b4b65e5badf612c389b328b6d253bb0647a47e6c",
+      "size": 121957
+    },
+    "special_tokens_map.json": {
+      "rfilename": "special_tokens_map.json",
+      "blobId": "5819ea25d7b1b6340063a0629c2143c44b0452da",
+      "size": 548
+    },
+    "tokenizer.model": {
+      "rfilename": "tokenizer.model",
+      "blobId": "5dc56ceef972dd0a233ce8c8100316ac1bdc089e",
+      "size": 2782298,
+      "lfs": {
+        "sha256": "fb41d04798b714520a9b075727b0226538b7330254299062742c50ec8374bc36",
+        "size": 2782298,
+        "pointerSize": 132
+      }
+    },
+    "tokenizer_config.json": {
+      "rfilename": "tokenizer_config.json",
+      "blobId": "0eee6d27908b59ac7e9bffb8ba9666cefe615a31",
+      "size": 992
+    }
+  }
+}

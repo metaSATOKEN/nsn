@@ -1,0 +1,943 @@
+{
+  "verification_status": "PASS",
+  "run_id": "loop-kv-kv01-20260930-110929-fe60928a",
+  "archive_sha256": "4f74d6fd66821ed6224e7b0bcbc8f97717dde6432f5f446919d1354afa3eaffe",
+  "archive_files": 76,
+  "hashes_verified": 75,
+  "expanded_bytes": 43589572,
+  "checks_verified": 49,
+  "native_cases": 15,
+  "compatibility_cases": 4,
+  "p0_trace_updates": 285696,
+  "p0_forward_calls": 8011,
+  "p0_original_threshold_inside": 3,
+  "p0_original_threshold_outside": 8,
+  "p0_diagnostics": [
+    {
+      "id": "G2-b37013-r8",
+      "kl": 0.0012688204688978404,
+      "delta_nll": -0.0014570879629900446,
+      "max_abs_logit": 1.0546875,
+      "kl_reduction_residual": 1.8996277424340735e-11,
+      "kl_float32_rounding_bound": 1.966347899544104e-08,
+      "within_original_tolerance": false
+    },
+    {
+      "id": "G2-b2976-r8",
+      "kl": 0.0009070043278821798,
+      "delta_nll": -0.0022018304986204384,
+      "max_abs_logit": 0.8125,
+      "kl_reduction_residual": 4.088143430551472e-11,
+      "kl_float32_rounding_bound": 1.4056252233680935e-08,
+      "within_original_tolerance": false
+    },
+    {
+      "id": "G2-b9442-r8",
+      "kl": 0.0008666761094400147,
+      "delta_nll": 0.000837217633261389,
+      "max_abs_logit": 0.6875,
+      "kl_reduction_residual": 4.7434731381516826e-11,
+      "kl_float32_rounding_bound": 1.3431267773152878e-08,
+      "within_original_tolerance": false
+    },
+    {
+      "id": "G2-b56102-r8",
+      "kl": 0.002922038802621113,
+      "delta_nll": -0.0006022622669661359,
+      "max_abs_logit": 2.0,
+      "kl_reduction_residual": 2.1073485751560428e-10,
+      "kl_float32_rounding_bound": 4.528414383881613e-08,
+      "within_original_tolerance": false
+    },
+    {
+      "id": "G3-L1-r8",
+      "kl": 0.0,
+      "delta_nll": null,
+      "max_abs_logit": 0.0,
+      "kl_reduction_residual": 0.0,
+      "kl_float32_rounding_bound": 0.0,
+      "within_original_tolerance": true
+    },
+    {
+      "id": "G3-L63-r8",
+      "kl": 0.0,
+      "delta_nll": 0.0,
+      "max_abs_logit": 0.0,
+      "kl_reduction_residual": 0.0,
+      "kl_float32_rounding_bound": 0.0,
+      "within_original_tolerance": true
+    },
+    {
+      "id": "G3-L64-r8",
+      "kl": 0.0,
+      "delta_nll": 0.0,
+      "max_abs_logit": 0.0,
+      "kl_reduction_residual": 0.0,
+      "kl_float32_rounding_bound": 0.0,
+      "within_original_tolerance": true
+    },
+    {
+      "id": "G3-L65-r8",
+      "kl": 0.0020836541424684514,
+      "delta_nll": 0.021243691444396973,
+      "max_abs_logit": 1.375,
+      "kl_reduction_residual": 9.268450633717618e-11,
+      "kl_float32_rounding_bound": 1.639393036393187e-08,
+      "within_original_tolerance": false
+    },
+    {
+      "id": "G3-L127-r8",
+      "kl": 0.016090242888807782,
+      "delta_nll": 0.062077999114990234,
+      "max_abs_logit": 4.09375,
+      "kl_reduction_residual": 6.966586196810454e-10,
+      "kl_float32_rounding_bound": 2.455213685634818e-07,
+      "within_original_tolerance": false
+    },
+    {
+      "id": "G3-L128-r8",
+      "kl": 0.015976225664417143,
+      "delta_nll": 0.06186911064808763,
+      "max_abs_logit": 4.09375,
+      "kl_reduction_residual": 2.15550244320184e-09,
+      "kl_float32_rounding_bound": 2.456861501006096e-07,
+      "within_original_tolerance": false
+    },
+    {
+      "id": "G3-L129-r8",
+      "kl": 0.0026117050463005235,
+      "delta_nll": 0.0440143384039402,
+      "max_abs_logit": 1.9375,
+      "kl_reduction_residual": 5.572593905420198e-11,
+      "kl_float32_rounding_bound": 4.047476264693882e-08,
+      "within_original_tolerance": false
+    }
+  ],
+  "trajectories": 32,
+  "predictions": 8160,
+  "forward_calls": 8192,
+  "independent_books": 8,
+  "elapsed_seconds": 1787.253332746,
+  "gate_case_seconds": 791.8022587599999,
+  "trajectory_seconds": 953.6029486530001,
+  "conditions": [
+    {
+      "target": "NATIVE",
+      "n": 8,
+      "mean_nll": 2.2047948096470456,
+      "ppl": 9.068390630665526,
+      "delta_nll": 0.0,
+      "ppl_change_percent": 0.0,
+      "mean_kl": null
+    },
+    {
+      "target": "K_ONLY",
+      "n": 8,
+      "mean_nll": 2.2096972747555297,
+      "ppl": 9.112957253218411,
+      "delta_nll": 0.004902465108483772,
+      "ppl_change_percent": 0.4914501852420902,
+      "mean_kl": 0.0022517470846749187
+    },
+    {
+      "target": "V_ONLY",
+      "n": 8,
+      "mean_nll": 2.2065184690037345,
+      "ppl": 9.084034925870819,
+      "delta_nll": 0.0017236593566888891,
+      "ppl_change_percent": 0.17251457113448634,
+      "mean_kl": 0.0025256061743667802
+    },
+    {
+      "target": "KV",
+      "n": 8,
+      "mean_nll": 2.211214251453651,
+      "ppl": 9.126791887778602,
+      "delta_nll": 0.006419441806604975,
+      "ppl_change_percent": 0.6440090584054122,
+      "mean_kl": 0.0036902455308801415
+    }
+  ],
+  "comparisons": [
+    {
+      "target": "K_ONLY",
+      "books": [
+        "3752",
+        "31131",
+        "31258",
+        "34475",
+        "4124",
+        "49966",
+        "49484",
+        "4537"
+      ],
+      "per_book_delta_nll": [
+        -0.0007839006769621015,
+        0.008620980458662775,
+        0.0020738760125253997,
+        0.00895071574926165,
+        0.012827039258392237,
+        0.007159512605521945,
+        0.0012561222028248942,
+        -0.0008846247423566211
+      ],
+      "mean": 0.004902465108483772,
+      "bootstrap_95": [
+        0.0016554026522563447,
+        0.008237457643418891
+      ],
+      "ppl_change_percent": 0.4914501852420902,
+      "ppl_change_percent_95": [
+        0.16567735876058626,
+        0.8271478849552844
+      ],
+      "worsened_books": 6,
+      "improved_books": 2,
+      "max_book_ppl_change_percent": 1.2909658602394098,
+      "books_above_5pct": 0,
+      "status": "WITHIN_5PCT"
+    },
+    {
+      "target": "V_ONLY",
+      "books": [
+        "3752",
+        "31131",
+        "31258",
+        "34475",
+        "4124",
+        "49966",
+        "49484",
+        "4537"
+      ],
+      "per_book_delta_nll": [
+        -0.00029892810328546737,
+        0.007350401271947193,
+        -0.00014320061855688238,
+        0.001170375884148367,
+        0.007665474413992346,
+        1.9645074316176903e-05,
+        -0.0021434604949273073,
+        0.00016896742587668712
+      ],
+      "mean": 0.0017236593566888891,
+      "bootstrap_95": [
+        -0.0004188220476710948,
+        0.004331435196417633
+      ],
+      "ppl_change_percent": 0.17251457113448634,
+      "ppl_change_percent_95": [
+        -0.04187343539604008,
+        0.4340829420441681
+      ],
+      "worsened_books": 5,
+      "improved_books": 3,
+      "max_book_ppl_change_percent": 0.7694929376975315,
+      "books_above_5pct": 0,
+      "status": "WITHIN_5PCT"
+    },
+    {
+      "target": "KV",
+      "books": [
+        "3752",
+        "31131",
+        "31258",
+        "34475",
+        "4124",
+        "49966",
+        "49484",
+        "4537"
+      ],
+      "per_book_delta_nll": [
+        0.0015968777601835793,
+        0.00933210650395,
+        0.0050900832159692655,
+        0.003776550607575313,
+        0.018811663419068925,
+        0.00757304685679383,
+        0.0019681920355578697,
+        0.0032070140537410197
+      ],
+      "mean": 0.006419441806604975,
+      "bootstrap_95": [
+        0.003309192941516187,
+        0.010450679115402345
+      ],
+      "ppl_change_percent": 0.6440090584054122,
+      "ppl_change_percent_95": [
+        0.3314674365173353,
+        1.0505478191878586
+      ],
+      "worsened_books": 8,
+      "improved_books": 0,
+      "max_book_ppl_change_percent": 1.8989717504751806,
+      "books_above_5pct": 0,
+      "status": "WITHIN_5PCT"
+    }
+  ],
+  "D": {
+    "status": "WITHIN_BAND",
+    "mean": 0.003178805751794883,
+    "bootstrap_95": [
+      0.001043919627220169,
+      0.005393786610122707
+    ],
+    "values": [
+      -0.00048497257367663416,
+      0.0012705791867155813,
+      0.002217076631082282,
+      0.007780339865113284,
+      0.005161564844399891,
+      0.007139867531205768,
+      0.0033995826977522015,
+      -0.0010535921682333083
+    ],
+    "books": [
+      "3752",
+      "31131",
+      "31258",
+      "34475",
+      "4124",
+      "49966",
+      "49484",
+      "4537"
+    ],
+    "positive_books": 6,
+    "negative_books": 2,
+    "threshold": 0.005
+  },
+  "I": {
+    "status": "WITHIN_BAND",
+    "mean": -0.0002066826585676862,
+    "bootstrap_95": [
+      -0.003237918275525914,
+      0.002359041013843358
+    ],
+    "values": [
+      0.002679706540431148,
+      -0.006639275226659969,
+      0.003159407822000748,
+      -0.006344541025834705,
+      -0.0016808502533156577,
+      0.00039388917695570846,
+      0.002855530327660283,
+      0.003922671370220954
+    ],
+    "books": [
+      "3752",
+      "31131",
+      "31258",
+      "34475",
+      "4124",
+      "49966",
+      "49484",
+      "4537"
+    ],
+    "positive_books": 5,
+    "negative_books": 3,
+    "threshold": 0.005
+  },
+  "norm_summaries": [
+    {
+      "target": "NATIVE",
+      "snapshots": 1920,
+      "transfers": 384,
+      "nonfinite": 0,
+      "max_relative_transfer_change": 0.0,
+      "max_absolute_transfer_change": 0.0,
+      "maximum_K_norm": 32.602073669433594,
+      "maximum_V_norm": 13.090335845947266
+    },
+    {
+      "target": "K_ONLY",
+      "snapshots": 1920,
+      "transfers": 384,
+      "nonfinite": 0,
+      "max_relative_transfer_change": 0.002771971048787236,
+      "max_absolute_transfer_change": 0.05204010009765625,
+      "maximum_K_norm": 32.60885238647461,
+      "maximum_V_norm": 13.090335845947266
+    },
+    {
+      "target": "V_ONLY",
+      "snapshots": 1920,
+      "transfers": 384,
+      "nonfinite": 0,
+      "max_relative_transfer_change": 0.0034099717158824205,
+      "max_absolute_transfer_change": 0.012195587158203125,
+      "maximum_K_norm": 32.602073669433594,
+      "maximum_V_norm": 13.088720321655273
+    },
+    {
+      "target": "KV",
+      "snapshots": 1920,
+      "transfers": 384,
+      "nonfinite": 0,
+      "max_relative_transfer_change": 0.0034099717158824205,
+      "max_absolute_transfer_change": 0.05204010009765625,
+      "maximum_K_norm": 32.60885238647461,
+      "maximum_V_norm": 13.088720321655273
+    }
+  ],
+  "intervention_summaries": [
+    {
+      "file": "interventions.jsonl",
+      "count": 12288,
+      "selected_slices": 6144,
+      "unselected_slices": 6144,
+      "protected_tail_violations": 0,
+      "unselected_violations": 0
+    },
+    {
+      "file": "p0r/compat_interventions.jsonl",
+      "count": 1536,
+      "selected_slices": 1536,
+      "unselected_slices": 0,
+      "protected_tail_violations": 0,
+      "unselected_violations": 0
+    }
+  ],
+  "diagnostic_distributions_checked": 32,
+  "max_diagnostic_logsoftmax_residual": 1.870546267213058e-06,
+  "per_book": [
+    {
+      "book_id": "49966",
+      "target": "NATIVE",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": null,
+      "nll": 1.7034654687704889,
+      "ppl": 5.492950093080878,
+      "delta_nll": 0.0,
+      "mean_kl": null
+    },
+    {
+      "book_id": "49966",
+      "target": "KV",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 1.7110385156272827,
+      "ppl": 5.534706373086689,
+      "delta_nll": 0.00757304685679383,
+      "mean_kl": 0.004701875890404885
+    },
+    {
+      "book_id": "49966",
+      "target": "V_ONLY",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 1.703485113844805,
+      "ppl": 5.493058003553623,
+      "delta_nll": 1.9645074316176903e-05,
+      "mean_kl": 0.002064982823780976
+    },
+    {
+      "book_id": "49966",
+      "target": "K_ONLY",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 1.7106249813760108,
+      "ppl": 5.532418055612122,
+      "delta_nll": 0.007159512605521945,
+      "mean_kl": 0.0035732758838513093
+    },
+    {
+      "book_id": "34475",
+      "target": "NATIVE",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": null,
+      "nll": 2.220339188467794,
+      "ppl": 9.210454416037269,
+      "delta_nll": 0.0,
+      "mean_kl": null
+    },
+    {
+      "book_id": "34475",
+      "target": "K_ONLY",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 2.2292899042170555,
+      "ppl": 9.29326462790745,
+      "delta_nll": 0.00895071574926165,
+      "mean_kl": 0.001708427385808457
+    },
+    {
+      "book_id": "34475",
+      "target": "KV",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 2.224115739075369,
+      "ppl": 9.24530392731008,
+      "delta_nll": 0.003776550607575313,
+      "mean_kl": 0.0027847062658751982
+    },
+    {
+      "book_id": "34475",
+      "target": "V_ONLY",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 2.2215095643519422,
+      "ppl": 9.221240420376326,
+      "delta_nll": 0.001170375884148367,
+      "mean_kl": 0.002251148996554227
+    },
+    {
+      "book_id": "49484",
+      "target": "NATIVE",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": null,
+      "nll": 2.4601904330621758,
+      "ppl": 11.707040735334116,
+      "delta_nll": 0.0,
+      "mean_kl": null
+    },
+    {
+      "book_id": "49484",
+      "target": "K_ONLY",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 2.4614465552650007,
+      "ppl": 11.721755448935584,
+      "delta_nll": 0.0012561222028248942,
+      "mean_kl": 0.0014357544723286586
+    },
+    {
+      "book_id": "49484",
+      "target": "V_ONLY",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 2.4580469725672485,
+      "ppl": 11.681974030348613,
+      "delta_nll": -0.0021434604949273073,
+      "mean_kl": 0.0020926035557382048
+    },
+    {
+      "book_id": "49484",
+      "target": "KV",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 2.4621586250977336,
+      "ppl": 11.730105129802569,
+      "delta_nll": 0.0019681920355578697,
+      "mean_kl": 0.0029214156932146035
+    },
+    {
+      "book_id": "3752",
+      "target": "NATIVE",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": null,
+      "nll": 1.8799902825134946,
+      "ppl": 6.5534411789055085,
+      "delta_nll": 0.0,
+      "mean_kl": null
+    },
+    {
+      "book_id": "3752",
+      "target": "KV",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 1.8815871602736782,
+      "ppl": 6.563914583524614,
+      "delta_nll": 0.0015968777601835793,
+      "mean_kl": 0.0038431930164448454
+    },
+    {
+      "book_id": "3752",
+      "target": "K_ONLY",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 1.8792063818365325,
+      "ppl": 6.548305944948588,
+      "delta_nll": -0.0007839006769621015,
+      "mean_kl": 0.002610556784749351
+    },
+    {
+      "book_id": "3752",
+      "target": "V_ONLY",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 1.8796913544102092,
+      "ppl": 6.551482463935966,
+      "delta_nll": -0.00029892810328546737,
+      "mean_kl": 0.0037540887408498208
+    },
+    {
+      "book_id": "4537",
+      "target": "NATIVE",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": null,
+      "nll": 2.323654105598279,
+      "ppl": 10.212925312627759,
+      "delta_nll": 0.0,
+      "mean_kl": null
+    },
+    {
+      "book_id": "4537",
+      "target": "KV",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 2.32686111965202,
+      "ppl": 10.245730883481611,
+      "delta_nll": 0.0032070140537410197,
+      "mean_kl": 0.0030165854426241804
+    },
+    {
+      "book_id": "4537",
+      "target": "V_ONLY",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 2.3238230730241556,
+      "ppl": 10.214651110126178,
+      "delta_nll": 0.00016896742587668712,
+      "mean_kl": 0.002818193039832063
+    },
+    {
+      "book_id": "4537",
+      "target": "K_ONLY",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 2.3227694808559223,
+      "ppl": 10.203894701144463,
+      "delta_nll": -0.0008846247423566211,
+      "mean_kl": 0.0014606436319529533
+    },
+    {
+      "book_id": "31258",
+      "target": "NATIVE",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": null,
+      "nll": 2.276509193128275,
+      "ppl": 9.742611405126311,
+      "delta_nll": 0.0,
+      "mean_kl": null
+    },
+    {
+      "book_id": "31258",
+      "target": "V_ONLY",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 2.276365992509718,
+      "ppl": 9.741216357034997,
+      "delta_nll": -0.00014320061855688238,
+      "mean_kl": 0.001817649208761823
+    },
+    {
+      "book_id": "31258",
+      "target": "KV",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 2.2815992763442443,
+      "ppl": 9.792328532734492,
+      "delta_nll": 0.0050900832159692655,
+      "mean_kl": 0.002684501353069565
+    },
+    {
+      "book_id": "31258",
+      "target": "K_ONLY",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 2.2785830691408004,
+      "ppl": 9.762837339009067,
+      "delta_nll": 0.0020738760125253997,
+      "mean_kl": 0.0015573203173695292
+    },
+    {
+      "book_id": "4124",
+      "target": "NATIVE",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": null,
+      "nll": 2.8179223164131946,
+      "ppl": 16.742029870690022,
+      "delta_nll": 0.0,
+      "mean_kl": null
+    },
+    {
+      "book_id": "4124",
+      "target": "V_ONLY",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 2.825587790827187,
+      "ppl": 16.870858608172192,
+      "delta_nll": 0.007665474413992346,
+      "mean_kl": 0.002515799610058571
+    },
+    {
+      "book_id": "4124",
+      "target": "K_ONLY",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 2.830749355671587,
+      "ppl": 16.958163760631713,
+      "delta_nll": 0.012827039258392237,
+      "mean_kl": 0.0035401986286530576
+    },
+    {
+      "book_id": "4124",
+      "target": "KV",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 2.8367339798322635,
+      "ppl": 17.05995628839054,
+      "delta_nll": 0.018811663419068925,
+      "mean_kl": 0.0058295476486110226
+    },
+    {
+      "book_id": "31131",
+      "target": "NATIVE",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": null,
+      "nll": 1.956287489222664,
+      "ppl": 7.07301960050416,
+      "delta_nll": 0.0,
+      "mean_kl": null
+    },
+    {
+      "book_id": "31131",
+      "target": "V_ONLY",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 1.9636378904946112,
+      "ppl": 7.125200673747675,
+      "delta_nll": 0.007350401271947193,
+      "mean_kl": 0.0028903834193585555
+    },
+    {
+      "book_id": "31131",
+      "target": "K_ONLY",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 1.9649084696813268,
+      "ppl": 7.134259559221879,
+      "delta_nll": 0.008620980458662775,
+      "mean_kl": 0.0021277995726860337
+    },
+    {
+      "book_id": "31131",
+      "target": "KV",
+      "r": 8,
+      "mode": "PREFIX_ONLY",
+      "bits": 3,
+      "nll": 1.965619595726614,
+      "ppl": 7.139334721334387,
+      "delta_nll": 0.00933210650395,
+      "mean_kl": 0.0037401389367968316
+    }
+  ],
+  "memory": [
+    {
+      "target": "NATIVE",
+      "planned_bytes": 1609039872,
+      "floating_cache_bytes": 1609039872
+    },
+    {
+      "target": "K_ONLY",
+      "planned_bytes": 1181233152,
+      "floating_cache_bytes": 1609039872
+    },
+    {
+      "target": "V_ONLY",
+      "planned_bytes": 1181233152,
+      "floating_cache_bytes": 1609039872
+    },
+    {
+      "target": "KV",
+      "planned_bytes": 753426432,
+      "floating_cache_bytes": 1609039872
+    }
+  ],
+  "historical_anchors": [
+    {
+      "book_id": "3752",
+      "target": "NATIVE",
+      "token_scores_identical": true,
+      "nll_difference": 0.0,
+      "distribution_hash_identical": true,
+      "final_cache_hash_identical": true
+    },
+    {
+      "book_id": "3752",
+      "target": "KV",
+      "token_scores_identical": true,
+      "nll_difference": 0.0,
+      "distribution_hash_identical": true,
+      "final_cache_hash_identical": true
+    },
+    {
+      "book_id": "31131",
+      "target": "NATIVE",
+      "token_scores_identical": true,
+      "nll_difference": 0.0,
+      "distribution_hash_identical": true,
+      "final_cache_hash_identical": true
+    },
+    {
+      "book_id": "31131",
+      "target": "KV",
+      "token_scores_identical": true,
+      "nll_difference": 0.0,
+      "distribution_hash_identical": true,
+      "final_cache_hash_identical": true
+    },
+    {
+      "book_id": "31258",
+      "target": "NATIVE",
+      "token_scores_identical": true,
+      "nll_difference": 0.0,
+      "distribution_hash_identical": true,
+      "final_cache_hash_identical": true
+    },
+    {
+      "book_id": "31258",
+      "target": "KV",
+      "token_scores_identical": true,
+      "nll_difference": 0.0,
+      "distribution_hash_identical": true,
+      "final_cache_hash_identical": true
+    },
+    {
+      "book_id": "34475",
+      "target": "NATIVE",
+      "token_scores_identical": true,
+      "nll_difference": 0.0,
+      "distribution_hash_identical": true,
+      "final_cache_hash_identical": true
+    },
+    {
+      "book_id": "34475",
+      "target": "KV",
+      "token_scores_identical": true,
+      "nll_difference": 0.0,
+      "distribution_hash_identical": true,
+      "final_cache_hash_identical": true
+    },
+    {
+      "book_id": "4124",
+      "target": "NATIVE",
+      "token_scores_identical": true,
+      "nll_difference": 0.0,
+      "distribution_hash_identical": true,
+      "final_cache_hash_identical": true
+    },
+    {
+      "book_id": "4124",
+      "target": "KV",
+      "token_scores_identical": true,
+      "nll_difference": 0.0,
+      "distribution_hash_identical": true,
+      "final_cache_hash_identical": true
+    },
+    {
+      "book_id": "49966",
+      "target": "NATIVE",
+      "token_scores_identical": true,
+      "nll_difference": 0.0,
+      "distribution_hash_identical": true,
+      "final_cache_hash_identical": true
+    },
+    {
+      "book_id": "49966",
+      "target": "KV",
+      "token_scores_identical": true,
+      "nll_difference": 0.0,
+      "distribution_hash_identical": true,
+      "final_cache_hash_identical": true
+    },
+    {
+      "book_id": "49484",
+      "target": "NATIVE",
+      "token_scores_identical": true,
+      "nll_difference": 0.0,
+      "distribution_hash_identical": true,
+      "final_cache_hash_identical": true
+    },
+    {
+      "book_id": "49484",
+      "target": "KV",
+      "token_scores_identical": true,
+      "nll_difference": 0.0,
+      "distribution_hash_identical": true,
+      "final_cache_hash_identical": true
+    },
+    {
+      "book_id": "4537",
+      "target": "NATIVE",
+      "token_scores_identical": true,
+      "nll_difference": 0.0,
+      "distribution_hash_identical": true,
+      "final_cache_hash_identical": true
+    },
+    {
+      "book_id": "4537",
+      "target": "KV",
+      "token_scores_identical": true,
+      "nll_difference": 0.0,
+      "distribution_hash_identical": true,
+      "final_cache_hash_identical": true
+    }
+  ],
+  "historical_interval_note": {
+    "old_order": [
+      "31131",
+      "31258",
+      "34475",
+      "3752",
+      "4124",
+      "4537",
+      "49484",
+      "49966"
+    ],
+    "current_order": [
+      "3752",
+      "31131",
+      "31258",
+      "34475",
+      "4124",
+      "49966",
+      "49484",
+      "4537"
+    ],
+    "old_order_bootstrap_matches_previous": true,
+    "old_order_ci": [
+      0.0032851694753849746,
+      0.010366353481801455
+    ]
+  },
+  "scope": "Original token scores independently aggregated; archive/code/material hashes, schedules, native references, fixed-point distributions, all-slot intervention evidence, norm coordinates and side-specific byte arithmetic checked. Raw full KV tensors and all-token vocabulary distributions are not archived; runtime bitwise checks and hashes are evidence, not a new independent GPU execution. No returned code is imported.",
+  "audit_tolerances": {
+    "document_nll": 1e-12,
+    "p0_mean_kl": "gamma_(n+1) * mean(abs(float32 terms)); eps=2**-23",
+    "p0_delta_nll": 3e-06,
+    "saved_distribution": 1e-05,
+    "saved_kl": 1e-07
+  },
+  "audit_script_sha256": "1c42e0aadb4dbea1313aee712c10aa3143a2b6f24b4dfdb42435eb6ab5affec1"
+}

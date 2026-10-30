@@ -1,0 +1,392 @@
+{
+  "phase": "Tier-2 (d) cancellation MMLU -- Jamba-Mini-1.6 (overnight split)",
+  "generated_at": "2026-06-23T14:05:12+00:00",
+  "generator": "phase_cancellation_mmlu_jamba.py",
+  "transformers_version": "5.12.1",
+  "preregistration": "experiments/cancellation_mmlu_preregistration.md",
+  "model_id": "ai21labs/AI21-Jamba-Mini-1.6",
+  "dtype": "fp16",
+  "knobs": {
+    "k_bits": 3,
+    "v_bits": 3,
+    "recipe": "nsn",
+    "ctx": 1024,
+    "n_windows": 30,
+    "n_bootstrap": 5000,
+    "seed": 20260510,
+    "mmlu_n_subjects": 20,
+    "mmlu_max_q_per_subject": null,
+    "mmlu_dev_shots": 5,
+    "mmlu_ctx_cap": 4096,
+    "mmlu_threshold_pp": 2.0,
+    "n_subjects": 20
+  },
+  "subjects": [
+    "abstract_algebra",
+    "anatomy",
+    "astronomy",
+    "business_ethics",
+    "clinical_knowledge",
+    "college_biology",
+    "college_chemistry",
+    "college_computer_science",
+    "college_mathematics",
+    "college_medicine",
+    "college_physics",
+    "computer_security",
+    "conceptual_physics",
+    "econometrics",
+    "electrical_engineering",
+    "elementary_mathematics",
+    "formal_logic",
+    "global_facts",
+    "high_school_biology",
+    "high_school_chemistry"
+  ],
+  "progress": {
+    "FP16": {
+      "done_subjects": 20,
+      "n_correct": 2005,
+      "n_total": 3182,
+      "running_acc": 0.6301068510370836
+    },
+    "K=V-INT3-NSN": {
+      "done_subjects": 20,
+      "n_correct": 1961,
+      "n_total": 3182,
+      "running_acc": 0.6162790697674418
+    }
+  },
+  "window_starts": [
+    204630,
+    308426,
+    239025,
+    228389,
+    6049,
+    57124,
+    215611,
+    145991,
+    160773,
+    259903,
+    129519,
+    105179,
+    114681,
+    287385,
+    117767,
+    137577,
+    73486,
+    175824,
+    299425,
+    311677,
+    287865,
+    274810,
+    63732,
+    227359,
+    73782,
+    318416,
+    273038,
+    254600,
+    90841,
+    143581
+  ],
+  "fp16_ppl_mean": 8.583241042718006,
+  "cancel_ppl_mean": 8.318081270928605,
+  "dppl": {
+    "per_window": [
+      -2.31507544264633,
+      -4.007041346989608,
+      -3.019850385716324,
+      -4.5738678949636915,
+      -1.3736081420742123,
+      -4.030588783684401,
+      -0.4850249176217996,
+      -3.1036318788156136,
+      -2.329971101169263,
+      -5.623044745672516,
+      -3.896579963345532,
+      -3.7315799863524175,
+      -3.783052335539443,
+      -2.681374951808482,
+      1.261044697023326,
+      1.4250961944010896,
+      -4.282171371047589,
+      -3.64092544336833,
+      -1.6850675809874918,
+      0.8565768225168225,
+      -5.5880822417149645,
+      -6.047393738817591,
+      -1.5974998118136072,
+      -6.7085998735090815,
+      -0.35790819619529546,
+      -4.461459558567202,
+      -4.000454818966361,
+      -4.411627629575745,
+      -4.426157973932861,
+      -3.6091393831064886
+    ],
+    "mean": -3.0742687261353665,
+    "std": 2.083075860178809,
+    "ci_lo": -3.8040181036710923,
+    "ci_hi": -2.3351923179776986,
+    "ci_half_width": 0.7344128928466969
+  },
+  "dppl_published_target": -3.07,
+  "dppl_reproduced": -3.0742687261353665,
+  "gate_ok": true,
+  "mmlu_fp16": {
+    "aggregate_accuracy": 0.6301068510370836,
+    "n_correct_total": 2005,
+    "n_total_total": 3182,
+    "per_subject": {
+      "abstract_algebra": {
+        "subject": "abstract_algebra",
+        "n_total": 100,
+        "n_correct": 37,
+        "accuracy": 0.37
+      },
+      "anatomy": {
+        "subject": "anatomy",
+        "n_total": 135,
+        "n_correct": 91,
+        "accuracy": 0.674074074074074
+      },
+      "astronomy": {
+        "subject": "astronomy",
+        "n_total": 152,
+        "n_correct": 126,
+        "accuracy": 0.8289473684210527
+      },
+      "business_ethics": {
+        "subject": "business_ethics",
+        "n_total": 100,
+        "n_correct": 68,
+        "accuracy": 0.68
+      },
+      "clinical_knowledge": {
+        "subject": "clinical_knowledge",
+        "n_total": 265,
+        "n_correct": 207,
+        "accuracy": 0.7811320754716982
+      },
+      "college_biology": {
+        "subject": "college_biology",
+        "n_total": 144,
+        "n_correct": 116,
+        "accuracy": 0.8055555555555556
+      },
+      "college_chemistry": {
+        "subject": "college_chemistry",
+        "n_total": 100,
+        "n_correct": 42,
+        "accuracy": 0.42
+      },
+      "college_computer_science": {
+        "subject": "college_computer_science",
+        "n_total": 100,
+        "n_correct": 55,
+        "accuracy": 0.55
+      },
+      "college_mathematics": {
+        "subject": "college_mathematics",
+        "n_total": 100,
+        "n_correct": 44,
+        "accuracy": 0.44
+      },
+      "college_medicine": {
+        "subject": "college_medicine",
+        "n_total": 173,
+        "n_correct": 111,
+        "accuracy": 0.6416184971098265
+      },
+      "college_physics": {
+        "subject": "college_physics",
+        "n_total": 102,
+        "n_correct": 46,
+        "accuracy": 0.45098039215686275
+      },
+      "computer_security": {
+        "subject": "computer_security",
+        "n_total": 100,
+        "n_correct": 74,
+        "accuracy": 0.74
+      },
+      "conceptual_physics": {
+        "subject": "conceptual_physics",
+        "n_total": 235,
+        "n_correct": 162,
+        "accuracy": 0.6893617021276596
+      },
+      "econometrics": {
+        "subject": "econometrics",
+        "n_total": 114,
+        "n_correct": 54,
+        "accuracy": 0.47368421052631576
+      },
+      "electrical_engineering": {
+        "subject": "electrical_engineering",
+        "n_total": 145,
+        "n_correct": 98,
+        "accuracy": 0.6758620689655173
+      },
+      "elementary_mathematics": {
+        "subject": "elementary_mathematics",
+        "n_total": 378,
+        "n_correct": 194,
+        "accuracy": 0.5132275132275133
+      },
+      "formal_logic": {
+        "subject": "formal_logic",
+        "n_total": 126,
+        "n_correct": 60,
+        "accuracy": 0.47619047619047616
+      },
+      "global_facts": {
+        "subject": "global_facts",
+        "n_total": 100,
+        "n_correct": 42,
+        "accuracy": 0.42
+      },
+      "high_school_biology": {
+        "subject": "high_school_biology",
+        "n_total": 310,
+        "n_correct": 257,
+        "accuracy": 0.8290322580645161
+      },
+      "high_school_chemistry": {
+        "subject": "high_school_chemistry",
+        "n_total": 203,
+        "n_correct": 121,
+        "accuracy": 0.5960591133004927
+      }
+    }
+  },
+  "mmlu_cancellation": {
+    "aggregate_accuracy": 0.6162790697674418,
+    "n_correct_total": 1961,
+    "n_total_total": 3182,
+    "per_subject": {
+      "abstract_algebra": {
+        "subject": "abstract_algebra",
+        "n_total": 100,
+        "n_correct": 31,
+        "accuracy": 0.31
+      },
+      "anatomy": {
+        "subject": "anatomy",
+        "n_total": 135,
+        "n_correct": 87,
+        "accuracy": 0.6444444444444445
+      },
+      "astronomy": {
+        "subject": "astronomy",
+        "n_total": 152,
+        "n_correct": 124,
+        "accuracy": 0.8157894736842105
+      },
+      "business_ethics": {
+        "subject": "business_ethics",
+        "n_total": 100,
+        "n_correct": 66,
+        "accuracy": 0.66
+      },
+      "clinical_knowledge": {
+        "subject": "clinical_knowledge",
+        "n_total": 265,
+        "n_correct": 202,
+        "accuracy": 0.7622641509433963
+      },
+      "college_biology": {
+        "subject": "college_biology",
+        "n_total": 144,
+        "n_correct": 115,
+        "accuracy": 0.7986111111111112
+      },
+      "college_chemistry": {
+        "subject": "college_chemistry",
+        "n_total": 100,
+        "n_correct": 46,
+        "accuracy": 0.46
+      },
+      "college_computer_science": {
+        "subject": "college_computer_science",
+        "n_total": 100,
+        "n_correct": 51,
+        "accuracy": 0.51
+      },
+      "college_mathematics": {
+        "subject": "college_mathematics",
+        "n_total": 100,
+        "n_correct": 42,
+        "accuracy": 0.42
+      },
+      "college_medicine": {
+        "subject": "college_medicine",
+        "n_total": 173,
+        "n_correct": 114,
+        "accuracy": 0.6589595375722543
+      },
+      "college_physics": {
+        "subject": "college_physics",
+        "n_total": 102,
+        "n_correct": 48,
+        "accuracy": 0.47058823529411764
+      },
+      "computer_security": {
+        "subject": "computer_security",
+        "n_total": 100,
+        "n_correct": 69,
+        "accuracy": 0.69
+      },
+      "conceptual_physics": {
+        "subject": "conceptual_physics",
+        "n_total": 235,
+        "n_correct": 157,
+        "accuracy": 0.6680851063829787
+      },
+      "econometrics": {
+        "subject": "econometrics",
+        "n_total": 114,
+        "n_correct": 52,
+        "accuracy": 0.45614035087719296
+      },
+      "electrical_engineering": {
+        "subject": "electrical_engineering",
+        "n_total": 145,
+        "n_correct": 93,
+        "accuracy": 0.6413793103448275
+      },
+      "elementary_mathematics": {
+        "subject": "elementary_mathematics",
+        "n_total": 378,
+        "n_correct": 192,
+        "accuracy": 0.5079365079365079
+      },
+      "formal_logic": {
+        "subject": "formal_logic",
+        "n_total": 126,
+        "n_correct": 58,
+        "accuracy": 0.4603174603174603
+      },
+      "global_facts": {
+        "subject": "global_facts",
+        "n_total": 100,
+        "n_correct": 40,
+        "accuracy": 0.4
+      },
+      "high_school_biology": {
+        "subject": "high_school_biology",
+        "n_total": 310,
+        "n_correct": 253,
+        "accuracy": 0.8161290322580645
+      },
+      "high_school_chemistry": {
+        "subject": "high_school_chemistry",
+        "n_total": 203,
+        "n_correct": 121,
+        "accuracy": 0.5960591133004927
+      }
+    }
+  },
+  "mmlu_delta_pp": -1.3827781269641792,
+  "verdict": "benign"
+}

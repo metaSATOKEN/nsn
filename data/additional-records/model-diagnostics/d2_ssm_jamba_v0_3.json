@@ -1,0 +1,114 @@
+{
+  "schema_version": "0.2.0",
+  "generated_at": "2026-05-14T04:41:13+00:00",
+  "generator": "phase_d2_ssm_jamba.py (v0.3 Realisation A + B)",
+  "transformers_version": "5.8.1",
+  "model_id": "ai21labs/AI21-Jamba-Mini-1.6",
+  "model_label": "Jamba-1.5-Mini",
+  "geometry": "between_layer_coupled",
+  "purpose": "Paper D Phase D-2 v0.3 SSM-side baseline on Jamba-1.5-Mini. Vendors lab-ssm Phase C-8d Mamba-1 reference forward patch (per-token recurrence + per-(c, s) state quantisation). Produces BOTH Realisation A (`half_slope_rg`, recommended state-cache memory recipe per lab-ssm SS 3.5 / SS 6.2) and Realisation B (`full_slope`, slope-1 simplification). Realisation A is the LAB-D v0.3 hero; Realisation B is kept for sanity reproduction against lab-ssm phase_c8d_jamba_mini.json and ablation against Realisation A. Resolves the LAB-D paper label-vs-numbers disconnect discovered on Day 15.",
+  "protocol": {
+    "ctx": 1024,
+    "n_windows": 5,
+    "kv_recipe": "qa_nsep_pchan_asym (NSN v0.3 hero)",
+    "ssm_recipes": [
+      "Realisation A: b_g = b_0 + ceil((1/2) log_2 R_g + log_2 r_g - mean(log_2 r_g))_+",
+      "Realisation B: b_g = b_0 + ceil(log_2 R_g)_+ (slope-1 simplification, sanity)"
+    ],
+    "fakequant_via": "k/v_proj forward hooks + Mamba1.slow_forward patch",
+    "calib_corpus": "WikiText-2 train (8000 chars, first 1024 toks)",
+    "test_corpus": "WikiText-2 test",
+    "range_k": 7.0,
+    "b_min": 2
+  },
+  "fp16_baseline_ppl": 6.689885270252582,
+  "delta_K_from_v1": -3.914011457087698,
+  "delta_S_C3": 4.555970698779201,
+  "delta_both_C7": 0.2829032939369471,
+  "interaction_I": -0.3590559477545563,
+  "composition_regime": "clean",
+  "delta_S_C3_A": 1.4821156157800308,
+  "delta_both_C7_A": -1.3573589710194982,
+  "interaction_I_A": 1.0745368702881688,
+  "composition_regime_A": "degradation",
+  "attn_layers": [
+    4,
+    12,
+    20,
+    28
+  ],
+  "n_ssm_layers": 28,
+  "conditions": {
+    "C0_FP16": {
+      "ppl": 6.689885270252582,
+      "delta_pct": 0.0,
+      "ssm_profile": null,
+      "kv_bits": null,
+      "kv_layers": []
+    },
+    "C3_SSM_LAB_full_b6": {
+      "ppl": 6.994674482947236,
+      "delta_pct": 4.555970698779201,
+      "ssm_profile": "full_b6",
+      "kv_bits": null,
+      "kv_layers": []
+    },
+    "C4_SSM_LAB_full_b4": {
+      "ppl": 8.294291316366207,
+      "delta_pct": 23.982564443187368,
+      "ssm_profile": "full_b4",
+      "kv_bits": null,
+      "kv_layers": []
+    },
+    "C5_global_INT4": {
+      "ppl": 9.328597279012946,
+      "delta_pct": 39.44330735377076,
+      "ssm_profile": "uniform_b4",
+      "kv_bits": 4,
+      "kv_layers": [
+        4,
+        12,
+        20,
+        28
+      ]
+    },
+    "C7_KV_INT3_SSM_full_b6": {
+      "ppl": 6.70881117604273,
+      "delta_pct": 0.2829032939369471,
+      "ssm_profile": "full_b6",
+      "kv_bits": 3,
+      "kv_layers": [
+        4,
+        12,
+        20,
+        28
+      ]
+    },
+    "C3_SSM_LAB_half_slope_rg_b6": {
+      "ppl": 6.789037104520764,
+      "delta_pct": 1.4821156157800308,
+      "ssm_profile": "half_slope_rg_b6",
+      "kv_bits": null,
+      "kv_layers": []
+    },
+    "C4_SSM_LAB_half_slope_rg_b4": {
+      "ppl": 7.281090950570125,
+      "delta_pct": 8.837306716550325,
+      "ssm_profile": "half_slope_rg_b4",
+      "kv_bits": null,
+      "kv_layers": []
+    },
+    "C7_KV_INT3_SSM_half_slope_rg_b6": {
+      "ppl": 6.599079512385897,
+      "delta_pct": -1.3573589710194982,
+      "ssm_profile": "half_slope_rg_b6",
+      "kv_bits": 3,
+      "kv_layers": [
+        4,
+        12,
+        20,
+        28
+      ]
+    }
+  }
+}

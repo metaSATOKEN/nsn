@@ -1,0 +1,4 @@
+def _iv01_shape_v(v, q, total):
+    t = w.torch
+    w.require(v.dtype == t.bfloat16 and v.is_contiguous() and (tuple(v.shape) == (1, q.shape[1], total, 128)), 'V shape/type')
+    w.require(v.device == q.device and v.device.type == 'cuda', 'V device')

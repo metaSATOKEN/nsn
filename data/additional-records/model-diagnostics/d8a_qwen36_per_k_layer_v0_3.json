@@ -1,0 +1,180 @@
+{
+  "schema_version": "0.1.0",
+  "generated_at": "2026-05-15T03:26:37+00:00",
+  "generator": "phase_d8a_qwen36_per_k_layer.py",
+  "transformers_version": "5.8.1",
+  "model_id": "Qwen/Qwen3.6-27B",
+  "model_label": "Qwen3.6-27B",
+  "purpose": "Paper D Phase D-8a — per-K-layer probe on Qwen3.6-27B to test whether F14 (localisation rejection) transfers from the Mamba-class testbed (Zamba2 / Jamba D-3) to non-Mamba hybrids. K substrate is alone-quantised at INT3 layer-by-layer; M (GatedDeltaNet) and the rest are FP16. F14 transfers if the per-layer ΔPPL spread is below 1 pp; otherwise per-layer K-fallback policy candidates are worth pursuing in D-5 / D-8 follow-up.",
+  "protocol": {
+    "ctx": 1024,
+    "n_windows": 5,
+    "kv_recipe": "qa_nsep_pchan_asym (NSN v0.3 hero)",
+    "calib_corpus": "WikiText-2 test (model's own tokenizer)"
+  },
+  "fp16_baseline_ppl_thisrun": 6.967336158879674,
+  "fp16_baseline_ppl_reference": 6.9673,
+  "fp16_drift": 3.615887967445275e-05,
+  "n_attn_layers": 16,
+  "attn_layers": [
+    3,
+    7,
+    11,
+    15,
+    19,
+    23,
+    27,
+    31,
+    35,
+    39,
+    43,
+    47,
+    51,
+    55,
+    59,
+    63
+  ],
+  "forward_path_selected": "direct",
+  "forward_sanity_ppl": 7.954225437423217,
+  "results": {
+    "C0_FP16": {
+      "ppl": 6.967336158879674,
+      "delta_pct": 0.0,
+      "target": []
+    },
+    "C8_L3_K_INT3": {
+      "ppl": 7.0211387731034485,
+      "delta_pct": 0.7722121194799001,
+      "target": [
+        3
+      ]
+    },
+    "C8_L7_K_INT3": {
+      "ppl": 6.971429761118034,
+      "delta_pct": 0.05875419450147484,
+      "target": [
+        7
+      ]
+    },
+    "C8_L11_K_INT3": {
+      "ppl": 6.983398843312644,
+      "delta_pct": 0.23054269331469265,
+      "target": [
+        11
+      ]
+    },
+    "C8_L15_K_INT3": {
+      "ppl": 6.996261323555991,
+      "delta_pct": 0.41515385531459975,
+      "target": [
+        15
+      ]
+    },
+    "C8_L19_K_INT3": {
+      "ppl": 6.9758548915553105,
+      "delta_pct": 0.12226670970625267,
+      "target": [
+        19
+      ]
+    },
+    "C8_L23_K_INT3": {
+      "ppl": 6.948493445114064,
+      "delta_pct": -0.2704435861271874,
+      "target": [
+        23
+      ]
+    },
+    "C8_L27_K_INT3": {
+      "ppl": 6.967814386845371,
+      "delta_pct": 0.006863856641778513,
+      "target": [
+        27
+      ]
+    },
+    "C8_L31_K_INT3": {
+      "ppl": 6.962899815202425,
+      "delta_pct": -0.06367345533623259,
+      "target": [
+        31
+      ]
+    },
+    "C8_L35_K_INT3": {
+      "ppl": 6.97142293977455,
+      "delta_pct": 0.05865628988874636,
+      "target": [
+        35
+      ]
+    },
+    "C8_L39_K_INT3": {
+      "ppl": 6.974058970925228,
+      "delta_pct": 0.09649042176593312,
+      "target": [
+        39
+      ]
+    },
+    "C8_L43_K_INT3": {
+      "ppl": 6.968628247997102,
+      "delta_pct": 0.018544951584986712,
+      "target": [
+        43
+      ]
+    },
+    "C8_L47_K_INT3": {
+      "ppl": 6.961461922071033,
+      "delta_pct": -0.08431108639928289,
+      "target": [
+        47
+      ]
+    },
+    "C8_L51_K_INT3": {
+      "ppl": 6.972964067469587,
+      "delta_pct": 0.08077561440379939,
+      "target": [
+        51
+      ]
+    },
+    "C8_L55_K_INT3": {
+      "ppl": 6.976654540435849,
+      "delta_pct": 0.13374382035950105,
+      "target": [
+        55
+      ]
+    },
+    "C8_L59_K_INT3": {
+      "ppl": 6.969106065693353,
+      "delta_pct": 0.02540291975754646,
+      "target": [
+        59
+      ]
+    },
+    "C8_L63_K_INT3": {
+      "ppl": 6.986766019292874,
+      "delta_pct": 0.2788707185950419,
+      "target": [
+        63
+      ]
+    }
+  },
+  "per_layer_deltas": {
+    "3": 0.7722121194799001,
+    "7": 0.05875419450147484,
+    "11": 0.23054269331469265,
+    "15": 0.41515385531459975,
+    "19": 0.12226670970625267,
+    "23": -0.2704435861271874,
+    "27": 0.006863856641778513,
+    "31": -0.06367345533623259,
+    "35": 0.05865628988874636,
+    "39": 0.09649042176593312,
+    "43": 0.018544951584986712,
+    "47": -0.08431108639928289,
+    "51": 0.08077561440379939,
+    "55": 0.13374382035950105,
+    "59": 0.02540291975754646,
+    "63": 0.2788707185950419
+  },
+  "spread_pp": 1.0426557056070875,
+  "argmax_layer": 3,
+  "argmin_layer": 23,
+  "f14_transferability": "fails"
+}

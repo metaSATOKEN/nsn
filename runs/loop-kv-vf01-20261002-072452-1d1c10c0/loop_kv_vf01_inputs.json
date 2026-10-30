@@ -1,0 +1,4251 @@
+{
+  "experiment": "LOOP-KV-VF01",
+  "version": "0.1",
+  "status": "DESIGNED_NOT_IMPLEMENTED",
+  "date": "2026-10-02",
+  "parent_zip": "runs/loop-kv-rf01-20261001-081630-26e77b7d.zip",
+  "parent_sha256": "79a9bfda5e8e0280188827b4003b88b8844934e5d700eb7ac1bce1f9cd4f9f7c",
+  "samples": [
+    {
+      "id": "GATE-FUSED-s0",
+      "trajectory": "GATE-FUSED",
+      "phase": "gate",
+      "slot": 0,
+      "length": 833,
+      "compressed": 768,
+      "book_id": "37013",
+      "K": {
+        "file": "restore/inputs/GATE-FUSED-s0-K.npz",
+        "sha256": "df02e56b11f37daeb68c6d5523f9d77876a93d4e93f96860773e98b0196901f9",
+        "bytes": 3218648,
+        "cache_digest": "6d5eeccc51d23edb942731302331aaa10408c17c6bb6dcddf110c618591dc144"
+      },
+      "V": {
+        "file": "restore/inputs/GATE-FUSED-s0-V.npz",
+        "sha256": "f762f998fc490a4f43ffc9bafa94da7ae049c0dc70b4271e5a85f116b73137da",
+        "bytes": 2492859,
+        "cache_digest": "d01552d89b89bb07d46e3fdc8657f764a161e9bf4a215fc73a2823aeda306527"
+      },
+      "query_hashes": {
+        "gaussian": "56b8019adbf23c4ddb925ffe21f46f5e2dac5e3b2b7a24f48b0bcfb6d7d2cc69",
+        "one_hot": "051907f076229a29c906ad2f4dc4e33cf69411c0b59238823c8b542041130e7a",
+        "alternating": "21dde0593c1a9e515e2dd039d55c3da4be2510bc981db4abccdab40b5ca4fae9",
+        "zero": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+      }
+    },
+    {
+      "id": "GATE-FUSED-s95",
+      "trajectory": "GATE-FUSED",
+      "phase": "gate",
+      "slot": 95,
+      "length": 833,
+      "compressed": 768,
+      "book_id": "37013",
+      "K": {
+        "file": "restore/inputs/GATE-FUSED-s95-K.npz",
+        "sha256": "4a59edde4240c4d6c9d78c979c6930bc20f14481c74865c04d3d6c99d3158476",
+        "bytes": 3388123,
+        "cache_digest": "8316cb2f3671ff643096dc3213e8d3acdf72f6da16be6166499e5467b1de7811"
+      },
+      "V": {
+        "file": "restore/inputs/GATE-FUSED-s95-V.npz",
+        "sha256": "8d9be1ef59caaf0d66ee6552f86625865f7989efd4d34f0951fb380dd8d78fcd",
+        "bytes": 3384519,
+        "cache_digest": "ec83f0ca404d104080a8621583c13fa77478962f950b3a2915cebb570c4ed7d0"
+      },
+      "query_hashes": {
+        "gaussian": "31adeeed97a45ed42cc21a25436441ae3080922a0e8218a487ec6f2dd352c5d5",
+        "one_hot": "051907f076229a29c906ad2f4dc4e33cf69411c0b59238823c8b542041130e7a",
+        "alternating": "21dde0593c1a9e515e2dd039d55c3da4be2510bc981db4abccdab40b5ca4fae9",
+        "zero": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+      }
+    },
+    {
+      "id": "GATE-FUSED-s191",
+      "trajectory": "GATE-FUSED",
+      "phase": "gate",
+      "slot": 191,
+      "length": 833,
+      "compressed": 768,
+      "book_id": "37013",
+      "K": {
+        "file": "restore/inputs/GATE-FUSED-s191-K.npz",
+        "sha256": "38a8ee41e5656eb8629598bcfe148e3fe4858c4e389aab3396555cd32d69c9e9",
+        "bytes": 3388666,
+        "cache_digest": "0fe2fabda5bc2fd7aed848aff0773ac8721926709226fe16e8efb68a19bbcb20"
+      },
+      "V": {
+        "file": "restore/inputs/GATE-FUSED-s191-V.npz",
+        "sha256": "3c1d6d2939910b69b46ab49df2f13948162ca2c8158a3d56dd2f7b04a77c0f60",
+        "bytes": 3385129,
+        "cache_digest": "1ab38b74e766e87224e6abb3ee9413d23d57577c082efc053c5b9e38f9790e0c"
+      },
+      "query_hashes": {
+        "gaussian": "d931991a383464dcc9b5278dca97c7924dbc2d313f41326ca37a323164ce7d5e",
+        "one_hot": "051907f076229a29c906ad2f4dc4e33cf69411c0b59238823c8b542041130e7a",
+        "alternating": "21dde0593c1a9e515e2dd039d55c3da4be2510bc981db4abccdab40b5ca4fae9",
+        "zero": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+      }
+    },
+    {
+      "id": "RF01-b3752-FUSED-s0",
+      "trajectory": "RF01-b3752-FUSED",
+      "phase": "main",
+      "slot": 0,
+      "length": 1023,
+      "compressed": 896,
+      "book_id": "3752",
+      "K": {
+        "file": "restore/inputs/RF01-b3752-FUSED-s0-K.npz",
+        "sha256": "f4d078b2709f1374ff33c9bae61bcf5559b98d2ef8e8a40cce8330e4e4bdb71c",
+        "bytes": 3919973,
+        "cache_digest": "146f9e3e24c3c29a582a21e133bda9c0dc0f3fd3776f70585234c556a763e3f2"
+      },
+      "V": {
+        "file": "restore/inputs/RF01-b3752-FUSED-s0-V.npz",
+        "sha256": "ad6029c0831faee4dff01850941817653b63c5013279778c992e8d72fe0cb0ec",
+        "bytes": 3040089,
+        "cache_digest": "588b59661e47bc72ea92ff3b841f220794c999f63dd359bdb4b7115d8606b7e6"
+      },
+      "query_hashes": {
+        "gaussian": "5acb5d9db7170ec69a0c18a64231db9765b4f823731715ba0a46ee9ca2419ba9",
+        "one_hot": "051907f076229a29c906ad2f4dc4e33cf69411c0b59238823c8b542041130e7a",
+        "alternating": "21dde0593c1a9e515e2dd039d55c3da4be2510bc981db4abccdab40b5ca4fae9",
+        "zero": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+      }
+    },
+    {
+      "id": "RF01-b3752-FUSED-s95",
+      "trajectory": "RF01-b3752-FUSED",
+      "phase": "main",
+      "slot": 95,
+      "length": 1023,
+      "compressed": 896,
+      "book_id": "3752",
+      "K": {
+        "file": "restore/inputs/RF01-b3752-FUSED-s95-K.npz",
+        "sha256": "f2f3753d28bc2e8ed5893c79b473af222a074323d3e879c939a8eebb39bc874e",
+        "bytes": 4123461,
+        "cache_digest": "2b333ea1ccc32792b399f7006929ba80763bf88cfb6f03ef1a3233defb27f381"
+      },
+      "V": {
+        "file": "restore/inputs/RF01-b3752-FUSED-s95-V.npz",
+        "sha256": "09ac6c8de0290742cbde5d5d1fa3001510591771648a49da8ccc0e324de60ee5",
+        "bytes": 4115747,
+        "cache_digest": "7c32a089217f799bc9850405cd948d00ce2574f00f6249e1965adf207ab27f52"
+      },
+      "query_hashes": {
+        "gaussian": "7e8dd0960a772fdf3a8f56fde4fd2ba24d809c271f5e5804cc0dafb55a863722",
+        "one_hot": "051907f076229a29c906ad2f4dc4e33cf69411c0b59238823c8b542041130e7a",
+        "alternating": "21dde0593c1a9e515e2dd039d55c3da4be2510bc981db4abccdab40b5ca4fae9",
+        "zero": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+      }
+    },
+    {
+      "id": "RF01-b3752-FUSED-s191",
+      "trajectory": "RF01-b3752-FUSED",
+      "phase": "main",
+      "slot": 191,
+      "length": 1023,
+      "compressed": 896,
+      "book_id": "3752",
+      "K": {
+        "file": "restore/inputs/RF01-b3752-FUSED-s191-K.npz",
+        "sha256": "fcea6256823a0c0178a1be6c19dba0c23927657ed3bd51243ab63a7677518487",
+        "bytes": 4123706,
+        "cache_digest": "2ff75d5d3b70c8f1d586d4dab628baa767709d6ef4f9016fe0da48d87bb2b27a"
+      },
+      "V": {
+        "file": "restore/inputs/RF01-b3752-FUSED-s191-V.npz",
+        "sha256": "5441f9c16bc2553300c321773f4e8fdfd97adc2ca09b17cb8d34b06926256b1e",
+        "bytes": 4117183,
+        "cache_digest": "878b65706acaa0847c8d0fe1b1209b13923c2f6a3fe023352fa24072cb659e71"
+      },
+      "query_hashes": {
+        "gaussian": "91a6f4b6c8d55e4029cbc9a0939cd3f4096b9b4f461f33802ac06702c78d5c12",
+        "one_hot": "051907f076229a29c906ad2f4dc4e33cf69411c0b59238823c8b542041130e7a",
+        "alternating": "21dde0593c1a9e515e2dd039d55c3da4be2510bc981db4abccdab40b5ca4fae9",
+        "zero": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+      }
+    },
+    {
+      "id": "RF01-b31131-FUSED-s0",
+      "trajectory": "RF01-b31131-FUSED",
+      "phase": "main",
+      "slot": 0,
+      "length": 1023,
+      "compressed": 896,
+      "book_id": "31131",
+      "K": {
+        "file": "restore/inputs/RF01-b31131-FUSED-s0-K.npz",
+        "sha256": "e88a4fd14071ca310e2a04f439b3306cf8ae83cd1423ecc1ac14a10eb3252408",
+        "bytes": 3901036,
+        "cache_digest": "e5e7e222b69b212307148288f62b17b8d7692291d8ddef7c30c509db815b5165"
+      },
+      "V": {
+        "file": "restore/inputs/RF01-b31131-FUSED-s0-V.npz",
+        "sha256": "7f4f495657aa674fbfc9aa69def39527b1e7077055af463bd9cf21d82ebc7f1b",
+        "bytes": 2965417,
+        "cache_digest": "a48685ad108974834db174b21c6ea8c2c75c8544ec2a2335cd3b237db9401439"
+      },
+      "query_hashes": {
+        "gaussian": "e07ff39bcb75a06d950c66925724f786659cd514505550a4eb85c4b69ecbe9e7",
+        "one_hot": "051907f076229a29c906ad2f4dc4e33cf69411c0b59238823c8b542041130e7a",
+        "alternating": "21dde0593c1a9e515e2dd039d55c3da4be2510bc981db4abccdab40b5ca4fae9",
+        "zero": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+      }
+    },
+    {
+      "id": "RF01-b31131-FUSED-s95",
+      "trajectory": "RF01-b31131-FUSED",
+      "phase": "main",
+      "slot": 95,
+      "length": 1023,
+      "compressed": 896,
+      "book_id": "31131",
+      "K": {
+        "file": "restore/inputs/RF01-b31131-FUSED-s95-K.npz",
+        "sha256": "1cac0bc0a174620d2904fcdc0b802990a46437b660ecc50ac7461b0550f0679f",
+        "bytes": 4122056,
+        "cache_digest": "834e2f896caa2972a6e9924cbe4b4aa1877c4e62b848589d0869bc501557d2a1"
+      },
+      "V": {
+        "file": "restore/inputs/RF01-b31131-FUSED-s95-V.npz",
+        "sha256": "3d47c619ae7b19870723da3f3ffbaaf220be0577197e1c2f0d585b7269aa1771",
+        "bytes": 4117318,
+        "cache_digest": "871c0767544ffd2f3f3a6cae97fba637695a0aa79efd647418aab603c3dcf78e"
+      },
+      "query_hashes": {
+        "gaussian": "7c4e5d1f98ac54af627f7b4ab4fdda6c66b451d3a371148b8e2f786150c93e27",
+        "one_hot": "051907f076229a29c906ad2f4dc4e33cf69411c0b59238823c8b542041130e7a",
+        "alternating": "21dde0593c1a9e515e2dd039d55c3da4be2510bc981db4abccdab40b5ca4fae9",
+        "zero": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+      }
+    },
+    {
+      "id": "RF01-b31131-FUSED-s191",
+      "trajectory": "RF01-b31131-FUSED",
+      "phase": "main",
+      "slot": 191,
+      "length": 1023,
+      "compressed": 896,
+      "book_id": "31131",
+      "K": {
+        "file": "restore/inputs/RF01-b31131-FUSED-s191-K.npz",
+        "sha256": "7ac29af7daf50df8f35a622af220ffb20a8e108e431864997e55beb71054ee94",
+        "bytes": 4122423,
+        "cache_digest": "c5905826dfa809d3c69b8e70254a20a97cd5a0abdc616962d2f448412d3e706c"
+      },
+      "V": {
+        "file": "restore/inputs/RF01-b31131-FUSED-s191-V.npz",
+        "sha256": "f258ff8b33791bc0b4a0c415a66f7694cb85349eb1ddcad9a1de31e372cee6e2",
+        "bytes": 4117026,
+        "cache_digest": "c2f3f019890e7f34088ce0f1383c93a4fce9c4f445c7711bf148c1b5ef77a8ec"
+      },
+      "query_hashes": {
+        "gaussian": "cb389fe803398b366742eddebf8358942ea0083d4e2d3604b87801139d7c6aa2",
+        "one_hot": "051907f076229a29c906ad2f4dc4e33cf69411c0b59238823c8b542041130e7a",
+        "alternating": "21dde0593c1a9e515e2dd039d55c3da4be2510bc981db4abccdab40b5ca4fae9",
+        "zero": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+      }
+    }
+  ],
+  "query": {
+    "reuse": "scripts/loop_kv_qk01_contract.py:query",
+    "seed": 2026100104,
+    "index": "0-based sample index in samples",
+    "kinds": [
+      "gaussian",
+      "one_hot",
+      "alternating",
+      "zero"
+    ],
+    "dtype": "bfloat16",
+    "shape": [
+      1,
+      16,
+      1,
+      128
+    ],
+    "origin": "synthetic, not actual model query"
+  },
+  "arms": [
+    "RF01_MATERIALIZE",
+    "TILE_MATERIALIZE",
+    "V_FUSED"
+  ],
+  "main_pairs": 6,
+  "diagnostic_pairs": 3,
+  "independent_main_books": 2,
+  "normal_fixtures": [
+    {
+      "id": "C64T65-zero",
+      "compressed": 64,
+      "length": 65,
+      "pattern": "zero"
+    },
+    {
+      "id": "C64T65-constant",
+      "compressed": 64,
+      "length": 65,
+      "pattern": "constant"
+    },
+    {
+      "id": "C64T65-mixed_codes",
+      "compressed": 64,
+      "length": 65,
+      "pattern": "mixed_codes"
+    },
+    {
+      "id": "C64T65-partial_zero_norm",
+      "compressed": 64,
+      "length": 65,
+      "pattern": "partial_zero_norm"
+    },
+    {
+      "id": "C768T833-zero",
+      "compressed": 768,
+      "length": 833,
+      "pattern": "zero"
+    },
+    {
+      "id": "C768T833-constant",
+      "compressed": 768,
+      "length": 833,
+      "pattern": "constant"
+    },
+    {
+      "id": "C768T833-mixed_codes",
+      "compressed": 768,
+      "length": 833,
+      "pattern": "mixed_codes"
+    },
+    {
+      "id": "C768T833-partial_zero_norm",
+      "compressed": 768,
+      "length": 833,
+      "pattern": "partial_zero_norm"
+    },
+    {
+      "id": "C896T1023-zero",
+      "compressed": 896,
+      "length": 1023,
+      "pattern": "zero"
+    },
+    {
+      "id": "C896T1023-constant",
+      "compressed": 896,
+      "length": 1023,
+      "pattern": "constant"
+    },
+    {
+      "id": "C896T1023-mixed_codes",
+      "compressed": 896,
+      "length": 1023,
+      "pattern": "mixed_codes"
+    },
+    {
+      "id": "C896T1023-partial_zero_norm",
+      "compressed": 896,
+      "length": 1023,
+      "pattern": "partial_zero_norm"
+    },
+    {
+      "id": "C0T17-tail",
+      "compressed": 0,
+      "length": 17,
+      "pattern": "tail_only"
+    },
+    {
+      "id": "C0T65-tail",
+      "compressed": 0,
+      "length": 65,
+      "pattern": "tail_only"
+    },
+    {
+      "id": "C0T833-tail",
+      "compressed": 0,
+      "length": 833,
+      "pattern": "tail_only"
+    },
+    {
+      "id": "C0T1023-tail",
+      "compressed": 0,
+      "length": 1023,
+      "pattern": "tail_only"
+    }
+  ],
+  "negative_fixtures": [
+    "q_nan",
+    "q_inf",
+    "k_tail_nan",
+    "v_tail_inf",
+    "k_norm_nan",
+    "k_min_nan",
+    "k_scale_inf",
+    "v_norm_nan",
+    "v_min_nan",
+    "v_scale_nan",
+    "v_norm_inf",
+    "v_zero_norm_nan_direction",
+    "q_dtype",
+    "q_shape",
+    "k_codes_dtype",
+    "v_codes_dtype",
+    "v_codes_short",
+    "v_meta_shape",
+    "v_tail_noncontiguous",
+    "kv_length_mismatch",
+    "k_header_position",
+    "v_header_position",
+    "empty_sequence",
+    "score_overflow"
+  ],
+  "timing": {
+    "rounds": 5,
+    "calls_per_interval": 20,
+    "first_calls": 108,
+    "warmup_calls_per_cell": 5,
+    "warmup_calls": 540,
+    "intervals": 540,
+    "measured_calls": 10800,
+    "host_schedule": [
+      {
+        "id": "GATE-FUSED-s0-gaussian-r0-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-gaussian-r0-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-gaussian-r0-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s0-one_hot-r0-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-one_hot-r0-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s0-one_hot-r0-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-alternating-r0-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "alternating",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s0-alternating-r0-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "alternating",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-alternating-r0-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "alternating",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-zero-r0-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "zero",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-zero-r0-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "zero",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-zero-r0-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "zero",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-gaussian-r0-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-gaussian-r0-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-gaussian-r0-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-one_hot-r0-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-one_hot-r0-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-one_hot-r0-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-alternating-r0-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "alternating",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-alternating-r0-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "alternating",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-alternating-r0-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "alternating",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-zero-r0-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "zero",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-zero-r0-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "zero",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-zero-r0-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "zero",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-gaussian-r0-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s191-gaussian-r0-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-gaussian-r0-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-one_hot-r0-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-one_hot-r0-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-one_hot-r0-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s191-alternating-r0-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "alternating",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-alternating-r0-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "alternating",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s191-alternating-r0-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "alternating",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-zero-r0-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "zero",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s191-zero-r0-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "zero",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-zero-r0-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "zero",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-gaussian-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-gaussian-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-gaussian-r0-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-one_hot-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-one_hot-r0-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-one_hot-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-alternating-r0-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "alternating",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-alternating-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "alternating",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-alternating-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "alternating",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-zero-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "zero",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-zero-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "zero",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-zero-r0-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "zero",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-gaussian-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-gaussian-r0-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-gaussian-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-one_hot-r0-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-one_hot-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-one_hot-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-alternating-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "alternating",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-alternating-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "alternating",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-alternating-r0-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "alternating",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-zero-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "zero",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-zero-r0-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "zero",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-zero-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "zero",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-gaussian-r0-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-gaussian-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-gaussian-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-one_hot-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-one_hot-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-one_hot-r0-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-alternating-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "alternating",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-alternating-r0-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "alternating",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-alternating-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "alternating",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-zero-r0-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "zero",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-zero-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "zero",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-zero-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "zero",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-gaussian-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-gaussian-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-gaussian-r0-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-one_hot-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-one_hot-r0-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-one_hot-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-alternating-r0-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "alternating",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-alternating-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "alternating",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-alternating-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "alternating",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-zero-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "zero",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-zero-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "zero",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-zero-r0-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "zero",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-gaussian-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-gaussian-r0-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-gaussian-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-one_hot-r0-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-one_hot-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-one_hot-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-alternating-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "alternating",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-alternating-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "alternating",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-alternating-r0-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "alternating",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-zero-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "zero",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-zero-r0-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "zero",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-zero-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "zero",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-gaussian-r0-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-gaussian-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-gaussian-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "gaussian",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-one_hot-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-one_hot-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-one_hot-r0-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "one_hot",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-alternating-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "alternating",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-alternating-r0-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "alternating",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-alternating-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "alternating",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-zero-r0-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "zero",
+        "round": 0,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-zero-r0-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "zero",
+        "round": 0,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-zero-r0-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "zero",
+        "round": 0,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-gaussian-r1-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-gaussian-r1-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s0-gaussian-r1-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-one_hot-r1-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s0-one_hot-r1-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-one_hot-r1-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-alternating-r1-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "alternating",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-alternating-r1-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "alternating",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-alternating-r1-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "alternating",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s0-zero-r1-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "zero",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-zero-r1-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "zero",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s0-zero-r1-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "zero",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-gaussian-r1-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-gaussian-r1-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-gaussian-r1-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-one_hot-r1-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-one_hot-r1-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-one_hot-r1-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-alternating-r1-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "alternating",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-alternating-r1-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "alternating",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-alternating-r1-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "alternating",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-zero-r1-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "zero",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-zero-r1-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "zero",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-zero-r1-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "zero",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-gaussian-r1-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-gaussian-r1-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-gaussian-r1-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s191-one_hot-r1-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-one_hot-r1-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s191-one_hot-r1-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-alternating-r1-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "alternating",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s191-alternating-r1-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "alternating",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-alternating-r1-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "alternating",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-zero-r1-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "zero",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-zero-r1-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "zero",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-zero-r1-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "zero",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-gaussian-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-gaussian-r1-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-gaussian-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-one_hot-r1-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-one_hot-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-one_hot-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-alternating-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "alternating",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-alternating-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "alternating",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-alternating-r1-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "alternating",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-zero-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "zero",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-zero-r1-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "zero",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-zero-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "zero",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-gaussian-r1-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-gaussian-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-gaussian-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-one_hot-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-one_hot-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-one_hot-r1-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-alternating-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "alternating",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-alternating-r1-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "alternating",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-alternating-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "alternating",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-zero-r1-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "zero",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-zero-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "zero",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-zero-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "zero",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-gaussian-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-gaussian-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-gaussian-r1-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-one_hot-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-one_hot-r1-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-one_hot-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-alternating-r1-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "alternating",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-alternating-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "alternating",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-alternating-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "alternating",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-zero-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "zero",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-zero-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "zero",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-zero-r1-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "zero",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-gaussian-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-gaussian-r1-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-gaussian-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-one_hot-r1-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-one_hot-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-one_hot-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-alternating-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "alternating",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-alternating-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "alternating",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-alternating-r1-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "alternating",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-zero-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "zero",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-zero-r1-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "zero",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-zero-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "zero",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-gaussian-r1-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-gaussian-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-gaussian-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-one_hot-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-one_hot-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-one_hot-r1-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-alternating-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "alternating",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-alternating-r1-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "alternating",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-alternating-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "alternating",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-zero-r1-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "zero",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-zero-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "zero",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-zero-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "zero",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-gaussian-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-gaussian-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-gaussian-r1-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "gaussian",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-one_hot-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-one_hot-r1-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-one_hot-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "one_hot",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-alternating-r1-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "alternating",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-alternating-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "alternating",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-alternating-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "alternating",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-zero-r1-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "zero",
+        "round": 1,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-zero-r1-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "zero",
+        "round": 1,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-zero-r1-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "zero",
+        "round": 1,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s0-gaussian-r2-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s0-gaussian-r2-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-gaussian-r2-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-one_hot-r2-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-one_hot-r2-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-one_hot-r2-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s0-alternating-r2-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "alternating",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-alternating-r2-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "alternating",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s0-alternating-r2-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "alternating",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-zero-r2-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "zero",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s0-zero-r2-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "zero",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-zero-r2-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "zero",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-gaussian-r2-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-gaussian-r2-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-gaussian-r2-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-one_hot-r2-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-one_hot-r2-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-one_hot-r2-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-alternating-r2-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "alternating",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-alternating-r2-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "alternating",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-alternating-r2-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "alternating",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-zero-r2-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "zero",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-zero-r2-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "zero",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-zero-r2-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "zero",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s191-gaussian-r2-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-gaussian-r2-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s191-gaussian-r2-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-one_hot-r2-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s191-one_hot-r2-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-one_hot-r2-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-alternating-r2-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "alternating",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-alternating-r2-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "alternating",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-alternating-r2-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "alternating",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s191-zero-r2-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "zero",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-zero-r2-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "zero",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s191-zero-r2-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "zero",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-gaussian-r2-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-gaussian-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-gaussian-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-one_hot-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-one_hot-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-one_hot-r2-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-alternating-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "alternating",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-alternating-r2-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "alternating",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-alternating-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "alternating",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-zero-r2-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "zero",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-zero-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "zero",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-zero-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "zero",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-gaussian-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-gaussian-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-gaussian-r2-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-one_hot-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-one_hot-r2-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-one_hot-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-alternating-r2-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "alternating",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-alternating-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "alternating",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-alternating-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "alternating",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-zero-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "zero",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-zero-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "zero",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-zero-r2-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "zero",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-gaussian-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-gaussian-r2-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-gaussian-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-one_hot-r2-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-one_hot-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-one_hot-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-alternating-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "alternating",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-alternating-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "alternating",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-alternating-r2-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "alternating",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-zero-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "zero",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-zero-r2-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "zero",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-zero-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "zero",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-gaussian-r2-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-gaussian-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-gaussian-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-one_hot-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-one_hot-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-one_hot-r2-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-alternating-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "alternating",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-alternating-r2-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "alternating",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-alternating-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "alternating",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-zero-r2-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "zero",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-zero-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "zero",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-zero-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "zero",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-gaussian-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-gaussian-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-gaussian-r2-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-one_hot-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-one_hot-r2-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-one_hot-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-alternating-r2-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "alternating",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-alternating-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "alternating",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-alternating-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "alternating",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-zero-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "zero",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-zero-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "zero",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-zero-r2-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "zero",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-gaussian-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-gaussian-r2-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-gaussian-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "gaussian",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-one_hot-r2-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-one_hot-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-one_hot-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "one_hot",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-alternating-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "alternating",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-alternating-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "alternating",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-alternating-r2-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "alternating",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-zero-r2-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "zero",
+        "round": 2,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-zero-r2-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "zero",
+        "round": 2,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-zero-r2-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "zero",
+        "round": 2,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-gaussian-r3-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-gaussian-r3-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-gaussian-r3-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s0-one_hot-r3-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-one_hot-r3-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s0-one_hot-r3-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-alternating-r3-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "alternating",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s0-alternating-r3-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "alternating",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-alternating-r3-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "alternating",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-zero-r3-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "zero",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-zero-r3-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "zero",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-zero-r3-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "zero",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-gaussian-r3-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-gaussian-r3-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-gaussian-r3-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-one_hot-r3-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-one_hot-r3-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-one_hot-r3-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-alternating-r3-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "alternating",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-alternating-r3-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "alternating",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-alternating-r3-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "alternating",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-zero-r3-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "zero",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-zero-r3-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "zero",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-zero-r3-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "zero",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-gaussian-r3-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s191-gaussian-r3-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-gaussian-r3-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-one_hot-r3-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-one_hot-r3-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-one_hot-r3-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s191-alternating-r3-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "alternating",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-alternating-r3-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "alternating",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s191-alternating-r3-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "alternating",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-zero-r3-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "zero",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s191-zero-r3-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "zero",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-zero-r3-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "zero",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-gaussian-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-gaussian-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-gaussian-r3-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-one_hot-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-one_hot-r3-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-one_hot-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-alternating-r3-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "alternating",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-alternating-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "alternating",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-alternating-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "alternating",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-zero-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "zero",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-zero-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "zero",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-zero-r3-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "zero",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-gaussian-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-gaussian-r3-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-gaussian-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-one_hot-r3-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-one_hot-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-one_hot-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-alternating-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "alternating",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-alternating-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "alternating",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-alternating-r3-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "alternating",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-zero-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "zero",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-zero-r3-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "zero",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-zero-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "zero",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-gaussian-r3-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-gaussian-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-gaussian-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-one_hot-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-one_hot-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-one_hot-r3-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-alternating-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "alternating",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-alternating-r3-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "alternating",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-alternating-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "alternating",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-zero-r3-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "zero",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-zero-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "zero",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-zero-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "zero",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-gaussian-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-gaussian-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-gaussian-r3-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-one_hot-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-one_hot-r3-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-one_hot-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-alternating-r3-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "alternating",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-alternating-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "alternating",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-alternating-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "alternating",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-zero-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "zero",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-zero-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "zero",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-zero-r3-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "zero",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-gaussian-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-gaussian-r3-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-gaussian-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-one_hot-r3-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-one_hot-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-one_hot-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-alternating-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "alternating",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-alternating-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "alternating",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-alternating-r3-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "alternating",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-zero-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "zero",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-zero-r3-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "zero",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-zero-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "zero",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-gaussian-r3-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-gaussian-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-gaussian-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "gaussian",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-one_hot-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-one_hot-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-one_hot-r3-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "one_hot",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-alternating-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "alternating",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-alternating-r3-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "alternating",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-alternating-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "alternating",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-zero-r3-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "zero",
+        "round": 3,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-zero-r3-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "zero",
+        "round": 3,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-zero-r3-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "zero",
+        "round": 3,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-gaussian-r4-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-gaussian-r4-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s0-gaussian-r4-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-one_hot-r4-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s0-one_hot-r4-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-one_hot-r4-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-alternating-r4-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "alternating",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-alternating-r4-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "alternating",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-alternating-r4-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "alternating",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s0-zero-r4-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "zero",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s0-zero-r4-V_FUSED",
+        "sample": "GATE-FUSED-s0",
+        "query": "zero",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s0-zero-r4-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s0",
+        "query": "zero",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-gaussian-r4-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-gaussian-r4-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-gaussian-r4-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-one_hot-r4-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-one_hot-r4-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-one_hot-r4-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-alternating-r4-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "alternating",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-alternating-r4-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "alternating",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-alternating-r4-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "alternating",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-zero-r4-V_FUSED",
+        "sample": "GATE-FUSED-s95",
+        "query": "zero",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s95-zero-r4-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "zero",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s95-zero-r4-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s95",
+        "query": "zero",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-gaussian-r4-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-gaussian-r4-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-gaussian-r4-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s191-one_hot-r4-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-one_hot-r4-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s191-one_hot-r4-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-alternating-r4-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "alternating",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "GATE-FUSED-s191-alternating-r4-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "alternating",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-alternating-r4-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "alternating",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-zero-r4-RF01_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "zero",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-zero-r4-TILE_MATERIALIZE",
+        "sample": "GATE-FUSED-s191",
+        "query": "zero",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "GATE-FUSED-s191-zero-r4-V_FUSED",
+        "sample": "GATE-FUSED-s191",
+        "query": "zero",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-gaussian-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-gaussian-r4-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-gaussian-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-one_hot-r4-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-one_hot-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-one_hot-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-alternating-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "alternating",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-alternating-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "alternating",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-alternating-r4-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "alternating",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-zero-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "zero",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-zero-r4-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "zero",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s0-zero-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s0",
+        "query": "zero",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-gaussian-r4-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-gaussian-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-gaussian-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-one_hot-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-one_hot-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-one_hot-r4-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-alternating-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "alternating",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-alternating-r4-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "alternating",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-alternating-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "alternating",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-zero-r4-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "zero",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-zero-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "zero",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s95-zero-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s95",
+        "query": "zero",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-gaussian-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-gaussian-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-gaussian-r4-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-one_hot-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-one_hot-r4-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-one_hot-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-alternating-r4-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "alternating",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-alternating-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "alternating",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-alternating-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "alternating",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-zero-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "zero",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-zero-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "zero",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b3752-FUSED-s191-zero-r4-V_FUSED",
+        "sample": "RF01-b3752-FUSED-s191",
+        "query": "zero",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-gaussian-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-gaussian-r4-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-gaussian-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-one_hot-r4-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-one_hot-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-one_hot-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-alternating-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "alternating",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-alternating-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "alternating",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-alternating-r4-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "alternating",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-zero-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "zero",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-zero-r4-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "zero",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s0-zero-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s0",
+        "query": "zero",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-gaussian-r4-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-gaussian-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-gaussian-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-one_hot-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-one_hot-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-one_hot-r4-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-alternating-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "alternating",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-alternating-r4-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "alternating",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-alternating-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "alternating",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-zero-r4-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "zero",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-zero-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "zero",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s95-zero-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s95",
+        "query": "zero",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-gaussian-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-gaussian-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-gaussian-r4-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "gaussian",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-one_hot-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-one_hot-r4-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-one_hot-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "one_hot",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-alternating-r4-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "alternating",
+        "round": 4,
+        "arm": "V_FUSED"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-alternating-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "alternating",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-alternating-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "alternating",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-zero-r4-RF01_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "zero",
+        "round": 4,
+        "arm": "RF01_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-zero-r4-TILE_MATERIALIZE",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "zero",
+        "round": 4,
+        "arm": "TILE_MATERIALIZE"
+      },
+      {
+        "id": "RF01-b31131-FUSED-s191-zero-r4-V_FUSED",
+        "sample": "RF01-b31131-FUSED-s191",
+        "query": "zero",
+        "round": 4,
+        "arm": "V_FUSED"
+      }
+    ],
+    "trace": false,
+    "autotune": false
+  },
+  "kernel": {
+    "token_tile": 16,
+    "num_warps": 4,
+    "enable_fp_fusion": false,
+    "division": "div_rn",
+    "norm_floor": 1e-12,
+    "restore_output_rounding": "BF16 rtne BEFORE probability multiplication",
+    "output_rounding": "BF16 rtne",
+    "stages": "partial statistics + unchanged AF01 merge"
+  },
+  "caps_seconds": {
+    "prepare": 1800,
+    "experiment": 1200,
+    "condition": 120,
+    "worker_verify": 120,
+    "independent_verify": 120,
+    "zip": 120,
+    "outer": 3600
+  },
+  "output_limit_bytes": 1073741824,
+  "transport": {
+    "input": "derived RF01 material ZIP; 18 unmodified NPZ, manual /content placement then chooser if absent",
+    "selected_npz_bytes": 66043379,
+    "drive": false,
+    "hf_secret_required": false,
+    "model_loading": false,
+    "new_text_download": false,
+    "auto_download_result": true
+  },
+  "frozen_sources": {
+    "scripts/loop_kv_pilot.py": "4312155fc121d926f0a9bd794a62758f7acab634f8991d671e60fe22a7b0b1c9",
+    "scripts/loop_kv_pk01_cache.py": "95bebcd9b9e5412077465e80a88c7d400a34fdbb39a7800d922eaebc13ba22ac",
+    "scripts/loop_kv_pu01_kernel.py": "88e4567ffe1e8169bdfe6781c49a851b7c0a8446f02d2fd7666985d61914bcd3",
+    "scripts/loop_kv_rf01_kernel.py": "23c0845313ffbcd11199cdf7f19a8e4413902364548d2b0b22168e6941812809",
+    "scripts/loop_kv_qk01_kernel.py": "694a24cf27ddd0d305855261a429800ce5a801272460bfb4d089a0dbe3f5d03a",
+    "scripts/loop_kv_qk01_contract.py": "b445dfb82b45aa4a95d29131ef9a5f6ca3fe37c7fdaee621d2e9fd51ec3709ae",
+    "scripts/loop_kv_af01_kernel.py": "a944c3c8f6e6663e86feda6f7ad7a5619e540991254fd45f1f6d413efd57f6de",
+    "scripts/loop_kv_af01_contract.py": "7a814a399259169037957380c98643f07ec006dddb489d4043e27bd8db3c593b",
+    "scripts/loop_kv_iv01_kernel.py": "fd5eb1286e415a6a1cf7c66ad11b3163fb283e209563bf88a6e58ded20fc064a",
+    "scripts/loop_kv_ac04_attention.py": "146641acba38667669edc548cf168ee37257f9f7c506a690eeeb18fe224d8265",
+    "scripts/loop_kv_ac06_runtime.py": "19a68e041145081ce27f960a71bcddd77ca27a7bc6420c4f65d7827f46837269",
+    "scripts/loop_kv_ac06_launcher.py": "1d9547f1dbd01a29f997eb16e05f6bed8bb5762b64460961029e7ebda39fd571",
+    "scripts/loop_kv_af01.py": "fd2906ea31c2f483a7dba7c4f69ef81cf89868748721ff9228c031dc188d6e63",
+    "scripts/verify_loop_kv_af01.py": "d7a52de2e591424c9f42417804a73b7be7fa2ca70727d882073731208e5b794d",
+    "scripts/loop_kv_rf01_diagnostics.py": "32ce9d2ca1322f0d49afed70bab740010299f3f74cd56ab6b98a019ab7cd1730",
+    "scripts/loop_kv_iv01.py": "c81c0636083fa0ade58aaabab5d02426a0c30fe6f8e1c22deed6efa888b4f253",
+    "scripts/loop_kv_iv01_contract.py": "7bd13c3e2c888dd2da2515a16865d040bf0f59b6508973f90246c1a03827864b",
+    "plans/loop-kv-ac06-design-v0.1-2026-10-02.md": "848014988e42e85bb6ac84b56847eac962f1cbe83a490830bb4250af09515888",
+    "plans/loop-kv-af01-design-v0.1-2026-10-01.md": "5cfe033b8dfc9111e32984cde87b1134ebc6ef67d2dbcaa1325a5a86cb9e640d",
+    "plans/loop-kv-qk01-design-v0.1-2026-10-01.md": "f56812514250476996fd68b0592042fea72492ea0706166dbc00f0db41886e15",
+    "reports/ac06-results-v0.1-2026-10-02.md": "198abf3fe55c7d78c129dd1aa052badb4c73956dfce90ccaba1d5b7b9beac4ba",
+    "reports/rf01-results-v0.1-2026-10-01.md": "8f039fc8ce173163a62ce6eb63e9e5fc67afcdd2f9366c8fab0332af3edd8cdf",
+    "reports/af01-results-v0.1-2026-10-01.md": "c4236da89a1a3656a5e69d8d0de50377c84f379fb2f4b87f5aa169bcfe52c7f5"
+  }
+}

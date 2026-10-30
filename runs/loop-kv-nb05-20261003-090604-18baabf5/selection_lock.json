@@ -1,0 +1,15 @@
+{
+  "status": "FROZEN_BEFORE_MODEL_LOAD",
+  "frozen_monotonic": 919.424548139,
+  "selected_ids": [
+    "9667",
+    "26438",
+    "45277",
+    "28881"
+  ],
+  "files": {
+    "materials.json": "6110de4d1d1a16e0efa81020e27ef834cf4802da8d5cac6bdc991baefa028c46",
+    "schedule.json": "6eb0a29ade1a6ce5a7b6e296e17d79eaa28121e0984977f2a6d96a392c86bfb7",
+    "selection.jsonl": "cb74707a06120810c71fb9f2df2cef1b77fa4a8b1a63f12d460e790d4f11f82d"
+  }
+}

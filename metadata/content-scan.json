@@ -1,0 +1,83 @@
+{
+  "scope": "Scoped pattern scan of distributed text; values redacted",
+  "python_parsed": 298,
+  "credential_candidates": [
+    {
+      "path": "experiments/storage/phase27_decode_latency.py",
+      "line": 87,
+      "length": 37,
+      "repeated_placeholder": true,
+      "original_identifier": "modeq/experiments/phase27_decode_latency.py"
+    },
+    {
+      "path": "experiments/storage/phase27_decode_latency.py",
+      "issue": "syntax_error",
+      "line": 80,
+      "syntax_message": "invalid syntax",
+      "notebook_magic": true,
+      "original_identifier": "modeq/experiments/phase27_decode_latency.py"
+    },
+    {
+      "path": "experiments/configuration/phase21_gemma_b_anomaly_probe.py",
+      "line": 71,
+      "length": 37,
+      "repeated_placeholder": true,
+      "original_identifier": "modeq/experiments/phase21_gemma_b_anomaly_probe.py"
+    },
+    {
+      "path": "experiments/configuration/phase21_gemma_b_anomaly_probe.py",
+      "issue": "syntax_error",
+      "line": 65,
+      "syntax_message": "invalid syntax",
+      "notebook_magic": true,
+      "original_identifier": "modeq/experiments/phase21_gemma_b_anomaly_probe.py"
+    },
+    {
+      "path": "experiments/storage/phase26_real_cache_ppl.py",
+      "line": 79,
+      "length": 37,
+      "repeated_placeholder": true,
+      "original_identifier": "modeq/experiments/phase26_real_cache_ppl.py"
+    },
+    {
+      "path": "experiments/storage/phase26_real_cache_ppl.py",
+      "issue": "syntax_error",
+      "line": 72,
+      "syntax_message": "invalid syntax",
+      "notebook_magic": true,
+      "original_identifier": "modeq/experiments/phase26_real_cache_ppl.py"
+    },
+    {
+      "path": "experiments/configuration/phase19_ablation_generalization.py",
+      "line": 65,
+      "length": 37,
+      "repeated_placeholder": true,
+      "original_identifier": "modeq/experiments/phase19_ablation_generalization.py"
+    },
+    {
+      "path": "experiments/configuration/phase19_ablation_generalization.py",
+      "issue": "syntax_error",
+      "line": 59,
+      "syntax_message": "invalid syntax",
+      "notebook_magic": true,
+      "original_identifier": "modeq/experiments/phase19_ablation_generalization.py"
+    },
+    {
+      "path": "experiments/configuration/phase18_ablation_vs_industry_naive.py",
+      "line": 64,
+      "length": 37,
+      "repeated_placeholder": true,
+      "original_identifier": "modeq/experiments/phase18_ablation_vs_industry_naive.py"
+    },
+    {
+      "path": "experiments/configuration/phase18_ablation_vs_industry_naive.py",
+      "issue": "syntax_error",
+      "line": 58,
+      "syntax_message": "invalid syntax",
+      "notebook_magic": true,
+      "original_identifier": "modeq/experiments/phase18_ablation_vs_industry_naive.py"
+    }
+  ],
+  "compressed_executable_payload_files": [],
+  "layout_note": "Original content scan retained. Relocated candidate paths have original_identifier; this layout change did not alter their bytes."
+}

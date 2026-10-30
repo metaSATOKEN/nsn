@@ -1,0 +1,19 @@
+{
+  "status": "AVAILABLE",
+  "model_calls": 0,
+  "python": "/content/loop-kv-nb06-20261008-075410-5621380a/runtime/bin/python",
+  "loader_environment": {
+    "LD_LIBRARY_PATH": "/usr/lib64-nvidia",
+    "NVIDIA_VISIBLE_DEVICES": "all"
+  },
+  "torch_version": "2.11.0+cu128",
+  "cuda_build": "12.8",
+  "cuda_available": true,
+  "device_count": 1,
+  "bf16_supported": true,
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "capability": [
+    12,
+    0
+  ]
+}

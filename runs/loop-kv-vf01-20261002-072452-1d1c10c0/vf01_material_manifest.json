@@ -1,0 +1,98 @@
+{
+  "file": "loop_kv_vf01_materials.zip",
+  "sha256": "18b9e1953d42f9ea44d8b4331d693caff03ea3897a2b9a383274b46bbe453851",
+  "bytes": 66045645,
+  "parent_sha256": "79a9bfda5e8e0280188827b4003b88b8844934e5d700eb7ac1bce1f9cd4f9f7c",
+  "entries": {
+    "GATE-FUSED-s0-K.npz": {
+      "sha256": "df02e56b11f37daeb68c6d5523f9d77876a93d4e93f96860773e98b0196901f9",
+      "bytes": 3218648,
+      "parent_file": "restore/inputs/GATE-FUSED-s0-K.npz"
+    },
+    "GATE-FUSED-s0-V.npz": {
+      "sha256": "f762f998fc490a4f43ffc9bafa94da7ae049c0dc70b4271e5a85f116b73137da",
+      "bytes": 2492859,
+      "parent_file": "restore/inputs/GATE-FUSED-s0-V.npz"
+    },
+    "GATE-FUSED-s95-K.npz": {
+      "sha256": "4a59edde4240c4d6c9d78c979c6930bc20f14481c74865c04d3d6c99d3158476",
+      "bytes": 3388123,
+      "parent_file": "restore/inputs/GATE-FUSED-s95-K.npz"
+    },
+    "GATE-FUSED-s95-V.npz": {
+      "sha256": "8d9be1ef59caaf0d66ee6552f86625865f7989efd4d34f0951fb380dd8d78fcd",
+      "bytes": 3384519,
+      "parent_file": "restore/inputs/GATE-FUSED-s95-V.npz"
+    },
+    "GATE-FUSED-s191-K.npz": {
+      "sha256": "38a8ee41e5656eb8629598bcfe148e3fe4858c4e389aab3396555cd32d69c9e9",
+      "bytes": 3388666,
+      "parent_file": "restore/inputs/GATE-FUSED-s191-K.npz"
+    },
+    "GATE-FUSED-s191-V.npz": {
+      "sha256": "3c1d6d2939910b69b46ab49df2f13948162ca2c8158a3d56dd2f7b04a77c0f60",
+      "bytes": 3385129,
+      "parent_file": "restore/inputs/GATE-FUSED-s191-V.npz"
+    },
+    "RF01-b3752-FUSED-s0-K.npz": {
+      "sha256": "f4d078b2709f1374ff33c9bae61bcf5559b98d2ef8e8a40cce8330e4e4bdb71c",
+      "bytes": 3919973,
+      "parent_file": "restore/inputs/RF01-b3752-FUSED-s0-K.npz"
+    },
+    "RF01-b3752-FUSED-s0-V.npz": {
+      "sha256": "ad6029c0831faee4dff01850941817653b63c5013279778c992e8d72fe0cb0ec",
+      "bytes": 3040089,
+      "parent_file": "restore/inputs/RF01-b3752-FUSED-s0-V.npz"
+    },
+    "RF01-b3752-FUSED-s95-K.npz": {
+      "sha256": "f2f3753d28bc2e8ed5893c79b473af222a074323d3e879c939a8eebb39bc874e",
+      "bytes": 4123461,
+      "parent_file": "restore/inputs/RF01-b3752-FUSED-s95-K.npz"
+    },
+    "RF01-b3752-FUSED-s95-V.npz": {
+      "sha256": "09ac6c8de0290742cbde5d5d1fa3001510591771648a49da8ccc0e324de60ee5",
+      "bytes": 4115747,
+      "parent_file": "restore/inputs/RF01-b3752-FUSED-s95-V.npz"
+    },
+    "RF01-b3752-FUSED-s191-K.npz": {
+      "sha256": "fcea6256823a0c0178a1be6c19dba0c23927657ed3bd51243ab63a7677518487",
+      "bytes": 4123706,
+      "parent_file": "restore/inputs/RF01-b3752-FUSED-s191-K.npz"
+    },
+    "RF01-b3752-FUSED-s191-V.npz": {
+      "sha256": "5441f9c16bc2553300c321773f4e8fdfd97adc2ca09b17cb8d34b06926256b1e",
+      "bytes": 4117183,
+      "parent_file": "restore/inputs/RF01-b3752-FUSED-s191-V.npz"
+    },
+    "RF01-b31131-FUSED-s0-K.npz": {
+      "sha256": "e88a4fd14071ca310e2a04f439b3306cf8ae83cd1423ecc1ac14a10eb3252408",
+      "bytes": 3901036,
+      "parent_file": "restore/inputs/RF01-b31131-FUSED-s0-K.npz"
+    },
+    "RF01-b31131-FUSED-s0-V.npz": {
+      "sha256": "7f4f495657aa674fbfc9aa69def39527b1e7077055af463bd9cf21d82ebc7f1b",
+      "bytes": 2965417,
+      "parent_file": "restore/inputs/RF01-b31131-FUSED-s0-V.npz"
+    },
+    "RF01-b31131-FUSED-s95-K.npz": {
+      "sha256": "1cac0bc0a174620d2904fcdc0b802990a46437b660ecc50ac7461b0550f0679f",
+      "bytes": 4122056,
+      "parent_file": "restore/inputs/RF01-b31131-FUSED-s95-K.npz"
+    },
+    "RF01-b31131-FUSED-s95-V.npz": {
+      "sha256": "3d47c619ae7b19870723da3f3ffbaaf220be0577197e1c2f0d585b7269aa1771",
+      "bytes": 4117318,
+      "parent_file": "restore/inputs/RF01-b31131-FUSED-s95-V.npz"
+    },
+    "RF01-b31131-FUSED-s191-K.npz": {
+      "sha256": "7ac29af7daf50df8f35a622af220ffb20a8e108e431864997e55beb71054ee94",
+      "bytes": 4122423,
+      "parent_file": "restore/inputs/RF01-b31131-FUSED-s191-K.npz"
+    },
+    "RF01-b31131-FUSED-s191-V.npz": {
+      "sha256": "f258ff8b33791bc0b4a0c415a66f7694cb85349eb1ddcad9a1de31e372cee6e2",
+      "bytes": 4117026,
+      "parent_file": "restore/inputs/RF01-b31131-FUSED-s191-V.npz"
+    }
+  }
+}

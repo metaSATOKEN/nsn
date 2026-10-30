@@ -1,0 +1,290 @@
+[
+  {
+    "id": "KV01-b49966-r8-NATIVE",
+    "book_id": "49966",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "NATIVE",
+    "bits": null,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b49966-r8-KV",
+    "book_id": "49966",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "KV",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b49966-r8-V_ONLY",
+    "book_id": "49966",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "V_ONLY",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b49966-r8-K_ONLY",
+    "book_id": "49966",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "K_ONLY",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b34475-r8-NATIVE",
+    "book_id": "34475",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "NATIVE",
+    "bits": null,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b34475-r8-K_ONLY",
+    "book_id": "34475",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "K_ONLY",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b34475-r8-KV",
+    "book_id": "34475",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "KV",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b34475-r8-V_ONLY",
+    "book_id": "34475",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "V_ONLY",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b49484-r8-NATIVE",
+    "book_id": "49484",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "NATIVE",
+    "bits": null,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b49484-r8-K_ONLY",
+    "book_id": "49484",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "K_ONLY",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b49484-r8-V_ONLY",
+    "book_id": "49484",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "V_ONLY",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b49484-r8-KV",
+    "book_id": "49484",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "KV",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b3752-r8-NATIVE",
+    "book_id": "3752",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "NATIVE",
+    "bits": null,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b3752-r8-KV",
+    "book_id": "3752",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "KV",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b3752-r8-K_ONLY",
+    "book_id": "3752",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "K_ONLY",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b3752-r8-V_ONLY",
+    "book_id": "3752",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "V_ONLY",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b4537-r8-NATIVE",
+    "book_id": "4537",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "NATIVE",
+    "bits": null,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b4537-r8-KV",
+    "book_id": "4537",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "KV",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b4537-r8-V_ONLY",
+    "book_id": "4537",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "V_ONLY",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b4537-r8-K_ONLY",
+    "book_id": "4537",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "K_ONLY",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b31258-r8-NATIVE",
+    "book_id": "31258",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "NATIVE",
+    "bits": null,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b31258-r8-V_ONLY",
+    "book_id": "31258",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "V_ONLY",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b31258-r8-KV",
+    "book_id": "31258",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "KV",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b31258-r8-K_ONLY",
+    "book_id": "31258",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "K_ONLY",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b4124-r8-NATIVE",
+    "book_id": "4124",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "NATIVE",
+    "bits": null,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b4124-r8-V_ONLY",
+    "book_id": "4124",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "V_ONLY",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b4124-r8-K_ONLY",
+    "book_id": "4124",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "K_ONLY",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b4124-r8-KV",
+    "book_id": "4124",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "KV",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b31131-r8-NATIVE",
+    "book_id": "31131",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "NATIVE",
+    "bits": null,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b31131-r8-V_ONLY",
+    "book_id": "31131",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "V_ONLY",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b31131-r8-K_ONLY",
+    "book_id": "31131",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "K_ONLY",
+    "bits": 3,
+    "expected_scored": 255
+  },
+  {
+    "id": "KV01-b31131-r8-KV",
+    "book_id": "31131",
+    "r": 8,
+    "mode": "PREFIX_ONLY",
+    "target": "KV",
+    "bits": 3,
+    "expected_scored": 255
+  }
+]

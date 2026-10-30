@@ -1,0 +1,21 @@
+{
+  "id": "AC08-gate-b37013-OFFICIAL_REPEAT",
+  "phase": "gate",
+  "book_id": "37013",
+  "arm": "OFFICIAL_REPEAT",
+  "prefix": 768,
+  "length": 1023,
+  "scored": 255,
+  "forwards": 256,
+  "auxiliary_forwards": 1,
+  "status": "COMPLETE_FINITE",
+  "seconds": 32.94332043900005,
+  "nll": 2.148225930927764,
+  "connection_calls": {},
+  "skipped_k": {},
+  "skipped_v": {},
+  "kv_checker_calls": 0,
+  "grouped_checker_calls": 0,
+  "raw_logits_sha256": "a8ac515e1d7dcb00a33f8bcc040d9ee5022dd05d93435cd467a4e189783b945c",
+  "rng_unchanged": true
+}

@@ -1,0 +1,2693 @@
+{
+  "source_sha256": {
+    "reports/ac08-descriptive-statistics.json": "cf71edd774b8b5e519d5ce4b962f27993081db604054927429b58efdc60c4e52",
+    "throughline/audits/loop-kv-nb05-results-v0.1-2026-10-03/supplementary-analysis.json": "cfb3c88504481096ba0066215a89e36fcab81f7739adf69b50609ed5360b6430",
+    "reports/iv01-descriptive-statistics.json": "9693bd21fde69f3ce8dac0e8419aee8f39436b0c6f327111081aa86500881f90",
+    "throughline/audits/loop-kv-vf01-results-v0.1-2026-10-02/analysis.json": "4d5713b5590e61196de3d2552ee38afe76a311596c24462e75df31dac7838144",
+    "plans/loop-kv-ac08-input-contract-v0.1-2026-10-02.json": "9d04a77dba9b3f467bfc9840b4444862523e04ecf7126b93ddcca1f6a1338bfb",
+    "plans/loop-kv-nb05-input-contract-v0.1-2026-10-03.json": "599908e5b535c3f505ec75e5f59a400beb9690a7fb36c41cdcb0cb177014fdcf",
+    "scripts/loop_kv_ac08.py": "83581a6f15bb1b8def5b3126151dd4acd2a7281e3a704ada803931ed5ab72446",
+    "runs/loop-kv-nb05-20261003-090604-18baabf5/loaded_config.json": "54a3b29d1de35c80fa2deef585b563d96fa11d703e236f93ad48ae96c4158e27"
+  },
+  "scope": "Existing-results extraction; no new inference or hypothesis test.",
+  "block_storage_bytes": 3724,
+  "quality": [
+    {
+      "model": "Ouro",
+      "book_id": "38233",
+      "ppl": {
+        "NATIVE": 13.511404177111842,
+        "PACKED_GROUPED": 13.330482180115549,
+        "PACKED_KV_FUSED": 13.38851604978172
+      },
+      "fused_change_percent": -0.9095141091130536,
+      "late_window_change_percent": 0.5560673193086044
+    },
+    {
+      "model": "Ouro",
+      "book_id": "57533",
+      "ppl": {
+        "NATIVE": 9.419985264169252,
+        "PACKED_GROUPED": 9.488617279908834,
+        "PACKED_KV_FUSED": 9.475571455415302
+      },
+      "fused_change_percent": 0.5900878789851435,
+      "late_window_change_percent": 1.095064595274988
+    },
+    {
+      "model": "Ouro",
+      "book_id": "3921",
+      "ppl": {
+        "NATIVE": 7.848236119207003,
+        "PACKED_GROUPED": 7.859490513979519,
+        "PACKED_KV_FUSED": 7.861095178598387
+      },
+      "fused_change_percent": 0.16384648978532082,
+      "late_window_change_percent": 0.07251496741176883
+    },
+    {
+      "model": "Ouro",
+      "book_id": "58192",
+      "ppl": {
+        "NATIVE": 8.516334542404653,
+        "PACKED_GROUPED": 8.303404859733504,
+        "PACKED_KV_FUSED": 8.3448599688011
+      },
+      "fused_change_percent": -2.0134786010313,
+      "late_window_change_percent": 0.2579035072858573
+    },
+    {
+      "model": "Nanbeige",
+      "book_id": "9667",
+      "ppl": {
+        "NATIVE": 1.7358676211943533,
+        "PACKED_SDPA": 1.7589612161336141,
+        "GQA_FUSED": 1.7487653120307693
+      },
+      "fused_change_percent": 0.7430111996409998
+    },
+    {
+      "model": "Nanbeige",
+      "book_id": "26438",
+      "ppl": {
+        "NATIVE": 1.480435526807064,
+        "PACKED_SDPA": 1.489423033342052,
+        "GQA_FUSED": 1.4826378555323634
+      },
+      "fused_change_percent": 0.1487622179703585
+    },
+    {
+      "model": "Nanbeige",
+      "book_id": "45277",
+      "ppl": {
+        "NATIVE": 28.972401109765904,
+        "PACKED_SDPA": 30.2534049021421,
+        "GQA_FUSED": 30.28787671081119
+      },
+      "fused_change_percent": 4.5404438384703605
+    },
+    {
+      "model": "Nanbeige",
+      "book_id": "28881",
+      "ppl": {
+        "NATIVE": 1.2187741165815125,
+        "PACKED_SDPA": 1.2201061514883114,
+        "GQA_FUSED": 1.2276943045018234
+      },
+      "fused_change_percent": 0.7318983722209904
+    }
+  ],
+  "ouro": {
+    "timing": {
+      "NATIVE": {
+        "median_cuda_ms_per_token": 146.00888543019732
+      },
+      "PACKED_GROUPED": {
+        "median_cuda_ms_per_token": 164.6508965016556
+      },
+      "PACKED_KV_FUSED": {
+        "median_cuda_ms_per_token": 154.4110900763694
+      }
+    },
+    "ratios": {
+      "PACKED_KV_FUSED_over_PACKED_GROUPED": {
+        "time_ratio": {
+          "median": 0.9383781718718964,
+          "minimum": 0.9324766839352756,
+          "maximum": 0.9407684139121851,
+          "comparisons": 8
+        },
+        "wall_ratio": {
+          "median": 0.9383940812329021,
+          "minimum": 0.9324867338978432,
+          "maximum": 0.9407748140605828,
+          "comparisons": 8
+        },
+        "allocated_peak_ratio": {
+          "median": 0.9938235359279172,
+          "minimum": 0.9938235359279172,
+          "maximum": 0.9938235359279172,
+          "comparisons": 8
+        },
+        "reserved_peak_ratio": {
+          "median": 1.0,
+          "minimum": 1.0,
+          "maximum": 1.0,
+          "comparisons": 8
+        }
+      },
+      "PACKED_KV_FUSED_over_NATIVE": {
+        "time_ratio": {
+          "median": 1.0572214006023648,
+          "minimum": 1.0517201228831814,
+          "maximum": 1.06165693491029,
+          "comparisons": 8
+        },
+        "wall_ratio": {
+          "median": 1.0571977354795044,
+          "minimum": 1.0517038182714304,
+          "maximum": 1.061648577959763,
+          "comparisons": 8
+        },
+        "allocated_peak_ratio": {
+          "median": 0.7563760022180351,
+          "minimum": 0.7563760022180351,
+          "maximum": 0.7563760022180351,
+          "comparisons": 8
+        },
+        "reserved_peak_ratio": {
+          "median": 1.0785649409627611,
+          "minimum": 1.0785649409627611,
+          "maximum": 1.0785649409627611,
+          "comparisons": 8
+        }
+      },
+      "PACKED_GROUPED_over_NATIVE": {
+        "time_ratio": {
+          "median": 1.126727274727228,
+          "minimum": 1.1198297352377458,
+          "maximum": 1.130455292998494,
+          "comparisons": 8
+        },
+        "wall_ratio": {
+          "median": 1.1266814980815965,
+          "minimum": 1.119790524792739,
+          "maximum": 1.1304203651542233,
+          "comparisons": 8
+        },
+        "allocated_peak_ratio": {
+          "median": 0.7610767655163438,
+          "minimum": 0.7610767655163438,
+          "maximum": 0.7610767655163438,
+          "comparisons": 8
+        },
+        "reserved_peak_ratio": {
+          "median": 1.0785649409627611,
+          "minimum": 1.0785649409627611,
+          "maximum": 1.0785649409627611,
+          "comparisons": 8
+        }
+      }
+    },
+    "memory": {
+      "NATIVE": {
+        "allocated_peak": 4524364800,
+        "reserved_peak": 4617928704,
+        "terminal_storage": 1609039872,
+        "resident": {
+          "model_only": {
+            "allocated": 2902860800,
+            "reserved": 3105882112
+          },
+          "prefill_post": {
+            "allocated": 4159054848,
+            "reserved": 4366270464
+          },
+          "terminal_post": {
+            "allocated": 4513485824,
+            "reserved": 4617928704
+          }
+        },
+        "recorded_prefill_inclusive_peak": {
+          "allocated_peak": 4524364800,
+          "reserved_peak": 4617928704
+        }
+      },
+      "PACKED_GROUPED": {
+        "allocated_peak": 3443388928,
+        "reserved_peak": 4980736000,
+        "terminal_storage": 520077312,
+        "resident": {
+          "model_only": {
+            "allocated": 2902860800,
+            "reserved": 3105882112
+          },
+          "prefill_post": {
+            "allocated": 3255378944,
+            "reserved": 4718592000
+          },
+          "terminal_post": {
+            "allocated": 3423085568,
+            "reserved": 4982833152
+          }
+        },
+        "recorded_prefill_inclusive_peak": {
+          "allocated_peak": 4222254592,
+          "reserved_peak": 4982833152
+        }
+      },
+      "PACKED_KV_FUSED": {
+        "allocated_peak": 3422120960,
+        "reserved_peak": 4980736000,
+        "terminal_storage": 520077312,
+        "resident": {
+          "model_only": {
+            "allocated": 2902860800,
+            "reserved": 3105882112
+          },
+          "prefill_post": {
+            "allocated": 3255378944,
+            "reserved": 4718592000
+          },
+          "terminal_post": {
+            "allocated": 3423085568,
+            "reserved": 4982833152
+          }
+        },
+        "recorded_prefill_inclusive_peak": {
+          "allocated_peak": 4222254592,
+          "reserved_peak": 4982833152
+        }
+      }
+    },
+    "aggregate_ppl_change_percent": {
+      "ALL": -0.5474049251975358,
+      "W4": 0.49464418159337514
+    }
+  },
+  "nanbeige": {
+    "timing": {
+      "cuda_ms": {
+        "decode": {
+          "GQA_FUSED_vs_NATIVE": {
+            "change_percent": -2.9843509059978457,
+            "ratio": 0.9701564909400215,
+            "book_medians": [
+              0.9709887922517543,
+              0.9690695113451075,
+              0.9712019380774919,
+              0.9693241896282888
+            ],
+            "fused_shorter_blocks": 12,
+            "paired_blocks": 12
+          },
+          "GQA_FUSED_vs_PACKED_SDPA": {
+            "change_percent": -43.039937236348955,
+            "ratio": 0.5696006276365104,
+            "book_medians": [
+              0.5699660199628311,
+              0.5692352353101896,
+              0.566648883387928,
+              0.5708144513047008
+            ],
+            "fused_shorter_blocks": 12,
+            "paired_blocks": 12
+          }
+        },
+        "phase_sum": {
+          "GQA_FUSED_vs_NATIVE": {
+            "change_percent": 14.765464687272445,
+            "ratio": 1.1476546468727244,
+            "book_medians": [
+              1.1493110299660019,
+              1.1459279130419258,
+              1.1477615639089551,
+              1.1475477298364938
+            ],
+            "fused_shorter_blocks": 0,
+            "paired_blocks": 12
+          },
+          "GQA_FUSED_vs_PACKED_SDPA": {
+            "change_percent": -36.62981418219299,
+            "ratio": 0.6337018581780701,
+            "book_medians": [
+              0.6342889370725949,
+              0.6331147792835453,
+              0.6304452702356483,
+              0.6351193692560806
+            ],
+            "fused_shorter_blocks": 12,
+            "paired_blocks": 12
+          }
+        }
+      },
+      "wall_ms": {
+        "decode": {
+          "GQA_FUSED_vs_NATIVE": {
+            "change_percent": -2.9823159690871903,
+            "ratio": 0.9701768403091281,
+            "book_medians": [
+              0.9710196555696067,
+              0.9690703796202347,
+              0.9712298579067579,
+              0.9693340250486495
+            ],
+            "fused_shorter_blocks": 12,
+            "paired_blocks": 12
+          },
+          "GQA_FUSED_vs_PACKED_SDPA": {
+            "change_percent": -43.02168940333462,
+            "ratio": 0.5697831059666538,
+            "book_medians": [
+              0.5701574564789993,
+              0.5694087554543084,
+              0.5668060817120604,
+              0.5709840857749822
+            ],
+            "fused_shorter_blocks": 12,
+            "paired_blocks": 12
+          }
+        },
+        "phase_sum": {
+          "GQA_FUSED_vs_NATIVE": {
+            "change_percent": 14.759171434823926,
+            "ratio": 1.1475917143482393,
+            "book_medians": [
+              1.149275575179287,
+              1.1458581747800203,
+              1.1476873012734434,
+              1.147496127423035
+            ],
+            "fused_shorter_blocks": 0,
+            "paired_blocks": 12
+          },
+          "GQA_FUSED_vs_PACKED_SDPA": {
+            "change_percent": -36.6129082961739,
+            "ratio": 0.633870917038261,
+            "book_medians": [
+              0.634461637078886,
+              0.633280196997636,
+              0.6305886096376695,
+              0.6352743228509071
+            ],
+            "fused_shorter_blocks": 12,
+            "paired_blocks": 12
+          }
+        }
+      }
+    },
+    "books": [
+      {
+        "id": "9667",
+        "timing": {
+          "cuda_ms": {
+            "medians": {
+              "NATIVE": {
+                "prefill_ms": 29.933311462402344,
+                "compression_ms": 0.0,
+                "decode_ms": 286.3620796203613,
+                "phase_sum_ms": 316.2953910827637
+              },
+              "PACKED_SDPA": {
+                "prefill_ms": 30.0347843170166,
+                "compression_ms": 55.332767486572266,
+                "decode_ms": 487.62163162231445,
+                "phase_sum_ms": 573.0974063873291
+              },
+              "GQA_FUSED": {
+                "prefill_ms": 30.075519561767578,
+                "compression_ms": 55.22758483886719,
+                "decode_ms": 277.8950080871582,
+                "phase_sum_ms": 363.7403507232666
+              }
+            },
+            "decode_fused_change_percent": {
+              "NATIVE": -2.9011207748245726,
+              "PACKED_SDPA": -43.00339800371689
+            },
+            "phase_sum_fused_change_percent": {
+              "NATIVE": 14.931102996600188,
+              "PACKED_SDPA": -36.57110629274051
+            }
+          },
+          "wall_ms": {
+            "medians": {
+              "NATIVE": {
+                "prefill_ms": 29.969101999995473,
+                "compression_ms": 0.0,
+                "decode_ms": 286.56529899990346,
+                "phase_sum_ms": 316.53440099989893
+              },
+              "PACKED_SDPA": {
+                "prefill_ms": 30.071711999994477,
+                "compression_ms": 55.35266300000785,
+                "decode_ms": 487.81832399993164,
+                "phase_sum_ms": 573.349728999915
+              },
+              "GQA_FUSED": {
+                "prefill_ms": 30.1106819999859,
+                "compression_ms": 55.24678300002961,
+                "decode_ms": 278.0962060001002,
+                "phase_sum_ms": 364.00159200013604
+              }
+            },
+            "decode_fused_change_percent": {
+              "NATIVE": -2.8980344430393323,
+              "PACKED_SDPA": -42.98425435210007
+            },
+            "phase_sum_fused_change_percent": {
+              "NATIVE": 14.92755751792869,
+              "PACKED_SDPA": -36.5538362921114
+            }
+          }
+        },
+        "memory": {
+          "NATIVE": {
+            "allocated": {
+              "prefill": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "decode": [
+                8472228352,
+                8472228352,
+                8472228352
+              ],
+              "compression": [
+                null,
+                null,
+                null
+              ],
+              "whole_main_trajectory": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "median_decode_mib": 8079.74658203125,
+              "median_whole_main_mib": 8197.58984375
+            },
+            "reserved": {
+              "prefill": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "decode": [
+                8646557696,
+                8646557696,
+                8646557696
+              ],
+              "compression": [
+                null,
+                null,
+                null
+              ],
+              "whole_main_trajectory": [
+                8646557696,
+                8646557696,
+                8646557696
+              ],
+              "median_decode_mib": 8246.0,
+              "median_whole_main_mib": 8246.0
+            }
+          },
+          "PACKED_SDPA": {
+            "allocated": {
+              "prefill": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "decode": [
+                8463909376,
+                8463909376,
+                8463909376
+              ],
+              "compression": [
+                8467560448,
+                8467560448,
+                8467560448
+              ],
+              "whole_main_trajectory": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "median_decode_mib": 8071.81298828125,
+              "median_whole_main_mib": 8197.58984375
+            },
+            "reserved": {
+              "prefill": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "decode": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "compression": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "whole_main_trajectory": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "median_decode_mib": 8240.0,
+              "median_whole_main_mib": 8240.0
+            }
+          },
+          "GQA_FUSED": {
+            "allocated": {
+              "prefill": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "decode": [
+                8460061696,
+                8460061696,
+                8460061696
+              ],
+              "compression": [
+                8467560448,
+                8467560448,
+                8467560448
+              ],
+              "whole_main_trajectory": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "median_decode_mib": 8068.1435546875,
+              "median_whole_main_mib": 8197.58984375
+            },
+            "reserved": {
+              "prefill": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "decode": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "compression": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "whole_main_trajectory": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "median_decode_mib": 8240.0,
+              "median_whole_main_mib": 8240.0
+            }
+          }
+        },
+        "terminal_kv_bytes": {
+          "NATIVE": 24510464,
+          "PACKED_SDPA": 15597824,
+          "GQA_FUSED": 15597824
+        }
+      },
+      {
+        "id": "26438",
+        "timing": {
+          "cuda_ms": {
+            "medians": {
+              "NATIVE": {
+                "prefill_ms": 30.146175384521484,
+                "compression_ms": 0.0,
+                "decode_ms": 285.3914566040039,
+                "phase_sum_ms": 315.4938564300537
+              },
+              "PACKED_SDPA": {
+                "prefill_ms": 30.09231948852539,
+                "compression_ms": 54.956417083740234,
+                "decode_ms": 486.01078033447266,
+                "phase_sum_ms": 571.1111335754395
+              },
+              "GQA_FUSED": {
+                "prefill_ms": 30.01897621154785,
+                "compression_ms": 54.88947296142578,
+                "decode_ms": 276.6544609069824,
+                "phase_sum_ms": 361.53321647644043
+              }
+            },
+            "decode_fused_change_percent": {
+              "NATIVE": -3.093048865489245,
+              "PACKED_SDPA": -43.07647646898104
+            },
+            "phase_sum_fused_change_percent": {
+              "NATIVE": 14.592791304192577,
+              "PACKED_SDPA": -36.688522071645465
+            }
+          },
+          "wall_ms": {
+            "medians": {
+              "NATIVE": {
+                "prefill_ms": 30.1824430000579,
+                "compression_ms": 0.0,
+                "decode_ms": 285.5981059997248,
+                "phase_sum_ms": 315.7382989996904
+              },
+              "PACKED_SDPA": {
+                "prefill_ms": 30.129703000056907,
+                "compression_ms": 54.977922999910334,
+                "decode_ms": 486.22449399999823,
+                "phase_sum_ms": 571.3853000000881
+              },
+              "GQA_FUSED": {
+                "prefill_ms": 30.05522299997665,
+                "compression_ms": 54.912202999958026,
+                "decode_ms": 276.8604839999398,
+                "phase_sum_ms": 361.79131099993356
+              }
+            },
+            "decode_fused_change_percent": {
+              "NATIVE": -3.092962037976532,
+              "PACKED_SDPA": -43.059124454569165
+            },
+            "phase_sum_fused_change_percent": {
+              "NATIVE": 14.585817478002028,
+              "PACKED_SDPA": -36.6719803002364
+            }
+          }
+        },
+        "memory": {
+          "NATIVE": {
+            "allocated": {
+              "prefill": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "decode": [
+                8472228352,
+                8472228352,
+                8472228352
+              ],
+              "compression": [
+                null,
+                null,
+                null
+              ],
+              "whole_main_trajectory": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "median_decode_mib": 8079.74658203125,
+              "median_whole_main_mib": 8197.58984375
+            },
+            "reserved": {
+              "prefill": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "decode": [
+                8646557696,
+                8646557696,
+                8646557696
+              ],
+              "compression": [
+                null,
+                null,
+                null
+              ],
+              "whole_main_trajectory": [
+                8646557696,
+                8646557696,
+                8646557696
+              ],
+              "median_decode_mib": 8246.0,
+              "median_whole_main_mib": 8246.0
+            }
+          },
+          "PACKED_SDPA": {
+            "allocated": {
+              "prefill": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "decode": [
+                8463909376,
+                8463909376,
+                8463909376
+              ],
+              "compression": [
+                8467560448,
+                8467560448,
+                8467560448
+              ],
+              "whole_main_trajectory": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "median_decode_mib": 8071.81298828125,
+              "median_whole_main_mib": 8197.58984375
+            },
+            "reserved": {
+              "prefill": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "decode": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "compression": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "whole_main_trajectory": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "median_decode_mib": 8240.0,
+              "median_whole_main_mib": 8240.0
+            }
+          },
+          "GQA_FUSED": {
+            "allocated": {
+              "prefill": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "decode": [
+                8460061696,
+                8460061696,
+                8460061696
+              ],
+              "compression": [
+                8467560448,
+                8467560448,
+                8467560448
+              ],
+              "whole_main_trajectory": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "median_decode_mib": 8068.1435546875,
+              "median_whole_main_mib": 8197.58984375
+            },
+            "reserved": {
+              "prefill": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "decode": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "compression": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "whole_main_trajectory": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "median_decode_mib": 8240.0,
+              "median_whole_main_mib": 8240.0
+            }
+          }
+        },
+        "terminal_kv_bytes": {
+          "NATIVE": 24510464,
+          "PACKED_SDPA": 15597824,
+          "GQA_FUSED": 15597824
+        }
+      },
+      {
+        "id": "45277",
+        "timing": {
+          "cuda_ms": {
+            "medians": {
+              "NATIVE": {
+                "prefill_ms": 30.100095748901367,
+                "compression_ms": 0.0,
+                "decode_ms": 285.77356719970703,
+                "phase_sum_ms": 315.8736629486084
+              },
+              "PACKED_SDPA": {
+                "prefill_ms": 30.189184188842773,
+                "compression_ms": 55.09564971923828,
+                "decode_ms": 488.56076431274414,
+                "phase_sum_ms": 573.8969898223877
+              },
+              "GQA_FUSED": {
+                "prefill_ms": 30.049055099487305,
+                "compression_ms": 54.793983459472656,
+                "decode_ms": 277.5438423156738,
+                "phase_sum_ms": 362.5476493835449
+              }
+            },
+            "decode_fused_change_percent": {
+              "NATIVE": -2.879806192250811,
+              "PACKED_SDPA": -43.33511166120721
+            },
+            "phase_sum_fused_change_percent": {
+              "NATIVE": 14.776156390895512,
+              "PACKED_SDPA": -36.95547297643517
+            }
+          },
+          "wall_ms": {
+            "medians": {
+              "NATIVE": {
+                "prefill_ms": 30.147161999934724,
+                "compression_ms": 0.0,
+                "decode_ms": 285.9713369999781,
+                "phase_sum_ms": 316.11849899991284
+              },
+              "PACKED_SDPA": {
+                "prefill_ms": 30.227143000047363,
+                "compression_ms": 55.11888299997736,
+                "decode_ms": 488.7934899998072,
+                "phase_sum_ms": 574.1888559998642
+              },
+              "GQA_FUSED": {
+                "prefill_ms": 30.08646199998566,
+                "compression_ms": 54.815481999980875,
+                "decode_ms": 277.7439009998943,
+                "phase_sum_ms": 362.8051869998217
+              }
+            },
+            "decode_fused_change_percent": {
+              "NATIVE": -2.8770142093242135,
+              "PACKED_SDPA": -43.31939182879396
+            },
+            "phase_sum_fused_change_percent": {
+              "NATIVE": 14.768730127344343,
+              "PACKED_SDPA": -36.941139036233054
+            }
+          }
+        },
+        "memory": {
+          "NATIVE": {
+            "allocated": {
+              "prefill": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "decode": [
+                8472228352,
+                8472228352,
+                8472228352
+              ],
+              "compression": [
+                null,
+                null,
+                null
+              ],
+              "whole_main_trajectory": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "median_decode_mib": 8079.74658203125,
+              "median_whole_main_mib": 8197.58984375
+            },
+            "reserved": {
+              "prefill": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "decode": [
+                8646557696,
+                8646557696,
+                8646557696
+              ],
+              "compression": [
+                null,
+                null,
+                null
+              ],
+              "whole_main_trajectory": [
+                8646557696,
+                8646557696,
+                8646557696
+              ],
+              "median_decode_mib": 8246.0,
+              "median_whole_main_mib": 8246.0
+            }
+          },
+          "PACKED_SDPA": {
+            "allocated": {
+              "prefill": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "decode": [
+                8463909376,
+                8463909376,
+                8463909376
+              ],
+              "compression": [
+                8467560448,
+                8467560448,
+                8467560448
+              ],
+              "whole_main_trajectory": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "median_decode_mib": 8071.81298828125,
+              "median_whole_main_mib": 8197.58984375
+            },
+            "reserved": {
+              "prefill": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "decode": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "compression": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "whole_main_trajectory": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "median_decode_mib": 8240.0,
+              "median_whole_main_mib": 8240.0
+            }
+          },
+          "GQA_FUSED": {
+            "allocated": {
+              "prefill": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "decode": [
+                8460061696,
+                8460061696,
+                8460061696
+              ],
+              "compression": [
+                8467560448,
+                8467560448,
+                8467560448
+              ],
+              "whole_main_trajectory": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "median_decode_mib": 8068.1435546875,
+              "median_whole_main_mib": 8197.58984375
+            },
+            "reserved": {
+              "prefill": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "decode": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "compression": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "whole_main_trajectory": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "median_decode_mib": 8240.0,
+              "median_whole_main_mib": 8240.0
+            }
+          }
+        },
+        "terminal_kv_bytes": {
+          "NATIVE": 24510464,
+          "PACKED_SDPA": 15597824,
+          "GQA_FUSED": 15597824
+        }
+      },
+      {
+        "id": "28881",
+        "timing": {
+          "cuda_ms": {
+            "medians": {
+              "NATIVE": {
+                "prefill_ms": 30.117631912231445,
+                "compression_ms": 0.0,
+                "decode_ms": 287.61286544799805,
+                "phase_sum_ms": 317.8651542663574
+              },
+              "PACKED_SDPA": {
+                "prefill_ms": 30.205535888671875,
+                "compression_ms": 55.14780807495117,
+                "decode_ms": 488.40758514404297,
+                "phase_sum_ms": 574.3257942199707
+              },
+              "GQA_FUSED": {
+                "prefill_ms": 30.215679168701172,
+                "compression_ms": 55.33369445800781,
+                "decode_ms": 278.5556831359863,
+                "phase_sum_ms": 363.9396495819092
+              }
+            },
+            "decode_fused_change_percent": {
+              "NATIVE": -3.0675810371711187,
+              "PACKED_SDPA": -42.91855486952992
+            },
+            "phase_sum_fused_change_percent": {
+              "NATIVE": 14.754772983649378,
+              "PACKED_SDPA": -36.48806307439194
+            }
+          },
+          "wall_ms": {
+            "medians": {
+              "NATIVE": {
+                "prefill_ms": 30.153881999922305,
+                "compression_ms": 0.0,
+                "decode_ms": 287.82166600001347,
+                "phase_sum_ms": 318.10991800000465
+              },
+              "PACKED_SDPA": {
+                "prefill_ms": 30.244071999959488,
+                "compression_ms": 55.169642000009844,
+                "decode_ms": 488.6219090000168,
+                "phase_sum_ms": 574.6020039999848
+              },
+              "GQA_FUSED": {
+                "prefill_ms": 30.255961999955616,
+                "compression_ms": 55.35317200008194,
+                "decode_ms": 278.7711030001674,
+                "phase_sum_ms": 364.2108270003064
+              }
+            },
+            "decode_fused_change_percent": {
+              "NATIVE": -3.0665974951350483,
+              "PACKED_SDPA": -42.90159142250178
+            },
+            "phase_sum_fused_change_percent": {
+              "NATIVE": 14.749612742303508,
+              "PACKED_SDPA": -36.47256771490929
+            }
+          }
+        },
+        "memory": {
+          "NATIVE": {
+            "allocated": {
+              "prefill": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "decode": [
+                8472228352,
+                8472228352,
+                8472228352
+              ],
+              "compression": [
+                null,
+                null,
+                null
+              ],
+              "whole_main_trajectory": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "median_decode_mib": 8079.74658203125,
+              "median_whole_main_mib": 8197.58984375
+            },
+            "reserved": {
+              "prefill": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "decode": [
+                8646557696,
+                8646557696,
+                8646557696
+              ],
+              "compression": [
+                null,
+                null,
+                null
+              ],
+              "whole_main_trajectory": [
+                8646557696,
+                8646557696,
+                8646557696
+              ],
+              "median_decode_mib": 8246.0,
+              "median_whole_main_mib": 8246.0
+            }
+          },
+          "PACKED_SDPA": {
+            "allocated": {
+              "prefill": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "decode": [
+                8463909376,
+                8463909376,
+                8463909376
+              ],
+              "compression": [
+                8467560448,
+                8467560448,
+                8467560448
+              ],
+              "whole_main_trajectory": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "median_decode_mib": 8071.81298828125,
+              "median_whole_main_mib": 8197.58984375
+            },
+            "reserved": {
+              "prefill": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "decode": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "compression": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "whole_main_trajectory": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "median_decode_mib": 8240.0,
+              "median_whole_main_mib": 8240.0
+            }
+          },
+          "GQA_FUSED": {
+            "allocated": {
+              "prefill": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "decode": [
+                8460061696,
+                8460061696,
+                8460061696
+              ],
+              "compression": [
+                8467560448,
+                8467560448,
+                8467560448
+              ],
+              "whole_main_trajectory": [
+                8595795968,
+                8595795968,
+                8595795968
+              ],
+              "median_decode_mib": 8068.1435546875,
+              "median_whole_main_mib": 8197.58984375
+            },
+            "reserved": {
+              "prefill": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "decode": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "compression": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "whole_main_trajectory": [
+                8640266240,
+                8640266240,
+                8640266240
+              ],
+              "median_decode_mib": 8240.0,
+              "median_whole_main_mib": 8240.0
+            }
+          }
+        },
+        "terminal_kv_bytes": {
+          "NATIVE": 24510464,
+          "PACKED_SDPA": 15597824,
+          "GQA_FUSED": 15597824
+        }
+      }
+    ],
+    "quality": {
+      "post_compression_8": {
+        "mean_of_book_mean_nll": {
+          "NATIVE": 1.1270082249219482,
+          "PACKED_SDPA": 1.14291470924645,
+          "GQA_FUSED": 1.1421545559989565
+        },
+        "ppl": {
+          "NATIVE": 3.0864088325259265,
+          "PACKED_SDPA": 3.135895280542464,
+          "GQA_FUSED": 3.13351242534346
+        },
+        "contrasts": {
+          "PACKED_SDPA_vs_NATIVE": {
+            "delta_nll": 0.015906484324501813,
+            "relative_ppl_percent": 1.603366588866241
+          },
+          "GQA_FUSED_vs_NATIVE": {
+            "delta_nll": 0.015146331077008357,
+            "relative_ppl_percent": 1.5261618072478034
+          },
+          "GQA_FUSED_vs_PACKED_SDPA": {
+            "delta_nll": -0.0007601532474934558,
+            "relative_ppl_percent": -0.07598644042066419
+          }
+        },
+        "unique_target_positions_per_arm": 32
+      },
+      "all_9": {
+        "mean_of_book_mean_nll": {
+          "NATIVE": 1.364587676055403,
+          "PACKED_SDPA": 1.378726773232738,
+          "GQA_FUSED": 1.3780510814571882
+        },
+        "ppl": {
+          "NATIVE": 3.914108838430296,
+          "PACKED_SDPA": 3.969843896847669,
+          "GQA_FUSED": 3.9671624120070006
+        },
+        "contrasts": {
+          "PACKED_SDPA_vs_NATIVE": {
+            "delta_nll": 0.01413909717733497,
+            "relative_ppl_percent": 1.4239526982526352
+          },
+          "GQA_FUSED_vs_NATIVE": {
+            "delta_nll": 0.013463405401785256,
+            "relative_ppl_percent": 1.3554445153850478
+          },
+          "GQA_FUSED_vs_PACKED_SDPA": {
+            "delta_nll": -0.0006756917755497138,
+            "relative_ppl_percent": -0.06754635472688261
+          }
+        },
+        "unique_target_positions_per_arm": 36
+      }
+    }
+  },
+  "bridge": {
+    "time": {
+      "RF01_MATERIALIZE": {
+        "cuda_ms": 0.29944720268249514,
+        "wall_ms": 0.3003477500016061
+      },
+      "TILE_MATERIALIZE": {
+        "cuda_ms": 0.24324400424957277,
+        "wall_ms": 0.24430524999843328
+      },
+      "V_FUSED": {
+        "cuda_ms": 0.1745136022567749,
+        "wall_ms": 0.17540800000119816
+      }
+    },
+    "ratios": {
+      "V_FUSED/TILE_MATERIALIZE": {
+        "n_pairs": 6,
+        "independent_books": 2,
+        "median": 0.7171956045725806,
+        "min": 0.7109080619144332,
+        "max": 0.7189956602616008,
+        "faster_count": 6
+      },
+      "V_FUSED/RF01_MATERIALIZE": {
+        "n_pairs": 6,
+        "independent_books": 2,
+        "median": 0.5827945626979539,
+        "min": 0.5793717967514916,
+        "max": 0.5839844135990376,
+        "faster_count": 6
+      },
+      "TILE_MATERIALIZE/RF01_MATERIALIZE": {
+        "n_pairs": 6,
+        "independent_books": 2,
+        "median": 0.8120063324295627,
+        "min": 0.810420192561806,
+        "max": 0.8179999864163711,
+        "faster_count": 6
+      }
+    },
+    "memory": {
+      "RF01_MATERIALIZE": {
+        "allocated_before": {
+          "min": 22293504,
+          "max": 22293504
+        },
+        "allocated_peak": {
+          "min": 43322368,
+          "max": 43322368
+        },
+        "reserved_before": {
+          "min": 46137344,
+          "max": 46137344
+        },
+        "reserved_peak": {
+          "min": 46137344,
+          "max": 46137344
+        },
+        "output_storage_bytes": {
+          "min": 4096,
+          "max": 4096
+        },
+        "allocated_extra": {
+          "min": 21028864,
+          "max": 21028864
+        },
+        "reserved_extra": {
+          "min": 0,
+          "max": 0
+        }
+      },
+      "TILE_MATERIALIZE": {
+        "allocated_before": {
+          "min": 22293504,
+          "max": 22293504
+        },
+        "allocated_peak": {
+          "min": 36959232,
+          "max": 36959232
+        },
+        "reserved_before": {
+          "min": 46137344,
+          "max": 46137344
+        },
+        "reserved_peak": {
+          "min": 46137344,
+          "max": 46137344
+        },
+        "output_storage_bytes": {
+          "min": 4096,
+          "max": 4096
+        },
+        "allocated_extra": {
+          "min": 14665728,
+          "max": 14665728
+        },
+        "reserved_extra": {
+          "min": 0,
+          "max": 0
+        }
+      },
+      "V_FUSED": {
+        "allocated_before": {
+          "min": 22293504,
+          "max": 22293504
+        },
+        "allocated_peak": {
+          "min": 22844928,
+          "max": 22844928
+        },
+        "reserved_before": {
+          "min": 46137344,
+          "max": 46137344
+        },
+        "reserved_peak": {
+          "min": 46137344,
+          "max": 46137344
+        },
+        "output_storage_bytes": {
+          "min": 4096,
+          "max": 4096
+        },
+        "allocated_extra": {
+          "min": 551424,
+          "max": 551424
+        },
+        "reserved_extra": {
+          "min": 0,
+          "max": 0
+        }
+      }
+    },
+    "original_hypotheses": {
+      "H1": false,
+      "H2": true,
+      "H3": true
+    }
+  },
+  "input_validation": {
+    "status": "DESCRIPTIVE_RECOMPUTED",
+    "times": [
+      {
+        "scope": "CHECK_ONLY",
+        "arm": "LEGACY",
+        "cuda_ms": 0.1930072009563446,
+        "wall_ms": 0.19416674995227368
+      },
+      {
+        "scope": "CHECK_ONLY",
+        "arm": "TORCH_GROUPED",
+        "cuda_ms": 0.18384720087051393,
+        "wall_ms": 0.18498249996810046
+      },
+      {
+        "scope": "CHECK_ONLY",
+        "arm": "TRITON_GROUPED",
+        "cuda_ms": 0.04307200014591217,
+        "wall_ms": 0.044198500017955666
+      },
+      {
+        "scope": "PACKED_PIPELINE",
+        "arm": "LEGACY",
+        "cuda_ms": 0.4009455919265747,
+        "wall_ms": 0.4021014749469032
+      },
+      {
+        "scope": "PACKED_PIPELINE",
+        "arm": "TORCH_GROUPED",
+        "cuda_ms": 0.3925640106201172,
+        "wall_ms": 0.3937159750421415
+      },
+      {
+        "scope": "PACKED_PIPELINE",
+        "arm": "TRITON_GROUPED",
+        "cuda_ms": 0.24576719999313357,
+        "wall_ms": 0.24696024997865607
+      }
+    ],
+    "comparisons": [
+      {
+        "scope": "CHECK_ONLY",
+        "candidate": "TRITON_GROUPED",
+        "reference": "LEGACY",
+        "field": "cuda_ms",
+        "ratio_median": 0.2232232971613084,
+        "reduction_percent": 77.67767028386916,
+        "ratio_min": 0.21420347611467885,
+        "ratio_max": 0.22793677953156133,
+        "shorter_samples": 18
+      },
+      {
+        "scope": "CHECK_ONLY",
+        "candidate": "TRITON_GROUPED",
+        "reference": "LEGACY",
+        "field": "wall_ms",
+        "ratio_median": 0.2279981598871073,
+        "reduction_percent": 77.20018401128928,
+        "ratio_min": 0.21847621641412612,
+        "ratio_max": 0.23238290451517085,
+        "shorter_samples": 18
+      },
+      {
+        "scope": "CHECK_ONLY",
+        "candidate": "TORCH_GROUPED",
+        "reference": "LEGACY",
+        "field": "cuda_ms",
+        "ratio_median": 0.952781093196383,
+        "reduction_percent": 4.721890680361696,
+        "ratio_min": 0.9465047810008627,
+        "ratio_max": 0.9608604293543646,
+        "shorter_samples": 18
+      },
+      {
+        "scope": "CHECK_ONLY",
+        "candidate": "TORCH_GROUPED",
+        "reference": "LEGACY",
+        "field": "wall_ms",
+        "ratio_median": 0.9529051686499221,
+        "reduction_percent": 4.709483135007786,
+        "ratio_min": 0.9467718151655772,
+        "ratio_max": 0.96162390273113,
+        "shorter_samples": 18
+      },
+      {
+        "scope": "CHECK_ONLY",
+        "candidate": "TRITON_GROUPED",
+        "reference": "TORCH_GROUPED",
+        "field": "cuda_ms",
+        "ratio_median": 0.23360900136520463,
+        "reduction_percent": 76.63909986347954,
+        "ratio_min": 0.22530341109936164,
+        "ratio_max": 0.23916862739404116,
+        "shorter_samples": 18
+      },
+      {
+        "scope": "CHECK_ONLY",
+        "candidate": "TRITON_GROUPED",
+        "reference": "TORCH_GROUPED",
+        "field": "wall_ms",
+        "ratio_median": 0.23822620559018487,
+        "reduction_percent": 76.17737944098151,
+        "ratio_min": 0.22979531374469697,
+        "ratio_max": 0.2438792359203679,
+        "shorter_samples": 18
+      },
+      {
+        "scope": "PACKED_PIPELINE",
+        "candidate": "TRITON_GROUPED",
+        "reference": "LEGACY",
+        "field": "cuda_ms",
+        "ratio_median": 0.6122421411066228,
+        "reduction_percent": 38.77578588933772,
+        "ratio_min": 0.6083561959509484,
+        "ratio_max": 0.6481186172512595,
+        "shorter_samples": 18
+      },
+      {
+        "scope": "PACKED_PIPELINE",
+        "candidate": "TRITON_GROUPED",
+        "reference": "LEGACY",
+        "field": "wall_ms",
+        "ratio_median": 0.6134129606005383,
+        "reduction_percent": 38.65870393994617,
+        "ratio_min": 0.6095054266913199,
+        "ratio_max": 0.6491297246940064,
+        "shorter_samples": 18
+      },
+      {
+        "scope": "PACKED_PIPELINE",
+        "candidate": "TORCH_GROUPED",
+        "reference": "LEGACY",
+        "field": "cuda_ms",
+        "ratio_median": 0.977458712130078,
+        "reduction_percent": 2.2541287869922044,
+        "ratio_min": 0.9711077103145921,
+        "ratio_max": 0.9846011786022599,
+        "shorter_samples": 18
+      },
+      {
+        "scope": "PACKED_PIPELINE",
+        "candidate": "TORCH_GROUPED",
+        "reference": "LEGACY",
+        "field": "wall_ms",
+        "ratio_median": 0.9775715000017302,
+        "reduction_percent": 2.242849999826979,
+        "ratio_min": 0.9713151439074902,
+        "ratio_max": 0.9846493717826356,
+        "shorter_samples": 18
+      },
+      {
+        "scope": "PACKED_PIPELINE",
+        "candidate": "TRITON_GROUPED",
+        "reference": "TORCH_GROUPED",
+        "field": "cuda_ms",
+        "ratio_median": 0.6279042512151929,
+        "reduction_percent": 37.20957487848071,
+        "ratio_min": 0.6205601421911254,
+        "ratio_max": 0.6652815388469029,
+        "shorter_samples": 18
+      },
+      {
+        "scope": "PACKED_PIPELINE",
+        "candidate": "TRITON_GROUPED",
+        "reference": "TORCH_GROUPED",
+        "field": "wall_ms",
+        "ratio_median": 0.6289732778148904,
+        "reduction_percent": 37.10267221851096,
+        "ratio_min": 0.6216215874098526,
+        "ratio_max": 0.6662751370353033,
+        "shorter_samples": 18
+      }
+    ],
+    "memory": [
+      {
+        "scope": "CHECK_ONLY",
+        "arm": "LEGACY",
+        "allocated_peak": 105764864.0,
+        "temporary_peak_bytes": 8509440.0
+      },
+      {
+        "scope": "CHECK_ONLY",
+        "arm": "TORCH_GROUPED",
+        "allocated_peak": 105767424.0,
+        "temporary_peak_bytes": 8512000.0
+      },
+      {
+        "scope": "CHECK_ONLY",
+        "arm": "TRITON_GROUPED",
+        "allocated_peak": 97265664.0,
+        "temporary_peak_bytes": 10240.0
+      },
+      {
+        "scope": "PACKED_PIPELINE",
+        "arm": "LEGACY",
+        "allocated_peak": 113160192.0,
+        "temporary_peak_bytes": 15904768.0
+      },
+      {
+        "scope": "PACKED_PIPELINE",
+        "arm": "TORCH_GROUPED",
+        "allocated_peak": 113160192.0,
+        "temporary_peak_bytes": 15904768.0
+      },
+      {
+        "scope": "PACKED_PIPELINE",
+        "arm": "TRITON_GROUPED",
+        "allocated_peak": 113160192.0,
+        "temporary_peak_bytes": 15904768.0
+      }
+    ],
+    "pipeline_peak_equal_in_all_54_sample_rounds": true,
+    "fixture_counts": {
+      "normal": 8,
+      "nonfinite": 36,
+      "structural": 20
+    },
+    "cache_files": 134,
+    "per_sample": [
+      {
+        "sample": "DC01-capture-b3752-L769-S0",
+        "scope": "CHECK_ONLY",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.19384160041809081,
+            "wall_ms": 0.19496249997246196,
+            "allocated_peak": 105129984,
+            "temporary_peak_bytes": 7874560
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.18347200155258178,
+            "wall_ms": 0.1845849999881466,
+            "allocated_peak": 105132544,
+            "temporary_peak_bytes": 7877120
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.043403199315071105,
+            "wall_ms": 0.044580000030691735,
+            "allocated_peak": 97265152,
+            "temporary_peak_bytes": 9728
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b3752-L769-S0",
+        "scope": "PACKED_PIPELINE",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.4021008014678955,
+            "wall_ms": 0.4032790000565001,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.3904831886291504,
+            "wall_ms": 0.3917109999747481,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.24531359672546388,
+            "wall_ms": 0.24644844997965265,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b3752-L769-S95",
+        "scope": "CHECK_ONLY",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.19415520429611205,
+            "wall_ms": 0.19532850001269253,
+            "allocated_peak": 105129984,
+            "temporary_peak_bytes": 7874560
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.18378880023956298,
+            "wall_ms": 0.1849410000431817,
+            "allocated_peak": 105132544,
+            "temporary_peak_bytes": 7877120
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.042628800868988036,
+            "wall_ms": 0.043689499943866394,
+            "allocated_peak": 97265152,
+            "temporary_peak_bytes": 9728
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b3752-L769-S95",
+        "scope": "PACKED_PIPELINE",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.40076160430908203,
+            "wall_ms": 0.40183900000556605,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.3919935941696167,
+            "wall_ms": 0.39316849997703684,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.24554879665374757,
+            "wall_ms": 0.24672299996382208,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b3752-L769-S191",
+        "scope": "CHECK_ONLY",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.192849600315094,
+            "wall_ms": 0.19398200001887744,
+            "allocated_peak": 105129984,
+            "temporary_peak_bytes": 7874560
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.1839840054512024,
+            "wall_ms": 0.18515199999455945,
+            "allocated_peak": 105132544,
+            "temporary_peak_bytes": 7877120
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.04368799924850464,
+            "wall_ms": 0.04486799998630886,
+            "allocated_peak": 97265152,
+            "temporary_peak_bytes": 9728
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b3752-L769-S191",
+        "scope": "PACKED_PIPELINE",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.4008048057556152,
+            "wall_ms": 0.4019564999907743,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.39087040424346925,
+            "wall_ms": 0.3927664999537228,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.2453200101852417,
+            "wall_ms": 0.24652450001667603,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b3752-L831-S0",
+        "scope": "CHECK_ONLY",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.19394079446792603,
+            "wall_ms": 0.1951004999682482,
+            "allocated_peak": 105764864,
+            "temporary_peak_bytes": 8509440
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.18372960090637208,
+            "wall_ms": 0.18486600001779152,
+            "allocated_peak": 105767424,
+            "temporary_peak_bytes": 8512000
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.04349919855594635,
+            "wall_ms": 0.04462300003069686,
+            "allocated_peak": 97266176,
+            "temporary_peak_bytes": 10752
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b3752-L831-S0",
+        "scope": "PACKED_PIPELINE",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.4006351947784424,
+            "wall_ms": 0.4018149500552681,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.39337279796600344,
+            "wall_ms": 0.3945659999772033,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.24456961154937745,
+            "wall_ms": 0.245747000008123,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b3752-L831-S95",
+        "scope": "CHECK_ONLY",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.19267359972000123,
+            "wall_ms": 0.19382000000405242,
+            "allocated_peak": 105764864,
+            "temporary_peak_bytes": 8509440
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.18401919603347777,
+            "wall_ms": 0.18512349997763522,
+            "allocated_peak": 105767424,
+            "temporary_peak_bytes": 8512000
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.04287680089473724,
+            "wall_ms": 0.04406244997881004,
+            "allocated_peak": 97266176,
+            "temporary_peak_bytes": 10752
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b3752-L831-S95",
+        "scope": "PACKED_PIPELINE",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.40108637809753417,
+            "wall_ms": 0.4022324499601382,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.3902352094650269,
+            "wall_ms": 0.39140349999797763,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.24504799842834474,
+            "wall_ms": 0.2462280000145256,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b3752-L831-S191",
+        "scope": "CHECK_ONLY",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.19353280067443848,
+            "wall_ms": 0.19469299995762412,
+            "allocated_peak": 105764864,
+            "temporary_peak_bytes": 8509440
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.18350239992141723,
+            "wall_ms": 0.1846615000431484,
+            "allocated_peak": 105767424,
+            "temporary_peak_bytes": 8512000
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.04253759980201721,
+            "wall_ms": 0.043702499988285126,
+            "allocated_peak": 97266176,
+            "temporary_peak_bytes": 10752
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b3752-L831-S191",
+        "scope": "PACKED_PIPELINE",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.4007296085357666,
+            "wall_ms": 0.4018854499918234,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.39190239906311036,
+            "wall_ms": 0.39304644997173455,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.24526240825653076,
+            "wall_ms": 0.24638499999127816,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b3752-L833-S0",
+        "scope": "CHECK_ONLY",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.19184960126876832,
+            "wall_ms": 0.1933850000568782,
+            "allocated_peak": 105785344,
+            "temporary_peak_bytes": 8529920
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.18381760120391846,
+            "wall_ms": 0.184959499983961,
+            "allocated_peak": 105787904,
+            "temporary_peak_bytes": 8532480
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.04321120083332062,
+            "wall_ms": 0.04434849997778656,
+            "allocated_peak": 97265664,
+            "temporary_peak_bytes": 10240
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b3752-L833-S0",
+        "scope": "PACKED_PIPELINE",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.40062880516052246,
+            "wall_ms": 0.40176049997171503,
+            "allocated_peak": 114606080,
+            "temporary_peak_bytes": 17350656
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.39276800155639646,
+            "wall_ms": 0.3939390000596177,
+            "allocated_peak": 114606080,
+            "temporary_peak_bytes": 17350656
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.24760639667510986,
+            "wall_ms": 0.24881050003386918,
+            "allocated_peak": 114606080,
+            "temporary_peak_bytes": 17350656
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b3752-L833-S95",
+        "scope": "CHECK_ONLY",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.19307520389556884,
+            "wall_ms": 0.19424599995545577,
+            "allocated_peak": 105785344,
+            "temporary_peak_bytes": 8529920
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.18428640365600585,
+            "wall_ms": 0.1854279999861319,
+            "allocated_peak": 105787904,
+            "temporary_peak_bytes": 8532480
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.04286240041255951,
+            "wall_ms": 0.043982500028505456,
+            "allocated_peak": 97265664,
+            "temporary_peak_bytes": 10240
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b3752-L833-S95",
+        "scope": "PACKED_PIPELINE",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.40434880256652833,
+            "wall_ms": 0.40554199995312956,
+            "allocated_peak": 114606080,
+            "temporary_peak_bytes": 17350656
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.3939631938934326,
+            "wall_ms": 0.39516400001957663,
+            "allocated_peak": 114606080,
+            "temporary_peak_bytes": 17350656
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.24735679626464843,
+            "wall_ms": 0.24850150002748705,
+            "allocated_peak": 114606080,
+            "temporary_peak_bytes": 17350656
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b3752-L833-S191",
+        "scope": "CHECK_ONLY",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.19205119609832763,
+            "wall_ms": 0.19311500000185333,
+            "allocated_peak": 105785344,
+            "temporary_peak_bytes": 8529920
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.18453439474105834,
+            "wall_ms": 0.18570399997770437,
+            "allocated_peak": 105787904,
+            "temporary_peak_bytes": 8532480
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.043188801407814024,
+            "wall_ms": 0.044278499990468845,
+            "allocated_peak": 97265664,
+            "temporary_peak_bytes": 10240
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b3752-L833-S191",
+        "scope": "PACKED_PIPELINE",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.40267200469970704,
+            "wall_ms": 0.40384300000368967,
+            "allocated_peak": 114606080,
+            "temporary_peak_bytes": 17350656
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.39395999908447266,
+            "wall_ms": 0.3951174999201612,
+            "allocated_peak": 114606080,
+            "temporary_peak_bytes": 17350656
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.24496800899505616,
+            "wall_ms": 0.2461445000335516,
+            "allocated_peak": 114606080,
+            "temporary_peak_bytes": 17350656
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b31131-L769-S0",
+        "scope": "CHECK_ONLY",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.19297280311584472,
+            "wall_ms": 0.19415799997659633,
+            "allocated_peak": 105129984,
+            "temporary_peak_bytes": 7874560
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.18391040563583375,
+            "wall_ms": 0.18500549995223992,
+            "allocated_peak": 105132544,
+            "temporary_peak_bytes": 7877120
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.04398559927940369,
+            "wall_ms": 0.04511899996941793,
+            "allocated_peak": 97265152,
+            "temporary_peak_bytes": 9728
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b31131-L769-S0",
+        "scope": "PACKED_PIPELINE",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.4006319999694824,
+            "wall_ms": 0.40176100001190207,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.39283199310302735,
+            "wall_ms": 0.39399849993060343,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.2466752052307129,
+            "wall_ms": 0.24786149997453322,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b31131-L769-S95",
+        "scope": "CHECK_ONLY",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.19316960573196412,
+            "wall_ms": 0.1943254999787314,
+            "allocated_peak": 105129984,
+            "temporary_peak_bytes": 7874560
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.1836527943611145,
+            "wall_ms": 0.18475355000191485,
+            "allocated_peak": 105132544,
+            "temporary_peak_bytes": 7877120
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.041377601027488706,
+            "wall_ms": 0.04245549998813658,
+            "allocated_peak": 97265152,
+            "temporary_peak_bytes": 9728
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b31131-L769-S95",
+        "scope": "PACKED_PIPELINE",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.39940800666809084,
+            "wall_ms": 0.4006025000308,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.3932575941085815,
+            "wall_ms": 0.3944529999898805,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.24403998851776124,
+            "wall_ms": 0.2452005000122881,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b31131-L769-S191",
+        "scope": "CHECK_ONLY",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.19289920330047608,
+            "wall_ms": 0.19403350006541586,
+            "allocated_peak": 105129984,
+            "temporary_peak_bytes": 7874560
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.18404639959335328,
+            "wall_ms": 0.18519300001571537,
+            "allocated_peak": 105132544,
+            "temporary_peak_bytes": 7877120
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.04291520118713379,
+            "wall_ms": 0.044077499933337094,
+            "allocated_peak": 97265152,
+            "temporary_peak_bytes": 9728
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b31131-L769-S191",
+        "scope": "PACKED_PIPELINE",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.3998271942138672,
+            "wall_ms": 0.40100950000123703,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.3929392099380493,
+            "wall_ms": 0.3940455000702059,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.24598560333251954,
+            "wall_ms": 0.24719749999349006,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b31131-L831-S0",
+        "scope": "CHECK_ONLY",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.19389439821243287,
+            "wall_ms": 0.19507650004015886,
+            "allocated_peak": 105764864,
+            "temporary_peak_bytes": 8509440
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.18445119857788086,
+            "wall_ms": 0.18560200005595107,
+            "allocated_peak": 105767424,
+            "temporary_peak_bytes": 8512000
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.042955198884010316,
+            "wall_ms": 0.04411850004544249,
+            "allocated_peak": 97266176,
+            "temporary_peak_bytes": 10752
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b31131-L831-S0",
+        "scope": "PACKED_PIPELINE",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.4023280143737793,
+            "wall_ms": 0.4035234500406659,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.3917952060699463,
+            "wall_ms": 0.39293400004680734,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.24639201164245605,
+            "wall_ms": 0.24756749999141903,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b31131-L831-S95",
+        "scope": "CHECK_ONLY",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.19273600578308106,
+            "wall_ms": 0.1938775000780879,
+            "allocated_peak": 105764864,
+            "temporary_peak_bytes": 8509440
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.18453919887542725,
+            "wall_ms": 0.1856699999734701,
+            "allocated_peak": 105767424,
+            "temporary_peak_bytes": 8512000
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.04344959855079651,
+            "wall_ms": 0.044598000022233464,
+            "allocated_peak": 97266176,
+            "temporary_peak_bytes": 10752
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b31131-L831-S95",
+        "scope": "PACKED_PIPELINE",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.40077600479125974,
+            "wall_ms": 0.4019704999336682,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.39043679237365725,
+            "wall_ms": 0.3916265000043495,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.25975039005279543,
+            "wall_ms": 0.26093099995705415,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b31131-L831-S191",
+        "scope": "CHECK_ONLY",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.1936992049217224,
+            "wall_ms": 0.19485049997456372,
+            "allocated_peak": 105764864,
+            "temporary_peak_bytes": 8509440
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.18367199897766112,
+            "wall_ms": 0.18475549995855545,
+            "allocated_peak": 105767424,
+            "temporary_peak_bytes": 8512000
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.042710399627685545,
+            "wall_ms": 0.043892499979847344,
+            "allocated_peak": 97266176,
+            "temporary_peak_bytes": 10752
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b31131-L831-S191",
+        "scope": "PACKED_PIPELINE",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.4017280101776123,
+            "wall_ms": 0.4029100000479957,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.3910000085830688,
+            "wall_ms": 0.39216400000441354,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.24501121044158936,
+            "wall_ms": 0.2462155000102939,
+            "allocated_peak": 113160192,
+            "temporary_peak_bytes": 15904768
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b31131-L833-S0",
+        "scope": "CHECK_ONLY",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.1925536036491394,
+            "wall_ms": 0.19374849998712307,
+            "allocated_peak": 105785344,
+            "temporary_peak_bytes": 8529920
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.18315680027008058,
+            "wall_ms": 0.18427600007271394,
+            "allocated_peak": 105787904,
+            "temporary_peak_bytes": 8532480
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.043315199017524716,
+            "wall_ms": 0.0444440000137547,
+            "allocated_peak": 97265664,
+            "temporary_peak_bytes": 10240
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b31131-L833-S0",
+        "scope": "PACKED_PIPELINE",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.40251998901367186,
+            "wall_ms": 0.40369449998252094,
+            "allocated_peak": 114606080,
+            "temporary_peak_bytes": 17350656
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.39323999881744387,
+            "wall_ms": 0.39444250005544745,
+            "allocated_peak": 114606080,
+            "temporary_peak_bytes": 17350656
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.2481600046157837,
+            "wall_ms": 0.24925050001911586,
+            "allocated_peak": 114606080,
+            "temporary_peak_bytes": 17350656
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b31131-L833-S95",
+        "scope": "CHECK_ONLY",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.1930415987968445,
+            "wall_ms": 0.19417549992795102,
+            "allocated_peak": 105785344,
+            "temporary_peak_bytes": 8529920
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.18387680053710936,
+            "wall_ms": 0.18503950004742364,
+            "allocated_peak": 105787904,
+            "temporary_peak_bytes": 8532480
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.043532800674438474,
+            "wall_ms": 0.04469049999897834,
+            "allocated_peak": 97265664,
+            "temporary_peak_bytes": 10240
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b31131-L833-S95",
+        "scope": "PACKED_PIPELINE",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.40154399871826174,
+            "wall_ms": 0.4026454999802809,
+            "allocated_peak": 114606080,
+            "temporary_peak_bytes": 17350656
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.3927328109741211,
+            "wall_ms": 0.39391450000039185,
+            "allocated_peak": 114606080,
+            "temporary_peak_bytes": 17350656
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.24725279808044434,
+            "wall_ms": 0.24843600003805477,
+            "allocated_peak": 114606080,
+            "temporary_peak_bytes": 17350656
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b31131-L833-S191",
+        "scope": "CHECK_ONLY",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.19239840507507325,
+            "wall_ms": 0.1935924999997951,
+            "allocated_peak": 105785344,
+            "temporary_peak_bytes": 8529920
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.18379839658737182,
+            "wall_ms": 0.18494249998184387,
+            "allocated_peak": 105787904,
+            "temporary_peak_bytes": 8532480
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.04281120002269745,
+            "wall_ms": 0.04387400003906805,
+            "allocated_peak": 97265664,
+            "temporary_peak_bytes": 10240
+          }
+        }
+      },
+      {
+        "sample": "DC01-capture-b31131-L833-S191",
+        "scope": "PACKED_PIPELINE",
+        "values": {
+          "LEGACY": {
+            "cuda_ms": 0.40240001678466797,
+            "wall_ms": 0.40358100004596054,
+            "allocated_peak": 114606080,
+            "temporary_peak_bytes": 17350656
+          },
+          "TORCH_GROUPED": {
+            "cuda_ms": 0.3923952102661133,
+            "wall_ms": 0.39351745008389116,
+            "allocated_peak": 114606080,
+            "temporary_peak_bytes": 17350656
+          },
+          "TRITON_GROUPED": {
+            "cuda_ms": 0.24755361080169677,
+            "wall_ms": 0.24871350005923887,
+            "allocated_peak": 114606080,
+            "temporary_peak_bytes": 17350656
+          }
+        }
+      }
+    ],
+    "aggregation": "3-round median per sample, then paired ratio across 18 saved inputs. No CI/p-value. Peak-minus-before is descriptive, not a model memory result."
+  },
+  "figure_metrics": {
+    "figure_02_memory": {
+      "Ouro": {
+        "labels": [
+          "Terminal KV storage",
+          "Decode allocated peak",
+          "Recorded allocated peak\n(including prefill)",
+          "Decode reserved peak"
+        ],
+        "packed_percent": [
+          32.32221407624633,
+          76.10767655163438,
+          93.32259396943412,
+          107.85649409627611
+        ],
+        "fused_percent": [
+          32.32221407624633,
+          75.63760022180351,
+          93.32259396943412,
+          107.85649409627611
+        ]
+      },
+      "Nanbeige": {
+        "labels": [
+          "Terminal KV storage",
+          "Decode allocated peak",
+          "Recorded allocated peak\n(including prefill)",
+          "Decode reserved peak"
+        ],
+        "packed_percent": [
+          63.6374080882353,
+          99.90180887891158,
+          100.0,
+          99.92723744845986
+        ],
+        "fused_percent": [
+          63.6374080882353,
+          99.85639367242588,
+          100.0,
+          99.92723744845986
+        ]
+      }
+    },
+    "figure_03_component": {
+      "arm_order": [
+        "RF01_MATERIALIZE",
+        "TILE_MATERIALIZE",
+        "V_FUSED"
+      ],
+      "cuda_ms": [
+        0.29944720268249514,
+        0.24324400424957277,
+        0.1745136022567749
+      ],
+      "allocated_extra_mib": [
+        20.0546875,
+        13.986328125,
+        0.52587890625
+      ]
+    },
+    "figure_05_time": {
+      "Ouro": [
+        {
+          "label": "Decode / K-fused, V-full",
+          "ratios": [
+            0.9388399678941722,
+            0.9407452398015841,
+            0.9407684139121851,
+            0.9378627597369977,
+            0.9377827994150983,
+            0.9391410182124773,
+            0.9379163758496207,
+            0.9324766839352756
+          ],
+          "median": 0.9383781718718964,
+          "unit": "book x technical repeat (8 blocks; 4 books)"
+        },
+        {
+          "label": "Decode / checked native",
+          "ratios": [
+            1.058478124943257,
+            1.0534744928131774,
+            1.0590794836566955,
+            1.054809845338218,
+            1.0559646762614725,
+            1.06165693491029,
+            1.059414647371439,
+            1.0517201228831814
+          ],
+          "median": 1.0572214006023648,
+          "unit": "book x technical repeat (8 blocks; 4 books)"
+        }
+      ],
+      "Nanbeige": [
+        {
+          "label": "Decode / full-restore SDPA",
+          "ratios": [
+            0.5699660199628311,
+            0.5692352353101896,
+            0.566648883387928,
+            0.5708144513047008
+          ],
+          "median": 0.5696006276365104,
+          "unit": "book median (4 books; 3 technical repeats each)"
+        },
+        {
+          "label": "Decode / checked native",
+          "ratios": [
+            0.9709887922517543,
+            0.9690695113451075,
+            0.9712019380774919,
+            0.9693241896282888
+          ],
+          "median": 0.9701564909400215,
+          "unit": "book median (4 books; 3 technical repeats each)"
+        },
+        {
+          "label": "Including initial cost /\nfull-restore SDPA",
+          "ratios": [
+            0.6342889370725949,
+            0.6331147792835453,
+            0.6304452702356483,
+            0.6351193692560806
+          ],
+          "median": 0.6337018581780701,
+          "unit": "book median (4 books; 3 technical repeats each)"
+        },
+        {
+          "label": "Including initial cost /\nchecked native",
+          "ratios": [
+            1.1493110299660019,
+            1.1459279130419258,
+            1.1477615639089551,
+            1.1475477298364938
+          ],
+          "median": 1.1476546468727244,
+          "unit": "book median (4 books; 3 technical repeats each)"
+        }
+      ]
+    }
+  }
+}

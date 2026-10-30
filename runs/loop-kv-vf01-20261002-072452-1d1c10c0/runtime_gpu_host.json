@@ -1,0 +1,8 @@
+{
+  "loader_environment": {
+    "LD_LIBRARY_PATH": "/usr/lib64-nvidia",
+    "NVIDIA_VISIBLE_DEVICES": "all"
+  },
+  "returncode": 0,
+  "output": "NVIDIA RTX PRO 6000 Blackwell Server Edition, 580.82.07, 97887\n"
+}

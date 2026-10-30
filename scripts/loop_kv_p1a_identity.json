@@ -1,0 +1,9 @@
+{
+  "run_id": "loop-kv-p0r-p1a-20260930-090219-7f1b80ef",
+  "archive_sha256": "05ea9b97856bcdf7f7d2e5e3be8fb8a339d54c7c1f71b767dece555300c81fbf",
+  "summary_sha256": "5b5d7956f9dae7d4ba0f2bd758b90a468f8a1509905650b70bd7ff660f589478",
+  "worker_sha256": "577f8dca7975250468ddbe13badb47cbcbccf3cff8001f9a21a42229eaa3e158",
+  "route_status": "PASS_ROUTE_P0R",
+  "completed_p1a_trajectories": 64,
+  "used_as": "Historical identity only; P1B recomputes all native and quantized conditions. No previous outcomes enter P1B estimates."
+}

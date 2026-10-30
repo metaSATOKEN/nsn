@@ -1,0 +1,38 @@
+[
+  {
+    "id": "G5-b37013-r8-KV",
+    "book_id": "37013",
+    "r": 8,
+    "length": 1023,
+    "prefill": 768,
+    "steps": 256,
+    "expected_forwards": 512
+  },
+  {
+    "id": "G5-b2976-r8-KV",
+    "book_id": "2976",
+    "r": 8,
+    "length": 1023,
+    "prefill": 768,
+    "steps": 256,
+    "expected_forwards": 512
+  },
+  {
+    "id": "G5-b9442-r8-KV",
+    "book_id": "9442",
+    "r": 8,
+    "length": 1023,
+    "prefill": 768,
+    "steps": 256,
+    "expected_forwards": 512
+  },
+  {
+    "id": "G5-b56102-r8-KV",
+    "book_id": "56102",
+    "r": 8,
+    "length": 1023,
+    "prefill": 768,
+    "steps": 256,
+    "expected_forwards": 512
+  }
+]

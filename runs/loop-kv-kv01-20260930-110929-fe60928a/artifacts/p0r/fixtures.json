@@ -1,0 +1,126 @@
+[
+  {
+    "test": "codec",
+    "bits": 3,
+    "status": "PASS"
+  },
+  {
+    "test": "codec",
+    "bits": 4,
+    "status": "PASS"
+  },
+  {
+    "test": "codec",
+    "bits": 5,
+    "status": "PASS"
+  },
+  {
+    "test": "metadata_overflow_detection",
+    "status": "PASS"
+  },
+  {
+    "test": "causal_mask_and_independent_arithmetic",
+    "status": "PASS"
+  },
+  {
+    "test": "gpu_codec_roundtrip",
+    "bits": 3,
+    "status": "PASS"
+  },
+  {
+    "test": "gpu_codec_roundtrip",
+    "bits": 4,
+    "status": "PASS"
+  },
+  {
+    "test": "gpu_codec_roundtrip",
+    "bits": 5,
+    "status": "PASS"
+  },
+  {
+    "test": "cache_schedule_fixture",
+    "bits": 3,
+    "mode": "PREFIX_ONLY",
+    "status": "PASS",
+    "flush": [],
+    "compressed": 704,
+    "native_tail": 319
+  },
+  {
+    "test": "cache_schedule_fixture",
+    "bits": 3,
+    "mode": "DECODE_ONLINE",
+    "status": "PASS",
+    "flush": [
+      64,
+      128,
+      192
+    ],
+    "compressed": 896,
+    "native_tail": 127
+  },
+  {
+    "test": "cache_schedule_fixture",
+    "bits": 4,
+    "mode": "PREFIX_ONLY",
+    "status": "PASS",
+    "flush": [],
+    "compressed": 704,
+    "native_tail": 319
+  },
+  {
+    "test": "cache_schedule_fixture",
+    "bits": 4,
+    "mode": "DECODE_ONLINE",
+    "status": "PASS",
+    "flush": [
+      64,
+      128,
+      192
+    ],
+    "compressed": 896,
+    "native_tail": 127
+  },
+  {
+    "test": "cache_schedule_fixture",
+    "bits": 5,
+    "mode": "PREFIX_ONLY",
+    "status": "PASS",
+    "flush": [],
+    "compressed": 704,
+    "native_tail": 319
+  },
+  {
+    "test": "cache_schedule_fixture",
+    "bits": 5,
+    "mode": "DECODE_ONLINE",
+    "status": "PASS",
+    "flush": [
+      64,
+      128,
+      192
+    ],
+    "compressed": 896,
+    "native_tail": 127
+  },
+  {
+    "test": "selective_intervention",
+    "target": "NATIVE",
+    "status": "PASS"
+  },
+  {
+    "test": "selective_intervention",
+    "target": "K_ONLY",
+    "status": "PASS"
+  },
+  {
+    "test": "selective_intervention",
+    "target": "V_ONLY",
+    "status": "PASS"
+  },
+  {
+    "test": "selective_intervention",
+    "target": "KV",
+    "status": "PASS"
+  }
+]

@@ -1,0 +1,282 @@
+{
+  "status": "PASS",
+  "scope": "Synthetic CPU arithmetic checks only; not a new model experiment or fused-kernel equivalence claim",
+  "torch_version": "2.11.0",
+  "body_lines": 10,
+  "frozen_source": "scripts/loop_kv_nb05_primitives.py",
+  "frozen_source_sha256": "594b7d5919f4f9af2b3c9b0b4d9620597f316b2933ccc3773b95c7b084573b13",
+  "listing_sha256": "b8da4fa8ad87e4deda3c92f506d15dcf5b2064600e95365f0ba0cf6d5190bdf3",
+  "cases": [
+    {
+      "fixture": "normal",
+      "dtype": "torch.float32",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "normal",
+      "dtype": "torch.float16",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "normal",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "zero",
+      "dtype": "torch.float32",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "zero",
+      "dtype": "torch.float16",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "zero",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "constant_across_tokens",
+      "dtype": "torch.float32",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "constant_across_tokens",
+      "dtype": "torch.float16",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "constant_across_tokens",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "zero_rows",
+      "dtype": "torch.float32",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "zero_rows",
+      "dtype": "torch.float16",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "zero_rows",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "norm_dispersion",
+      "dtype": "torch.float32",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "norm_dispersion",
+      "dtype": "torch.float16",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "norm_dispersion",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "strided_input",
+      "dtype": "torch.float32",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "strided_input",
+      "dtype": "torch.float16",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "strided_input",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "shifted",
+      "dtype": "torch.float32",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "shifted",
+      "dtype": "torch.float16",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "shifted",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        2,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "multi_head",
+      "dtype": "torch.float32",
+      "shape": [
+        2,
+        3,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "multi_head",
+      "dtype": "torch.float16",
+      "shape": [
+        2,
+        3,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    },
+    {
+      "fixture": "multi_head",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        2,
+        3,
+        64,
+        128
+      ],
+      "bitwise_equal": true,
+      "finite": true
+    }
+  ],
+  "total": 24,
+  "all_bitwise_equal": true,
+  "new_model_calls": 0,
+  "gpu_calls": 0
+}
