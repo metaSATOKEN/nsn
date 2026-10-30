@@ -1,69 +1,80 @@
 # NSN: KV Quantization by Separating Norm and Direction
 
-**Configuration, Applicability, and the Cost of Using Compressed Representations**  
-Kentaro Sato · Independent Researcher · [info@metaclan.jp](mailto:info@metaclan.jp)
+**How far can we shrink a language model's KV cache while retaining prediction quality—and what does it take to turn that smaller cache into cheaper inference?**
 
-NSN compresses a language model's attention memory (the KV cache) by keeping each vector's magnitude separately and quantizing its direction. The asymmetric configuration uses per-channel minima and step sizes, then renormalizes the reconstructed direction. Its bit width is configurable: the study examines both 3-bit compression and higher-precision 5-bit settings.
+A language model stores keys and values from earlier tokens in its **KV cache**, so it can attend to the past without recomputing everything. This memory grows with context length. Low-bit quantization makes it smaller, but also changes the values used by attention and adds work to reconstruct them.
 
-This repository connects three questions: **when prediction quality is retained, how much storage is actually saved, and what using the compressed representation costs.** A smaller KV cache does not automatically imply a lower whole-GPU memory peak or a faster complete inference path.
+This project develops and evaluates **asymmetric NSN**: store each vector's magnitude separately, and represent its direction with a small set of integers. The integrated study connects the method's prediction quality to its actual storage and execution costs. It identifies useful settings across model architectures, then follows the compressed representation all the way into attention.
 
-**Read the [English integrated paper](papers/nsn-integrated/NSN-2026-10-29-EN.md) or [Japanese paper](papers/nsn-integrated/NSN-2026-10-29-JA.md).** Both explain NSN from the beginning. The [looped-model study](papers/loop-kv/README.md) provides additional implementation detail.
+[Read the paper](papers/nsn-integrated/NSN-2026-10-29-EN.md) · [日本語 README](README.ja.md) · [日本語論文](papers/nsn-integrated/NSN-2026-10-29-JA.md) · [Code](experiments/README.md)
 
-[Earlier edition / library users](LEGACY.md) · [日本語 README](README.ja.md) · [Run commands](RUNNING.md) · [Reproduction](REPRODUCIBILITY.md) · [Evidence coverage](DATA_COVERAGE.md) · [Licenses](LICENSES.md)
+## What this study adds
 
-## What the experiments show
+**1. Evidence for choosing asymmetric NSN, and for adjusting its precision.** In the primary comparison, asymmetric NSN was the only one of four 3-bit configurations to keep PPL degradation below 5% in all **8 tested models**. Its value here is broad coverage with one configuration; other configurations achieved lower PPL on some models. The same method also supports higher bit widths: a **5-bit setting** kept mean PPL changes within ±0.5% in **4 models with SSM-plus-attention or MoE architectures**. This gives a concrete way to trade code size for precision.
 
-| Question | Observation | Evaluation setting |
-| --- | --- | --- |
-| Which configuration retained quality? | Asymmetric NSN was the only one of four 3-bit configurations below 5% PPL degradation for all 8 tested models in the primary comparison. | Configuration-level comparison; the paper reports additional conditions where this did not hold. |
-| Is NSN restricted to 3 bits or dense Transformers? | The precision-oriented 5-bit setting met the quality diagnostic in 4 models with SSM-plus-attention or MoE architectures. | Attention K/V; whole-window QDQ, with 3/4/5-bit comparisons. |
-| Does an actual packed cache work in looped models? | Final KV storage fell by 67.68% for Ouro and 64.39% for the extended Nanbeige evaluation. | Four texts per model; 255 and 256 teacher-forced predictions per text, respectively. Metadata and uncompressed tails are included. |
-| Does reduced storage mean faster execution? | Fused reconstruction reduced compressed-path costs. In the Nanbeige continuation experiment, initialization and updates offset most forward-pass savings, yielding approximately equal total time to checked uncompressed execution. | Fixed implementation, batch size 1; quality, stored bytes, GPU peaks, and time are separate measurements. |
+**2. Working compressed caches in looped Transformers.** We connected actual bit-packed 3-bit KV to **Ouro and Nanbeige**, including cache updates and the mapping between loops, layers, and heads. Terminal KV storage fell by **67.68% in Ouro** and **64.39% in the extended Nanbeige evaluation**, counting metadata and the uncompressed tail. These are measured storage reductions from representations used for subsequent predictions.
 
-Here, quality refers to the paper's PPL diagnostic, not a general generation-quality guarantee. The six [integrated figures](papers/nsn-integrated/figures/) and the appendices explain the comparisons and numerical criteria.
+**3. A controlled account of the cost of using compression.** A *bridge control* reconstructs the same packed values with the same arithmetic as a fused attention kernel, but outside attention. Against this control, the fused route was **28.28% faster in the component comparison**. The model experiments then show where shorter compressed readout paths help—and where initial packing and recurring updates consume those savings.
 
-The public GPU entrypoints are [readable, expanded Python sources](experiments/README.md). Compressed OneCell files stay in the author's local Colab workflow.
+Quality here means the paper's **PPL diagnostic**: how well the model predicts the supplied text, with a 5% degradation threshold. The four-method result compares complete configurations. The hybrid/MoE results quantize attention K/V using ranges estimated over each full evaluation window; the separate packed-cache evaluations use teacher forcing on **4 texts per model**, with **255 predictions per text for Ouro and 256 for the Nanbeige extension**. This defines the evidence for choosing settings; long free-running generation and a ranking against external quantizers remain open questions.
 
-## Start with the level of evidence you need
+## Why separate magnitude from direction?
 
-1. **Read and inspect:** the papers, figures, fixed plans, code, summary tables and most logs are in the Git repository.
-2. **Check the download:** run the standard-library hash verifier. This performs no model calls or numerical reanalysis.
-3. **Inspect raw arrays or reproduce:** obtain the companion evidence ZIPs, restore a new workspace, and use that workspace's environment. See [REPRODUCIBILITY.md](REPRODUCIBILITY.md).
+The vectors `(3, 4)` and `(30, 40)` point in the same direction, but their lengths are 5 and 50. When raw KV values are quantized directly per channel, large-magnitude tokens can widen the range and leave a coarse grid for smaller tokens.
+
+Asymmetric NSN separates these two jobs:
+
+1. **Keep magnitude:** store each token vector's norm separately.
+2. **Compress direction:** normalize the vector, then assign integer levels over each channel's observed minimum-to-maximum range. The range need not be symmetric around zero.
+3. **Reconstruct for attention:** restore the direction, normalize its length after rounding, and multiply by the saved norm.
+
+The quantizer uses the input block's statistics, with no additional quantizer training or separate calibration corpus. Bit width remains a design choice: 3 bits provide 8 levels; 5 bits provide 32.
+
+![NSN separates vector magnitude and direction, quantizes direction, then reconstructs it with the stored norm.](papers/nsn-integrated/figures/v0.2/figure-01-nsn.png)
+
+The paper explains the equations and includes a 10-line quantize–reconstruct example. The [reference implementation](src/README.md) provides the underlying operations.
+
+## When does smaller storage become an execution benefit?
+
+The Nanbeige measurements make the distinction concrete:
+
+| Evaluation | Observed outcome |
+| --- | --- |
+| Initial 8-step continuation | Fused decoding was about **3% faster** than checked uncompressed execution, but time including prefill and initial compression was about **15% longer**. |
+| Extension to 256 steps, including four compression updates | KV storage was **64.39% smaller**, while total time including initialization and updates was **approximately equal** to checked uncompressed execution. |
+
+Compression saved capacity in this workload. Turning that saving into a time advantage required accounting for **reconstruction, validation, initial packing, and updates**. The paper also measures whole-GPU memory peaks separately from KV storage, because weights and temporary arrays remain in memory. These cost breakdowns help identify which part of an implementation needs work.
+
+## Explore the research
+
+| To understand… | Start here |
+| --- | --- |
+| The method, findings, and their scope | Integrated paper: [English](papers/nsn-integrated/NSN-2026-10-29-EN.md) / [Japanese](papers/nsn-integrated/NSN-2026-10-29-JA.md), including figures and appendices |
+| How the looped-model caches and kernels work | [Looped-model companion paper](papers/loop-kv/README.md) |
+| How the experiments were implemented | [Readable Python sources and experiment index](experiments/README.md) |
+| Which measurements support a result | [Data index](data/README.md) and [evidence coverage](DATA_COVERAGE.md) |
+| The original edition or the retained library API | [Earlier edition and library guide](LEGACY.md) |
+
+The integrated paper introduces NSN from the beginning. Experiment sources are expanded, readable Python; no compressed OneCell payload needs to be deciphered.
+
+## Verify or reproduce
+
+The repository contains papers, figures, code, tables, plans, and readable logs. Large saved arrays are distributed as **17 ZIPs (6.30 GB total) plus SHA256SUMS** in the [integrated-v1.0 Release](https://github.com/metaSATOKEN/nsn/releases/tag/integrated-v1.0). Download all 17 into one directory without renaming them. GitHub's automatic source archives contain only the repository.
+
+From a standalone checkout, use its root `.venv` as described in [RUNNING.md](RUNNING.md):
 
 ```sh
 .venv/bin/python -B tools/verify_package.py
 ```
 
-Use the `.venv` belonging to this repository root. The source research workspace has its own instructions in its root `RUNNING.md`. Do not substitute a local Mac interpreter into the Colab launchers.
+This checks file identity without running a model. [REPRODUCIBILITY.md](REPRODUCIBILITY.md) explains how to verify the companion ZIPs, restore a new workspace, and regenerate results with the required dependencies. [release-assets.json](metadata/release-assets.json) lists filenames, sizes, hashes, and download URLs.
 
-## Repository map
+## Edition, citation, and license
 
-| Path | Contents |
-| --- | --- |
-| `papers/nsn-integrated/` | Current Japanese/English integrated paper, six figures, tables, and generation inputs |
-| `papers/loop-kv/` | Current looped-model companion paper and numerical-audit code |
-| `src/nsn/` | NSN reference implementation: quantization, storage and packing |
-| `data/` | Configuration, applicability, storage and kernel measurements; a separate catalogue of contextual records |
-| `experiments/` | Code grouped by the same research questions, plus readable AC08/NB05/NB06 model integrations |
-| `runs/` | Six selected experiments' saved metadata and logs; large files are in companion assets |
-| `scripts/`, `plans/` | Looped-model analysis implementations and fixed experiment specifications |
-| `tools/` | Hash verification, safe workspace restoration, and offline reproduction entrypoints |
-| `metadata/` | Source mapping, per-file hashes, asset manifest, and packaging checks |
+Kentaro Sato · Independent Researcher · [info@metaclan.jp](mailto:info@metaclan.jp)
 
-The repository is organized around the integrated paper's questions rather than the earlier projects. Start with [the experiment index](experiments/README.md) and [the data index](data/README.md). The earlier standalone manuscripts are not bundled; the published NSN paper remains cited below. Frozen integrated-paper baselines are retained only as generator inputs.
+The integrated manuscripts are **v1.0, 29 October 2026**. They combine a reanalysis of the earlier [*Norm Separation is Necessary*](https://doi.org/10.5281/zenodo.19724817) with subsequent implementation and looped-model evaluations. [CITATION.cff](CITATION.cff) identifies this integrated edition; the earlier DOI identifies the earlier paper.
 
-Internal workflow ledgers and operating records are not distributed. Required scientific protocols are in `plans/prespecified/`, and numerical checks are in [data/validation](data/validation/README.md).
+Code: [Apache-2.0](LICENSE). Author-owned papers, figures, and data: [CC BY 4.0](LICENSES/CC-BY-4.0.txt). Third-party terms are retained in [LICENSES.md](LICENSES.md).
 
-Acquisition-time source identifiers in original records are resolved through [source-layout.json](metadata/source-layout.json). The mapper verifies unchanged source bytes and does not recreate the old project folders.
-
-## Availability, attribution, and license
-
-The integrated v1.0 package is hosted at [https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn), with **17 evidence ZIPs and SHA256SUMS in the [integrated-v1.0 Release](https://github.com/metaSATOKEN/nsn/releases/tag/integrated-v1.0)**. The ZIPs total 6.30 GB and remain outside Git history. Download all 17 ZIPs into one directory without renaming them, then follow [REPRODUCIBILITY.md](REPRODUCIBILITY.md). Filenames, sizes, hashes and download URLs are listed in [release-assets.json](metadata/release-assets.json). GitHub's automatic source archives do not include these companion arrays.
-
-**The repository remains private pending the author's public-access decision.** Authorized repository users can access its Release assets. No integrated-paper DOI has been assigned.
-
-The earlier public NSN paper is [*Norm Separation is Necessary*, v1.0.0](https://doi.org/10.5281/zenodo.19724817). The integrated paper combines its reanalysis with subsequent implementation and looped-model evaluations. See [publication provenance](papers/nsn-integrated/publication-provenance-v0.1-2026-10-03.md).
-
-Author-owned code is licensed under [Apache-2.0](LICENSE); author-owned papers, figures and data under [CC BY 4.0](LICENSES/CC-BY-4.0.txt). Third-party material retains its original terms; see [LICENSES.md](LICENSES.md). Citation metadata is in [CITATION.cff](CITATION.cff).
-
-The current PDF exports retain an obsolete contact address and are excluded from this candidate; use the corrected Markdown editions. [Publishing checklist](PUBLISHING.md).
+The repository and Release currently require authorized access while the author reviews the upload. Corrected Markdown editions are available; PDF and integrated-DOI status are tracked in [PUBLISHING.md](PUBLISHING.md).
