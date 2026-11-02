@@ -64,7 +64,6 @@
   },
   "remaining_publication_steps": [
     "Author decides public visibility",
-    "Re-export corrected PDFs if included",
     "Assign integrated archive DOI if desired"
   ],
   "original_research_environment": "Unchanged standard-library-only root venv; analysis dependencies were installed only in a restored temporary copy",

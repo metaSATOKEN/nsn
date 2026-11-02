@@ -49,8 +49,8 @@ Nanbeigeの測定では、その違いが具体的に見えました。
 
 | 知りたいこと | 入口 |
 | --- | --- |
-| 手法・発見・成立する範囲 | 図と付録を含む統合論文：[日本語](papers/nsn-integrated/NSN-2026-10-29-JA.md)／[English](papers/nsn-integrated/NSN-2026-10-29-EN.md) |
-| 再帰型モデルのキャッシュとカーネルの実装 | [Loopedモデルの詳細稿](papers/loop-kv/README.md) |
+| 手法・発見・成立する範囲 | 図と付録を含む統合論文：[日本語](papers/nsn-integrated/NSN-2026-10-29-JA.md)／[English](papers/nsn-integrated/NSN-2026-10-29-EN.md)・[英語PDF](papers/nsn-integrated/NSNv2.0.pdf) |
+| 再帰型モデルのキャッシュとカーネルの実装 | [Loopedモデルの詳細稿](papers/loop-kv/README.md)・[英語PDF](papers/loop-kv/Loop-kv_NSN.pdf) |
 | 実験のコード | [可読Pythonと実験一覧](experiments/README.md) |
 | 結果の根拠になった測定 | [データ一覧](data/README.md)と[証拠の収録範囲](DATA_COVERAGE.md) |
 | 旧版や従来のライブラリAPI | [旧版とライブラリの案内](LEGACY.md) |
@@ -73,8 +73,8 @@ Nanbeigeの測定では、その違いが具体的に見えました。
 
 Kentaro Sato · 独立研究者 · [info@metaclan.jp](mailto:info@metaclan.jp)
 
-統合稿は**2026年10月29日・v1.0**です。既報[*Norm Separation is Necessary*](https://doi.org/10.5281/zenodo.19724817)の再集計に、後続の実装評価と再帰型モデルでの評価を統合しています。統合版の引用情報は[CITATION.cff](CITATION.cff)を参照してください。既報のDOIは旧論文を識別します。
+統合稿のMarkdown版は**2026年10月29日・v1.0**です。既報[*Norm Separation is Necessary*](https://doi.org/10.5281/zenodo.19724817)の再集計に、後続の実装評価と再帰型モデルでの評価を統合しています。統合版の引用情報は[CITATION.cff](CITATION.cff)を参照してください。既報のDOIは旧論文を識別します。
 
 コードは[Apache-2.0](LICENSE)、著者作成の論文・図・データは[CC BY 4.0](LICENSES/CC-BY-4.0.txt)。第三者資料の条件は[LICENSES.md](LICENSES.md)に保持しています。
 
-現在は著者による確認中のため、リポジトリとReleaseの閲覧権限が必要です。訂正済みMarkdownを収録し、PDFと統合版DOIの状況は[PUBLISHING.md](PUBLISHING.md)にまとめています。
+現在は著者による確認中のため、リポジトリとReleaseの閲覧権限が必要です。収録したPDFと統合版DOIの状況は[PUBLISHING.md](PUBLISHING.md)にまとめています。

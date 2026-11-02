@@ -14,5 +14,23 @@
     "included": false,
     "reason": "Cover contact is info@mataclan.jp; re-export from corrected current Markdown before PDF publication.",
     "check": "Poppler text extraction of cover; no complete layout audit"
+  },
+  {
+    "path": "papers/nsn-integrated/NSNv2.0.pdf",
+    "bytes": 563265,
+    "sha256": "c207ef604d4fac9b486f61e534f631e83a3aba49c53fdf23c0a0570923c8020e",
+    "included": true,
+    "pages": 46,
+    "cover_identifier": "NSN-INTEGRATED-EN-0.7",
+    "cover_contact": "info@metaclan.jp"
+  },
+  {
+    "path": "papers/loop-kv/Loop-kv_NSN.pdf",
+    "bytes": 435960,
+    "sha256": "7b275a4531d1fa597bb317c9e9cddf799d29e580f56229df0a1cf0c740d3f371",
+    "included": true,
+    "pages": 32,
+    "cover_identifier": "LOOP-KV-EN-0.3",
+    "cover_contact": "info@metaclan.jp"
   }
 ]

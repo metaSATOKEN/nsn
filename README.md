@@ -49,8 +49,8 @@ Compression saved capacity in this workload. Turning that saving into a time adv
 
 | To understand… | Start here |
 | --- | --- |
-| The method, findings, and their scope | Integrated paper: [English](papers/nsn-integrated/NSN-2026-10-29-EN.md) / [Japanese](papers/nsn-integrated/NSN-2026-10-29-JA.md), including figures and appendices |
-| How the looped-model caches and kernels work | [Looped-model companion paper](papers/loop-kv/README.md) |
+| The method, findings, and their scope | Integrated paper: [English](papers/nsn-integrated/NSN-2026-10-29-EN.md) / [Japanese](papers/nsn-integrated/NSN-2026-10-29-JA.md) with figures and appendices · [English PDF](papers/nsn-integrated/NSNv2.0.pdf) |
+| How the looped-model caches and kernels work | [Looped-model companion paper](papers/loop-kv/README.md) · [English PDF](papers/loop-kv/Loop-kv_NSN.pdf) |
 | How the experiments were implemented | [Readable Python sources and experiment index](experiments/README.md) |
 | Which measurements support a result | [Data index](data/README.md) and [evidence coverage](DATA_COVERAGE.md) |
 | The original edition or the retained library API | [Earlier edition and library guide](LEGACY.md) |
@@ -73,8 +73,8 @@ This checks file identity without running a model. [REPRODUCIBILITY.md](REPRODUC
 
 Kentaro Sato · Independent Researcher · [info@metaclan.jp](mailto:info@metaclan.jp)
 
-The integrated manuscripts are **v1.0, 29 October 2026**. They combine a reanalysis of the earlier [*Norm Separation is Necessary*](https://doi.org/10.5281/zenodo.19724817) with subsequent implementation and looped-model evaluations. [CITATION.cff](CITATION.cff) identifies this integrated edition; the earlier DOI identifies the earlier paper.
+The integrated Markdown manuscripts are **v1.0, 29 October 2026**. They combine a reanalysis of the earlier [*Norm Separation is Necessary*](https://doi.org/10.5281/zenodo.19724817) with subsequent implementation and looped-model evaluations. [CITATION.cff](CITATION.cff) identifies this integrated edition; the earlier DOI identifies the earlier paper.
 
 Code: [Apache-2.0](LICENSE). Author-owned papers, figures, and data: [CC BY 4.0](LICENSES/CC-BY-4.0.txt). Third-party terms are retained in [LICENSES.md](LICENSES.md).
 
-The repository and Release currently require authorized access while the author reviews the upload. Corrected Markdown editions are available; PDF and integrated-DOI status are tracked in [PUBLISHING.md](PUBLISHING.md).
+The repository and Release currently require authorized access while the author reviews the upload. The [publication notes](PUBLISHING.md) list the paper files and integrated DOI status.
