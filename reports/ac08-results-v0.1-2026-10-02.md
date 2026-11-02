@@ -4,7 +4,7 @@
 
 35系列が完走し、手元の独立再計算も一致した。実装と長さを固定した新材料への確認として、AC08を完了する。終端KV67.678%削減と、現行からの追加allocated peak20.283 MiB削減も維持された。
 
-[設計](../plans/loop-kv-ac08-design-v0.1-2026-10-02.md)／[取得前カード](../throughline/prereg/loop-kv-ac08-v0.1-2026-10-02.md)／[原保存物](../runs/loop-kv-ac08-20261002-095022-41c2554c/)／[独立照合](../throughline/audits/loop-kv-ac08-results-v0.1-2026-10-02/)／[全対応値](ac08-descriptive-statistics.json)
+[設計](../plans/loop-kv-ac08-design-v0.1-2026-10-02.md)／[取得前カード](../plans/prespecified/loop-kv-ac08-v0.1-2026-10-02.md)／[原保存物](../runs/loop-kv-ac08-20261002-095022-41c2554c/)／独立照合 (`throughline/audits/loop-kv-ac08-results-v0.1-2026-10-02`)／[全対応値](ac08-descriptive-statistics.json)
 
 ## 1. 固定して比較したもの
 
@@ -106,10 +106,8 @@ RF01全量復元を基準にした主192組では、V復元352,321,536要素中1
 
 RTX PRO 6000 Blackwell Server Edition、Python3.13.15、torch2.11.0+cu128、Triton3.6.0。準備開始からworker終了まで2423.227秒（約40分23秒）。外側照合・ZIP・DLを除く。専用runtime準備は81.211秒だった。
 
-## 6. 今回を閉じ、次に進む範囲
+## 6. 結果の解釈と測定範囲
 
 **V融合の実装と長さを固定したまま、新4文章でも、現行比の時間短縮・品質目安・KV保存量が揃って成立した。** 非量子化との約5.7%の時間差とreservedの増加も残った。
 
 4文章・同一モデル・固定長・1GPUでの小比較として閉じる。技術反復やtoken・slotを独立文章数へ増やさず、p値・CI、既存runとの合算は行わない。
-
-次は既存checkpointの順序どおり、**実装を固定して後続区間を延ばし、圧縮更新が増えても品質・時間・メモリの関係が続くか**の小設計を推奨する。材料数・延長長・捕捉量・上限は次設計で決める。ここでは新kernelや新しいColab実験を追加しない。

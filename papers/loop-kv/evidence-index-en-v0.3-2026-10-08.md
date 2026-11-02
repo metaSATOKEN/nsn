@@ -24,13 +24,13 @@ Each run's `summary.json`, `run_status.json`, manifest, and SHA256 list provide 
 |Table 4 / Figure 2 left: Ouro memory|[AC08 descriptive statistics](../../reports/ac08-descriptive-statistics.json)|`terminal_storage`, `allocated_peak`, `reserved_peak`, and `recorded_prefill_inclusive_peak` under `memory`; bytes converted to MiB|
 |Table 4 / Figure 2 right: Nanbeige memory|[NB05 descriptive statistics](../../data/validation/nb05/supplementary-analysis.json)|Each `books[].terminal_kv_bytes` and `memory`; identical across texts and replicates|
 |Table 5 / Figure 3: bridge control|[VF01 analysis](../../data/validation/vf01/analysis.json)|`main_time_ms`, `timing.cuda_ms.*.main`, and `main_memory_bytes`; 6 main pairs from 2 distinct texts|
-|Table 7 / Figure 4: per-text quality|[Paper data](paper-data-v0.3-2026-10-08.json)|`quality`; 255 predictions and the last 64 for Ouro, 8 post-compression predictions for Nanbeige; PPLs are not averaged directly|
+|Table 7 / Figure 4: per-text quality|[Paper data](data/paper-data-v0.3-2026-10-08.json)|`quality`; 255 predictions and the last 64 for Ouro, 8 post-compression predictions for Nanbeige; PPLs are not averaged directly|
 |Table 8 / Figure 5 left: Ouro time ratios|[AC08 descriptive statistics](../../reports/ac08-descriptive-statistics.json)|`time_ratio_summary` and `window_time_ratio_summary`; median of 8 paired ratios|
 |Table 8 / Figure 5 right: Nanbeige time ratios|[NB05 descriptive statistics](../../data/validation/nb05/supplementary-analysis.json)|`timing.cuda_ms.decode` / `phase_sum`; median of 3 paired ratios per text, then median across 4 texts|
 |Table 6: validation cost|[IV01 descriptive statistics](../../reports/iv01-descriptive-statistics.json)|Representative values and paired ratios for 18 saved model inputs; 192 decisions on 64 fixtures are not independent texts|
 |Formulas and actual packed size|[NSN arithmetic](../../scripts/loop_kv_nb05_primitives.py), [codec](../../scripts/loop_kv_nb05_codec.py)|64×128 block; 3072 code bytes + 640 metadata bytes + 12 header bytes = 3724 bytes; summed over K/V, all heads and slots, and BF16 tails|
 
-Figure 1 is a schematic of the readout paths. Figures 2–5 are generated from extracted paper data. Figure 2 uses the uncompressed value of each memory metric as its denominator. Figure 3 shows path-level values, Figure 4 per-text PPL changes, and Figure 5 paired time ratios aggregated at prespecified units. Source SVGs are retained in `figures/v0.2/`. All five figures already have English labels and are shared unchanged with the Japanese version; captions have been translated and checked against the figures. “Decode” in the figures refers to model decoding; “restore” refers to KV reconstruction. “Checked native” denotes the checked uncompressed path.
+Figure 1 is a schematic of the readout paths. Figures 2–5 are generated from extracted paper data. Figure 2 uses the uncompressed value of each memory metric as its denominator. Figure 3 shows path-level values, Figure 4 per-text PPL changes, and Figure 5 paired time ratios aggregated at prespecified units. Source SVGs are retained in `figures/`. All five figures already have English labels and are shared unchanged with the Japanese version; captions have been translated and checked against the figures. “Decode” in the figures refers to model decoding; “restore” refers to KV reconstruction. “Checked native” denotes the checked uncompressed path.
 
 The extraction and plotting code is [build_paper_assets_v0_2.py](code/build_paper_assets_v0_2.py). Hashes of 8 source files are included in the paper JSON. Figure generation maps previously verified values to the paper; it is separate from rechecking raw logits. The CPU cross-check of Nanbeige logits conducted for Japanese v0.4 is described in Section 8.
 
@@ -46,10 +46,10 @@ Numerical thresholds are retained in the contract and numerical modules imported
 For reaggregation, preserve the original run, inspect verifier side effects, and use a working copy. In particular, the AC08 verifier CLI writes `completion_verification.json`, so it should not be run directly on original evidence. To regenerate only paper tables and figures, run from the research root:
 
 ```bash
-python3 papers/loop-kv/code/build_paper_assets_v0_2.py --research-root .
+.venv/bin/python -B tools/reproduce.py --output-dir /tmp/nsn-results
 ```
 
-This regenerates the v0.2 derived JSON in `papers/loop-kv/` and PNG/SVG files in `figures/v0.2/`. The v0.1 manuscript, data, figures, and code remain separate. It uses no GPU, model, or network; dependencies are matplotlib and the Python standard library.
+Use a fresh restored workspace as described in the [reproduction guide](../../REPRODUCIBILITY.md).
 
 ## 4. Distinctions Between Numerical Checks
 
@@ -99,7 +99,7 @@ Stops and fixes are described in the public reports above. Internal workflow led
 
 ## 6. Relationship to the Integrated Paper
 
-This paper details implementation and evaluation in looped models; the [integrated NSN paper v1.0](../nsn-integrated/NSN-2026-10-29-EN.md) brings together configuration, applicability, actual storage, and readout costs. The earlier public NSN version has been checked in the [publication provenance record](../nsn-integrated/publication-provenance-v0.1-2026-10-03.md). Author-owned papers, figures, and data use CC BY 4.0, code uses Apache-2.0, and third-party terms are retained (see [licenses](../../LICENSES.md)). The repository is [https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn); [README](../../README.md) records its access status and the availability of companion ZIPs. A permanent archive DOI for the integrated paper has not been assigned.
+This paper details implementation and evaluation in looped models; the [integrated NSN paper v1.0](../nsn-integrated/NSN-2026-10-29-EN.md) brings together configuration, applicability, actual storage, and readout costs. The earlier public NSN version has been checked in the [publication provenance record](../../metadata/publication-provenance/README.md). Author-owned papers, figures, and data use CC BY 4.0, code uses Apache-2.0, and third-party terms are retained (see [licenses](../../LICENSES.md)). The repository is [https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn); [README](../../README.md) records its access status and the availability of companion ZIPs. A permanent archive DOI for the integrated paper has not been assigned.
 
 ## 7. Short Implementation and Literature Checks Added in Japanese v0.3
 
@@ -107,13 +107,13 @@ The function body of [nsn_int3_core.py](code/nsn_int3_core.py), shown in Listing
 
 The [comparison results](../../data/validation/qdq-core/core-validation.json) show bitwise agreement with the CPU reference in 24 conditions: 8 synthetic input types × 3 dtypes (FP32 / FP16 / BF16). Inputs include all-zero and constant arrays, zero rows, varying norms, and strided inputs. This is not a new model-quality measurement, a proof for arbitrary inputs, or a bitwise-equivalence test of the GPU fused kernel. Reference-source and short-code SHA256 hashes and per-fixture results are saved. The [check script](../../data/validation/qdq-core/check_core.py) extracts only three functions from the reference code and runs them on the CPU.
 
-Actual storage additionally requires the [codec](../../scripts/loop_kv_nb05_codec.py), cache management, checks, and attention paths. Listing 1's uint8 code array is not counted as actual 3-bit storage. Results in Sections 4–6, all 5 figures, Tables 4–8, and the [paper JSON](paper-data-v0.3-2026-10-08.json) remain unchanged from Japanese v0.2 and use the same derived assets.
+Actual storage additionally requires the [codec](../../scripts/loop_kv_nb05_codec.py), cache management, checks, and attention paths. Listing 1's uint8 code array is not counted as actual 3-bit storage. Results in Sections 4–6, all 5 figures, Tables 4–8, and the [paper JSON](data/paper-data-v0.3-2026-10-08.json) remain unchanged from Japanese v0.2 and use the same derived assets.
 
-The added primary sources and the scope of their use are documented in the [related-work review v0.2](related-work-review-v0.2-2026-10-03.md). Weight/activation quantization, low-dimensional representations across recurrences, and cross-recurrence residual quantization are distinguished. Adding literature did not change measurement conditions or earlier run outcomes.
+Section 2 of the paper cites the primary sources used for each comparison.
 
 ## 8. Numerical Conditions and Separate Reproduction Entry Points
 
-Appendix B, Table B1 corresponds to code fixed before measurement; Table B2 corresponds to saved diagnostic results. The [numerical-audit JSON](numerical-audit-v0.4-2026-10-03.json) stores maximum differences, pass counts, and source hashes. Error measures assess reconstruction and computational consistency for the same compressed input. Prediction-quality loss relative to the uncompressed path is assessed with PPL in Table 7.
+Appendix B, Table B1 corresponds to code fixed before measurement; Table B2 corresponds to saved diagnostic results. The [numerical-audit JSON](data/numerical-audit-v0.4-2026-10-03.json) stores maximum differences, pass counts, and source hashes. Error measures assess reconstruction and computational consistency for the same compressed input. Prediction-quality loss relative to the uncompressed path is assessed with PPL in Table 7.
 
 |Check|Fixed-code entry point|Reference distinction|
 |---|---|---|
@@ -211,13 +211,6 @@ Main-quality targets and saved raw-logit counts differ. For example, the Nanbeig
 
 The continuation comparison was fixed before measurement as NB06. Entry points are the [design](../../plans/loop-kv-nb06-design-v0.1-2026-10-08.md), [prespecified card](../../plans/prespecified/loop-kv-nb06-v0.1-2026-10-08.md), [input contract](../../plans/loop-kv-nb06-input-contract-v0.1-2026-10-08.json), [implementation](../../scripts/loop_kv_nb06.py), [fixed verifier](../../scripts/verify_loop_kv_nb06.py), [original results](../../runs/loop-kv-nb06-20261008-075410-5621380a/summary.json), and [input tokens](../../runs/loop-kv-nb06-20261008-075410-5621380a/materials.json).
 
-The quality, timing, and mean_additive_cost_cuda_ms fields of the [reaggregated results](../../reports/nb06-results-v0.1-2026-10-08.json) map to the quality table, cumulative-time table, and descriptive cost breakdown. The [reaggregation code](../../scripts/analyze_loop_kv_nb06_results.py) checks values against original step records. The 32 actual-query diagnostics are in books[].actual_q of the original summary; memory is in books[].memory_peak_bytes and terminal_kv_bytes. The [verification record](../../data/validation/nb06/verification-summary.json) and [paper-level NB06 numerical table](numerical-audit-nb06-v0.1-2026-10-08.json) are also retained.
+The quality, timing, and mean_additive_cost_cuda_ms fields of the [reaggregated results](../../reports/nb06-results-v0.1-2026-10-08.json) map to the quality table, cumulative-time table, and descriptive cost breakdown. The [reaggregation code](../../scripts/analyze_loop_kv_nb06_results.py) checks values against original step records. The 32 actual-query diagnostics are in books[].actual_q of the original summary; memory is in books[].memory_peak_bytes and terminal_kv_bytes. The [verification record](../../data/validation/nb06/verification-summary.json) and [paper-level NB06 numerical table](data/numerical-audit-nb06-v0.1-2026-10-08.json) are also retained.
 
-The initial tables and Figures 1–5 retain their original measurements. The extension is added in a separate section, Figure 6, and a new JSON version. The [supplement builder](../../scripts/build_nb06_paper_supplements.py) and [version-fixed manuscript changes](../../scripts/nb06_paper_supplements_v0_1.json) verify hashes of base manuscripts, saved aggregates, the original summary, and Figure 6, then regenerate both languages, the figure, and paper data in a new output directory. From the research root, run:
-
-~~~bash
-python3 scripts/build_nb06_paper_supplements.py \
-  --research-root . --output-dir /tmp/nb06-paper-regeneration
-~~~
-
-This regenerates manuscripts, tables, and figures. Rechecking raw logits and numerical diagnostics requires a working copy of the original run and the fixed verifier above. The materials are the same four texts; quality and timing are not pooled with NB05. Original ZIP SHA256: 2ef013414a6a7130bb55ddd0ff32328698b965a1f3347fa023b2400d5d2246fa. Original summary SHA256: 6da2ac29e8490ef5a36364b5637ce56d47bc00554605674a38f3ec93bd4ddc8a.
+The [reproduction guide](../../REPRODUCIBILITY.md) describes how to check the saved logits and regenerate the continuation table data and Figure 6. The materials are the same four texts; quality and timing are not pooled with NB05. Original ZIP SHA256: 2ef013414a6a7130bb55ddd0ff32328698b965a1f3347fa023b2400d5d2246fa. Original summary SHA256: 6da2ac29e8490ef5a36364b5637ce56d47bc00554605674a38f3ec93bd4ddc8a.

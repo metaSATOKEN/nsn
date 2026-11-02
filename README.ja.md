@@ -30,7 +30,7 @@ LLMは、過去の情報を毎回計算し直さずに参照するため、キ�
 
 量子化器は入力ブロックの統計だけを使い、追加の量子化器学習や別の校正コーパスを必要としません。ビット数は調整可能で、3bitなら8段階、5bitなら32段階の目盛りを使えます。
 
-![NSNはベクトルの大きさと方向を分け、方向を量子化し、保存したノルムと組み合わせて復元する。](papers/nsn-integrated/figures/v0.2/figure-01-nsn.png)
+![NSNはベクトルの大きさと方向を分け、方向を量子化し、保存したノルムと組み合わせて復元する。](papers/nsn-integrated/figures/figure-01-nsn.png)
 
 論文には数式と、量子化・復元の核となる10行のコード例を掲載しています。[参照実装](src/README.md)から各処理も確認できます。
 
@@ -77,4 +77,4 @@ Kentaro Sato · 独立研究者 · [info@metaclan.jp](mailto:info@metaclan.jp)
 
 コードは[Apache-2.0](LICENSE)、著者作成の論文・図・データは[CC BY 4.0](LICENSES/CC-BY-4.0.txt)。第三者資料の条件は[LICENSES.md](LICENSES.md)に保持しています。
 
-現在は著者による確認中のため、リポジトリとReleaseの閲覧権限が必要です。収録したPDFと統合版DOIの状況は[PUBLISHING.md](PUBLISHING.md)にまとめています。
+リポジトリと証拠データのReleaseを開くには閲覧権限が必要です。

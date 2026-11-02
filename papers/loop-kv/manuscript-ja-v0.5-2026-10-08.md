@@ -132,7 +132,7 @@ def nsn_int3_qdq(x):
 2. 融合候補と同じ区画単位の復元計算で全長Vを作り、attentionへ渡す。これを**橋渡し対照**と呼ぶ。
 3. 同じ区画単位の復元計算をattention内部で行う。
 
-![図1　復元実装と融合を区別する三経路](figures/v0.2/figure-01-bridge.png)
+![図1　復元実装と融合を区別する三経路](figures/figure-01-bridge.png)
 
 **図1。** 全経路に同じpacked入力を渡す。橋渡し対照と融合の比較は、検査・呼出し構成を含む読み出し経路の比較である。両者の復元値と出力を直接照合し、既存復元器から変わった数値と、内部へ移したことで生じる数値を区別する。
 
@@ -204,7 +204,7 @@ def nsn_int3_qdq(x):
 
 比較用の圧縮経路は、OuroではK融合＋V全量復元、NanbeigeではK/V全量復元＋SDPAである。表の各値は当該比較内で文章・反復によらず同じだった。記録区間の最大値はモデルロードやGPU上の他processまで含む全プロセスpeakではない。
 
-![図2　KV保存量の削減とモデルのメモリ使用量](figures/v0.2/figure-02-memory.png)
+![図2　KV保存量の削減とモデルのメモリ使用量](figures/figure-02-memory.png)
 
 **図2。** 各測定項目の検査付き非圧縮経路を100%とした比率。KV自体の削減が大きくても、prefillを含むallocated最大値やreservedが同じ比率で減るわけではない。各行の分母は異なり、棒を足してメモリの内訳にすることはできない。青は表4の比較用圧縮経路、緑はK/V融合。二モデルは文脈長と圧縮対象割合が異なる。
 
@@ -226,7 +226,7 @@ Ouroから保存した既知2文章×3か所のKVを使い、各組に3種類の
 |区画復元 → 全長V → attention（橋渡し対照）|0.243244|13.9863|
 |区画復元をattention内で実行|0.174514|0.5259|
 
-![図3　同じ復元値を使う橋渡し対照と融合の時間・一時領域](figures/v0.2/figure-03-bridge-cost.png)
+![図3　同じ復元値を使う橋渡し対照と融合の時間・一時領域](figures/figure-03-bridge-cost.png)
 
 **図3。** 表5を時間とallocated増分に分けて表示した。橋渡し対照は融合と同じ復元計算を使って全長Vを作り、融合はその計算をattention内部で行う。左は各経路の時間中央値、右は呼出し前からのallocated増分で、誤差棒や信頼区間ではない。本文の短縮率は同じ入力の対応比から集計するため、棒の高さ同士の割算とは区別する。
 
@@ -274,7 +274,7 @@ Ouroの全255予測では文章によって改善と悪化が分かれた。終�
 
 Nanbeigeは圧縮後の8予測で全四文章が悪化し、最大は＋4.540%だった。四文章を一度ずつ集計した相対PPL変化は＋1.526%である。同じ方式の技術反復は、両モデルとも保存logitsとNLLが一致した。反復を重ねたことは、文章数や品質評価範囲の拡大にはならない。
 
-![図4　新しい文章ごとのPPL変化](figures/v0.2/figure-04-quality.png)
+![図4　新しい文章ごとのPPL変化](figures/figure-04-quality.png)
 
 **図4。** 融合経路の検査付き非圧縮比PPL変化。負は改善、正は悪化を表す。破線は取得前に固定した悪化5%の診断目安で、信頼境界ではない。丸は主評価窓、Ouroの四角は終盤64予測。各点は一つの文章の値であり、同一だった技術反復を重ねて表示していない。横軸は共通だが、二モデルのtoken化と評価長は異なる。
 
@@ -299,7 +299,7 @@ Ouroでは、8つの文章・反復の組合せすべてで融合がV全量復�
 
 Nanbeigeでは、全12組合せで融合が全量復元と非圧縮の逐次時間を下回った。しかし、融合の初期圧縮には文章ごとの中央値で約54.8〜55.3 msを要した。prefill・圧縮・8回の逐次処理を足すと、全12組合せで非圧縮より長かった。同期wallでも同じ方向だった。
 
-![図5　融合の処理時間は、比較相手と測定範囲で変わる](figures/v0.2/figure-05-model-time.png)
+![図5　融合の処理時間は、比較相手と測定範囲で変わる](figures/figure-05-model-time.png)
 
 **図5。** 各行に示す比較相手に対する融合の時間変化。負は短縮、正は増加を表す。Ouroの点は4文章×2反復の8対応比、Nanbeigeの点は文章内3対応比の中央値を取った4文章の値。太い短線は報告する中央値であり、信頼区間ではない。左右で横軸の範囲が異なる。技術反復を独立文章数として数えず、各行の比較相手と計時範囲に沿って読む。
 
@@ -336,7 +336,7 @@ Nanbeigeでは、全12組合せで融合が全量復元と非圧縮の逐次時�
 
 終端KVは69,206,016から24,642,816 byte（66.000から23.501 MiB）へ、64.392%減少した。融合のdecode allocated peakも42.089 MiB低かったが、全工程allocated peakはprefill時の8,197.590 MiBで3方式とも同じだった。**継続によって初期費用は薄まる一方、圧縮更新の費用は繰り返し発生する。** 容量削減を実行上の利益へ変える条件は、読み出しと更新を合わせて評価できる。
 
-![継続評価の品質と累積時間](figures/v0.3/figure-06-continuation.png)
+![継続評価の品質と累積時間](figures/figure-06-continuation.png)
 
 **図6　同じ4文章で測った品質と継続費用。** 左：重ならない64予測区間ごとの融合対非圧縮PPL変化。破線は5%診断目安。中央：固定した8・64・128・256 stepの更新込みdecodeと初期費用込み時間の変化。横軸は測定時点を等間隔に置く。右：256 step総時間の全12対応比と文章別中央値。点と中央値は技術反復の記述であり、区間推定ではない。
 
@@ -390,7 +390,7 @@ OuroからNanbeigeへの移植では、層・周回と保存場所の対応、Q�
 4. Hooper, C., et al. *KVQuant: Towards 10 Million Context Length LLM Inference with KV Cache Quantization.* NeurIPS 2024; arXiv:2401.18079v6, 2025. [一次本文](https://arxiv.org/html/2401.18079v6).
 5. Dao, T., Fu, D. Y., Ermon, S., Rudra, A., and Ré, C. *FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness.* arXiv:2205.14135v2, 2022. [論文](https://arxiv.org/abs/2205.14135v2).
 6. Yang, W., and Liu, S. *FlashLoop: Fast and Memory-Efficient Looped Transformers via Lazy Updates.* arXiv:2609.29812v2, 2026. [一次本文](https://arxiv.org/html/2609.29812v2).
-7. Sato, K. *Norm Separation is Necessary: A Minimalist Calibration-Free INT3 Recipe for KV Cache Quantization.* 2026. [本研究で参照した保存稿](https://doi.org/10.5281/zenodo.19724817). 保存稿記載の公開DOI：10.5281/zenodo.19724817。Zenodo v1.0.0との一致を[版対応記録](../nsn-integrated/publication-provenance-v0.1-2026-10-03.md)で確認済み。
+7. Sato, K. *Norm Separation is Necessary: A Minimalist Calibration-Free INT3 Recipe for KV Cache Quantization.* 2026. [本研究で参照した保存稿](https://doi.org/10.5281/zenodo.19724817). 保存稿記載の公開DOI：10.5281/zenodo.19724817。Zenodo v1.0.0との一致を[版対応記録](../../metadata/publication-provenance/README.md)で確認済み。
 8. Rae, J. W., Potapenko, A., Jayakumar, S. M., Hillier, C., and Lillicrap, T. P. *Compressive Transformers for Long-Range Sequence Modelling.* 2019. 本稿の材料出所：[PG19公式データ説明](https://github.com/google-deepmind/pg19).
 
 9. Zeitoun, A., Torroba-Hennigen, L., and Kim, Y. *Hyperloop Transformers.* arXiv:2604.21254v3, 2026. [一次本文](https://arxiv.org/html/2604.21254v3).
@@ -493,7 +493,7 @@ Nanbeige継続評価（NB06）は、表B1の参照と予算をそのまま使っ
 |PyTorch／CUDA／Triton|2.11.0+cu128／12.8／3.6.0|
 |Transformers|Ouro 4.56.2、Nanbeige 4.45.1|
 |材料選定seed|2026093001（モデルごとの固定tokenizerを使用）|
-|元の正式集計と本文用抽出|[S1](evidence-index-v0.5-2026-10-08.md)、[本文用データ](paper-data-v0.3-2026-10-08.json)|
+|元の正式集計と本文用抽出|[S1](evidence-index-v0.5-2026-10-08.md)、[本文用データ](data/paper-data-v0.3-2026-10-08.json)|
 |図と本文用データの生成|[Pythonコード](code/build_paper_assets_v0_2.py)|
 
 本文用コードは既存の検証済み集計から抽出・再集約するもので、新しいモデル実行は行わない。入力ファイルのSHA256、storageの算式、集計対象数、数値検査の成立範囲を点検する。原logitsからの再計算を行った元検証器への入口もS1に残す。
@@ -502,13 +502,6 @@ Nanbeige継続評価（NB06）は、表B1の参照と予算をそのまま使っ
 
 本文の継続評価はNB06として取得前に固定した。[設計](../../plans/loop-kv-nb06-design-v0.1-2026-10-08.md)、[取得前カード](../../plans/prespecified/loop-kv-nb06-v0.1-2026-10-08.md)、[入力契約](../../plans/loop-kv-nb06-input-contract-v0.1-2026-10-08.json)、[実装](../../scripts/loop_kv_nb06.py)、[固定検証器](../../scripts/verify_loop_kv_nb06.py)、[原結果](../../runs/loop-kv-nb06-20261008-075410-5621380a/summary.json)、[入力token](../../runs/loop-kv-nb06-20261008-075410-5621380a/materials.json)に対応する。
 
-[結果再集計](../../reports/nb06-results-v0.1-2026-10-08.json)のquality・timing・mean_additive_cost_cuda_msが、本文の品質表、累積時間表、記述的費用内訳の入口である。[再集計コード](../../scripts/analyze_loop_kv_nb06_results.py)は原stepから値を照合する。32実Q点の診断は原summaryのbooks[].actual_q、メモリはbooks[].memory_peak_bytesとterminal_kv_bytesから確認できる。[照合記録](../../data/validation/nb06/verification-summary.json)と[本文用NB06数値表](numerical-audit-nb06-v0.1-2026-10-08.json)も保持する。
+[結果再集計](../../reports/nb06-results-v0.1-2026-10-08.json)のquality・timing・mean_additive_cost_cuda_msが、本文の品質表、累積時間表、記述的費用内訳の入口である。[再集計コード](../../scripts/analyze_loop_kv_nb06_results.py)は原stepから値を照合する。32実Q点の診断は原summaryのbooks[].actual_q、メモリはbooks[].memory_peak_bytesとterminal_kv_bytesから確認できる。[照合記録](../../data/validation/nb06/verification-summary.json)と[本文用NB06数値表](data/numerical-audit-nb06-v0.1-2026-10-08.json)も保持する。
 
-初回の表と図1–5は従来の測定を保持し、追補は別節・図6・別版JSONへ加える。[追補生成器](../../scripts/build_nb06_paper_supplements.py)と[固定差分原稿](../../scripts/nb06_paper_supplements_v0_1.json)は、基準本文・保存集計・原summary・図6のhashを照合し、日英本文、図、本文用JSONを新しい出力先へ再生成する。研究ルートで次を実行する。
-
-~~~bash
-python3 scripts/build_nb06_paper_supplements.py \
-  --research-root . --output-dir /tmp/nb06-paper-regeneration
-~~~
-
-これは本文と表・図の再生成である。生logits・数値検査の再実行には原runの作業コピーと上記固定検証器を使う。取得元は同じ4文章で、旧NB05との品質・時間のプールは行わない。原ZIP SHA256は2ef013414a6a7130bb55ddd0ff32328698b965a1f3347fa023b2400d5d2246fa、原summary SHA256は6da2ac29e8490ef5a36364b5637ce56d47bc00554605674a38f3ec93bd4ddc8a。
+[再計算手順](../../REPRODUCIBILITY.md)に従い、保存logitsを照合し、継続評価の表と図6を再生成する。同じ4文章で、旧NB05との品質・時間のプールは行わない。原ZIP SHA256は2ef013414a6a7130bb55ddd0ff32328698b965a1f3347fa023b2400d5d2246fa、原summary SHA256は6da2ac29e8490ef5a36364b5637ce56d47bc00554605674a38f3ec93bd4ddc8a。

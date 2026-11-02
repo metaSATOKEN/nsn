@@ -8,7 +8,7 @@
 
 Ouro-1.4Bの固定revision `fcfcfbc429c7b10ee73dfc718033351d8936d2a8`、BF16・8周、既知2冊3752／31131。prefill768からcache1023まで進め、各条件255予測を採点した。decode中のcache長832／896／960で圧縮範囲を更新する。同じGPUのRTX PRO 6000 Blackwell Server Edition、torch 2.11.0+cu128、Triton 3.6.0で実測した。
 
-[固定設計](../plans/loop-kv-pu02-design-v0.1-2026-10-01.md)／[取得前カード](../throughline/prereg/loop-kv-pu02-v0.1-2026-10-01.md)。取得前の予想は、両冊でFUSEDがPACKEDより短時間で、値と保存形式は同じ、というもの。今回の結果はこの予想に沿った。
+固定設計 (`plans/loop-kv-pu02-design-v0.1-2026-10-01.md`)／取得前カード (`throughline/prereg/loop-kv-pu02-v0.1-2026-10-01.md`)。取得前の予想は、両冊でFUSEDがPACKEDより短時間で、値と保存形式は同じ、というもの。今回の結果はこの予想に沿った。
 
 ## 2. 完了と値の照合
 
@@ -26,7 +26,7 @@ Ouro-1.4Bの固定revision `fcfcfbc429c7b10ee73dfc718033351d8936d2a8`、BF16・8
 
 返却workerをimportしない別集計器で、原BF16 bit列からのFP64採点、token対応、全計測位置、storage内訳、時間集計を再計算した。旧kernelの16入力fixtureと追加2形状はCPUで正解codeのhashを作り直して照合した。GPUでの展開・ゼロ受理・NaN拒否の成立は保存されたゲート記録による。
 
-別コピーを再hashしたうえで、最後のNLL誤記、3回目のflush欠落、最後のtiming欠落、最終KV digestの不一致、後半の時間集計誤記、追加形状の正解hash不一致、storage誤記を入れた7負例はすべて拒否した。原本は受理した。[再集計・検査記録](../throughline/audits/loop-kv-pu02-results-v0.1-2026-10-01/)。
+別コピーを再hashしたうえで、最後のNLL誤記、3回目のflush欠落、最後のtiming欠落、最終KV digestの不一致、後半の時間集計誤記、追加形状の正解hash不一致、storage誤記を入れた7負例はすべて拒否した。原本は受理した。再集計・検査記録 (`throughline/audits/loop-kv-pu02-results-v0.1-2026-10-01`)。
 
 ## 3. 長い区間と後半でも時間短縮が続いた
 
@@ -48,7 +48,7 @@ wall計時の短縮率も19.391%／18.703%だった。各冊でPACKED/FUSEDの�
 
 **初期区間だけで生じた短縮ではなく、圧縮blockが増えた後半にも同程度の差が残った。** 早い／後ろは一本の軌道内の区間であり、独立した短長二試験ではない。
 
-![PU02のモデル時間と区間別短縮](figures/pu02-long-model-times.png)
+!PU02のモデル時間と区間別短縮 (`reports/figures/pu02-long-model-times.png`)
 
 計測はforwardとpostの範囲。復元中の即時検査は含み、モデルロード・コンパイル・CPU採点・snapshot監査・保存は外側にある。FAKEも量子化後の値を持つ対照なので、この表は元の非量子化モデルに対する品質や速度の比較ではない。
 
@@ -73,20 +73,16 @@ PU01の約70%減から割合が変わったのは、終端長と未圧縮tailの
 
 第一段階では、**整数展開の局所変更が、3回の圧縮更新を通したモデル経路でも値・検査・容量を保ち、約19%の時間短縮を維持した**。後続区間を延ばした今回の範囲まで、PU01の成立範囲を広げられた。
 
-それでもFUSEDはFAKEより約1.75〜1.76倍遅い。次の推奨は、二段階作戦の第二段階として、**展開後の復元処理をまとめ、中間の読書きや処理起動を減らせるかの小設計**へ進むこと。SADPの復元＋内積融合を参照しつつ、今回残っているnorm再構成・BF16化・検査・tail連結のどこまでを一度に変えるかを先に固定する。
-
-まず同じ値を保てる復元範囲を調べ、演算順や丸めが変わるattention融合は、その許容条件を明示した別の比較として扱う。即時検査を省く変更やeffective_normの保存は、今回の成功だけでは採用しない。速度がまだ遅いという事実から、残りの全時間を特定の処理のせいにすることもしない。
+それでもFUSEDはFAKEより約1.75〜1.76倍遅い。
 
 今回の完了範囲は既知2冊・同一モデル/GPU・各条件1軌道、最大cache長1023。旧PU01と独立Nとして合算せず、p値・CIは出していない。量子化自体のPPL改善、別GPU、未使用材料、さらに長い文脈は別の問いとして残る。旧PK01のINCONCLUSIVEと旧BF16 full/incremental P0未達は保持した。
 
-PU02はこの固定結果で閉じる。第二段階の設計・コード・新GPU実測はまだ行っていない。
-
 ## 6. 証拠と再計算
 
-- [原ZIP](../runs/loop-kv-pu02-20261001-074838-a39a8745.zip)：SHA256 `6e145df237d2891489a3ec9e7408cd642242519c0d3041a75cc8905564f516c3`
-- [原状態](../runs/loop-kv-pu02-20261001-074838-a39a8745/run_status.json)／[原集計](../runs/loop-kv-pu02-20261001-074838-a39a8745/summary.json)
-- [独立再集計](../throughline/audits/loop-kv-pu02-results-v0.1-2026-10-01/offline-verification.json)／[再集計コード](../scripts/analyze_loop_kv_pu02_return.py)
-- [改変標本の拒否](../throughline/audits/loop-kv-pu02-results-v0.1-2026-10-01/negative-control-report.json)／[図のコード](../scripts/plot_loop_kv_pu02_return.py)
+- 原ZIP (`runs/loop-kv-pu02-20261001-074838-a39a8745.zip`)：SHA256 `6e145df237d2891489a3ec9e7408cd642242519c0d3041a75cc8905564f516c3`
+- 原状態 (`runs/loop-kv-pu02-20261001-074838-a39a8745/run_status.json`)／原集計 (`runs/loop-kv-pu02-20261001-074838-a39a8745/summary.json`)
+- 独立再集計 (`throughline/audits/loop-kv-pu02-results-v0.1-2026-10-01/offline-verification.json`)／再集計コード (`scripts/analyze_loop_kv_pu02_return.py`)
+- 改変標本の拒否 (`throughline/audits/loop-kv-pu02-results-v0.1-2026-10-01/negative-control-report.json`)／図のコード (`scripts/plot_loop_kv_pu02_return.py`)
 
 原62ファイルをそのままrunに保存し、派生解析を監査フォルダへ分けた。元ZIP、採点値、取得前カードの埋込版、原statusは保持。今回手元ではモデルロード・GPU実測・新外部取得を行っていない。別集計器の照合であり、別人による第三者監査ではない。
 

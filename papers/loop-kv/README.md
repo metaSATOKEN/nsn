@@ -1,9 +1,7 @@
 # Looped-model companion study
 
-Current: [English](manuscript-en-v0.3-2026-10-08.md) / [日本語](manuscript-ja-v0.5-2026-10-08.md). Six PNG/SVG figures are in `figures/v0.2/` and `figures/v0.3/`.
+[English PDF, 32 pages](Loop-kv_NSN.pdf) · [English Markdown](manuscript-en-v0.3-2026-10-08.md) · [日本語](manuscript-ja-v0.5-2026-10-08.md)
 
-The current manuscript includes the NB06 continuation evaluation. Earlier Markdown editions and templates here are immutable inputs to `scripts/build_nb06_paper_supplements.py`; they are retained for reproducibility, not alternative current editions. Current contact: **info@metaclan.jp**.
+The PDF cover identifies its edition as `LOOP-KV-EN-0.3`. Both language editions include the NB06 continuation.
 
-[English PDF (32 pages)](Loop-kv_NSN.pdf) · Cover identifier `LOOP-KV-EN-0.3`.
-
-Use the repository-root [running instructions](../../RUNNING.md) and [reproduction guide](../../REPRODUCIBILITY.md). Figure labels are shared between the Japanese and English versions. Numerical results are unchanged by packaging.
+[Figures](figures/) · [Evidence index](evidence-index-en-v0.3-2026-10-08.md) · [証拠索引](evidence-index-v0.5-2026-10-08.md) · [Paper data](data/paper-data-v0.3-2026-10-08.json) · [Reproduction guide](../../REPRODUCIBILITY.md)

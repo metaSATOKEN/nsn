@@ -13,7 +13,7 @@
 
 Ouro-1.4Bの固定revision `fcfcfbc429c7b10ee73dfc718033351d8936d2a8`、BF16・8周、既知2冊3752／31131。prefill768からcache1023まで進め、255予測と、cache長832／896／960での3回の圧縮更新を通した。GPUはRTX PRO 6000 Blackwell Server Edition、torch 2.11.0+cu128、Triton 3.6.0。
 
-[固定設計](../plans/loop-kv-rf01-design-v0.1-2026-10-01.md)／[取得前カード](../throughline/prereg/loop-kv-rf01-v0.1-2026-10-01.md)。取得前の予想は、値・保存量が一致し、両冊でRESTOREがFUSEDより短時間になること。短縮幅とピーク使用量の変化は予測していなかった。今回の結果は、固定した方向予想に沿った。
+固定設計 (`plans/loop-kv-rf01-design-v0.1-2026-10-01.md`)／取得前カード (`throughline/prereg/loop-kv-rf01-v0.1-2026-10-01.md`)。取得前の予想は、値・保存量が一致し、両冊でRESTOREがFUSEDより短時間になること。短縮幅とピーク使用量の変化は予測していなかった。今回の結果は、固定した方向予想に沿った。
 
 ## 2. 値・検査・予定集合の照合
 
@@ -36,7 +36,7 @@ Ouro-1.4Bの固定revision `fcfcfbc429c7b10ee73dfc718033351d8936d2a8`、BF16・8
 
 準備時には、以前のGPU参照とCPU復元の間に84要素の差があった。今回、**同じGPU上で旧処理と新処理を直接比べるゲートは通った**。異なる実行場所の比較を混ぜず、準備時の記録も保持する。
 
-返却workerをimportしない別集計器で、原BF16 bit列からのFP64採点、予定ID・token位置、全計測位置、3flush、保存量と時間集計を再計算した。さらに再hashした別コピーの8負例（末尾NLL、3回目flush、末尾timing、後半集計、入力変更、NPZとcacheの誤対応、Inf拒否欠落、FMA有効化）をすべて拒否した。原本は受理し、変更していない。[監査記録](../throughline/audits/loop-kv-rf01-results-v0.1-2026-10-01/)。
+返却workerをimportしない別集計器で、原BF16 bit列からのFP64採点、予定ID・token位置、全計測位置、3flush、保存量と時間集計を再計算した。さらに再hashした別コピーの8負例（末尾NLL、3回目flush、末尾timing、後半集計、入力変更、NPZとcacheの誤対応、Inf拒否欠落、FMA有効化）をすべて拒否した。原本は受理し、変更していない。監査記録 (`throughline/audits/loop-kv-rf01-results-v0.1-2026-10-01`)。
 
 ## 3. 前回方式から約15.7%短縮し、後半も続いた
 
@@ -56,7 +56,7 @@ wall計時でも15.778%／15.691%短縮した。冊ごとにFUSEDとRESTOREの�
 
 圧縮block数が増えた後半にも短縮が続いた。早い／後ろは同じ軌道内の区間である。
 
-![RF01のモデル時間と区間別短縮](figures/rf01-restore-model-times.png)
+!RF01のモデル時間と区間別短縮 (`reports/figures/rf01-restore-model-times.png`)
 
 計測はforwardとpostの範囲で、復元中の即時検査を含む。モデルロード、コンパイル、CPU採点、snapshot監査、ファイル保存は外側にある。FAKEも同じ量子化後の値を持つ対照なので、非量子化モデルの品質や速度との比較はこの表に含まれない。
 
@@ -75,24 +75,20 @@ wall計時でも15.778%／15.691%短縮した。冊ごとにFUSEDとRESTOREの�
 
 新方式のdecode/post allocatedピークはFUSEDより9.23 MiB（0.280%）小さかった。全forward/postのピークとreservedピークは変わらなかった。今回の主な改善は時間で、保存圧縮率の追加改善ではない。KV storageの67.68%減をGPU全体の使用量の削減率へ読み替えない。
 
-## 5. 二段階作戦の到達点と次の方針
+## 5. 結果の解釈と測定範囲
 
 **整数の展開に続き、浮動小数点復元の前後も、値と即時検査を保ちながらまとめられた。** 既知2冊・3回の圧縮更新を通す今回の範囲で、二段階の局所最適化が成立した。量子化による品質変化とは別に、同じ量子化値を読み出す実装の時間を削れることを確認した。
 
 それでも新方式はFAKEより約1.47〜1.48倍の時間を要する。残差をすべてnorm・検査・連結のどれかに帰属するための計測は、今回行っていない。旧PD01の部品比率も、復元実装が変わった現在へそのまま流用できない。
 
-**次は、この二段階の値一致・速度・容量をチェックポイントとして整理することを推奨する。** さらに速度を狙う場合は、SADPのような復元とattentionの融合が候補になるが、演算順・丸めと数値許容条件を定める別設計になる。今回は、元のnormとattentionを保った範囲までで閉じる。
-
 今回の適用範囲は同一モデル・GPU、既知2冊、各方式1軌道、最大cache長1023。p値・CIは算出せず、旧実験との独立N合算もしない。非量子化対照に対するPPL、未使用材料、別GPU、さらに長い文脈の成立は別途確認する対象である。旧PK01のINCONCLUSIVEと旧BF16 full/incremental P0未達は保持した。
-
-RF01はこの結果で完了。次の設計・コード・GPU実測は開始していない。
 
 ## 6. 証拠と再計算
 
-- [原ZIP](../runs/loop-kv-rf01-20261001-081630-26e77b7d.zip)：SHA256 `79a9bfda5e8e0280188827b4003b88b8844934e5d700eb7ac1bce1f9cd4f9f7c`
-- [原状態](../runs/loop-kv-rf01-20261001-081630-26e77b7d/run_status.json)／[原集計](../runs/loop-kv-rf01-20261001-081630-26e77b7d/summary.json)
-- [独立再集計](../throughline/audits/loop-kv-rf01-results-v0.1-2026-10-01/offline-verification.json)／[再集計コード](../scripts/analyze_loop_kv_rf01_return.py)
-- [改変標本の拒否](../throughline/audits/loop-kv-rf01-results-v0.1-2026-10-01/negative-control-report.json)／[図のコード](../scripts/plot_loop_kv_rf01_return.py)
+- 原ZIP (`runs/loop-kv-rf01-20261001-081630-26e77b7d.zip`)：SHA256 `79a9bfda5e8e0280188827b4003b88b8844934e5d700eb7ac1bce1f9cd4f9f7c`
+- 原状態 (`runs/loop-kv-rf01-20261001-081630-26e77b7d/run_status.json`)／原集計 (`runs/loop-kv-rf01-20261001-081630-26e77b7d/summary.json`)
+- 独立再集計 (`throughline/audits/loop-kv-rf01-results-v0.1-2026-10-01/offline-verification.json`)／再集計コード (`scripts/analyze_loop_kv_rf01_return.py`)
+- 改変標本の拒否 (`throughline/audits/loop-kv-rf01-results-v0.1-2026-10-01/negative-control-report.json`)／図のコード (`scripts/plot_loop_kv_rf01_return.py`)
 
 原87ファイルをそのままrunに保存し、派生解析を監査フォルダへ分けた。原ZIP・採点・status・取得前カードの埋込版は維持。今回手元ではモデルロード、GPU実測、新外部取得を行っていない。別集計器による照合であり、別人による第三者監査ではない。
 

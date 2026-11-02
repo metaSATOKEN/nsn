@@ -47,7 +47,7 @@
 
 平均の分類と各冊の値を分けて残す。S_Kは2冊、S_Vは正側1冊・負側1冊、Jは負側1冊が±0.005の外にある。平均幅内は、すべての材料で無影響という意味ではない。また、この幅による探索的分類を母集団の同等性検定へ置き換えない。
 
-![LP01の品質と位置差](figures/lp01-quality-and-position.png)
+!LP01の品質と位置差 (`reports/figures/lp01-quality-and-position.png`)
 
 図：左は相対PPL、右は位置のNLL差。点は各冊、ひし形は平均、横線は比較別95%区間。右の背景は事前の平均判定幅。左は細部を表示するため拡大しており、5%境界は描画範囲外にある。
 
@@ -82,11 +82,9 @@ MSEは各軌道の二乗誤差合計／対象要素数、相対L2は√（二乗
 
 照合は原token値・固定点分布と、実行時に保存された介入検査証拠を対象にした。全KV実体と全tokenの語彙分布は保存されていないため、全テンソルの再実行をしたという意味ではない。手元でモデルをロードせず、CPUで照合した。
 
-## 6. この比較の閉じ方と次の候補
+## 6. 結果の解釈と測定範囲
 
 LP01を固定40軌道で閉じる。NSN原系列でも行われたK/V切分けから一歩進み、今回は同じ総8周の中で**介入する周回位置**を比較できた。その結果、固定条件・固定8冊では、細かな周回配分を導入する根拠となる大きな平均位置差は得られなかった。
-
-次の推奨は、P1A・P1B・KV01・LP01の到達点をいったん整理すること。そのうえで、より長い逐次利用で新しく増えるKVも圧縮した場合に、品質目安内を維持できるかを小さく検討する。初期prefixだけを丸める現在の条件から、継続利用へ射程を広げるためである。今回は次設計・次コード・新規実測には着手していない。
 
 位置差の未使用材料での確認、同じ誤差エネルギーを与える伝播診断、通常の層別感度との比較、同予算での配分比較、実packed cacheは別の問いとして棚に残す。P0の旧結果、P1Bの元H2、KV01のD/Iは変更しない。
 
@@ -107,11 +105,11 @@ LP01を固定40軌道で閉じる。NSN原系列でも行われたK/V切分け�
 
 ## 証拠への入口
 
-- [原ZIP](../runs/loop-kv-lp01-20260930-123820-2a19fe23/original.zip)／[展開原本](../runs/loop-kv-lp01-20260930-123820-2a19fe23/artifacts/)。
-- [元値からの再集計JSON](../runs/loop-kv-lp01-20260930-123820-2a19fe23/offline-verification.json)。
-- [独立照合器](../scripts/verify_loop_kv_lp01.py)／[改変コピー検査](../scripts/test_verify_loop_kv_lp01.py)／[描画コード](../scripts/plot_loop_kv_lp01.py)。
-- [監査記録](../throughline/audits/loop-kv-lp01-results-v0.1-2026-09-30/)／[SVG図](figures/lp01-quality-and-position.svg)。
-- [固定設計](../plans/loop-kv-lp01-design-v0.1-2026-09-30.md)／[取得前カードと取得後欄](../throughline/prereg/loop-kv-lp01-v0.1-2026-09-30.md)。
+- 原ZIP (`runs/loop-kv-lp01-20260930-123820-2a19fe23/original.zip`)／展開原本 (`runs/loop-kv-lp01-20260930-123820-2a19fe23/artifacts`)。
+- 元値からの再集計JSON (`runs/loop-kv-lp01-20260930-123820-2a19fe23/offline-verification.json`)。
+- 独立照合器 (`scripts/verify_loop_kv_lp01.py`)／改変コピー検査 (`scripts/test_verify_loop_kv_lp01.py`)／描画コード (`scripts/plot_loop_kv_lp01.py`)。
+- 監査記録 (`throughline/audits/loop-kv-lp01-results-v0.1-2026-09-30`)／SVG図 (`reports/figures/lp01-quality-and-position.svg`)。
+- 固定設計 (`plans/loop-kv-lp01-design-v0.1-2026-09-30.md`)／取得前カードと取得後欄 (`throughline/prereg/loop-kv-lp01-v0.1-2026-09-30.md`)。
 
 再計算例（研究フォルダ直下）：
 

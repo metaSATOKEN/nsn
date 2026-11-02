@@ -10,7 +10,7 @@
 
 Ouro-1.4Bの固定revision `fcfcfbc429c7b10ee73dfc718033351d8936d2a8`、BF16、8周。既知2冊3752／31131、prefill768、終端cache848、各80予測。3752はFAKE→PACKED→FUSED、31131はFAKE→FUSED→PACKEDの固定順で、それぞれ新しいcacheを使った。
 
-[固定設計](../plans/loop-kv-pu01-design-v0.1-2026-10-01.md)／[取得前カード](../throughline/prereg/loop-kv-pu01-v0.1-2026-10-01.md)。取得前の「展開単体は短くなる」という予想に沿った。モデル短縮は可能性として置き、倍率の予測はしていなかった。
+固定設計 (`plans/loop-kv-pu01-design-v0.1-2026-10-01.md`)／取得前カード (`throughline/prereg/loop-kv-pu01-v0.1-2026-10-01.md`)。取得前の「展開単体は短くなる」という予想に沿った。モデル短縮は可能性として置き、倍率の予測はしていなかった。
 
 ## 2. 完了と値の照合
 
@@ -30,7 +30,7 @@ Ouro-1.4Bの固定revision `fcfcfbc429c7b10ee73dfc718033351d8936d2a8`、BF16、8
 
 部品測定に使った12標本の参照値＋tailは、実モデルPACKED終端の該当slotのdigestに接続できた。全復元の中間出力を手元で再生成した検証とは区別する。
 
-再hashしたコピーに、NLL誤記、入力変更ゲートの不合格、部品集計値の変更、実cacheと標本の対応不一致、計測区間欠落、kernel正解hash不一致を入れた6負例は全拒否。原本は受理した。[検算・検査記録](../throughline/audits/loop-kv-pu01-results-v0.1-2026-10-01/)。
+再hashしたコピーに、NLL誤記、入力変更ゲートの不合格、部品集計値の変更、実cacheと標本の対応不一致、計測区間欠落、kernel正解hash不一致を入れた6負例は全拒否。原本は受理した。検算・検査記録 (`throughline/audits/loop-kv-pu01-results-v0.1-2026-10-01`)。
 
 ## 3. モデル経路まで時間短縮が届いた
 
@@ -59,7 +59,7 @@ Ouro-1.4Bの固定revision `fcfcfbc429c7b10ee73dfc718033351d8936d2a8`、BF16、8
 
 三つの比較は各12/12標本で短縮。展開単体の速度比中央値は9.430倍（8.923〜9.554倍）。wall計時の短縮率中央値はそれぞれ88.822%／41.797%／41.349%だった。全標本・全roundの中央値と範囲は独立再集計JSONに保存した。
 
-![PU01の部品とモデル時間](figures/pu01-unpack-model-times.png)
+!PU01の部品とモデル時間 (`reports/figures/pu01-unpack-model-times.png`)
 
 部品測定は同じ入力を繰り返すwarm-cache診断であり、時間を加算・乗算してモデル実行時間を推定しない。12標本は2冊・同じモデルから得た関連するKVで、36の独立実験ではない。範囲は信頼区間ではなく、設計どおりp値・CIは出していない。GPU内cache、演算起動数、一時bufferの各寄与は今回分離していない。
 
@@ -76,28 +76,18 @@ Ouro-1.4Bの固定revision `fcfcfbc429c7b10ee73dfc718033351d8936d2a8`、BF16、8
 
 KV storageはFAKE比**69.981%削減**。内訳はcode216.00、metadata45.00、header0.84375、tail120.00 MiB。GPU常駐bufferを数えた値である。モデル重み等を含む全allocatedピークの削減は約1.50%、decode/postピークは約21.03%で、GPU総使用量が70%減ったという意味ではない。reservedピークはFAKEより約3.61%増えた。表のピークは計測対象forward/postの範囲で、全プロセスを外部モニターした最大値とは異なる。
 
-## 6. 到達点と次の候補
+## 6. 結果の解釈と測定範囲
 
 今回は、**保存形式・復元値・即時検査を保った整数展開の局所変更が、部品と短いモデル経路の両方を速くした**。旧PD01の診断から、実際のモデル経路に反映された変更へ一段進んだ。
 
 既知2冊・同じGPU・単一モデル・短い終端長で、各冊各方式のモデル軌道は一回である。量子化そのものの品質、別GPUや長文脈での速度、長期の安定性まで広げる材料は今回増やしていない。旧PK01の最終INCONCLUSIVEと、元のBF16 full/incremental P0未達は保持する。
 
-**次の推奨は、新kernelを固定したまま後続区間を延ばす小比較。** まず既知材料を使い、長さだけを変えて、複数回の圧縮更新後にも値一致・時間短縮・容量削減が続くかを確認する。同じ条件で従来PACKEDを対照に置く。所要時間と保存量は今回より増えるが、実装をさらに変える前に成立範囲を一つ広げられる。新材料は、その後の転移確認候補とする。
-
-| 保留候補 | 費用・注意 | 再検討する条件 |
-|---|---|---|
-| 未使用材料への転移 | 材料固定と追加取得が必要 | 長さ変更でも同じ実装の正しさと短縮が保たれた場合 |
-| 復元／attentionの融合 | 変更範囲が広く、丸め・buffer寿命の再検証が必要 | 固定実装の確認後もFAKEとの時間差が残り、復元側の寄与を次の対象に選ぶ場合 |
-| 検査の集約、effective_norm保存 | 停止時点または数値契約が変わる | それぞれの変更理由と許容条件を別設計として合意できた場合 |
-
-PU01は固定範囲で閉じる。次の設計・コード・実GPU測定はまだ行っていない。
-
 ## 7. 証拠と再計算
 
-- [原ZIP](../runs/loop-kv-pu01-20261001-071446-c65ca1a2.zip)：SHA256 `1f20a31a394fd781b75ead5aac9566b929bb8547a75dbe0776908bf51e67f641`
-- [原runの状態](../runs/loop-kv-pu01-20261001-071446-c65ca1a2/run_status.json)／[原集計](../runs/loop-kv-pu01-20261001-071446-c65ca1a2/summary.json)
-- [独立再集計](../throughline/audits/loop-kv-pu01-results-v0.1-2026-10-01/offline-verification.json)／[再集計コード](../scripts/analyze_loop_kv_pu01_return.py)
-- [図のコード](../scripts/plot_loop_kv_pu01_return.py)／[改変標本の拒否](../throughline/audits/loop-kv-pu01-results-v0.1-2026-10-01/negative-control-report.json)
+- 原ZIP (`runs/loop-kv-pu01-20261001-071446-c65ca1a2.zip`)：SHA256 `1f20a31a394fd781b75ead5aac9566b929bb8547a75dbe0776908bf51e67f641`
+- 原runの状態 (`runs/loop-kv-pu01-20261001-071446-c65ca1a2/run_status.json`)／原集計 (`runs/loop-kv-pu01-20261001-071446-c65ca1a2/summary.json`)
+- 独立再集計 (`throughline/audits/loop-kv-pu01-results-v0.1-2026-10-01/offline-verification.json`)／再集計コード (`scripts/analyze_loop_kv_pu01_return.py`)
+- 図のコード (`scripts/plot_loop_kv_pu01_return.py`)／改変標本の拒否 (`throughline/audits/loop-kv-pu01-results-v0.1-2026-10-01/negative-control-report.json`)
 
 原78ファイルだけをrunへ保存し、派生解析を監査フォルダへ分離した。原ZIP・原採点・取得前カードの埋込版・元statusを保持。今回ローカルのモデルロード、GPU実測、新しい外部データ取得は0件。別実装による照合であり、別人による第三者監査とはしない。
 

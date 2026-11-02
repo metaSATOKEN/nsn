@@ -4,7 +4,7 @@
 
 終端KVの保存量は両圧縮方式で同じ。V融合で主decodeの使用中メモリpeakがさらに20.283 MiB減った一方、確保済み領域とprefill込みの記録peakは現行と同じだった。接続・数値・時間・品質・保存容量を照合し、固定したAC07を完了する。
 
-[設計](../plans/loop-kv-ac07-design-v0.1-2026-10-02.md)／[取得前カード](../throughline/prereg/loop-kv-ac07-v0.1-2026-10-02.md)／[原保存物](../runs/loop-kv-ac07-20261002-082407-0cc44a28/)／[独立照合](../throughline/audits/loop-kv-ac07-results-v0.1-2026-10-02/)／[対応値・区間別集計](ac07-descriptive-statistics.json)
+設計 (`plans/loop-kv-ac07-design-v0.1-2026-10-02.md`)／取得前カード (`throughline/prereg/loop-kv-ac07-v0.1-2026-10-02.md`)／原保存物 (`runs/loop-kv-ac07-20261002-082407-0cc44a28`)／独立照合 (`throughline/audits/loop-kv-ac07-results-v0.1-2026-10-02`)／対応値・区間別集計 (`reports/ac07-descriptive-statistics.json`)
 
 ## 1. 比較した範囲
 
@@ -101,5 +101,3 @@ RTX PRO 6000 Blackwell Server Edition、Python3.13.15、torch2.11.0+cu128、Trit
 | H4：両packed方式の実保存byte数・構成が等しい | 成立 |
 
 **既存のKV削減を保ち、小さな品質変化の範囲で、V融合によるdecode時間短縮をモデル接続でも確認した。** 非量子化との速度差とallocatorの確保量増加も残った。既知2文章・1モデル・固定長・同一GPUでの記述比較として、反復を独立4文章に数えず、p値・信頼区間や過去結果との合算は行わない。
-
-予定の「部品比較→異常入力の小確認→モデル接続」が一巡した。次は**VF01・NC01・AC07をチェックポイントに整理し、部品とモデルで得た短縮、品質、メモリの到達点を分けて確定する**のがよい。今回の範囲は照合・集計・記帳までとし、追加実験は自動で始めない。

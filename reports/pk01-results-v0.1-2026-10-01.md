@@ -16,7 +16,7 @@
 
 Ouro-1.4B固定版、BF16、8周、192 slot。既知2冊（3752／31131）、入力1,024 token、prefill768、採点位置769〜1023の255予測／軌道。終端cacheは1,023 tokenで、896 tokenを圧縮し、127 tokenをBF16で保持した。両冊でFAKE/PACKEDの実行順を逆にした。材料数は2冊で、軌道やtokenを独立材料数へ水増ししない。
 
-[設計](../plans/loop-kv-pk01-design-v0.1-2026-10-01.md)／[取得前カード](../throughline/prereg/loop-kv-pk01-v0.1-2026-10-01.md)。原BF16 full/incremental P0の未達は継続して保持する。
+設計 (`plans/loop-kv-pk01-design-v0.1-2026-10-01.md`)／取得前カード (`throughline/prereg/loop-kv-pk01-v0.1-2026-10-01.md`)。原BF16 full/incremental P0の未達は継続して保持する。
 
 ## 2. 実行と検証の状態
 
@@ -91,20 +91,16 @@ CUDA Eventとwall timeの双方で同じ傾向だった。**小さく保存す�
 
 保存された原logitsと各時点digestに食違いは見つからず、FP64でPPLを再計算しても§4の傾向は変わらなかった。この追加計算は事後診断。元NLLを置換せず、2e-5の閾値を緩めず、`INCONCLUSIVE`を`PASS_STORAGE`へ書き換えない。workerの`PASS_STORAGE`は保存量・FAKE/PACKED一致の集計状態であり、最終の全検証通過とは区別する。
 
-## 7. 到達点と次の一手
+## 7. 結果の解釈と測定範囲
 
 取得前の「復元一致と常駐量削減」の予想に沿う測定が得られた。速度向上は予想・合格条件に含めておらず、今回の遅さも結果として残す。数値照合を含む正式な検証完了は未達である。
 
-**次の推奨は、GPU実験を追加する前に採点経路をFP64へ揃えるオフライン修正。** 保存済みlogitsと合成fixtureで、別実装との照合・誤target／意図的なNLL改変の拒否を点検する。観測した最大誤差に合わせて許容幅を広げる方法は採らない。修正を次回実験に適用する場合は版と取得前条件を新たに固定する。
-
-その後の問いは「どの復元・連結処理が時間を使っているか」。速度内訳の小診断または最適化候補の設計へ進める。長cache・新材料への拡張はその目的が定まった段階で検討する。今回の6軌道を成功まで増やしたり、過去LC01/LC02と独立反復として合算したりしない。
-
 ## 8. 証拠と再計算
 
-- [原ZIP](../runs/loop-kv-pk01-20261001-060906-22517c43.zip)：SHA256 `b21f6cb661e657481bb7459135b72d737e9381654b94ec89c7033597907f539f`
-- [原runの最終状態](../runs/loop-kv-pk01-20261001-060906-22517c43/run_status.json)、[worker集計](../runs/loop-kv-pk01-20261001-060906-22517c43/worker_summary.json)、[元の照合停止](../runs/loop-kv-pk01-20261001-060906-22517c43/recovery_verification.log)
-- [独立再集計JSON](../throughline/audits/loop-kv-pk01-results-v0.1-2026-10-01/offline-verification.json)：全token FP64参考値・超過12件・容量・時間・ゲートを収録
-- [再集計コード](../scripts/analyze_loop_kv_pk01_return.py)、[改変標本検査](../throughline/audits/loop-kv-pk01-results-v0.1-2026-10-01/negative-control-report.json)
+- 原ZIP (`runs/loop-kv-pk01-20261001-060906-22517c43.zip`)：SHA256 `b21f6cb661e657481bb7459135b72d737e9381654b94ec89c7033597907f539f`
+- 原runの最終状態 (`runs/loop-kv-pk01-20261001-060906-22517c43/run_status.json`)、worker集計 (`runs/loop-kv-pk01-20261001-060906-22517c43/worker_summary.json`)、元の照合停止 (`runs/loop-kv-pk01-20261001-060906-22517c43/recovery_verification.log`)
+- 独立再集計JSON (`throughline/audits/loop-kv-pk01-results-v0.1-2026-10-01/offline-verification.json`)：全token FP64参考値・超過12件・容量・時間・ゲートを収録
+- 再集計コード (`scripts/analyze_loop_kv_pk01_return.py`)、改変標本検査 (`throughline/audits/loop-kv-pk01-results-v0.1-2026-10-01/negative-control-report.json`)
 
 展開run内は原57ファイルのみを保ち、派生分析は監査フォルダへ分離した。再計算はPython＋NumPy、超過行の補助照合にはCPU PyTorchを使用する。モデル・GPU・通信は不要。
 

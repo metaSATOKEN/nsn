@@ -2,7 +2,7 @@
 
 **未使用4文章でもNanbeigeのGQA融合接続が成立した（PASS_MODEL_CONNECTION）。** 60系列・540 forwardが完了し、配布前から存在するNumPy検証器で同じ結果を再計算した。融合のPPL悪化は各文章＋0.149〜＋4.540%で、全4文章が事前の5%目安内。融合のモデルdecodeは全量復元より43.040%短く、検査付き非圧縮より2.984%短かった。最初の圧縮まで含めると非圧縮より14.765%長く、今回の短い系列では初期費用は回収していない。
 
-[固定設計](../plans/loop-kv-nb05-design-v0.1-2026-10-03.md)／[取得前カード](../throughline/prereg/loop-kv-nb05-v0.1-2026-10-03.md)／[原証拠](../runs/loop-kv-nb05-20261003-090604-18baabf5/)／[独立再計算](../throughline/audits/loop-kv-nb05-results-v0.1-2026-10-03/)。
+[固定設計](../plans/loop-kv-nb05-design-v0.1-2026-10-03.md)／[取得前カード](../plans/prespecified/loop-kv-nb05-v0.1-2026-10-03.md)／[原証拠](../runs/loop-kv-nb05-20261003-090604-18baabf5/)／独立再計算 (`throughline/audits/loop-kv-nb05-results-v0.1-2026-10-03`)。
 
 ## 1. 固定した比較が完了した
 
@@ -75,7 +75,7 @@ Nanbeigeの固定revision、BF16、22層×2周、Q48／KV8／head128を使用。
 
 実Q16点は、QK score最大絶対差3.522e-6、context最大絶対差3.988e-6を含め、取得前の各工程の予算内だった。融合とTORCH_SDPAの最終attention出力はbit一致ではなく、最大絶対差0.125があった。全slotで検査した保存形式・経路と、代表16点で詳細に確認した数値予算は、異なる確認範囲として残す。
 
-## 5. 予想の照合と論文化への出口
+## 5. 結果の解釈と測定範囲
 
 |取得前の予想|今回の観測|判定|
 |---|---|---|
@@ -85,12 +85,10 @@ Nanbeigeの固定revision、BF16、22層×2周、Q48／KV8／head128を使用。
 
 NB05の予定範囲をこれで閉じる。現在稿へ追加できるのは、**OuroからGQAを持つNanbeigeへ接続した仕組みが、新4文章でも保存と数値の整合を保ち、全量復元の読み出し費用を下げた**という証拠である。今回も残った品質変化、圧縮の初期費用、全体peakの上限を同じ比較の中で示せる。
 
-次は今回のLooped Transformer研究の日本語草稿へ進む。軸は①圧縮して保持する量と実際に使う費用、②復元とattentionの融合による短縮と初期費用、③モデルを変えて継承できた部分と接続条件。NSNの品質改善一般、長文脈での償却点、自由生成の能力、他GPUでの速度優位は今回の到達点から分ける。modeqと未公開SADPのNSN関連知見を抽出し、NSN統合稿へまとめる工程はその後に置く。
-
 ## 6. 再計算と環境の記録
 
-返却ZIP SHA-256：`9d515c5da44358a66cb3ccccadf4f86093a0f5973a0daf84af7f34df050e0da2`。返却コードを実行せず、配布済みの検証器から原logits、選定lock、予定、storage、数値、速度集約を再計算した。手元の派生float22欄に最大3.553e-15の差があり、取得前固定のrtol=atol=1e-12内。原配列・hash・離散判定は一致。差は[別記録](../throughline/audits/loop-kv-nb05-results-v0.1-2026-10-03/derived-float-differences.json)へ残した。
+返却ZIP SHA-256：`9d515c5da44358a66cb3ccccadf4f86093a0f5973a0daf84af7f34df050e0da2`。返却コードを実行せず、配布済みの検証器から原logits、選定lock、予定、storage、数値、速度集約を再計算した。手元の派生float22欄に最大3.553e-15の差があり、取得前固定のrtol=atol=1e-12内。原配列・hash・離散判定は一致。差は別記録 (`throughline/audits/loop-kv-nb05-results-v0.1-2026-10-03/derived-float-differences.json`)へ残した。
 
 実GPUはNVIDIA RTX PRO 6000 Blackwell Server Edition、driver 580.82.07。torch 2.11.0+cu128、Triton 3.6.0、transformers 4.45.1、モデルrevisionは固定値と一致。4文章の測定区間は保存・診断込み約52.7秒、準備開始から最後の文章終了までは約170.6秒だった。この経過時間は表のmodel-forward計時と分ける。
 
-事後の補助照合として、各文章のwarmup／主測定、融合診断／主測定、非圧縮ゲート／主測定のlogit hashも一致した。[詳細分析](../throughline/audits/loop-kv-nb05-results-v0.1-2026-10-03/supplementary-analysis.json)に文章別・token別の値、全12対応block、peak、数値差を保存した。旧NB04・Ouroの成績は変更・合算していない。今回の手元作業ではモデルロード、新たなGPU実行、ネットワーク取得を行っていない。
+事後の補助照合として、各文章のwarmup／主測定、融合診断／主測定、非圧縮ゲート／主測定のlogit hashも一致した。[詳細分析](../data/validation/nb05/supplementary-analysis.json)に文章別・token別の値、全12対応block、peak、数値差を保存した。旧NB04・Ouroの成績は変更・合算していない。今回の手元作業ではモデルロード、新たなGPU実行、ネットワーク取得を行っていない。

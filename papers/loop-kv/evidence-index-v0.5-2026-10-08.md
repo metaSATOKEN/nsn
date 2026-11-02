@@ -24,13 +24,13 @@
 |表4・図2左：Ouro memory|[AC08記述集計](../../reports/ac08-descriptive-statistics.json)|`memory` 内の `terminal_storage`、`allocated_peak`、`reserved_peak`、`recorded_prefill_inclusive_peak`。byteをMiBへ換算|
 |表4・図2右：Nanbeige memory|[NB05記述集計](../../data/validation/nb05/supplementary-analysis.json)|各 `books[].terminal_kv_bytes` と `memory`。全文章・反復で同値|
 |表5・図3：橋渡し対照|[VF01分析](../../data/validation/vf01/analysis.json)|`main_time_ms`、`timing.cuda_ms.*.main`、`main_memory_bytes`。主6組、独立文章は2|
-|表7・図4：文章別品質|[本文用データ](paper-data-v0.3-2026-10-08.json)|`quality`。Ouroは255予測と終盤64、Nanbeigeは圧縮後8。PPLの直接平均はしない|
+|表7・図4：文章別品質|[本文用データ](data/paper-data-v0.3-2026-10-08.json)|`quality`。Ouroは255予測と終盤64、Nanbeigeは圧縮後8。PPLの直接平均はしない|
 |表8・図5左：Ouro時間比|[AC08記述集計](../../reports/ac08-descriptive-statistics.json)|`time_ratio_summary` と `window_time_ratio_summary`。8対応比の中央値|
 |表8・図5右：Nanbeige時間比|[NB05記述集計](../../data/validation/nb05/supplementary-analysis.json)|`timing.cuda_ms.decode`／`phase_sum`。文章内3対応比の中央値→4文章の中央値|
 |表6：検査費用|[IV01記述集計](../../reports/iv01-descriptive-statistics.json)|18実入力の代表値と対応比。64fixtureの192判定を独立文章数にしない|
 |式・実packed量|[NSN算術](../../scripts/loop_kv_nb05_primitives.py)、[codec](../../scripts/loop_kv_nb05_codec.py)|64×128区画。符号3072＋補助情報640＋header12＝3724 byte。両K/V、全head・slot、BF16末尾を合計|
 
-図1は読み出し経路の模式図。図2〜5は本文用抽出データから作成した。図2の分母は各測定項目の非圧縮値、図3は各経路の水準値、図4は文章別PPL変化、図5は取得前に固定した単位で集計する対応時間比である。画像の元となるSVGも `figures/v0.2/` に保存した。本文用抽出・作図コードは[build_paper_assets_v0_2.py](code/build_paper_assets_v0_2.py)。読み込み元8ファイルのhashを本文用JSONに保存する。この図表生成は、前回の検証済み数値を本文へ対応づける作業であり、原logitsの再検証とは別である。v0.4で行ったNanbeige保存logitsのCPU照合は§8へ分けた。
+図1は読み出し経路の模式図。図2〜5は本文用抽出データから作成した。図2の分母は各測定項目の非圧縮値、図3は各経路の水準値、図4は文章別PPL変化、図5は取得前に固定した単位で集計する対応時間比である。画像の元となるSVGも `figures/` に保存した。本文用抽出・作図コードは[build_paper_assets_v0_2.py](code/build_paper_assets_v0_2.py)。読み込み元8ファイルのhashを本文用JSONに保存する。この図表生成は、前回の検証済み数値を本文へ対応づける作業であり、原logitsの再検証とは別である。v0.4で行ったNanbeige保存logitsのCPU照合は§8へ分けた。
 
 ## 3. 取得前計画と再計算の入口
 
@@ -44,10 +44,10 @@
 再集計を行う場合は原runを保持し、検証器の副作用を確認して作業コピー上で実行する。とくにAC08検証器のCLIは `completion_verification.json` を書くため、原証拠へ直接実行しない。本文用の表と図だけを再作成する場合は、研究ルートから次を実行できる。
 
 ```bash
-python3 papers/loop-kv/code/build_paper_assets_v0_2.py --research-root .
+.venv/bin/python -B tools/reproduce.py --output-dir /tmp/nsn-results
 ```
 
-このコマンドは `papers/loop-kv/` のv0.2派生JSONと `figures/v0.2/` のPNG・SVGを再生成する。v0.1の稿・データ・図・コードは保持する。GPU、モデル、ネットワークは使わない。必要packageはmatplotlibとPython標準library。
+[再計算手順](../../REPRODUCIBILITY.md)に従って復元した作業コピーを使う。
 
 ## 4. 数値照合の区別
 
@@ -97,7 +97,7 @@ python3 papers/loop-kv/code/build_paper_assets_v0_2.py --research-root .
 
 ## 6. 今回稿と統合稿の境界
 
-本稿は再帰型モデルでの実装・評価を詳述し、[NSN統合稿 v1.0](../nsn-integrated/NSN-2026-10-29-JA.md)は構成・適用条件・実保存量・利用費用をまとめる。既公開NSNの版照合は[版対応記録](../nsn-integrated/publication-provenance-v0.1-2026-10-03.md)に保存済み。著者作成の論文・図・データはCC BY 4.0、コードはApache-2.0とし、第三者条件を保持する（[利用条件](../../LICENSES.md)）。リポジトリは[https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn)。公開範囲と別配布ZIPの提供状況は[README](../../README.ja.md)に記録する。統合稿の恒久アーカイブDOIは未割当である。
+本稿は再帰型モデルでの実装・評価を詳述し、[NSN統合稿 v1.0](../nsn-integrated/NSN-2026-10-29-JA.md)は構成・適用条件・実保存量・利用費用をまとめる。既公開NSNの版照合は[版対応記録](../../metadata/publication-provenance/README.md)に保存済み。著者作成の論文・図・データはCC BY 4.0、コードはApache-2.0とし、第三者条件を保持する（[利用条件](../../LICENSES.md)）。リポジトリは[https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn)。公開範囲と別配布ZIPの提供状況は[README](../../README.ja.md)に記録する。統合稿の恒久アーカイブDOIは未割当である。
 
 ## 7. v0.3の短い実装と文献の照合
 
@@ -105,14 +105,14 @@ python3 papers/loop-kv/code/build_paper_assets_v0_2.py --research-root .
 
 [照合結果](../../data/validation/qdq-core/core-validation.json)は合成8種×3 dtype（FP32／FP16／BF16）の24条件で、CPU上の参照出力と全bitが一致した。全ゼロ、定数、ゼロ行、ノルムの分散、stride付き入力等を含む。モデルの品質測定、任意入力への完全性証明、GPU融合kernelとの全bit一致の試験には数えない。参照sourceと短いコードのSHA256、fixtureごとの結果を保存した。[照合スクリプト](../../data/validation/qdq-core/check_core.py)は参照コードから三関数だけを読み出してCPUで実行する。
 
-実保存には[codec](../../scripts/loop_kv_nb05_codec.py)とcache・検査・attention経路が別途必要となる。コード1のuint8配列を実3bit保存と数えない。§4〜6の数値、図5点、表4〜8、[本文用JSON](paper-data-v0.3-2026-10-08.json)はv0.2から変更せず、同じ派生資産を参照する。
+実保存には[codec](../../scripts/loop_kv_nb05_codec.py)とcache・検査・attention経路が別途必要となる。コード1のuint8配列を実3bit保存と数えない。§4〜6の数値、図5点、表4〜8、[本文用JSON](data/paper-data-v0.3-2026-10-08.json)はv0.2から変更せず、同じ派生資産を参照する。
 
-追加した一次資料と採用範囲は[関連研究照合v0.2](related-work-review-v0.2-2026-10-03.md)。重み・活性値、周回方向の低次元化、周回間残差の量子化を区別する。新しい文献の採用によって、自分の測定条件や先行runの成否を変更していない。
+比較に用いた一次資料は本文§2で引用した。
 
 
 ## 8. 数値条件と再現入口の区別（v0.4）
 
-本文付録Bの表B1は取得前の固定コード、表B2は保存済み診断値に対応する。[数値照合JSON](numerical-audit-v0.4-2026-10-03.json)に最大差・通過点数・出所hashを保存した。誤差尺度は同じ圧縮入力に対する復元・計算経路の整合性を測る。非圧縮からの品質損失は本文表7のPPLで評価する。
+本文付録Bの表B1は取得前の固定コード、表B2は保存済み診断値に対応する。[数値照合JSON](data/numerical-audit-v0.4-2026-10-03.json)に最大差・通過点数・出所hashを保存した。誤差尺度は同じ圧縮入力に対する復元・計算経路の整合性を測る。非圧縮からの品質損失は本文表7のPPLで評価する。
 
 |判定|固定コードの入口|参照の区別|
 |---|---|---|
@@ -210,13 +210,6 @@ PG19の候補一覧はrevision `4d28bd77e66947ad3835cf78ed7aaeb4dd87ad8b` に結
 
 本文の継続評価はNB06として取得前に固定した。[設計](../../plans/loop-kv-nb06-design-v0.1-2026-10-08.md)、[取得前カード](../../plans/prespecified/loop-kv-nb06-v0.1-2026-10-08.md)、[入力契約](../../plans/loop-kv-nb06-input-contract-v0.1-2026-10-08.json)、[実装](../../scripts/loop_kv_nb06.py)、[固定検証器](../../scripts/verify_loop_kv_nb06.py)、[原結果](../../runs/loop-kv-nb06-20261008-075410-5621380a/summary.json)、[入力token](../../runs/loop-kv-nb06-20261008-075410-5621380a/materials.json)に対応する。
 
-[結果再集計](../../reports/nb06-results-v0.1-2026-10-08.json)のquality・timing・mean_additive_cost_cuda_msが、本文の品質表、累積時間表、記述的費用内訳の入口である。[再集計コード](../../scripts/analyze_loop_kv_nb06_results.py)は原stepから値を照合する。32実Q点の診断は原summaryのbooks[].actual_q、メモリはbooks[].memory_peak_bytesとterminal_kv_bytesから確認できる。[照合記録](../../data/validation/nb06/verification-summary.json)と[本文用NB06数値表](numerical-audit-nb06-v0.1-2026-10-08.json)も保持する。
+[結果再集計](../../reports/nb06-results-v0.1-2026-10-08.json)のquality・timing・mean_additive_cost_cuda_msが、本文の品質表、累積時間表、記述的費用内訳の入口である。[再集計コード](../../scripts/analyze_loop_kv_nb06_results.py)は原stepから値を照合する。32実Q点の診断は原summaryのbooks[].actual_q、メモリはbooks[].memory_peak_bytesとterminal_kv_bytesから確認できる。[照合記録](../../data/validation/nb06/verification-summary.json)と[本文用NB06数値表](data/numerical-audit-nb06-v0.1-2026-10-08.json)も保持する。
 
-初回の表と図1–5は従来の測定を保持し、追補は別節・図6・別版JSONへ加える。[追補生成器](../../scripts/build_nb06_paper_supplements.py)と[固定差分原稿](../../scripts/nb06_paper_supplements_v0_1.json)は、基準本文・保存集計・原summary・図6のhashを照合し、日英本文、図、本文用JSONを新しい出力先へ再生成する。研究ルートで次を実行する。
-
-~~~bash
-python3 scripts/build_nb06_paper_supplements.py \
-  --research-root . --output-dir /tmp/nb06-paper-regeneration
-~~~
-
-これは本文と表・図の再生成である。生logits・数値検査の再実行には原runの作業コピーと上記固定検証器を使う。取得元は同じ4文章で、旧NB05との品質・時間のプールは行わない。原ZIP SHA256は2ef013414a6a7130bb55ddd0ff32328698b965a1f3347fa023b2400d5d2246fa、原summary SHA256は6da2ac29e8490ef5a36364b5637ce56d47bc00554605674a38f3ec93bd4ddc8a。
+[再計算手順](../../REPRODUCIBILITY.md)に従い、保存logitsを照合し、継続評価の表と図6を再生成する。同じ4文章で、旧NB05との品質・時間のプールは行わない。原ZIP SHA256は2ef013414a6a7130bb55ddd0ff32328698b965a1f3347fa023b2400d5d2246fa、原summary SHA256は6da2ac29e8490ef5a36364b5637ce56d47bc00554605674a38f3ec93bd4ddc8a。

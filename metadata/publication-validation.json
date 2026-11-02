@@ -1,117 +1,141 @@
 {
+  "scope": "CPU saved-value and saved-logit checks; no model/GPU calls",
   "status": "PASS",
-  "date": "2026-10-29",
-  "scope": "Local GitHub preparation; no upload or model execution",
-  "license_authorization": {
-    "code": "Apache-2.0",
-    "author_owned_papers_figures_data": "CC-BY-4.0",
-    "third_party": "original terms retained"
+  "saved_value_checks": {
+    "total": 1730,
+    "failed": 0
   },
-  "source_file_hashes": {
-    "original_files_checked": 3616,
-    "mismatches": 0,
-    "expanded_members": 107,
-    "expanded_members_all_match": true,
-    "current_repository_source_rows_checked": 2028,
-    "original_files_checked_scope": "Historical preparation report; current relocated files and source rows were checked again"
+  "raw_logit_nll": {
+    "predictions": 432,
+    "all_within_original_tolerance": true
   },
-  "readable_distributions": {
-    "AC08": 47,
-    "NB05": 31,
-    "NB06": 29,
-    "default_check_only": true,
-    "modified_source_and_extra_file_rejection": "PASS",
-    "undefined_global_names": [],
-    "gpu_rerun": false
-  },
-  "transport": {
-    "failure_boundary_tests": 10,
-    "passed": 10,
-    "full_restore": "PASS",
-    "archive_files": 17,
-    "external_members": 1673,
-    "external_uncompressed_bytes": 6907963436,
-    "zip_bytes": 6302337365,
-    "current_full_restore": "PASS: 1673 external members and 2090 repository files checked before validation-metadata finalization"
-  },
-  "scientific_reproduction": {
-    "report": "reproduction-without-internal-workflow-20261029.json",
-    "status": "PASS",
-    "python": "3.13.17",
-    "saved_value_checks": 1730,
-    "failed_checks": 0,
-    "raw_logit_nll_predictions": 432,
-    "nb06_saved_loss_components": 15420,
-    "current_manuscripts_exact": 4,
-    "base_figures_pixel_equal": 5,
-    "supplement_outputs_exact": 14,
-    "new_model_calls": 0,
-    "removed_checks": "Exactly two old manuscript body hashes; numerical checks unchanged",
-    "current_manuscripts_comparison": "Exact after declared reference edits: link relocation and two S1 private-ledger passages; scientific prose, values, formulas and code unchanged"
-  },
-  "documentation": {
-    "current_documents_link_checked": 12,
-    "missing_current_links": [],
-    "current_contacts": "info@metaclan.jp",
-    "historical_inputs": "Original links/contact text preserved where frozen; not selected as current editions"
-  },
-  "content_scan": {
-    "report": "content-scan.json",
-    "real_credentials_found": false,
-    "candidate_literals": "five repeated-character placeholders",
-    "archived_notebook_magic_files": 5,
-    "compressed_executable_payload_assignments": 0
-  },
-  "remaining_publication_steps": [
-    "Author decides public visibility",
-    "Assign integrated archive DOI if desired"
-  ],
-  "original_research_environment": "Unchanged standard-library-only root venv; analysis dependencies were installed only in a restored temporary copy",
-  "revision": "v1.0-publication-edition-2026-10-29",
-  "previous_validation": "publication-validation-before-throughline-exclusion.json",
-  "layout": {
-    "relocated_files_byte_identical": 182,
-    "raw_results_byte_identical": 135,
-    "selected_results_reaggregated": 20,
-    "catalogue_only_context": 115,
-    "excluded_historical_document_copies": 4,
-    "old_project_directories_present": false,
-    "source_lookup": "source-layout.json",
-    "historical_snapshot": "Retained outside the publication directory in the research archive",
-    "internal_workflow_exclusion": {
-      "throughline_directory_present": false,
-      "internal_ledger_files_present": false,
-      "excluded_internal_files": 18,
-      "retained_scientific_files": 22,
-      "retained_scientific_files_byte_identical": true,
-      "release_assets_internal_workflow_paths": 0
+  "nb06_nll_components_checked": 15420,
+  "comparisons": [
+    {
+      "item": "extraction/checks.json",
+      "passed": true
+    },
+    {
+      "item": "extraction/evidence-tables.json",
+      "passed": true
+    },
+    {
+      "item": "extraction/protocol-specifications.json",
+      "passed": true
+    },
+    {
+      "item": "extraction/result-catalog.json",
+      "passed": true
+    },
+    {
+      "item": "extraction/source-manifest.json",
+      "passed": true
+    },
+    {
+      "item": "extraction/summary.json",
+      "passed": true
+    },
+    {
+      "item": "extraction/window-values.json",
+      "passed": true
+    },
+    {
+      "item": "numerical/numerical-audit-v0.4-2026-10-03.json",
+      "passed": true
+    },
+    {
+      "item": "nb06/nb06-results-v0.1-2026-10-08.json",
+      "passed": true
+    },
+    {
+      "item": "papers/nsn-integrated/paper-data-v0.5-2026-10-08.json",
+      "passed": true
+    },
+    {
+      "item": "papers/nsn-integrated/numerical-audit-nb06-v0.1-2026-10-08.json",
+      "passed": true
+    },
+    {
+      "item": "papers/loop-kv/paper-data-v0.3-2026-10-08.json",
+      "passed": true
+    },
+    {
+      "item": "papers/loop-kv/numerical-audit-nb06-v0.1-2026-10-08.json",
+      "passed": true
+    },
+    {
+      "item": "initial looped tables",
+      "passed": true
     }
-  },
-  "publication_edition": {
-    "version": "v1.0",
-    "current_names": [
-      "papers/nsn-integrated/NSN-2026-10-29-JA.md",
-      "papers/nsn-integrated/NSN-2026-10-29-EN.md"
-    ],
-    "funding_and_conflicts": "Author confirmed personal self-funding, no external funding, no competing interests on 2026-10-29",
-    "current_check": "metadata/publication-edit-validation-20261029.json",
-    "scientific_recalculation_this_revision": false
-  },
-  "github_migration": {
-    "date": "2026-10-30",
-    "repository": "https://github.com/metaSATOKEN/nsn",
-    "old_head": "dc6b52a0b8698c4d1971273fac309bf8e0cbdd6d",
-    "legacy_tag": "legacy-before-integrated-2026-10-30",
-    "visibility": "private",
-    "existing_release_count": 0,
-    "legacy_library_source_files_byte_identical": 7,
-    "library_version": "0.3.12",
-    "integrated_edition": "1.0",
-    "assets": "17 ZIPs and SHA256SUMS uploaded; sizes and GitHub SHA-256 digests match",
-    "new_model_calls": 0,
-    "scientific_reanalysis": false,
-    "release_tag": "integrated-v1.0",
-    "release_id": 428694000,
-    "release_url": "https://github.com/metaSATOKEN/nsn/releases/tag/integrated-v1.0"
+  ],
+  "rendering": [
+    {
+      "figure": "papers/nsn-integrated/figures/figure-01-nsn.png",
+      "pixel_equal": true,
+      "svg_generated": true
+    },
+    {
+      "figure": "papers/nsn-integrated/figures/figure-02-quality-boundaries.png",
+      "pixel_equal": true,
+      "svg_generated": true
+    },
+    {
+      "figure": "papers/nsn-integrated/figures/figure-03-int5-applicability.png",
+      "pixel_equal": true,
+      "svg_generated": true
+    },
+    {
+      "figure": "papers/nsn-integrated/figures/figure-04-family-gaps.png",
+      "pixel_equal": true,
+      "svg_generated": true
+    },
+    {
+      "figure": "papers/nsn-integrated/figures/figure-05-model-cost.png",
+      "pixel_equal": true,
+      "svg_generated": true
+    },
+    {
+      "figure": "papers/nsn-integrated/figures/figure-06-continuation.png",
+      "pixel_equal": true,
+      "svg_generated": true
+    },
+    {
+      "figure": "papers/loop-kv/figures/figure-01-bridge.png",
+      "pixel_equal": true,
+      "svg_generated": true
+    },
+    {
+      "figure": "papers/loop-kv/figures/figure-02-memory.png",
+      "pixel_equal": true,
+      "svg_generated": true
+    },
+    {
+      "figure": "papers/loop-kv/figures/figure-03-bridge-cost.png",
+      "pixel_equal": true,
+      "svg_generated": true
+    },
+    {
+      "figure": "papers/loop-kv/figures/figure-04-quality.png",
+      "pixel_equal": true,
+      "svg_generated": true
+    },
+    {
+      "figure": "papers/loop-kv/figures/figure-05-model-time.png",
+      "pixel_equal": true,
+      "svg_generated": true
+    },
+    {
+      "figure": "papers/loop-kv/figures/figure-06-continuation.png",
+      "pixel_equal": true,
+      "svg_generated": true
+    }
+  ],
+  "environment": {
+    "python": "3.13.17",
+    "numpy": "2.4.1",
+    "matplotlib": "3.10.8",
+    "torch": "2.11.0",
+    "device": "CPU",
+    "model_calls": 0
   }
 }

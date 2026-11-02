@@ -6,7 +6,7 @@
 
 ## 1. 固定した比較と実行状況
 
-[設計](../plans/loop-kv-nb02-design-v0.1-2026-10-02.md)／[取得前カード](../throughline/prereg/loop-kv-nb02-v0.1-2026-10-02.md)／[原結果](../runs/loop-kv-nb02-20261002-134332-857495f7/summary.json)／[監査資料](../throughline/audits/loop-kv-nb02-results-v0.1-2026-10-02/)。
+設計 (`plans/loop-kv-nb02-design-v0.1-2026-10-02.md`)／取得前カード (`throughline/prereg/loop-kv-nb02-v0.1-2026-10-02.md`)／原結果 (`runs/loop-kv-nb02-20261002-134332-857495f7/summary.json`)／監査資料 (`throughline/audits/loop-kv-nb02-results-v0.1-2026-10-02`)。
 
 Nanbeige4.2-3B-Base revision `4a38e817c14b9f2c4b69b1e05cbda90395872f6b`、BF16、公式SDPA、22層×2周＝44 slot、Q48／KV8、head dimension128。RTX PRO 6000 Blackwell Server Editionで実行し、主要packageの固定版はすべて一致した。
 
@@ -40,7 +40,7 @@ GPU codecの固定15標本もすべて成立した。原prefixと量子化後pre
 |主：量子化後8位置|1.906445300|1.903526116|6.729126|6.709511|−0.291493%|
 |補助：全9位置|2.050527040|2.047932210|7.771996|7.751855|−0.259147%|
 
-固定した「悪化5%以内」の参考目安には収まった。8位置のうちNLLが低下したのは5位置、増加したのは3位置で、位置別ΔNLLは−0.128256〜＋0.182712だった。[位置別原値](../throughline/audits/loop-kv-nb02-results-v0.1-2026-10-02/per-position-nll.json)を残す。
+固定した「悪化5%以内」の参考目安には収まった。8位置のうちNLLが低下したのは5位置、増加したのは3位置で、位置別ΔNLLは−0.128256〜＋0.182712だった。位置別原値 (`throughline/audits/loop-kv-nb02-results-v0.1-2026-10-02/per-position-nll.json`)を残す。
 
 今回の到達点は、**この短文の小接続で品質を大きく崩さずに動いたこと**。材料1本・量子化後8位置という規模なので、平均の小さな負符号を一般的な品質改善や他文章への転移成立とは解釈しない。CIやp値は計画どおり算出しない。
 
@@ -65,11 +65,9 @@ P0は**36.362592%減**。内訳はcode2,162,688、metadata450,560、header8,448�
 
 同じColab環境内の別プロセス照合は成功した一方、手元macOS／NumPy2.4.1での`check_summary=True`は`Worker/independent summary mismatch`を返した。差分を全数抽出すると、相対L2の33欄と相対PPLの2欄だけに1〜2 ULP、最大絶対差5.551115123125783×10⁻¹⁷があった。他の欄はすべて完全一致した。これは補助集計の最終桁に現れた丸め水準の差であり、生logitや復元KVの不一致ではない。
 
-[差分全件](../throughline/audits/loop-kv-nb02-results-v0.1-2026-10-02/summary-differences.json)と[再計算値](../throughline/audits/loop-kv-nb02-results-v0.1-2026-10-02/recalculated-summary.json)を別保存する。正式結果はColabのPASSのまま保持し、ローカル全文一致は不成立として併記する。今回は事後の許容幅を追加せず、元検証器・summary・判定を変更しない。後続コードでは、生データの厳密一致とプラットフォーム依存の補助浮動小数集計を分ける修正候補とする。
+差分全件 (`throughline/audits/loop-kv-nb02-results-v0.1-2026-10-02/summary-differences.json`)と再計算値 (`throughline/audits/loop-kv-nb02-results-v0.1-2026-10-02/recalculated-summary.json`)を別保存する。正式結果はColabのPASSのまま保持し、ローカル全文一致は不成立として併記する。今回は事後の許容幅を追加せず、元検証器・summary・判定を変更しない。後続コードでは、生データの厳密一致とプラットフォーム依存の補助浮動小数集計を分ける修正候補とする。
 
-## 6. 次の推奨
-
-NB02は固定範囲で閉じる。次は予定していた **GQA対応の「復元＋attention融合」の小さな部品比較** を推奨する。今回成立したpacked形式とNSN演算を維持し、48 Q headが8 KV headを共有するNanbeigeの対応を明示して、公式attentionに渡す全量復元との整合から確認する。既存のOuro融合コードを再利用し、必要な差分に絞る。
+## 6. 結果の解釈と測定範囲
 
 選択肢は以下のとおり。新設計・新Colab実行にはまだ着手していない。
 

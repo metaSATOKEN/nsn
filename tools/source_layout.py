@@ -8,8 +8,6 @@ from functools import lru_cache
 import hashlib
 import json
 from pathlib import Path, PurePosixPath
-import posixpath
-import re
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -61,50 +59,6 @@ def expected_extraction(root, filename, baseline):
     elif filename == "summary.json":
         expected["checks"] -= len(excluded)
     return expected
-
-def public_document_path(root, relative_document):
-    spec = layout(Path(root).resolve())
-    names = dict(spec.get("publication_document_names", {}))
-    names.update(spec.get("publication_navigation_copies", {}))
-    return names.get(relative_document, relative_document)
-
-def public_markdown(root, relative_document, text):
-    """Apply declared publication prose, names and local-link presentation only."""
-    spec = layout(Path(root).resolve())
-    source_parent = posixpath.dirname(relative_document)
-    target_parent = posixpath.dirname(public_document_path(root, relative_document))
-    for before, after in spec.get("publication_text_replacements", {}).get(relative_document, []):
-        if before in text:
-            if text.count(before) != 1:
-                raise ValueError("Ambiguous publication-only text replacement")
-            text = text.replace(before, after)
-        elif after not in text:
-            raise ValueError("Missing publication-only text replacement anchor")
-    def replace(match):
-        target = match.group(1)
-        path, marker, anchor = target.partition("#")
-        if not path or re.match(r"\w+:", path):
-            return match.group(0)
-        original = posixpath.normpath(posixpath.join(source_parent, path))
-        mapped = original
-        if original in spec.get("publication_link_targets", {}):
-            mapped = spec["publication_link_targets"][original]
-        elif original in spec["files"]:
-            mapped = spec["files"][original]["path"]
-        elif original in spec.get("directories", {}):
-            mapped = spec["directories"][original] + "/"
-        elif original in spec["excluded_documents"]:
-            url = spec["excluded_documents"][original].get("replacement_url")
-            if url is None:
-                raise ValueError("No replacement for excluded-document link: " + original)
-            return "](" + url + (marker + anchor if marker else "") + ")"
-        mapped_path, mapped_marker, mapped_anchor = mapped.partition("#")
-        mapped_path = public_document_path(root, mapped_path)
-        new = posixpath.relpath(mapped_path, target_parent)
-        if mapped_path.endswith("/") or path.endswith("/"):
-            new += "/"
-        return "](" + new + (mapped_marker + mapped_anchor if mapped_marker else (marker + anchor if marker else "")) + ")"
-    return re.sub(r"\]\(([^)]+)\)", replace, text)
 
 def check(root):
     root = Path(root).resolve()

@@ -1,11 +1,7 @@
-# Integrated NSN study
+# NSN integrated study
 
-Current v1.0 (29 October 2026): [English](NSN-2026-10-29-EN.md) / [日本語](NSN-2026-10-29-JA.md). Six PNG/SVG figures are in `figures/v0.2/` and `figures/v0.3/`.
+[English PDF, 46 pages](NSNv2.0.pdf) · [English Markdown](NSN-2026-10-29-EN.md) · [日本語](NSN-2026-10-29-JA.md)
 
-The current manuscript includes the NB06 continuation evaluation. Earlier Markdown editions and templates here are immutable inputs to `scripts/build_nb06_paper_supplements.py`; they are retained for reproducibility, not alternative current editions. Current contact: **info@metaclan.jp**.
+The Markdown edition is v1.0 (29 October 2026). The PDF cover identifies its edition as `NSN-INTEGRATED-EN-0.7`.
 
-[English PDF (46 pages)](NSNv2.0.pdf) · Cover identifier `NSN-INTEGRATED-EN-0.7`.
-
-Use the repository-root [running instructions](../../RUNNING.md) and [reproduction guide](../../REPRODUCIBILITY.md). Figure labels are shared between the Japanese and English versions. Numerical results are unchanged by packaging.
-
-Publication-only transformations, including filename changes, are recorded in [source-layout.json](../../metadata/source-layout.json). Frozen generators retain their original output names before that separate transformation.
+[Figures](figures/) · [Paper data](data/paper-data-v0.5-2026-10-08.json) · [Reproduction guide](../../REPRODUCIBILITY.md)

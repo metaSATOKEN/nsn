@@ -1961,59 +1961,33 @@
     "location": "repository"
   },
   {
-    "path": "papers/loop-kv/evidence-index-en-v0.2-2026-10-03.md",
-    "bytes": 27487,
-    "sha256": "7d214a346484bb4a6e5c7af46d1d72cb41b9070a44c044bd1ca225e7c6e2cbe4",
-    "roles": [
-      "current paper or immutable supplement input"
-    ],
-    "source": "papers/loop-kv/evidence-index-en-v0.2-2026-10-03.md",
-    "copy": "byte-identical",
-    "location": "repository"
-  },
-  {
     "path": "papers/loop-kv/evidence-index-en-v0.3-2026-10-08.md",
-    "bytes": 30273,
-    "sha256": "8ebfa00d8222bd3203dfe421b86a51be75350cd87cee5cfe40d762fddccd4909",
+    "bytes": 29153,
+    "sha256": "179f4fc9567e73c0432dfd0aac59e144aa59ee04faad010bc5ec3a1f7047025b",
     "roles": [
       "current manuscript direct link",
       "current paper or immutable supplement input"
     ],
     "source": "papers/loop-kv/evidence-index-en-v0.3-2026-10-08.md",
-    "copy": "Publication-only metadata/navigation revision v1.0; scientific content retained.",
+    "copy": "Reader edition of the source report or document",
     "location": "repository",
-    "original_sha256": "aa2b37e5de17e9e5629c6e19b96fb6797f00deb99314b5b08d9e04745a290906",
-    "previous_public_sha256": "a1d010ddf573f46160b51942f1932acf43ad2fdfc209f61ce9699978eb782c19",
-    "publication_update": "2026-10-30: repository availability and historical-edition navigation; scientific content unchanged"
-  },
-  {
-    "path": "papers/loop-kv/evidence-index-v0.4-2026-10-03.md",
-    "bytes": 25215,
-    "sha256": "4225d580fef306da50b15e7d599e744d164048dc0e602058bb24651f3148ea12",
-    "roles": [
-      "current paper or immutable supplement input"
-    ],
-    "source": "papers/loop-kv/evidence-index-v0.4-2026-10-03.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "original_sha256": "aa2b37e5de17e9e5629c6e19b96fb6797f00deb99314b5b08d9e04745a290906"
   },
   {
     "path": "papers/loop-kv/evidence-index-v0.5-2026-10-08.md",
-    "bytes": 27818,
-    "sha256": "faa40ba33ebd7334eb184e5a56082a77de954ccb4e04ac38eeb847496e5a13e6",
+    "bytes": 26790,
+    "sha256": "9b2350294f2dcb7f2d540c79d9ed848b88971394a81f1b93c55ac9e659055afb",
     "roles": [
       "current manuscript direct link",
       "current paper or immutable supplement input"
     ],
     "source": "papers/loop-kv/evidence-index-v0.5-2026-10-08.md",
-    "copy": "Publication-only metadata/navigation revision v1.0; scientific content retained.",
+    "copy": "Reader edition of the source report or document",
     "location": "repository",
-    "original_sha256": "c8c815b0f06f218140efab6baf9e517bfa7948bd8d3d1c722c12b89541a72b02",
-    "previous_public_sha256": "0d0f4babe9b5fb25558f492921e41b0442194a87d7cbb63993cc427efcf26364",
-    "publication_update": "2026-10-30: repository availability and historical-edition navigation; scientific content unchanged"
+    "original_sha256": "c8c815b0f06f218140efab6baf9e517bfa7948bd8d3d1c722c12b89541a72b02"
   },
   {
-    "path": "papers/loop-kv/figures/v0.2/figure-01-bridge.png",
+    "path": "papers/loop-kv/figures/figure-01-bridge.png",
     "bytes": 89124,
     "sha256": "b3663028aec129fb69842c2445280ba0a8c8e14f27d8ecc7dc7bcc77868d9457",
     "roles": [
@@ -2025,7 +1999,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/loop-kv/figures/v0.2/figure-01-bridge.svg",
+    "path": "papers/loop-kv/figures/figure-01-bridge.svg",
     "bytes": 11046,
     "sha256": "4ac891efd23662d7c25d6ad2127cf23107dd102d33aef6641fff6d95e925a30d",
     "roles": [
@@ -2036,7 +2010,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/loop-kv/figures/v0.2/figure-02-memory.png",
+    "path": "papers/loop-kv/figures/figure-02-memory.png",
     "bytes": 85958,
     "sha256": "86eaa6854950c06c490ddc519c47cf7e0a8c837837973a88c895d2ff017260e9",
     "roles": [
@@ -2048,7 +2022,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/loop-kv/figures/v0.2/figure-02-memory.svg",
+    "path": "papers/loop-kv/figures/figure-02-memory.svg",
     "bytes": 30094,
     "sha256": "1d3549722b74fbfea5e2b8f14c3b3ce7ea777e7d0429b67fd889b45d9c2b3742",
     "roles": [
@@ -2059,7 +2033,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/loop-kv/figures/v0.2/figure-03-bridge-cost.png",
+    "path": "papers/loop-kv/figures/figure-03-bridge-cost.png",
     "bytes": 67172,
     "sha256": "118aa9f4af61c15ba77ce7d1b0082be0a80fecd07d703b728207d65d27483fbb",
     "roles": [
@@ -2071,7 +2045,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/loop-kv/figures/v0.2/figure-03-bridge-cost.svg",
+    "path": "papers/loop-kv/figures/figure-03-bridge-cost.svg",
     "bytes": 21920,
     "sha256": "7a60e3d6ebc6f042a68824dd45a40ca86ab2b3071357aab340c26e50151f021f",
     "roles": [
@@ -2082,7 +2056,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/loop-kv/figures/v0.2/figure-04-quality.png",
+    "path": "papers/loop-kv/figures/figure-04-quality.png",
     "bytes": 60631,
     "sha256": "4aab85c6b35ca48b64c942debfed54e1d6f1ed008c2e126569c87d74ade8d61f",
     "roles": [
@@ -2094,7 +2068,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/loop-kv/figures/v0.2/figure-04-quality.svg",
+    "path": "papers/loop-kv/figures/figure-04-quality.svg",
     "bytes": 27069,
     "sha256": "3d9145dc19177ca36bc4e77393588dcd72b8bd611beccf1ae21bbad07902fdcc",
     "roles": [
@@ -2105,7 +2079,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/loop-kv/figures/v0.2/figure-05-model-time.png",
+    "path": "papers/loop-kv/figures/figure-05-model-time.png",
     "bytes": 93261,
     "sha256": "058997f6af125d677cce5e5335990263ae5b497449b9a32ef6c6b101559847e5",
     "roles": [
@@ -2117,7 +2091,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/loop-kv/figures/v0.2/figure-05-model-time.svg",
+    "path": "papers/loop-kv/figures/figure-05-model-time.svg",
     "bytes": 27380,
     "sha256": "32b35831e2530453ffc98279ec6ccfcb5e0823048d4b9238954ef19731072c46",
     "roles": [
@@ -2128,7 +2102,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/loop-kv/figures/v0.3/figure-06-continuation.png",
+    "path": "papers/loop-kv/figures/figure-06-continuation.png",
     "bytes": 217742,
     "sha256": "940542ccaf8126c36351226272d791720743221e2db45f5ee6ddc245ce524dfc",
     "roles": [
@@ -2140,7 +2114,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/loop-kv/figures/v0.3/figure-06-continuation.svg",
+    "path": "papers/loop-kv/figures/figure-06-continuation.svg",
     "bytes": 101676,
     "sha256": "0a9930aab605396ea6e4ef2db6cc955f2230fe51cab873c20be1aff0510e4ca0",
     "roles": [
@@ -2151,70 +2125,33 @@
     "location": "repository"
   },
   {
-    "path": "papers/loop-kv/manuscript-en-v0.2-2026-10-03.md",
-    "bytes": 53460,
-    "sha256": "a2d6f476e70833c50b26e0c8da8a128eb135a7001ffb0db12a62882b18a5cf2b",
-    "roles": [
-      "current paper or immutable supplement input"
-    ],
-    "source": "papers/loop-kv/manuscript-en-v0.2-2026-10-03.md",
-    "copy": "byte-identical",
-    "location": "repository"
-  },
-  {
     "path": "papers/loop-kv/manuscript-en-v0.3-2026-10-08.md",
-    "bytes": 64850,
-    "sha256": "8ddbf51cb2892cde097dda00656b5f4c9fbaa0cc25023f27faea8496cc583afb",
+    "bytes": 64151,
+    "sha256": "5b08842278c143f4f1279519187ee97f2abadc65312ce0ee5fe72e05de6dd238",
     "roles": [
       "current manuscript direct link",
       "current paper or immutable supplement input"
     ],
     "source": "papers/loop-kv/manuscript-en-v0.3-2026-10-08.md",
-    "copy": "Publication-only metadata/navigation revision v1.0; scientific content retained.",
+    "copy": "Reader edition of the source report or document",
     "location": "repository",
-    "original_sha256": "35562e2090dc9f72d479df59879daa71aeae19acd1a76e59a7987c22a45bbcfb",
-    "previous_public_sha256": "344232d3d7e15ddb5f8187f5623e2b4615fe0c03edfb551e4d9a6af87b79b3c7",
-    "publication_update": "2026-10-30: repository availability and historical-edition navigation; scientific content unchanged"
-  },
-  {
-    "path": "papers/loop-kv/manuscript-ja-v0.4-2026-10-03.md",
-    "bytes": 48820,
-    "sha256": "a6aec04e3f37c582861fdca0b1d13282792cd9c2584c6d565795329382d91905",
-    "roles": [
-      "current paper or immutable supplement input"
-    ],
-    "source": "papers/loop-kv/manuscript-ja-v0.4-2026-10-03.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "original_sha256": "35562e2090dc9f72d479df59879daa71aeae19acd1a76e59a7987c22a45bbcfb"
   },
   {
     "path": "papers/loop-kv/manuscript-ja-v0.5-2026-10-08.md",
-    "bytes": 59002,
-    "sha256": "b6adc5b23a5ced28e79fbf4d39013a1630df5a5a21c190c965e5aada8db8abd5",
+    "bytes": 58375,
+    "sha256": "370c3060a86f16587d137d6490d33dc426cec489d20bce163c3ba262e3902056",
     "roles": [
       "current manuscript direct link",
       "current paper or immutable supplement input"
     ],
     "source": "papers/loop-kv/manuscript-ja-v0.5-2026-10-08.md",
-    "copy": "Publication-only metadata/navigation revision v1.0; scientific content retained.",
+    "copy": "Reader edition of the source report or document",
     "location": "repository",
-    "original_sha256": "c2827f9604a2022b494cf448292aa358f45de80a90f6d85cea5fe0547ee31e66",
-    "previous_public_sha256": "9d3a2490eef66c0f300c6d3a9f5fb6d12ba9af70f927495dee31e24dcf12c205",
-    "publication_update": "2026-10-30: repository availability and historical-edition navigation; scientific content unchanged"
+    "original_sha256": "c2827f9604a2022b494cf448292aa358f45de80a90f6d85cea5fe0547ee31e66"
   },
   {
-    "path": "papers/loop-kv/nb06-build-manifest-v0.1-2026-10-08.json",
-    "bytes": 2906,
-    "sha256": "ae0fdb4f98a88ca00227250d258fff723ac9a6eff0a7053fcc1214614295e8c7",
-    "roles": [
-      "paper data or retained build metadata"
-    ],
-    "source": "papers/loop-kv/nb06-build-manifest-v0.1-2026-10-08.json",
-    "copy": "byte-identical",
-    "location": "repository"
-  },
-  {
-    "path": "papers/loop-kv/numerical-audit-nb06-v0.1-2026-10-08.json",
+    "path": "papers/loop-kv/data/numerical-audit-nb06-v0.1-2026-10-08.json",
     "bytes": 759,
     "sha256": "b485bf642efd212e143ea225c08d96288f672b792b2b7f48c688bde0b117ce32",
     "roles": [
@@ -2226,7 +2163,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/loop-kv/numerical-audit-v0.4-2026-10-03.json",
+    "path": "papers/loop-kv/data/numerical-audit-v0.4-2026-10-03.json",
     "bytes": 13252,
     "sha256": "f68ccd27ecab593c55288e0f17dfbd093ff7ce746fc97a830fe8ea346072c847",
     "roles": [
@@ -2238,7 +2175,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/loop-kv/paper-data-v0.2-2026-10-03.json",
+    "path": "data/validation/loop-initial-tables.json",
     "bytes": 80818,
     "sha256": "b380c9f111c4671d959398fc8629443053a24eda4f00abc0aa798aedd8a81dc2",
     "roles": [
@@ -2250,7 +2187,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/loop-kv/paper-data-v0.3-2026-10-08.json",
+    "path": "papers/loop-kv/data/paper-data-v0.3-2026-10-08.json",
     "bytes": 108895,
     "sha256": "1c9a7263cc4fb56777562669f8f7e8f1a515f7fab3a9875cc08a493d93181fed",
     "roles": [
@@ -2262,51 +2199,16 @@
     "location": "repository"
   },
   {
-    "path": "papers/loop-kv/related-work-review-v0.2-2026-10-03.md",
-    "bytes": 5531,
-    "sha256": "a2ab539d73ff2de110ffcd8a136cbf920c3d17e99e42105c96c716037460841d",
-    "roles": [
-      "current manuscript direct link",
-      "current paper or immutable supplement input"
-    ],
-    "source": "papers/loop-kv/related-work-review-v0.2-2026-10-03.md",
-    "copy": "byte-identical",
-    "location": "repository"
-  },
-  {
-    "path": "papers/nsn-integrated/code/build_extraction_tables.py",
-    "bytes": 11135,
-    "sha256": "7fc64c3cad80c7b1a6cd6891a1a1b8fcc3eedb4de11983a53b15feb188337e76",
-    "roles": [
-      "current builder or extraction source"
-    ],
-    "source": "papers/nsn-integrated/code/build_extraction_tables.py",
-    "copy": "byte-identical",
-    "location": "repository"
-  },
-  {
-    "path": "papers/nsn-integrated/code/build_integrated_assets_v0_7.py",
-    "bytes": 18595,
-    "sha256": "23eae6e4f26c4121642421b858f1b8af3c48bba41ce9d4ac1a572a9991f217ab",
+    "path": "papers/nsn-integrated/code/build_tables_and_figures.py",
+    "bytes": 18141,
+    "sha256": "63265b90b18fc78fb49aa24a90b8e1faadf135eceac89299d9410c4522376ace",
     "roles": [
       "current builder or extraction source"
     ],
     "source": "papers/nsn-integrated/code/build_integrated_assets_v0_7.py",
-    "copy": "Publication derivative: source lookup adapter or current Markdown link targets; original numerical evidence preserved.",
+    "copy": "Distribution adaptation",
     "location": "repository",
     "original_sha256": "2a988e24c63a77b78f065b56d4df6771f5eeda73213e77d5d385862d0318371d"
-  },
-  {
-    "path": "papers/nsn-integrated/code/build_integrated_english_v0_6.py",
-    "bytes": 2909,
-    "sha256": "c2e9446ab789875f1d5163c745e72b0097b07df1b8b3d7531c4e87091ff2b06e",
-    "roles": [
-      "current builder or extraction source",
-      "current manuscript direct link"
-    ],
-    "source": "papers/nsn-integrated/code/build_integrated_english_v0_6.py",
-    "copy": "byte-identical",
-    "location": "repository"
   },
   {
     "path": "papers/nsn-integrated/code/extract_existing_evidence.py",
@@ -2321,30 +2223,6 @@
     "original_sha256": "00c5a4e6ff76609a965b54f45522bac9d5fef5594b4ee913cfc12266eeb2f6a7"
   },
   {
-    "path": "papers/nsn-integrated/code/manuscript-en-template-v0.6.md",
-    "bytes": 79142,
-    "sha256": "2f253edf387a89d07d8b17165178ca0ea05be7a94e0773864caaee9f6d094133",
-    "roles": [
-      "current builder or extraction source",
-      "current manuscript direct link"
-    ],
-    "source": "papers/nsn-integrated/code/manuscript-en-template-v0.6.md",
-    "copy": "byte-identical",
-    "location": "repository"
-  },
-  {
-    "path": "papers/nsn-integrated/code/manuscript-ja-template-v0.7.md",
-    "bytes": 86904,
-    "sha256": "d00ec79d827d62465c063c3163e5da880187e20cfd1f253706d8122292094680",
-    "roles": [
-      "current builder or extraction source",
-      "current manuscript direct link"
-    ],
-    "source": "papers/nsn-integrated/code/manuscript-ja-template-v0.7.md",
-    "copy": "byte-identical",
-    "location": "repository"
-  },
-  {
     "path": "papers/nsn-integrated/code/nsn_int3_core.py",
     "bytes": 970,
     "sha256": "b8da4fa8ad87e4deda3c92f506d15dcf5b2064600e95365f0ba0cf6d5190bdf3",
@@ -2353,17 +2231,6 @@
       "current manuscript direct link"
     ],
     "source": "papers/nsn-integrated/code/nsn_int3_core.py",
-    "copy": "byte-identical",
-    "location": "repository"
-  },
-  {
-    "path": "papers/nsn-integrated/code/table-translations-en-v0.6.json",
-    "bytes": 20309,
-    "sha256": "ea7c9bc60d9b91c60ad84ffdf2a90e3cfee70f7d968ac821ff58884e8e2093a2",
-    "roles": [
-      "current builder or extraction source"
-    ],
-    "source": "papers/nsn-integrated/code/table-translations-en-v0.6.json",
     "copy": "byte-identical",
     "location": "repository"
   },
@@ -2449,40 +2316,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/nsn-integrated/english-build-manifest-v0.6.json",
-    "bytes": 758,
-    "sha256": "0e76f4ce9c5ee6310ad51736d72b4416193520523f1764bd166c6412324c401b",
-    "roles": [
-      "paper data or retained build metadata"
-    ],
-    "source": "papers/nsn-integrated/english-build-manifest-v0.6.json",
-    "copy": "byte-identical",
-    "location": "repository"
-  },
-  {
-    "path": "papers/nsn-integrated/evidence-tables-v0.1-2026-10-03.md",
-    "bytes": 12308,
-    "sha256": "df95eb5218ca1388ab0d85c17e2e45338af857667e19fec2c715493369237545",
-    "roles": [
-      "current paper or immutable supplement input"
-    ],
-    "source": "papers/nsn-integrated/evidence-tables-v0.1-2026-10-03.md",
-    "copy": "byte-identical",
-    "location": "repository"
-  },
-  {
-    "path": "papers/nsn-integrated/extraction-report-v0.1-2026-10-03.md",
-    "bytes": 10737,
-    "sha256": "b5b024a9f94282f5baa2fd88842646c152136bec867ac5a57b449aad48568628",
-    "roles": [
-      "current paper or immutable supplement input"
-    ],
-    "source": "papers/nsn-integrated/extraction-report-v0.1-2026-10-03.md",
-    "copy": "byte-identical",
-    "location": "repository"
-  },
-  {
-    "path": "papers/nsn-integrated/figures/v0.2/figure-01-nsn.png",
+    "path": "papers/nsn-integrated/figures/figure-01-nsn.png",
     "bytes": 124921,
     "sha256": "fc2c1c86ae0a21cd888fdbe53fd9791ae49b6aee34e82952f434725f0b4e0a93",
     "roles": [
@@ -2494,7 +2328,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/nsn-integrated/figures/v0.2/figure-01-nsn.svg",
+    "path": "papers/nsn-integrated/figures/figure-01-nsn.svg",
     "bytes": 18350,
     "sha256": "72cbdd66a2abb3115d98f588145fc400ea3a6d17a6134da2e832847a4aaabde9",
     "roles": [
@@ -2505,7 +2339,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/nsn-integrated/figures/v0.2/figure-02-quality-boundaries.png",
+    "path": "papers/nsn-integrated/figures/figure-02-quality-boundaries.png",
     "bytes": 179448,
     "sha256": "2eb8ad4ef949b490d1019e4bf46eac4273d7d52beb81c950fe0748e51d7c789e",
     "roles": [
@@ -2517,7 +2351,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/nsn-integrated/figures/v0.2/figure-02-quality-boundaries.svg",
+    "path": "papers/nsn-integrated/figures/figure-02-quality-boundaries.svg",
     "bytes": 28429,
     "sha256": "77b5e8fd5c4c111be6ddfec15aaa9524fd3392abec7dc12936fe68d28d17dcef",
     "roles": [
@@ -2528,7 +2362,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/nsn-integrated/figures/v0.2/figure-03-int5-applicability.png",
+    "path": "papers/nsn-integrated/figures/figure-03-int5-applicability.png",
     "bytes": 88725,
     "sha256": "3d1a27cc6da0815e7769c0e1885d14d3a94476697c5858be5641c47099956072",
     "roles": [
@@ -2540,7 +2374,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/nsn-integrated/figures/v0.2/figure-03-int5-applicability.svg",
+    "path": "papers/nsn-integrated/figures/figure-03-int5-applicability.svg",
     "bytes": 14271,
     "sha256": "0be85b4a55310e7b5a0d862193da6f50908938be98bf84174e513fcb36cbc83a",
     "roles": [
@@ -2551,7 +2385,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/nsn-integrated/figures/v0.2/figure-04-family-gaps.png",
+    "path": "papers/nsn-integrated/figures/figure-04-family-gaps.png",
     "bytes": 107223,
     "sha256": "7aafe2a1636f7d535af24951634c5c64a78d58873154881b5f8e1477a43fd703",
     "roles": [
@@ -2563,7 +2397,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/nsn-integrated/figures/v0.2/figure-04-family-gaps.svg",
+    "path": "papers/nsn-integrated/figures/figure-04-family-gaps.svg",
     "bytes": 32956,
     "sha256": "610dd4a56172eecaf97eeb74a8adedee2b80b1843045e10c9029861de6e89efd",
     "roles": [
@@ -2574,7 +2408,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/nsn-integrated/figures/v0.2/figure-05-model-cost.png",
+    "path": "papers/nsn-integrated/figures/figure-05-model-cost.png",
     "bytes": 84004,
     "sha256": "c1fbfbabb1b592ff2db2a0de27a0391ad94169997348cc455f2ddea21771ced2",
     "roles": [
@@ -2586,7 +2420,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/nsn-integrated/figures/v0.2/figure-05-model-cost.svg",
+    "path": "papers/nsn-integrated/figures/figure-05-model-cost.svg",
     "bytes": 12710,
     "sha256": "e7b254309290f0ada8630c6049598c47089709c0ba30d53b41616f7c7cdb1c3e",
     "roles": [
@@ -2597,7 +2431,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/nsn-integrated/figures/v0.3/figure-06-continuation.png",
+    "path": "papers/nsn-integrated/figures/figure-06-continuation.png",
     "bytes": 217742,
     "sha256": "940542ccaf8126c36351226272d791720743221e2db45f5ee6ddc245ce524dfc",
     "roles": [
@@ -2609,7 +2443,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/nsn-integrated/figures/v0.3/figure-06-continuation.svg",
+    "path": "papers/nsn-integrated/figures/figure-06-continuation.svg",
     "bytes": 101676,
     "sha256": "0a9930aab605396ea6e4ef2db6cc955f2230fe51cab873c20be1aff0510e4ca0",
     "roles": [
@@ -2620,68 +2454,31 @@
     "location": "repository"
   },
   {
-    "path": "papers/nsn-integrated/manuscript-en-v0.6-2026-10-05.md",
-    "bytes": 100725,
-    "sha256": "b0aa0591c980792dda5faa72a8dd6f7521281ee40f822982bda16897bfa6a73d",
-    "roles": [
-      "current paper or immutable supplement input"
-    ],
-    "source": "papers/nsn-integrated/manuscript-en-v0.6-2026-10-05.md",
-    "copy": "byte-identical",
-    "location": "repository"
-  },
-  {
     "path": "papers/nsn-integrated/NSN-2026-10-29-EN.md",
-    "bytes": 113297,
-    "sha256": "a26b32367fc2629ffe9e14b97dd6dc73d2df7214125543d304e1773b0085792f",
+    "bytes": 111030,
+    "sha256": "96084d9d981e686aeaeb24ece092f22c51fa50c3ccebff42adfc9647d1f4e226",
     "roles": [
       "current paper or immutable supplement input"
     ],
     "source": "papers/nsn-integrated/manuscript-en-v0.7-2026-10-08.md",
-    "copy": "Publication-only metadata/navigation revision v1.0; scientific content retained.",
+    "copy": "Distribution adaptation",
     "location": "repository",
-    "original_sha256": "fe743154c1c93e10a2eb8f79e7af79fad7a24e11020f3b2e7ffaf9c3e892def0",
-    "previous_public_sha256": "f81d90168565987770a6fcf8c00e575e4242516172c5436dcb2b1f29ad3cd478",
-    "publication_update": "2026-10-30: repository availability and historical-edition navigation; scientific content unchanged"
-  },
-  {
-    "path": "papers/nsn-integrated/manuscript-ja-v0.7-2026-10-05.md",
-    "bytes": 92283,
-    "sha256": "0adc993b78821e7672caa9d524dc83b6208a8676c1e145155b28e52cf401b9b7",
-    "roles": [
-      "current paper or immutable supplement input"
-    ],
-    "source": "papers/nsn-integrated/manuscript-ja-v0.7-2026-10-05.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "original_sha256": "fe743154c1c93e10a2eb8f79e7af79fad7a24e11020f3b2e7ffaf9c3e892def0"
   },
   {
     "path": "papers/nsn-integrated/NSN-2026-10-29-JA.md",
-    "bytes": 103636,
-    "sha256": "7e4ce61aa694447ba0871357548e91ee50da036cd7204304e81125cff516a4a4",
+    "bytes": 101702,
+    "sha256": "a7b38bb09b2c043c41b0cea50444f1c8c99d6011ce9efb131d6e108680563e90",
     "roles": [
       "current paper or immutable supplement input"
     ],
     "source": "papers/nsn-integrated/manuscript-ja-v0.8-2026-10-08.md",
-    "copy": "Publication-only metadata/navigation revision v1.0; scientific content retained.",
+    "copy": "Distribution adaptation",
     "location": "repository",
-    "original_sha256": "b7cc87e9bacf58f5f66cf3bafadd03341cfe0ee7dd840fa0cd01a7071127e6fd",
-    "previous_public_sha256": "13388bb74f0e69eda6f4098d193b526e7fc7eed50197650f98edd2e7b564fec6",
-    "publication_update": "2026-10-30: repository availability and historical-edition navigation; scientific content unchanged"
+    "original_sha256": "b7cc87e9bacf58f5f66cf3bafadd03341cfe0ee7dd840fa0cd01a7071127e6fd"
   },
   {
-    "path": "papers/nsn-integrated/nb06-build-manifest-v0.1-2026-10-08.json",
-    "bytes": 2697,
-    "sha256": "f5dd96190531c7309f32dc18039bb53ff6c4edf5b3d4919f807f1f8c878a9f77",
-    "roles": [
-      "paper data or retained build metadata"
-    ],
-    "source": "papers/nsn-integrated/nb06-build-manifest-v0.1-2026-10-08.json",
-    "copy": "byte-identical",
-    "location": "repository"
-  },
-  {
-    "path": "papers/nsn-integrated/numerical-audit-nb06-v0.1-2026-10-08.json",
+    "path": "papers/nsn-integrated/data/numerical-audit-nb06-v0.1-2026-10-08.json",
     "bytes": 759,
     "sha256": "b485bf642efd212e143ea225c08d96288f672b792b2b7f48c688bde0b117ce32",
     "roles": [
@@ -2693,18 +2490,7 @@
     "location": "repository"
   },
   {
-    "path": "papers/nsn-integrated/paper-data-v0.4-2026-10-05.json",
-    "bytes": 158301,
-    "sha256": "02d41bdd370a6ffc4b1ab3a28509a4834102bd8fa2c2a1fcb73999551687513e",
-    "roles": [
-      "paper data or retained build metadata"
-    ],
-    "source": "papers/nsn-integrated/paper-data-v0.4-2026-10-05.json",
-    "copy": "byte-identical",
-    "location": "repository"
-  },
-  {
-    "path": "papers/nsn-integrated/paper-data-v0.5-2026-10-08.json",
+    "path": "papers/nsn-integrated/data/paper-data-v0.5-2026-10-08.json",
     "bytes": 186386,
     "sha256": "dee268b297e990ed1c7b094daa4a032f3023939557f187894836bd4e4e54d635",
     "roles": [
@@ -2716,40 +2502,17 @@
     "location": "repository"
   },
   {
-    "path": "papers/nsn-integrated/protocol-and-decisions-v0.1-2026-10-03.md",
-    "bytes": 13476,
-    "sha256": "8fdaf90ab7103116cb07d189126a7f09d4b60bb48dbc3fee5403fcdce9502418",
-    "roles": [
-      "current paper or immutable supplement input"
-    ],
-    "source": "papers/nsn-integrated/protocol-and-decisions-v0.1-2026-10-03.md",
-    "copy": "byte-identical",
-    "location": "repository"
-  },
-  {
-    "path": "papers/nsn-integrated/publication-provenance-v0.1-2026-10-03.md",
-    "bytes": 3879,
-    "sha256": "47b835a41378c7e5c1bcf4968b589b7f6c9db84522a9301a7e6488db01d45d90",
+    "path": "metadata/publication-provenance/README.md",
+    "bytes": 1310,
+    "sha256": "5089fc012fb4baf4fc7b74d04637163c053f9a81cac2f5681fa9dbcffc9d4578",
     "roles": [
       "current manuscript direct link",
       "current paper or immutable supplement input"
     ],
     "source": "papers/nsn-integrated/publication-provenance-v0.1-2026-10-03.md",
-    "copy": "Publication-only references; scientific evidence unchanged.",
+    "copy": "Distribution adaptation",
     "location": "repository",
     "original_sha256": "566ed9427f21c0f7c9de2ecb0c4139ec56336665ef94034c108a10209c1c6dab"
-  },
-  {
-    "path": "papers/nsn-integrated/related-work-review-v0.3-2026-10-03.md",
-    "bytes": 9102,
-    "sha256": "6eba582b6949649fded43030746afd6c7f2ed42472ebf466571a9f48dffe7377",
-    "roles": [
-      "current manuscript direct link",
-      "current paper or immutable supplement input"
-    ],
-    "source": "papers/nsn-integrated/related-work-review-v0.3-2026-10-03.md",
-    "copy": "byte-identical",
-    "location": "repository"
   },
   {
     "path": "plans/loop-kv-ac08-design-v0.1-2026-10-02.md",
@@ -2859,80 +2622,87 @@
   },
   {
     "path": "reports/ac01-results-v0.1-2026-10-01.md",
-    "bytes": 7580,
-    "sha256": "8f0cfe0766e514a3185a7908c489536a060d37b9f133f1c987321362e50f49ef",
+    "bytes": 6676,
+    "sha256": "3ad0aa346c07056bdd33afc1b1fc1b11bf1f5771d3885a14110f267f6053c62e",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/ac01-results-v0.1-2026-10-01.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "8f0cfe0766e514a3185a7908c489536a060d37b9f133f1c987321362e50f49ef"
   },
   {
     "path": "reports/ac02-results-v0.1-2026-10-01.md",
-    "bytes": 8550,
-    "sha256": "93e5a6b3be4540ce1631ee8bce77ca75827e9ac1110fc32e99972d2970c4b861",
+    "bytes": 7711,
+    "sha256": "09eb4b2bb7737015db9b4b4573af00c7c1d8391daed6668c5465794d57dac3e2",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/ac02-results-v0.1-2026-10-01.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "93e5a6b3be4540ce1631ee8bce77ca75827e9ac1110fc32e99972d2970c4b861"
   },
   {
     "path": "reports/ac03-results-v0.1-2026-10-01.md",
-    "bytes": 11328,
-    "sha256": "8e17ef3f9a75f3e52b95c570bec84c7f5d69846d5d87579bdbf3d5b511faca63",
+    "bytes": 11327,
+    "sha256": "a45b37b3978498eda3d36e5c39e81a19346a726540b75a2bf6bef1bb1946ab39",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/ac03-results-v0.1-2026-10-01.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "8e17ef3f9a75f3e52b95c570bec84c7f5d69846d5d87579bdbf3d5b511faca63"
   },
   {
     "path": "reports/ac04-results-v0.1-2026-10-02.md",
-    "bytes": 10007,
-    "sha256": "8c65c0bbe19c41b8d6fcd3b5e5dbcb87114e1dbfba0f805080b0e6865fd8bd95",
+    "bytes": 9428,
+    "sha256": "2c39dea562bbff970ee8125606a5681a0305b195552e72dea484410b4085c2bb",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/ac04-results-v0.1-2026-10-02.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "8c65c0bbe19c41b8d6fcd3b5e5dbcb87114e1dbfba0f805080b0e6865fd8bd95"
   },
   {
     "path": "reports/ac05-results-v0.1-2026-10-02.md",
-    "bytes": 11756,
-    "sha256": "7008e75c9a3b6ced4c7fca231df076adb71d869659c864f994f991735f50f365",
+    "bytes": 10940,
+    "sha256": "be8a7a12c45df02f75d2f69e347b843ba5f1b83d7d9ba46370c91b0ecfd6840c",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/ac05-results-v0.1-2026-10-02.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "7008e75c9a3b6ced4c7fca231df076adb71d869659c864f994f991735f50f365"
   },
   {
     "path": "reports/ac06-results-v0.1-2026-10-02.md",
-    "bytes": 12281,
-    "sha256": "198abf3fe55c7d78c129dd1aa052badb4c73956dfce90ccaba1d5b7b9beac4ba",
+    "bytes": 11600,
+    "sha256": "304db96f97b8c784b152a2cc1151f3bb3a313fa815231327e2e96bf1e1933f68",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/ac06-results-v0.1-2026-10-02.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "198abf3fe55c7d78c129dd1aa052badb4c73956dfce90ccaba1d5b7b9beac4ba"
   },
   {
     "path": "reports/ac07-results-v0.1-2026-10-02.md",
-    "bytes": 10653,
-    "sha256": "06816e9a2df9d47e73a41a2f2108f3e0fdf69f76657a511c5cf574424b711b9f",
+    "bytes": 10289,
+    "sha256": "dfe26b6b660aef088ef5878f185917ce3b31cee2efc7f55eae5efdef6338b7f2",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/ac07-results-v0.1-2026-10-02.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "06816e9a2df9d47e73a41a2f2108f3e0fdf69f76657a511c5cf574424b711b9f"
   },
   {
     "path": "reports/ac08-descriptive-statistics.json",
@@ -2948,47 +2718,51 @@
   },
   {
     "path": "reports/ac08-results-v0.1-2026-10-02.md",
-    "bytes": 9793,
-    "sha256": "a099d54ee9fa9aa6248ec656efc6316e09ec22c73e1e4b2353f2bdf4ee30e61a",
+    "bytes": 9448,
+    "sha256": "695b856f415e6f2bcf60e6de1974d60859cf4e95cc41665e13d3ff3afc98450f",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/ac08-results-v0.1-2026-10-02.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "a099d54ee9fa9aa6248ec656efc6316e09ec22c73e1e4b2353f2bdf4ee30e61a"
   },
   {
     "path": "reports/ad01-results-v0.1-2026-10-01.md",
-    "bytes": 8889,
-    "sha256": "f79668b1eaf49e3600f553f319386599cda921731ad95f235bce3fcfc4c52069",
+    "bytes": 7994,
+    "sha256": "5ce2ccf58915e3096b0f7f4532c6237ecabd94f299f716bdafe70e7b6476eb5f",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/ad01-results-v0.1-2026-10-01.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "f79668b1eaf49e3600f553f319386599cda921731ad95f235bce3fcfc4c52069"
   },
   {
     "path": "reports/af01-results-v0.1-2026-10-01.md",
-    "bytes": 7808,
-    "sha256": "c4236da89a1a3656a5e69d8d0de50377c84f379fb2f4b87f5aa169bcfe52c7f5",
+    "bytes": 7041,
+    "sha256": "a91b07b0eb44510bba697259ff8618963194a8deedb279076a89b8f269fa7540",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/af01-results-v0.1-2026-10-01.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "c4236da89a1a3656a5e69d8d0de50377c84f379fb2f4b87f5aa169bcfe52c7f5"
   },
   {
     "path": "reports/dc01-results-v0.1-2026-10-01.md",
-    "bytes": 9694,
-    "sha256": "ed60c19ad4407210770be33aa2d5ed411f9af7cbe330c3c9e7b7a4db1b58821e",
+    "bytes": 8865,
+    "sha256": "9c2a32c87b6a6f00c6deced6220aaeb1442d83919d2482a042b97b74dda3d7b6",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/dc01-results-v0.1-2026-10-01.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "ed60c19ad4407210770be33aa2d5ed411f9af7cbe330c3c9e7b7a4db1b58821e"
   },
   {
     "path": "reports/figures/nb06-results-v0.1-2026-10-08.png",
@@ -3026,125 +2800,123 @@
   },
   {
     "path": "reports/iv01-results-v0.1-2026-10-01.md",
-    "bytes": 6225,
-    "sha256": "44114219477efa7aee04a8d59a3a0d03856cf7375f1aa14399ff4008e9083e9d",
+    "bytes": 5887,
+    "sha256": "2bf3562ecb15af04298197ef4fd2c965b68352677f551c9a9b3e311dff29af41",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/iv01-results-v0.1-2026-10-01.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "44114219477efa7aee04a8d59a3a0d03856cf7375f1aa14399ff4008e9083e9d"
   },
   {
     "path": "reports/kv01-results-v0.1-2026-09-30.md",
-    "bytes": 11056,
-    "sha256": "d34c34eab732c0d04ab63c6ba2b87df71fa9a2b6084b2f5b312d1bc2372d8ff2",
+    "bytes": 10621,
+    "sha256": "eebd9cbd484fe4ea4c002b914e528e4f5454ded7fdbb061bf3a74ead8b54f55c",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/kv01-results-v0.1-2026-09-30.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "d34c34eab732c0d04ab63c6ba2b87df71fa9a2b6084b2f5b312d1bc2372d8ff2"
   },
   {
     "path": "reports/lc01-results-v0.1-2026-10-01.md",
-    "bytes": 9707,
-    "sha256": "e4f919918de2f778fade86e8789567fef9f21e706c4d98be0f287dd6cc3c6d18",
+    "bytes": 8722,
+    "sha256": "107abbc7a4af9beff8700814bfe2df40690787069ed8a2c5401c5c56de5ac91a",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/lc01-results-v0.1-2026-10-01.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "e4f919918de2f778fade86e8789567fef9f21e706c4d98be0f287dd6cc3c6d18"
   },
   {
     "path": "reports/lc02-results-v0.1-2026-10-01.md",
-    "bytes": 10601,
-    "sha256": "f5602e47d126d98ce68e925b0abcdd63e4c8db983b7cfe7c22c8461494d7af4d",
+    "bytes": 10096,
+    "sha256": "af180ff0dc6f50b691ca27588cad619a6776f69faa3b9cc924830572c0651cbf",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/lc02-results-v0.1-2026-10-01.md",
-    "copy": "Publication-only references; scientific evidence unchanged.",
+    "copy": "Reader edition of the source report or document",
     "location": "repository",
     "original_sha256": "5baefe3b1f62ce3ce7999d5b5af35e1fbe6a6cbb1448c165109b02dc68ec3845"
   },
   {
     "path": "reports/lp01-results-v0.1-2026-09-30.md",
-    "bytes": 11271,
-    "sha256": "afd94c9d33311366b93d038186708969133ca37f76dad5b66b379e6863afe54d",
+    "bytes": 10831,
+    "sha256": "c828ac8ce90620d5caad284330e1c6880e90437a6ba6e537e0696852fb2a3335",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/lp01-results-v0.1-2026-09-30.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "afd94c9d33311366b93d038186708969133ca37f76dad5b66b379e6863afe54d"
   },
   {
     "path": "reports/nb01-results-v0.1-2026-10-02.md",
-    "bytes": 5475,
-    "sha256": "085b629a2cea0310c93a6cf4a7fc6300f46499deb67befe1bad916bcf7c6442a",
+    "bytes": 4640,
+    "sha256": "a2375ee083eb30b03dc93909a20208d45a34a1ae38c37f708e86f8fa98a10c3b",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/nb01-results-v0.1-2026-10-02.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "085b629a2cea0310c93a6cf4a7fc6300f46499deb67befe1bad916bcf7c6442a"
   },
   {
     "path": "reports/nb02-results-v0.1-2026-10-02.md",
-    "bytes": 7615,
-    "sha256": "95e49f67a26e990eaef9a61230458c31c8a3a825d5dd2086dcb68c2ff45aeb74",
+    "bytes": 7198,
+    "sha256": "ae123fef7ce0ba3cc5d32497cd5a51f029bf804751543ff83bd2bea52ed64903",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/nb02-results-v0.1-2026-10-02.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "95e49f67a26e990eaef9a61230458c31c8a3a825d5dd2086dcb68c2ff45aeb74"
   },
   {
     "path": "reports/nb03-results-v0.1-2026-10-02.md",
-    "bytes": 7940,
-    "sha256": "8c6f4e7b2226f90fb455496e443a00f354654c0caae7441147abd907b59a22fd",
+    "bytes": 7372,
+    "sha256": "52c12ad7be7af2cbb59aca6c86e0845588240894a5bd6c21e11935f6a9cbabeb",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/nb03-results-v0.1-2026-10-02.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "8c6f4e7b2226f90fb455496e443a00f354654c0caae7441147abd907b59a22fd"
   },
   {
     "path": "reports/nb04-results-v0.1-2026-10-03.md",
-    "bytes": 8485,
-    "sha256": "6196451fe699e857ad9b4713f46dfa8b7ec391e1f94e5bd0cfe18b27c9ec703a",
+    "bytes": 8046,
+    "sha256": "5d3f6e3cd30dad15981ed008d23fcde8aba794cde77df62593aab22c4c44f6d0",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/nb04-results-v0.1-2026-10-03.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "6196451fe699e857ad9b4713f46dfa8b7ec391e1f94e5bd0cfe18b27c9ec703a"
   },
   {
     "path": "reports/nb05-results-v0.1-2026-10-03.md",
-    "bytes": 10080,
-    "sha256": "9b494e98b549aa35f1fc1d88986729d2cc410f1bd31e519ebc83ba9d401c71b8",
+    "bytes": 9519,
+    "sha256": "3016436e2c982c088c53dae3bc2fb84dc7d813f3ab6d28d88f608b6df2b07755",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/nb05-results-v0.1-2026-10-03.md",
-    "copy": "byte-identical",
-    "location": "repository"
-  },
-  {
-    "path": "reports/nb06-preparation-v0.1-2026-10-08.md",
-    "bytes": 4507,
-    "sha256": "e87f02f51173beab1d50b0228c1ddbcf725d4d1e50a33a00cceda82b407c0eb0",
-    "roles": [
-      "NB06 supplementary evidence and implementation"
-    ],
-    "source": "reports/nb06-preparation-v0.1-2026-10-08.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "9b494e98b549aa35f1fc1d88986729d2cc410f1bd31e519ebc83ba9d401c71b8"
   },
   {
     "path": "reports/nb06-results-v0.1-2026-10-08.json",
@@ -3160,147 +2932,159 @@
   },
   {
     "path": "reports/nb06-results-v0.1-2026-10-08.md",
-    "bytes": 9469,
-    "sha256": "69c0880b51129504daa29b61534b8b771d753be54a103cd69f5c45af53a5dfbc",
+    "bytes": 9475,
+    "sha256": "98789708ca8d66e00231195040ac78c183d8c4d735c283d54a510edb3ab42516",
     "roles": [
       "NB06 supplementary evidence and implementation"
     ],
     "source": "reports/nb06-results-v0.1-2026-10-08.md",
-    "copy": "Publication-only references; scientific evidence unchanged.",
+    "copy": "Reader edition of the source report or document",
     "location": "repository",
     "original_sha256": "b1ccef0fa13731a38007012c5c0a4e8763ab777ddd325c3a00b594a598ad6f91"
   },
   {
     "path": "reports/nc01-results-v0.1-2026-10-02.md",
-    "bytes": 5128,
-    "sha256": "f1a6e7fc98178d2dfe9d6cb4a238816dae95dfcd36c41230d9eed4b27fa0497b",
+    "bytes": 4505,
+    "sha256": "b87c094ca311607342db3ce93107d7f43d05f5e5604e693ec43b99ae9240c9bf",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/nc01-results-v0.1-2026-10-02.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "f1a6e7fc98178d2dfe9d6cb4a238816dae95dfcd36c41230d9eed4b27fa0497b"
   },
   {
     "path": "reports/p0-diag01-results-v0.1-2026-09-30.md",
-    "bytes": 9226,
-    "sha256": "a63344e2f33e4f30907e79d85f5c47b7cc884ac6015407e23c6d986913bd76c1",
+    "bytes": 8055,
+    "sha256": "e63819f777bfba6b0f228ead2e6fd948951dbc2bcff1649a2ebc132f815013c0",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/p0-diag01-results-v0.1-2026-09-30.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "a63344e2f33e4f30907e79d85f5c47b7cc884ac6015407e23c6d986913bd76c1"
   },
   {
     "path": "reports/p0-fp32-01-results-v0.1-2026-09-30.md",
-    "bytes": 9349,
-    "sha256": "412596a03928c367c22d1b95a4f321c76aac18d19b1305ae9efe93f1c7a6bb0b",
+    "bytes": 7405,
+    "sha256": "79ba64e8be2f93f5ca7acee3bdef028ce3822baca028edde08b0e5c8bc047618",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/p0-fp32-01-results-v0.1-2026-09-30.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "412596a03928c367c22d1b95a4f321c76aac18d19b1305ae9efe93f1c7a6bb0b"
   },
   {
     "path": "reports/p0r-p1a-results-v0.1-2026-09-30.md",
-    "bytes": 13292,
-    "sha256": "ecd1d0e4cbacac24c12be19a6d73865a9b7c68208b78b4a117bcf9dc3851928d",
+    "bytes": 11994,
+    "sha256": "c60d8acbacc4561070c319edd961ed37157c5bcfebfe2471ce3293cff58930ac",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/p0r-p1a-results-v0.1-2026-09-30.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "ecd1d0e4cbacac24c12be19a6d73865a9b7c68208b78b4a117bcf9dc3851928d"
   },
   {
     "path": "reports/p0rb-p1b-results-v0.1-2026-09-30.md",
-    "bytes": 9685,
-    "sha256": "94b4c7e81cbea2b291f9a47d59fde1c300508abe67edae41320f05d8ba958d60",
+    "bytes": 8234,
+    "sha256": "0c628036e5b5252354549d2fb70d0b7076dc75331a99e154bd5b6a2bcbf9f3c5",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/p0rb-p1b-results-v0.1-2026-09-30.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "94b4c7e81cbea2b291f9a47d59fde1c300508abe67edae41320f05d8ba958d60"
   },
   {
     "path": "reports/pd01-results-v0.1-2026-10-01.md",
-    "bytes": 9959,
-    "sha256": "46d06f1e56da39e085b03d4cf67ecc2ab21625191e7162403397a93f220d08fa",
+    "bytes": 8368,
+    "sha256": "a1825238db2cad7bdc69fd5bb17117ae081455c6226f46824a8f9343f3d0c515",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/pd01-results-v0.1-2026-10-01.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "46d06f1e56da39e085b03d4cf67ecc2ab21625191e7162403397a93f220d08fa"
   },
   {
     "path": "reports/pk01-results-v0.1-2026-10-01.md",
-    "bytes": 10134,
-    "sha256": "72a218bd1ff45c76562525fed3754ee1fcd9a8e0e8123a5ad80f7edf388a5a4d",
+    "bytes": 9349,
+    "sha256": "5bb26fd3ab5841a40a337050136e461adce164124b6a53e9b1cc6abe246c90df",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/pk01-results-v0.1-2026-10-01.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "72a218bd1ff45c76562525fed3754ee1fcd9a8e0e8123a5ad80f7edf388a5a4d"
   },
   {
     "path": "reports/pu01-results-v0.1-2026-10-01.md",
-    "bytes": 10421,
-    "sha256": "cf43312b0544b6ba98534ae4dc4d1f8abbad62c39551c77a37ba94dc22e428b3",
+    "bytes": 9221,
+    "sha256": "a42685e1d3ac33489bbe378379619c123a207a8af1df20183dc4904cd22b90c7",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/pu01-results-v0.1-2026-10-01.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "cf43312b0544b6ba98534ae4dc4d1f8abbad62c39551c77a37ba94dc22e428b3"
   },
   {
     "path": "reports/pu02-results-v0.1-2026-10-01.md",
-    "bytes": 8730,
-    "sha256": "d40e95ee62a42661fc895dda0967cdd5fcfcd27bbb954f69ec163e234c6e6019",
+    "bytes": 7845,
+    "sha256": "fbf829db1baa8ce0d6bcf15b6caf38c83ca3d856c5e6ecd3a82076580ab813a7",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/pu02-results-v0.1-2026-10-01.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "d40e95ee62a42661fc895dda0967cdd5fcfcd27bbb954f69ec163e234c6e6019"
   },
   {
     "path": "reports/qk01-results-v0.1-2026-10-01.md",
-    "bytes": 6295,
-    "sha256": "8347d6f63733fd0b6310514488987ef6f340fdc4352eae4a2438798bf8a57899",
+    "bytes": 5907,
+    "sha256": "5cadce57bf0deb96445fabaaa7ae49be8c891a1b9f2167d15c7e2b677d38d655",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/qk01-results-v0.1-2026-10-01.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "8347d6f63733fd0b6310514488987ef6f340fdc4352eae4a2438798bf8a57899"
   },
   {
     "path": "reports/rf01-results-v0.1-2026-10-01.md",
-    "bytes": 10039,
-    "sha256": "8f039fc8ce173163a62ce6eb63e9e5fc67afcdd2f9366c8fab0332af3edd8cdf",
+    "bytes": 9538,
+    "sha256": "41442630d23b487822c295a2f018001125b660bf12eb0cce9d6d97a282ceecb3",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/rf01-results-v0.1-2026-10-01.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "8f039fc8ce173163a62ce6eb63e9e5fc67afcdd2f9366c8fab0332af3edd8cdf"
   },
   {
     "path": "reports/vf01-results-v0.1-2026-10-02.md",
-    "bytes": 9471,
-    "sha256": "accfb089f000a25ed8f2ac760a1217d435487e3cf4b1afbf1adc6ce7e5f83961",
+    "bytes": 8655,
+    "sha256": "b7861781a64a15b0a6a08919be965f4682402983ea5c69853d4828fe724d187f",
     "roles": [
       "current manuscript direct link"
     ],
     "source": "reports/vf01-results-v0.1-2026-10-02.md",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Reader edition of the source report or document",
+    "location": "repository",
+    "original_sha256": "accfb089f000a25ed8f2ac760a1217d435487e3cf4b1afbf1adc6ce7e5f83961"
   },
   {
     "path": "runs/loop-kv-ac08-20261002-095022-41c2554c/SHA256SUMS.json",
@@ -40929,17 +40713,18 @@
     "location": "repository"
   },
   {
-    "path": "scripts/build_nb06_paper_supplements.py",
-    "bytes": 11966,
-    "sha256": "1394542f22d37dcc8af2d9be0619823b6a921ec73910cff4510677c7f1294189",
+    "path": "scripts/build_continuation_tables.py",
+    "bytes": 10442,
+    "sha256": "84399ceebd23efdbdcb0608285c470453ea1ee0a75508d745c680b8c1c95385e",
     "roles": [
       "NB06 supplementary evidence and implementation",
       "current manuscript direct link",
       "current supplement generator"
     ],
     "source": "scripts/build_nb06_paper_supplements.py",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Distribution adaptation",
+    "location": "repository",
+    "original_sha256": "1394542f22d37dcc8af2d9be0619823b6a921ec73910cff4510677c7f1294189"
   },
   {
     "path": "scripts/loop_kv_ac01_attention.py",
@@ -41857,17 +41642,18 @@
     "location": "repository"
   },
   {
-    "path": "scripts/nb06_paper_supplements_v0_1.json",
-    "bytes": 80470,
-    "sha256": "0fea791751cc784df374a7e7f616aa9f6216286043293dc5b99d0c3cc44967fb",
+    "path": "scripts/nb06_table_sources.json",
+    "bytes": 1629,
+    "sha256": "ecaf13d341eeb1a5b65f513593daba214bf06356ad5c7b87b7ddaee6c9a97a98",
     "roles": [
       "NB06 supplementary evidence and implementation",
       "current manuscript direct link",
       "fixed supplement patch specification"
     ],
     "source": "scripts/nb06_paper_supplements_v0_1.json",
-    "copy": "byte-identical",
-    "location": "repository"
+    "copy": "Distribution adaptation",
+    "location": "repository",
+    "original_sha256": "0fea791751cc784df374a7e7f616aa9f6216286043293dc5b99d0c3cc44967fb"
   },
   {
     "path": "scripts/nb06_previous_materials.json",
@@ -43425,27 +43211,16 @@
     "location": "repository"
   },
   {
-    "path": "papers/nsn-integrated/public-notes/related-work-review-v0.3-2026-10-03.md",
-    "bytes": 9372,
-    "sha256": "563b0df6e00f3b71ed373cec6968d113d1f17e23d8d494bdc1b7a2eda464d786",
-    "roles": [
-      "v1.0 public navigation or documentation"
-    ],
-    "source": "papers/nsn-integrated/related-work-review-v0.3-2026-10-03.md",
-    "copy": "Publication-only derivative",
-    "location": "repository",
-    "original_sha256": "6eba582b6949649fded43030746afd6c7f2ed42472ebf466571a9f48dffe7377"
-  },
-  {
     "path": "plans/README.md",
-    "bytes": 2336,
-    "sha256": "c01767740449941710f03200a4b501df2e15417e7dfe8959bb8691c343c7583c",
+    "bytes": 1795,
+    "sha256": "d2a7713ede3ea428398108304351aa82d0c0957d866c61aee414d4af3b443a2b",
     "roles": [
       "v1.0 public navigation or documentation"
     ],
     "source": "publication preparation 2026-10-29",
-    "copy": "new publication support file",
-    "location": "repository"
+    "copy": "Distribution adaptation",
+    "location": "repository",
+    "original_sha256": "c01767740449941710f03200a4b501df2e15417e7dfe8959bb8691c343c7583c"
   },
   {
     "path": "plans/public/loop-kv-kv01-design-v0.1-2026-09-30.md",
@@ -43520,17 +43295,6 @@
     "original_sha256": "e79a348567e53e129a8c0f43466095e572a5b598359322153055b54bb868c017"
   },
   {
-    "path": "tools/test_publication_edition.py",
-    "bytes": 3339,
-    "sha256": "a976f16ed41ad3d13f98cfc3a049ac6e419c400013a1aa8bc7525420391bf96c",
-    "roles": [
-      "v1.0 public navigation or documentation"
-    ],
-    "source": "publication preparation 2026-10-29",
-    "copy": "new publication support file",
-    "location": "repository"
-  },
-  {
     "path": "pyproject.toml",
     "bytes": 1466,
     "sha256": "fa83af38694b1f2354f14e258a74a832944860c551d19474bcdeeacbc3b11d4b",
@@ -43543,13 +43307,14 @@
   },
   {
     "path": "LEGACY.md",
-    "bytes": 2214,
-    "sha256": "84e61dd71cde4b507e64ecccebce41ed65a7027cfc0266d057566efbe382e1b2",
+    "bytes": 1288,
+    "sha256": "493321d6fa603468997237ee9a3bb3a8b5136762caa8f8105a7bc077902416ef",
     "roles": [
       "GitHub migration support"
     ],
     "source": "GitHub migration 2026-10-30",
-    "copy": "New legacy navigation",
-    "location": "repository"
+    "copy": "Distribution adaptation",
+    "location": "repository",
+    "original_sha256": "84e61dd71cde4b507e64ecccebce41ed65a7027cfc0266d057566efbe382e1b2"
   }
 ]

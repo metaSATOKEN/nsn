@@ -25,9 +25,9 @@ CUDA Event計時。両範囲ともTriton集約は18/18入力で短時間。同�
 
 torch集約／現行の短縮は、CUDAで検査単独4.722%、経路2.254%。Triton／torch集約は検査単独76.639%、経路37.210%短縮だった。**この実装では、host確認の集約に加え、GPU側の有限性処理をまとめた方式で大きな追加短縮が見えた。** kernel起動数、演算、一時配列等それぞれの寄与を分離した試験ではない。
 
-![IV01の部品時間](figures/iv01-input-check-times.png)
+!IV01の部品時間 (`reports/figures/iv01-input-check-times.png`)
 
-点は各実入力の3round中央値、棒は18入力の中央値。2つの図は異なる時間範囲を表示する。区間推定の図ではない。[SVG](figures/iv01-input-check-times.svg)。
+点は各実入力の3round中央値、棒は18入力の中央値。2つの図は異なる時間範囲を表示する。区間推定の図ではない。SVG (`reports/figures/iv01-input-check-times.svg`)。
 
 ## メモリと測定の成立
 
@@ -42,12 +42,10 @@ torch集約／現行の短縮は、CUDAで検査単独4.722%、経路2.254%。Tr
 - 原ZIP：`loop-kv-iv01-20261001-142907-0c002415.zip`、121,682,609 bytes、SHA256 `9d607d58936aadd08c676aa5fbb349983dfaf9c4dff18d84240d967a27e8a2c4`。
 - 全231ファイル、230保存hash、16配布source、元DC01の18入力を照合。返却ZIPのPythonを実行せず、v0.1.1配布前の検証器で再計算した。
 - RTX PRO 6000 Blackwell Server Edition、torch2.11.0+cu128、Triton3.6.0、NumPy2.1.3。worker9.185秒（別process照合・ZIP・DLを除く）。
-- [原保存物](../runs/loop-kv-iv01-20261001-142907-0c002415/)／[照合・配布前source](../throughline/audits/loop-kv-iv01-results-v0.1-2026-10-01/)／[記述的再集計](iv01-descriptive-statistics.json)／[図と集計を生成するコード](../scripts/analyze_loop_kv_iv01_results.py)。
+- [原保存物](../runs/loop-kv-iv01-20261001-142907-0c002415/)／照合・配布前source (`throughline/audits/loop-kv-iv01-results-v0.1-2026-10-01`)／[記述的再集計](iv01-descriptive-statistics.json)／図と集計を生成するコード (`scripts/analyze_loop_kv_iv01_results.py`)。
 
-元の[設計](../plans/loop-kv-iv01-design-v0.1-2026-10-01.md)・[取得前カード](../throughline/prereg/loop-kv-iv01-v0.1-2026-10-01.md)に置いた判定一致・実出力一致・Tritonによる検査短縮と経路への短縮残存の予想は、今回の条件で成立した。短縮幅とtorch集約の方向は、取得前に値を予測していなかった観測として記録する。
+元の[設計](../plans/loop-kv-iv01-design-v0.1-2026-10-01.md)・[取得前カード](../plans/prespecified/loop-kv-iv01-v0.1-2026-10-01.md)に置いた判定一致・実出力一致・Tritonによる検査短縮と経路への短縮残存の予想は、今回の条件で成立した。短縮幅とtorch集約の方向は、取得前に値を予測していなかった観測として記録する。
 
-## 次の推奨
-
-**この集約検査をモデル接続口へ入れ、現行融合との時間差が推論全体でも残るかを測る小設計**へ進むのがよい。主比較を現行融合／検査集約融合とし、同じrunに非量子化の参照条件も置く。数値の再現、PPL、V復元・cache更新を含む全体時間、実メモリを改めて確認する。
+## 結果の解釈と測定範囲
 
 今回の38.8%をAC03のモデル全体時間へ直接掛けたり、旧非量子化時間と異なるrun間で比べたりはしない。モデル全体で非量子化を超える速度は、まだ未測定である。今回は結果整理までで、新しい接続設計・実装・GPU実行は行っていない。

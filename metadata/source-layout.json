@@ -1,7 +1,7 @@
 {
   "version": 1,
   "date": "2026-10-29",
-  "purpose": "Integrated experiment layout. Original source identifiers are retained in frozen numerical records and resolve here to unchanged source bytes.",
+  "purpose": "Resolve source identifiers recorded in preserved data and scientific checks.",
   "files": {
     "modeq/LICENSE": {
       "path": "LICENSES/earlier-nsn-Apache-2.0.txt",
@@ -1094,6 +1094,16 @@
       "bytes": 3530,
       "sha256": "e79a348567e53e129a8c0f43466095e572a5b598359322153055b54bb868c017",
       "category": "prespecified scientific protocol"
+    },
+    "papers/loop-kv/paper-data-v0.2-2026-10-03.json": {
+      "path": "data/validation/loop-initial-tables.json",
+      "bytes": 80818,
+      "sha256": "b380c9f111c4671d959398fc8629443053a24eda4f00abc0aa798aedd8a81dc2"
+    },
+    "papers/loop-kv/numerical-audit-v0.4-2026-10-03.json": {
+      "path": "papers/loop-kv/data/numerical-audit-v0.4-2026-10-03.json",
+      "bytes": 13252,
+      "sha256": "f68ccd27ecab593c55288e0f17dfbd093ff7ce746fc97a830fe8ea346072c847"
     }
   },
   "excluded_documents": {
@@ -1103,363 +1113,14 @@
       "reason": "Historical manuscript is not needed for numerical reproduction; original is retained in the research archive.",
       "replacement_url": "https://doi.org/10.5281/zenodo.19724817"
     },
-    "modeq/paper/nsn.pdf": {
-      "bytes": 525735,
-      "sha256": "e68359fcc4c9de43dc43e631be7086caae1fd416de473bcf4f70cdcc5560f06f",
-      "reason": "Historical manuscript is not needed for numerical reproduction; original is retained in the research archive.",
-      "replacement_url": "https://doi.org/10.5281/zenodo.19724817"
-    },
     "Substrate-Aware-Diagnostic-and-Prescription/Diagnostic-and-Transfer-Study.md": {
       "bytes": 92193,
       "sha256": "2e8c9942def5420e44c6325bb924f029b72d17ed38d53386c0c54afa39564704",
       "reason": "Historical manuscript is not needed for numerical reproduction; original is retained in the research archive."
-    },
-    "nsn.md": {
-      "bytes": 113251,
-      "sha256": "f506b7c41fbedeb99bef85b662d0609c16fe787b13fe26251773fdf3fb767921",
-      "reason": "Historical manuscript is not needed for numerical reproduction; original is retained in the research archive.",
-      "replacement_url": "https://doi.org/10.5281/zenodo.19724817"
-    },
-    "throughline/audits/loop-kv-ac08-results-v0.1-2026-10-02/README.md": {
-      "bytes": 792,
-      "sha256": "cbe6ad6b8101a44144ffe5d4824b5638c455454f87e7b98d75cfc5d2e6a7fae1",
-      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
-    },
-    "throughline/audits/loop-kv-ac08-results-v0.1-2026-10-02/before-hashes.json": {
-      "bytes": 394,
-      "sha256": "175b322222408809d8766e01650939addcce8a17ea19071098759c6a32068513",
-      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
-    },
-    "throughline/audits/loop-kv-ac08-results-v0.1-2026-10-02/deployment-verification.json": {
-      "bytes": 3534,
-      "sha256": "fe0f46d076c5b24c53f0527a74a542e8dafc9673728ac6c48ed8590631e2b7d0",
-      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
-    },
-    "throughline/audits/loop-kv-ac08-results-v0.1-2026-10-02/ingestion.json": {
-      "bytes": 541,
-      "sha256": "02fb3f6174e381bee4e44dae2ed2dff959283941b45ba0aadeced918e3a15b80",
-      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
-    },
-    "throughline/audits/loop-kv-ac08-results-v0.1-2026-10-02/rescore.log": {
-      "bytes": 104,
-      "sha256": "6b7e39cf04224d400a7fd22a56725160eab5a5a83f3cb543205db413182caafd",
-      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
-    },
-    "throughline/audits/loop-kv-iv01-results-v0.1-2026-10-01/SHA256SUMS.json": {
-      "bytes": 3325,
-      "sha256": "8669b7fd88123eff8adbae2fcfa87cd072deea87444dbfea9c78eb499f8e52eb",
-      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
-    },
-    "throughline/audits/loop-kv-nb06-results-v0.1-2026-10-08/delivery.json": {
-      "bytes": 39318,
-      "sha256": "4afa0c853e47e05cca2db84563843d264944cd496eeb1cc79e25dbafb7728f01",
-      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
-    },
-    "throughline/audits/loop-kv-nb06-results-v0.1-2026-10-08/intake.json": {
-      "bytes": 198,
-      "sha256": "c3b652c55f57df37e79116a0617b0cd440695a6fb8dac1e91275df8cea6a97e2",
-      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
-    },
-    "throughline/audits/nsn-integrated-revision-v0.3-2026-10-03/before-sha256.json": {
-      "bytes": 312,
-      "sha256": "3e280425b1b61aed25fab22aea8ac2988e5350fa58341b941d6d961dfbd88cce",
-      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
-    },
-    "throughline/audits/nsn-integrated-revision-v0.3-2026-10-03/checks.json": {
-      "bytes": 18030,
-      "sha256": "e83b68f5e59668a48b4808da376f67ffb64b4608d37313a45293de2b800af0e0",
-      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
-    },
-    "throughline/audits/nsn-integrated-revision-v0.3-2026-10-03/delivery-manifest.json": {
-      "bytes": 3675,
-      "sha256": "8dfb92f1be5aa4a23f4e2699394557534e9ad3427a3f4a7120fed0aa63b2276a",
-      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
-    },
-    "throughline/audits/nsn-integrated-revision-v0.3-2026-10-03/delivery-verification.json": {
-      "bytes": 199,
-      "sha256": "b7dc6eea435d59c747ffb3f4bdcb78464d092c9324d9159dc2a3930d86a6d8d0",
-      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
-    },
-    "throughline/audits/nsn-integrated-revision-v0.3-2026-10-03/fetch-log.json": {
-      "bytes": 317,
-      "sha256": "bb251631d1aabd883c83aa3bad13b5697a0030b6545292146d2e3790a00cd118",
-      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
-    },
-    "throughline/audits/nsn-integrated-revision-v0.3-2026-10-03/preserved-assets.json": {
-      "bytes": 64204,
-      "sha256": "368c472c4f3a8e97d04c2a5fda34d51870411df88798e1a3ab0c84270d001ffb",
-      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
-    },
-    "throughline/audits/nsn-integrated-revision-v0.3-2026-10-03/regeneration-check.json": {
-      "bytes": 140,
-      "sha256": "6473524a34c008ac2cc07b4e4dd52883e4e2d8f2c65c8632e781dc6c5be260cf",
-      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
-    },
-    "throughline/fp-corpus.md": {
-      "bytes": 64525,
-      "sha256": "2881b1937f6f38b9b4753afdc0dcf20a0a5f99bfb13f42f2f995ac37df1cd6ca",
-      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
-    },
-    "throughline/ledger-2026-09.md": {
-      "bytes": 129504,
-      "sha256": "7cbabe445fb1398e63397ec694726bbb2b5f41ec275a44781e9ba666483d9771",
-      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
-    },
-    "throughline/ledger-2026-10.md": {
-      "bytes": 284700,
-      "sha256": "2d69eb073caaec42d3b3c0945f698161735ec844ca71dbc39fe073fd8a7ce216",
-      "reason": "Internal ledger, workflow or delivery record excluded from publication; original retained privately."
     }
   },
   "removed_from_extraction_source_hashes": [
     "modeq/paper/nsn.md",
     "Substrate-Aware-Diagnostic-and-Prescription/Diagnostic-and-Transfer-Study.md"
-  ],
-  "directories": {
-    "throughline/audits/loop-kv-ac08-results-v0.1-2026-10-02": "data/validation/ac08",
-    "throughline/audits/loop-kv-iv01-results-v0.1-2026-10-01": "data/validation/iv01",
-    "throughline/audits/loop-kv-nb05-results-v0.1-2026-10-03": "data/validation/nb05",
-    "throughline/audits/loop-kv-nb06-results-v0.1-2026-10-08": "data/validation/nb06",
-    "throughline/audits/loop-kv-paper-revision-v0.3-2026-10-03": "data/validation/qdq-core",
-    "throughline/audits/loop-kv-paper-revision-v0.4-2026-10-03": "data/validation/nb05",
-    "throughline/audits/loop-kv-vf01-results-v0.1-2026-10-02": "data/validation/vf01",
-    "throughline/audits/nsn-integrated-revision-v0.3-2026-10-03": "metadata/publication-provenance"
-  },
-  "publication_text_replacements": {
-    "papers/loop-kv/evidence-index-v0.5-2026-10-08.md": [
-      [
-        "より古い停止と修正の対応は各報告と[10月台帳](../../throughline/ledger-2026-10.md)、[9月台帳](../../throughline/ledger-2026-09.md)、[誤判定標本台帳](../../throughline/fp-corpus.md)を参照。本文はその履歴を実験の独立標本数として積み上げない。",
-        "停止と修正の対応は上記の公開報告を参照。内部の運用台帳は公開対象に含めない。本文はこの履歴を実験の独立標本数として積み上げない。"
-      ],
-      [
-        "本索引は同じ研究フォルダ内の保存物へ辿るための資料であり、公開データパッケージではない。本文の相対リンクはこの配置で確認した。原ZIP・原run・取得前計画・正式集計を保持し、本文用の再表示をそれらへ上書きしない。",
-        "本索引は公開候補に収録した保存物への入口である。コード・集計・読めるログをリポジトリに、大きな保存配列を別配布ZIPに収録する（[収録範囲](../../DATA_COVERAGE.md)）。取得前計画と原記録を保持し、本文用の再表示をそれらへ上書きしない。リポジトリは[https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn)。公開範囲と別配布ZIPの提供状況は[README](../../README.ja.md)に記録する。統合稿の恒久アーカイブDOIは未割当である。"
-      ],
-      [
-        "今回稿はLooped Transformer系の到達点を閉じる内部草稿。旧NSNの `modeq/` と未公開SADPからNSN関連証拠を抽出し、版・重複・評価条件を照合する作業は次段階に残す。旧NSNの公開版と手元稿の一致、恒久アーカイブと公開ライセンスの選択も未完了である。今回、追加推論・PDF化・外部公開は行っていない。",
-        "本稿は再帰型モデルでの実装・評価を詳述し、[NSN統合稿 v1.0](../nsn-integrated/NSN-2026-10-29-JA.md)は構成・適用条件・実保存量・利用費用をまとめる。既公開NSNの版照合は[版対応記録](../nsn-integrated/publication-provenance-v0.1-2026-10-03.md)に保存済み。著者作成の論文・図・データはCC BY 4.0、コードはApache-2.0とし、第三者条件を保持する（[利用条件](../../LICENSES.md)）。リポジトリは[https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn)。公開範囲と別配布ZIPの提供状況は[README](../../README.ja.md)に記録する。統合稿の恒久アーカイブDOIは未割当である。"
-      ],
-      [
-        "2026-10-08 / 日本語S1 v0.5。[日本語本文v0.5](manuscript-ja-v0.5-2026-10-08.md)に対応。初回二モデル比較の証拠を保持し、§12にNB06の継続評価を追加。",
-        "2026-10-08 / 日本語S1 v0.5。[日本語本文v0.5](manuscript-ja-v0.5-2026-10-08.md)に対応。初回二モデル比較の証拠を保持し、§12にNB06の継続評価を追加。\n\n公開用案内更新：2026年10月29日。利用条件・著者申告・参照先を現行パッケージへ同期した。測定値と科学的な結論は元の版から変更していない。"
-      ]
-    ],
-    "papers/loop-kv/evidence-index-en-v0.3-2026-10-08.md": [
-      [
-        "Earlier stops and fixes are mapped in those reports, the [October ledger](../../throughline/ledger-2026-10.md), [September ledger](../../throughline/ledger-2026-09.md), and [misclassification corpus](../../throughline/fp-corpus.md). This history is not accumulated into an independent sample count.",
-        "Stops and fixes are described in the public reports above. Internal workflow ledgers are not distributed. This history is not accumulated into an independent sample count."
-      ],
-      [
-        "This index leads to saved artifacts in the research directory; it is not a public data package. Relative links are checked for this layout. Original ZIPs, runs, prespecified plans, and formal summaries are retained. Paper-specific presentations do not overwrite them. Linked research reports and logs remain in their original language, primarily Japanese.",
-        "This index is an entry point to retained artifacts in the release candidate. Code, summaries, and readable logs are in the repository; large saved arrays are in companion ZIPs (see [coverage](../../DATA_COVERAGE.md)). Prespecified plans and original records are preserved; paper-specific presentations do not overwrite them. The repository is [https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn); [README](../../README.md) records its access status and the availability of companion ZIPs. A permanent archive DOI for the integrated paper has not been assigned. Linked historical reports retain their original language, primarily Japanese."
-      ],
-      [
-        "This internal manuscript closes the current Looped Transformer series. Extracting NSN-related evidence from the earlier `modeq/` study and unpublished SADP, and checking versions, overlap, and evaluation conditions, are subsequent tasks. Correspondence between the earlier public NSN version and the local manuscript, permanent archiving, and the choice of a public license remain unresolved. No additional inference, PDF production, or external publication was performed for this translation.",
-        "This paper details implementation and evaluation in looped models; the [integrated NSN paper v1.0](../nsn-integrated/NSN-2026-10-29-EN.md) brings together configuration, applicability, actual storage, and readout costs. The earlier public NSN version has been checked in the [publication provenance record](../nsn-integrated/publication-provenance-v0.1-2026-10-03.md). Author-owned papers, figures, and data use CC BY 4.0, code uses Apache-2.0, and third-party terms are retained (see [licenses](../../LICENSES.md)). The repository is [https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn); [README](../../README.md) records its access status and the availability of companion ZIPs. A permanent archive DOI for the integrated paper has not been assigned."
-      ],
-      [
-        "## 6. Boundary Between This Manuscript and the Planned Integrated Paper",
-        "## 6. Relationship to the Integrated Paper"
-      ],
-      [
-        "October 8, 2026 / English S1 v0.3, corresponding to [English manuscript v0.3](manuscript-en-v0.3-2026-10-08.md) and [Japanese S1 v0.5](evidence-index-v0.5-2026-10-08.md). Evidence for the initial two-model comparison is retained; §12 adds the NB06 continuation evaluation.",
-        "October 8, 2026 / English S1 v0.3, corresponding to [English manuscript v0.3](manuscript-en-v0.3-2026-10-08.md) and [Japanese S1 v0.5](evidence-index-v0.5-2026-10-08.md). Evidence for the initial two-model comparison is retained; §12 adds the NB06 continuation evaluation.\n\nPublication metadata updated October 29, 2026: licenses, author declarations and navigation are synchronized with the current package. Measured values and scientific conclusions are unchanged from the original edition."
-      ]
-    ],
-    "papers/nsn-integrated/manuscript-ja-v0.8-2026-10-08.md": [
-      [
-        "2026年10月8日 · 日本語草稿 v0.8",
-        "2026年10月29日 · 日本語版 v1.0"
-      ],
-      [
-        "本稿の図表は保存済み記録から再生成し、原値の位置とhashへの入口を付録Dへ対応づけた。公開用の固定アーカイブと統合稿のライセンスは、現草稿では未設定である。既公開NSNの版と本稿の採用範囲は付録D.5に示す。",
-        "本稿の図表は保存済み記録から再生成し、原値の位置とhashへの入口を付録Dへ対応づけた。公開候補には固定したコード・記録・図表と別配布の保存配列を収録した。著者作成の論文・図・データはCC BY 4.0、コードはApache-2.0とし、第三者資料には元の条件を適用する（[利用条件](../../LICENSES.md)）。リポジトリは[https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn)。公開範囲と別配布ZIPの提供状況は[README](../../README.ja.md)に記録する。統合稿の恒久アーカイブDOIは未割当である。既公開NSNの版と本稿の採用範囲は付録D.5に示す。"
-      ],
-      [
-        "資金・利益相反の最終申告は著者確認後に確定する。",
-        "本研究は著者個人の自己資金で実施し、外部からの資金提供を受けていない。著者に申告すべき利益相反はない。"
-      ],
-      [
-        "方法と数値の解釈に必要な条件は、本文と付録A–Cに記した。以下のリンクは再計算・原記録の閲覧に使う。相対パスは現在の研究フォルダ配置を前提とし、公開用の固定アーカイブはまだ作成していない。",
-        "方法と数値の解釈に必要な条件は、本文と付録A–Cに記した。以下のリンクは公開候補内の資料を指す。大きな保存配列は別配布ZIPから新しい作業コピーへ復元する。[実行手順](../../RUNNING.md)と[再現手順](../../REPRODUCIBILITY.md)に、照合・復元・科学的再計算の入口を分けて示す。"
-      ],
-      [
-        "`source`の基準は研究ルートである。",
-        "`source`は取得時の識別子であり、現在の配置とは異なる場合がある。[対応表](../../metadata/source-layout.json)または研究ルートからの `.venv/bin/python -B tools/source_layout.py --resolve 識別子` で現在の保存先を確認する。"
-      ],
-      [
-        "この抽出では1,732照合・不一致0を確認済みである。",
-        "元の抽出では1,732照合・不一致0を確認した。公開用の再集計では非同梱の旧文書hash照合2件を除いた1,730照合を維持し、数値検査は省いていない（[再現手順](../../REPRODUCIBILITY.md)）。"
-      ],
-      [
-        "python3 papers/nsn-integrated/code/build_integrated_assets_v0_7.py \\",
-        ".venv/bin/python -B papers/nsn-integrated/code/build_integrated_assets_v0_7.py \\"
-      ],
-      [
-        "python3 papers/nsn-integrated/code/extract_existing_evidence.py \\",
-        ".venv/bin/python -B papers/nsn-integrated/code/extract_existing_evidence.py \\"
-      ],
-      [
-        "python3 papers/nsn-integrated/code/build_extraction_tables.py \\",
-        ".venv/bin/python -B papers/nsn-integrated/code/build_extraction_tables.py \\"
-      ],
-      [
-        "python3 scripts/build_nb06_paper_supplements.py \\",
-        ".venv/bin/python -B scripts/build_nb06_paper_supplements.py \\"
-      ],
-      [
-        "これは本文と表・図の再生成である。",
-        "上の生成器は2026-10-08の追補本文を再生成する。v1.0では、その出力へ[明示的な公開用補正](../../metadata/source-layout.json)を適用し、日英の新ファイル名と案内・申告を整える。別作業コピーのルートから `.venv/bin/python -B tools/reproduce.py --output-dir /tmp/nsn-v1-reproduced-new` を使うと、この公開版まで照合する（[依存と復元の手順](../../REPRODUCIBILITY.md)）。"
-      ]
-    ],
-    "papers/nsn-integrated/manuscript-en-v0.7-2026-10-08.md": [
-      [
-        "October 8, 2026 · English draft v0.7",
-        "October 29, 2026 · English version v1.0"
-      ],
-      [
-        "The figures and tables are regenerated from retained records, with links to original value locations and hashes in Appendix D. A fixed public archive and a license for the integrated manuscript have not yet been specified in this draft. Appendix D.5 identifies the published NSN version and the scope adopted here.",
-        "The figures and tables are regenerated from retained records, with links to original value locations and hashes in Appendix D. The release candidate contains fixed code, records, figures, and separately distributed saved arrays. Author-owned papers, figures, and data are licensed under CC BY 4.0, and code under Apache-2.0; third-party materials retain their original terms (see [licenses](../../LICENSES.md)). The repository is [https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn); [README](../../README.md) records its access status and the availability of companion ZIPs. A permanent archive DOI for the integrated paper has not been assigned. Appendix D.5 identifies the published NSN version and the scope adopted here."
-      ],
-      [
-        "Final funding and conflict-of-interest statements will be settled after author confirmation.",
-        "The research was self-funded by the author and received no external funding. The author declares no competing interests."
-      ],
-      [
-        "Conditions needed to interpret the methods and numbers are provided in the main text and Appendices A–C. The links below support recalculation and inspection of original records. Relative paths assume the current research-folder structure; a fixed public archive has not yet been created.",
-        "Conditions needed to interpret the methods and numbers are provided in the main text and Appendices A–C. The links below point to materials in the release candidate. Large saved arrays are restored from companion ZIPs into a new working copy. The [running instructions](../../RUNNING.md) and [reproduction guide](../../REPRODUCIBILITY.md) distinguish verification, restoration, and scientific recalculation."
-      ],
-      [
-        "`source` is relative to the research root.",
-        "`source` is an acquisition-time identifier and may differ from the current layout. Resolve it through the [source map](../../metadata/source-layout.json), or run `.venv/bin/python -B tools/source_layout.py --resolve IDENTIFIER` from the repository root to locate the current file."
-      ],
-      [
-        "The extraction has passed 1,732 checks with zero discrepancies.",
-        "The original extraction passed 1,732 checks with zero discrepancies. Public reproduction retains 1,730 checks after excluding two hashes of historical documents that are not distributed; no numerical check was removed (see the [reproduction guide](../../REPRODUCIBILITY.md))."
-      ],
-      [
-        "python3 papers/nsn-integrated/code/build_integrated_assets_v0_7.py \\",
-        ".venv/bin/python -B papers/nsn-integrated/code/build_integrated_assets_v0_7.py \\"
-      ],
-      [
-        "python3 papers/nsn-integrated/code/extract_existing_evidence.py \\",
-        ".venv/bin/python -B papers/nsn-integrated/code/extract_existing_evidence.py \\"
-      ],
-      [
-        "python3 papers/nsn-integrated/code/build_extraction_tables.py \\",
-        ".venv/bin/python -B papers/nsn-integrated/code/build_extraction_tables.py \\"
-      ],
-      [
-        "python3 scripts/build_nb06_paper_supplements.py \\",
-        ".venv/bin/python -B scripts/build_nb06_paper_supplements.py \\"
-      ],
-      [
-        "This regenerates manuscripts, tables, and figures.",
-        "The builder above regenerates the supplemented manuscripts dated October 8, 2026. Version 1.0 then applies [declared publication-only transformations](../../metadata/source-layout.json) to update filenames, navigation and declarations. From the root of a separate working copy, `.venv/bin/python -B tools/reproduce.py --output-dir /tmp/nsn-v1-reproduced-new` checks these public editions as well (see [dependencies and restoration](../../REPRODUCIBILITY.md))."
-      ]
-    ],
-    "papers/loop-kv/manuscript-ja-v0.5-2026-10-08.md": [
-      [
-        "設計、原実行記録、配布時のコード、数値再計算、本文の表との対応は[補足資料S1](evidence-index-v0.5-2026-10-08.md)に整理した。現時点のリンクは研究フォルダ内を指し、恒久公開アーカイブはまだ作成していない。公開版では固定版のコード・材料・ログ・hash一覧をまとめ、公開先と利用条件を追記する。",
-        "設計、原実行記録、配布時のコード、数値再計算、本文の表との対応は[補足資料S1](evidence-index-v0.5-2026-10-08.md)に整理した。公開候補には固定したコード・材料・ログ・hash一覧を収録し、大きな保存配列は別配布ZIPとした。著者作成の論文・図・データはCC BY 4.0、コードはApache-2.0、第三者資料は元の条件に従う（[利用条件](../../LICENSES.md)）。リポジトリは[https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn)。公開範囲と別配布ZIPの提供状況は[README](../../README.ja.md)に記録する。統合稿の恒久アーカイブDOIは未割当である。"
-      ],
-      [
-        "研究資金と利益相反の申告文は公開前に著者が確定する。",
-        "本研究は著者個人の自己資金で実施し、外部からの資金提供を受けていない。著者に申告すべき利益相反はない。"
-      ],
-      [
-        "公開版との版対応は統合稿作成時に照合する。",
-        "Zenodo v1.0.0との一致を[版対応記録](../nsn-integrated/publication-provenance-v0.1-2026-10-03.md)で確認済み。"
-      ],
-      [
-        "2026年10月8日 · 日本語草稿 v0.5",
-        "2026年10月8日 · 日本語草稿 v0.5\n\n公開用案内更新：2026年10月29日。利用条件・著者申告・参照先を現行パッケージへ同期した。測定値と科学的な結論は元の版から変更していない。"
-      ]
-    ],
-    "papers/loop-kv/manuscript-en-v0.3-2026-10-08.md": [
-      [
-        "Designs, original execution records, distributed code, numerical recalculations, and their correspondence to the paper's tables are indexed in [Supplement S1](evidence-index-en-v0.3-2026-10-08.md). Current links point into the research directory; no permanent public archive has yet been created. The public version will include pinned code, materials, logs, and hashes, together with the archive location and terms of use.",
-        "Designs, original execution records, distributed code, numerical recalculations, and their correspondence to the tables are indexed in [Supplement S1](evidence-index-en-v0.3-2026-10-08.md). The release candidate contains pinned code, materials, logs, and hashes, with large saved arrays in companion ZIPs. Author-owned papers, figures, and data use CC BY 4.0, code uses Apache-2.0, and third-party materials retain their original terms (see [licenses](../../LICENSES.md)). The repository is [https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn); [README](../../README.md) records its access status and the availability of companion ZIPs. A permanent archive DOI for the integrated paper has not been assigned."
-      ],
-      [
-        "Funding and competing-interest declarations will be finalized by the author before publication.",
-        "The research was self-funded by the author and received no external funding. The author declares no competing interests."
-      ],
-      [
-        "Correspondence with the public version remains to be checked when preparing the integrated manuscript.",
-        "Correspondence with Zenodo v1.0.0 was verified in the [publication provenance record](../nsn-integrated/publication-provenance-v0.1-2026-10-03.md)."
-      ],
-      [
-        "October 8, 2026 · English manuscript v0.3",
-        "October 8, 2026 · English manuscript v0.3\n\nPublication metadata updated October 29, 2026: licenses, author declarations and navigation are synchronized with the current package. Measured values and scientific conclusions are unchanged from the original edition."
-      ]
-    ],
-    "plans/loop-kv-nb05-design-v0.1-2026-10-03.md": [
-      [
-        "[材料履歴・復帰照合](../throughline/audits/loop-kv-nb05-design-v0.1-2026-10-03/material-history-and-resume.json)",
-        "材料履歴・復帰照合（内部の運用記録は非同梱。科学的入力は上記候補一覧と契約を参照）"
-      ],
-      [
-        "[論文化と統合方針](../throughline/checkpoints/loop-kv-paper-readiness-v0.2-2026-10-03.md)",
-        "論文化と統合方針（内部の執筆計画は非同梱）"
-      ]
-    ],
-    "plans/loop-kv-vf01-design-v0.1-2026-10-02.md": [
-      [
-        "[入力・コード照合](../throughline/audits/loop-kv-vf01-design-v0.1-2026-10-02/source-check.json)",
-        "入力・コード照合（内部の設営記録は非同梱。入力hashと実行コードは上記契約・原runを参照）"
-      ]
-    ],
-    "papers/nsn-integrated/related-work-review-v0.3-2026-10-03.md": [
-      [
-        "[日本語v0.4](Old/manuscript-ja-v0.4-2026-10-03.md)",
-        "日本語v0.4（当時の補助資料・旧稿は非同梱）"
-      ],
-      [
-        "[英語v0.2](Old/manuscript-en-v0.2-2026-10-03.md)",
-        "英語v0.2（当時の補助資料・旧稿は非同梱）"
-      ],
-      [
-        "[初回ギャップ調査](research/related-work/gap-scan-v0.1-2026-10-03.md)",
-        "初回ギャップ調査（当時の補助資料・旧稿は非同梱）"
-      ],
-      [
-        "[機械可読catalog](research/related-work/source-catalog-v0.1-2026-10-03.json)",
-        "機械可読catalog（当時の補助資料・旧稿は非同梱）"
-      ],
-      [
-        "[以前の一次確認記録](Old/related-work-review-v0.2-2026-10-03.md)",
-        "以前の一次確認記録（当時の補助資料・旧稿は非同梱）"
-      ],
-      [
-        "[初回調査](research/related-work/gap-scan-v0.1-2026-10-03.md)",
-        "初回調査（当時の補助資料・旧稿は非同梱）"
-      ]
-    ]
-  },
-  "publication_document_names": {
-    "papers/nsn-integrated/manuscript-ja-v0.8-2026-10-08.md": "papers/nsn-integrated/NSN-2026-10-29-JA.md",
-    "papers/nsn-integrated/manuscript-en-v0.7-2026-10-08.md": "papers/nsn-integrated/NSN-2026-10-29-EN.md"
-  },
-  "publication_navigation_copies": {
-    "plans/loop-kv-kv01-design-v0.1-2026-09-30.md": "plans/public/loop-kv-kv01-design-v0.1-2026-09-30.md",
-    "plans/loop-kv-nb05-design-v0.1-2026-10-03.md": "plans/public/loop-kv-nb05-design-v0.1-2026-10-03.md",
-    "plans/loop-kv-vf01-design-v0.1-2026-10-02.md": "plans/public/loop-kv-vf01-design-v0.1-2026-10-02.md",
-    "plans/prespecified/loop-kv-kv01-v0.1-2026-09-30.md": "plans/public/loop-kv-kv01-v0.1-2026-09-30.md",
-    "plans/prespecified/loop-kv-vf01-v0.1-2026-10-02.md": "plans/public/loop-kv-vf01-v0.1-2026-10-02.md",
-    "plans/prespecified/loop-kv-nb05-v0.1-2026-10-03.md": "plans/public/loop-kv-nb05-v0.1-2026-10-03.md",
-    "papers/nsn-integrated/related-work-review-v0.3-2026-10-03.md": "papers/nsn-integrated/public-notes/related-work-review-v0.3-2026-10-03.md"
-  },
-  "publication_link_targets": {
-    "plans/loop-kv-nb05-material-candidates-v0.1-2026-10-03.json": "scripts/loop_kv_nb05_candidates.json",
-    "plans/loop-kv-vf01-input-contract-v0.1-2026-10-02.json": "runs/loop-kv-vf01-20261002-072452-1d1c10c0/loop_kv_vf01_inputs.json",
-    "colab/kv01_README.md": "plans/README.md#kv01-colab"
-  },
-  "publication_edition": {
-    "version": "v1.0",
-    "date": "2026-10-29",
-    "scope": "Publication metadata, author declarations and navigation only; numerical records, scientific code and frozen baselines preserved.",
-    "github_repository": "https://github.com/metaSATOKEN/nsn",
-    "availability_update": "2026-10-30"
-  }
+  ]
 }

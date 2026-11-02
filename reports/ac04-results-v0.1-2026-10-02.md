@@ -4,7 +4,7 @@
 
 同じ実行の非量子化参照よりは15.248%遅く、終端KVは71.241%少なかった。PPL変化は2材料で−0.133%／＋0.216%。この品質・時間・保存量の対応を、予定の小比較として閉じる。
 
-[設計](../plans/loop-kv-ac04-design-v0.1-2026-10-01.md)／[取得前カード](../throughline/prereg/loop-kv-ac04-v0.1-2026-10-01.md)／[原保存物](../runs/loop-kv-ac04-20261001-144912-bc86ca6a/)／[独立照合資料](../throughline/audits/loop-kv-ac04-results-v0.1-2026-10-02/)／[記述集計JSON](ac04-descriptive-statistics.json)
+設計 (`plans/loop-kv-ac04-design-v0.1-2026-10-01.md`)／取得前カード (`throughline/prereg/loop-kv-ac04-v0.1-2026-10-01.md`)／原保存物 (`runs/loop-kv-ac04-20261001-144912-bc86ca6a`)／独立照合資料 (`throughline/audits/loop-kv-ac04-results-v0.1-2026-10-02`)／記述集計JSON (`reports/ac04-descriptive-statistics.json`)
 
 ## 1. 比較条件と計測範囲
 
@@ -86,14 +86,12 @@ allocatedは使用中領域、reservedはallocatorが確保した領域なので
 
 初回prefillのCUDA時間中央値は非量子化197.380ms／現行融合197.513ms／集約融合197.659ms。直後の初期圧縮POSTは0.013ms／294.879ms／293.892ms。主decodeの改善と、圧縮開始時の費用を分けて保存した。
 
-![AC04の品質・モデル時間・メモリ](figures/ac04-quality-time-memory.png)
+!AC04の品質・モデル時間・メモリ (`reports/figures/ac04-quality-time-memory.png`)
 
 図の時間棒は方式別中央値、点は4ブロック。短縮率は対応比の中央値から算出。メモリは主decodeと終端KVの事前指標。区間推定は表示していない。
 
-## 6. 予想との対応と次の判断
+## 6. 結果の解釈と測定範囲
 
 取得前に置いた、検査判定・gate成立、新旧出力と保存状態の一致、現行融合よりモデル時間短縮、同じKV保存量、非量子化比PPL悪化5%以内は今回すべて成立した。短縮幅、非量子化を超える速度、モデル全体peakの削減幅は予測していない。
 
 結果の範囲は、既知2材料・各65予測・2反復、固定モデル・1GPU・768〜833tokenの検査付きdecodeである。独立材料は2つで、反復やtokenを独立Nに加えずp値・CIを出さない。NATIVEには既存の検査があり、その検査を最適化した非量子化実装や、検査を外した最速公式経路との比較ではない。旧full/incremental P0未達、PK01・AC01のINCONCLUSIVEも保持する。
-
-**次は、ここまでを一度チェックポイントへ整理するのが推奨。** 品質・実KV保存・decode時間・prefillを含む費用が揃った。その後は同じ実装で文脈長を延ばす小比較へ進み、長さによって省メモリと時間の対応がどう変わるか確認する。長さ変更とkernel改造を同時に入れず、残る約15%の遅延の原因同定やV復元融合は、追加の切り分けが必要な別課題として残す。今回は結果整理までで、新設計・新コード・新GPU測定は行っていない。

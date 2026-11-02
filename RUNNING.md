@@ -51,6 +51,6 @@ Remove `--dry-run` to create the new copy and restore the checked ZIP members. T
 
 ## Scientific computation
 
-Use a separate restored copy, its root `.venv`, the fixed specifications and the required dependency versions. `tools/reproduce.py`, the extraction scripts, paper builders, and experiment verifiers perform numerical calculations and/or write derived outputs. See [REPRODUCIBILITY.md](REPRODUCIBILITY.md). Original code retains its historical command examples; this file takes precedence for interpreter selection.
+Use a separate restored copy, its root `.venv`, the fixed specifications and the required dependency versions. `tools/reproduce.py`, the extraction scripts, table and figure builders, and experiment verifiers perform numerical calculations and/or write derived outputs. See [REPRODUCIBILITY.md](REPRODUCIBILITY.md). Original code retains its historical command examples; this file takes precedence for interpreter selection.
 
 The readable Colab launchers keep the original `sys.executable` and isolated runtime. Do not replace those paths with a Mac `.venv` path. No local model loading is needed for package verification or saved-data analysis.

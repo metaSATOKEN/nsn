@@ -4,7 +4,7 @@
 
 集約検査は旧検査よりCUDA時間が**15.363%短縮**。同runの非量子化よりは**12.849%長い**。終端の実KVは67.678%減、主decodeの使用中メモリpeakは23.892%減、確保済み領域peakは7.856%増だった。新4冊の固定比較はこれで閉じ、次の研究工程をV復元＋attention融合の部品比較とする。
 
-[設計](../plans/loop-kv-ac06-design-v0.1-2026-10-02.md)／[取得前カード](../throughline/prereg/loop-kv-ac06-v0.1-2026-10-02.md)／[原保存物](../runs/loop-kv-ac06-20261002-055057-e9d73f19/)／[独立照合資料](../throughline/audits/loop-kv-ac06-results-v0.1-2026-10-02/)／[全対応値の集計](ac06-descriptive-statistics.json)
+設計 (`plans/loop-kv-ac06-design-v0.1-2026-10-02.md`)／取得前カード (`throughline/prereg/loop-kv-ac06-v0.1-2026-10-02.md`)／原保存物 (`runs/loop-kv-ac06-20261002-055057-e9d73f19`)／独立照合資料 (`throughline/audits/loop-kv-ac06-results-v0.1-2026-10-02`)／全対応値の集計 (`reports/ac06-descriptive-statistics.json`)
 
 ## 1. 新しい材料と固定した比較
 
@@ -96,7 +96,7 @@ POST位置別のCUDA時間、8対応の中央値、単位ms。非量子化の列
 
 主decodeの使用中allocatedは減り、allocatorが確保するreservedは増えた。prefillを含む保存FORWARD／POSTのallocated最大は非量子化4,524,348,416→圧縮4,222,254,592 bytesで6.677%減。この最大値はモデルロード・補助forward・診断再生を含むprocess全体peakではない。
 
-![AC06：新4冊の品質・モデル時間・実メモリ](figures/ac06-quality-time-memory.png)
+!AC06：新4冊の品質・モデル時間・実メモリ (`reports/figures/ac06-quality-time-memory.png`)
 
 時間棒は方式別中央値、点は8対応ブロック。時間変化率は対応比中央値。品質は全255予測、反復間の品質値は一致。4冊の記述比較なのでp値・信頼区間は示していない。
 
@@ -128,8 +128,4 @@ POST位置別のCUDA時間、8対応の中央値、単位ms。非量子化の列
 
 **新しい4冊でも、小さな品質変化と実KV削減を保ちながら、検査集約の短縮が続いた。** この固定モデル・長さ・GPU・検査付きNATIVE参照の範囲でAC06を閉じる。技術反復を独立8冊と数えず、旧AC05やLC02の成績も合算しない。旧full/incremental P0未達と過去のINCONCLUSIVEは保持する。
 
-次は合意済みの**V復元＋attention融合**へ進む。現実装はK側を融合している一方、Vは一度全体をBF16へ戻してからattentionへ渡す。その復元と加重和をまとめた部品を、同一packed Vと未圧縮tailで比較する。基準経路のBF16丸めと入力検査を保ち、数値成立後にモデルへ接続する。
-
 今回の局所標本にある復元済みVは、当時のpacked V一式の代替ではない。再量子化したものを元のpacked Vと呼ばず、次の部品試験では共通のpacked入力を明示して用意する。残る約12.8%の遅延がすべてV由来とも仮定せず、部品の数値・時間から確かめる。新材料追加や長さ延長を先に挟まない。
-
-今回は返却の照合・解析・記帳まで。解析はAC05で使用した点検・集計・作図をコピーし、AC06のarchive・4冊・予定数・選定記録へ差分変更した。新GPU実験やV融合コードはまだ作成していない。再利用元hashとdiffを独立照合資料へ保存した。

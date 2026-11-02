@@ -1,10 +1,4 @@
-#!/usr/bin/env python3
-"""Reproduce the NB06 paper supplement from immutable papers and saved results.
-
-CPU only; no model, network, or modification of original evidence.
-Earlier paper generators remain unchanged. Exact prose changes live in the
-adjacent version-fixed JSON; added tables are computed from retained evidence.
-"""
+"""Build both papers’ continuation tables and numerical audits offline."""
 from pathlib import Path
 import argparse
 import hashlib
@@ -28,14 +22,18 @@ def table(header, rows):
 def pct(x):
     return f'{x:+.3f}%'.replace('-', '−')
 
-def build(root, output, spec_path):
+def build(root, output, spec_path, integrated_base, loop_base):
     root, output = root.resolve(), output.resolve()
     if output == root or root in output.parents:
         raise ValueError('Use an output directory outside the evidence tree.')
     spec=json.loads(spec_path.read_text())
+    base_data = {
+        'papers/nsn-integrated/paper-data-v0.4-2026-10-05.json': integrated_base,
+        'papers/loop-kv/paper-data-v0.2-2026-10-03.json': loop_base,
+    }
     checked={}
     for rel, expected in spec['inputs'].items():
-        actual=digest(root/rel)
+        actual=digest(base_data.get(rel, root/rel))
         if actual != expected:
             raise ValueError(f'Input hash mismatch: {rel}')
         checked[rel]=actual
@@ -145,25 +143,13 @@ def build(root, output, spec_path):
                          'primary_time':'median within text of three paired ratios, then median across four texts',
                          'cost_decomposition':'post hoc arithmetic means across twelve primary measurements'},
              'generated_tables':fragments}
-    produced=[]
-    for key,d in spec['documents'].items():
-        p=root/d['source']
-        assert digest(p)==d['source_sha256'],f"Base manuscript changed: {p}"
-        checked[d['source']]=digest(p)
-        text=p.read_text()
-        for op in d['operations']:
-            assert text.count(op['old'])==op.get('count',1),(key,op['old'][:100])
-            text=text.replace(op['old'],op['new'],op.get('count',1))
-        for name,value in fragments.items():
-            text=text.replace('{{'+name+'}}',value)
-        assert '{{QUALITY_TABLE' not in text and '{{TIMING_TABLE' not in text and '{{NUMERIC_TABLE' not in text
-        dest=output/d['output'];dest.parent.mkdir(parents=True,exist_ok=True)
-        dest.write_text(text)
-        produced.append(d['output'])
+    # Published JSON includes the original document identifiers as provenance.
+    # File verification above covers the numerical inputs used by this builder.
+    payload['source_sha256'] = {**checked, **spec['provenance_only']}
     for folder,oldname,newname in [
         ('nsn-integrated','paper-data-v0.4-2026-10-05.json','paper-data-v0.5-2026-10-08.json'),
         ('loop-kv','paper-data-v0.2-2026-10-03.json','paper-data-v0.3-2026-10-08.json')]:
-        baseline=json.loads((root/'papers'/folder/oldname).read_text())
+        baseline=json.loads(base_data[f'papers/{folder}/{oldname}'].read_text())
         # Preserve previous measurements; edition metadata and new data are separate.
         assert 'nb06_continuation' not in baseline
         inherited_metadata={k:baseline[k] for k in ['version','date','scope'] if k in baseline}
@@ -176,25 +162,13 @@ def build(root, output, spec_path):
         baseline['scope']='Retained earlier measurements plus NB06 continuation evidence; no new model execution during manuscript preparation.'
         write_json(output/'papers'/folder/newname,baseline)
         write_json(output/'papers'/folder/'numerical-audit-nb06-v0.1-2026-10-08.json',numeric)
-        produced.extend([f'papers/{folder}/{newname}',
-                         f'papers/{folder}/numerical-audit-nb06-v0.1-2026-10-08.json'])
-        figdir=output/'papers'/folder/'figures/v0.3';figdir.mkdir(parents=True,exist_ok=True)
-        for ext in ['png','svg']:
-            shutil.copyfile(root/f'reports/figures/nb06-results-v0.1-2026-10-08.{ext}',figdir/f'figure-06-continuation.{ext}')
-            produced.append(f'papers/{folder}/figures/v0.3/figure-06-continuation.{ext}')
-    outputs={rel:digest(output/rel) for rel in sorted(produced)}
-    manifest={'date':spec['date'],'scope':spec['scope'],'sources':checked,
-              'prose_spec_sha256':digest(spec_path),'builder_sha256':digest(Path(__file__)),
-              'outputs':outputs,'new_gpu_calls':0,'pdf_created':False}
-    write_json(output/'nb06-paper-build-manifest.json',manifest)
-    print(json.dumps({'documents':len(spec['documents']),'outputs':len(outputs),
-                      'quality_windows_pass':True,'storage_reduction_percent':reduction,
-                      'source_hash_checks':len(checked),'output_dir':str(output)}))
 
 if __name__=='__main__':
-    a=argparse.ArgumentParser(description=__doc__)
-    a.add_argument('--research-root',type=Path,required=True)
-    a.add_argument('--output-dir',type=Path,required=True)
-    a.add_argument('--spec',type=Path,default=Path(__file__).with_name('nb06_paper_supplements_v0_1.json'))
-    args=a.parse_args()
-    build(args.research_root,args.output_dir,args.spec)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--research-root', type=Path, required=True)
+    parser.add_argument('--output-dir', type=Path, required=True)
+    parser.add_argument('--integrated-base', type=Path, required=True)
+    parser.add_argument('--loop-base', type=Path, required=True)
+    args = parser.parse_args()
+    build(args.research_root, args.output_dir, Path(__file__).with_name('nb06_table_sources.json'),
+          args.integrated_base, args.loop_base)

@@ -2,7 +2,7 @@
 
 2026-10-01 / v0.1。**3方式のモデル比較は正常完了し、配布前の検証器による全保存物の再計算も一致した。** 新融合は圧縮＋SDPAよりモデルのdecode時間を7.807%短縮した。非量子化に対しては、終端KV保存量を71.241%減らし、PPL変化を−0.133%／＋0.216%に保った一方、decode時間は36.892%長かった。品質・保存量・速度の交換条件を、同じ実行の横並びで確認できた。
 
-[設計](../plans/loop-kv-ac03-design-v0.1-2026-10-01.md)／[取得前カード](../throughline/prereg/loop-kv-ac03-v0.1-2026-10-01.md)／[原保存物](../runs/loop-kv-ac03-20261001-125320-7db44941/)／[独立再集計・照合資料](../throughline/audits/loop-kv-ac03-results-v0.1-2026-10-01/)
+設計 (`plans/loop-kv-ac03-design-v0.1-2026-10-01.md`)／取得前カード (`throughline/prereg/loop-kv-ac03-v0.1-2026-10-01.md`)／原保存物 (`runs/loop-kv-ac03-20261001-125320-7db44941`)／独立再集計・照合資料 (`throughline/audits/loop-kv-ac03-results-v0.1-2026-10-01`)
 
 ## 1. 何を比較したか
 
@@ -80,7 +80,7 @@ allocatedはPyTorchで使用中の領域、reservedはallocatorが確保して�
 
 初回prefillのCUDA時間中央値は非量子化197.659ms／圧縮SDPA198.028ms／新融合197.855ms。その後の初回POSTはそれぞれ0.013ms／292.853ms／293.449msだった。圧縮の開始費用も原ログへ残っている。**今回得たのは、主decodeでの省メモリ効果と、開始時には別の費用があるという対応**である。
 
-![AC03の品質・モデルdecode時間・測定範囲別メモリ](figures/ac03-quality-time-memory.png)
+!AC03の品質・モデルdecode時間・測定範囲別メモリ (`reports/figures/ac03-quality-time-memory.png`)
 
 図の時間は4ブロック中央値と各ブロックの点。PPLは2材料別。メモリの右端だけは、上記のprefillを含む事後参考値である。区間推定は表示していない。
 

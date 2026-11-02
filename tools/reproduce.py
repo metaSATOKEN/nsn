@@ -4,11 +4,12 @@ import argparse
 import hashlib
 import json
 import os
+import shutil
 from pathlib import Path
 import subprocess
 import sys
 from verify_package import ROOT, verify
-from source_layout import check as check_source_layout, expected_extraction, layout, public_markdown, public_document_path
+from source_layout import check as check_source_layout, expected_extraction, layout, safe_relative, source_file
 
 
 def main():
@@ -50,8 +51,7 @@ def main():
     jobs = [
         ("extraction", paper / "code/extract_existing_evidence.py"),
         ("numerical", ROOT / "papers/loop-kv/code/extract_numerical_audit_v0_4.py"),
-        ("paper", paper / "code/build_integrated_assets_v0_7.py"),
-        ("english", paper / "code/build_integrated_english_v0_6.py"),
+        ("paper", paper / "code/build_tables_and_figures.py"),
     ]
     try:
         for name, script in jobs:
@@ -104,23 +104,25 @@ def main():
         same(
             "numerical/" + audit,
             out / "numerical" / audit,
-            ROOT / "papers/loop-kv" / audit,
+            ROOT / "papers/loop-kv/data" / audit,
         )
         nll = json.loads((out / "numerical/nb05-nll-checks.json").read_text())
         report["raw_logit_nll"] = {
             "predictions": len(nll),
             "all_within_original_tolerance": all(x["error"] <= x["limit"] for x in nll),
         }
-        for name in [
-            "manuscript-ja-v0.7-2026-10-05.md",
-            "paper-data-v0.4-2026-10-05.json",
-        ]:
-            same("paper/" + name, out / "paper" / name, paper / name)
-        for name in [
-            "manuscript-en-v0.6-2026-10-05.md",
-            "english-build-manifest-v0.6.json",
-        ]:
-            same("english/" + name, out / "english" / name, paper / name)
+        loop = ROOT / "papers/loop-kv"
+        loop_reference = ROOT / "data/validation/loop-initial-tables.json"
+        # The original plotting script records its acquisition-time input names.
+        # Project its eight verified inputs into a temporary tree with those names.
+        loop_inputs = out / "plot-inputs"
+        for identifier, digest in json.loads(loop_reference.read_text())["source_sha256"].items():
+            source = source_file(ROOT, identifier)
+            if hashlib.sha256(source.read_bytes()).hexdigest() != digest:
+                raise ValueError("Figure input mismatch: " + identifier)
+            target = loop_inputs / safe_relative(identifier)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, target)
         # Reuse the frozen continuation analyzer and supplement builder in fresh outputs.
         nb06_run = ROOT / "runs/loop-kv-nb06-20261008-075410-5621380a"
         extra_jobs = [
@@ -134,15 +136,16 @@ def main():
                 ],
             ),
             (
-                "supplement",
-                [
-                    sys.executable,
-                    str(ROOT / "scripts/build_nb06_paper_supplements.py"),
-                    "--research-root",
-                    str(ROOT),
-                    "--output-dir",
-                    str(out / "supplement"),
-                ],
+                "loop-figures",
+                [sys.executable, str(loop / "code/build_paper_assets_v0_2.py"),
+                 "--research-root", str(loop_inputs), "--output-dir", str(out / "loop-figures")],
+            ),
+            (
+                "paper-data",
+                [sys.executable, str(ROOT / "scripts/build_continuation_tables.py"),
+                 "--research-root", str(ROOT), "--output-dir", str(out / "paper-data"),
+                 "--integrated-base", str(out / "paper/initial-tables.json"),
+                 "--loop-base", str(out / "loop-figures/paper-data-v0.2-2026-10-03.json")],
             ),
         ]
         for name, command in extra_jobs:
@@ -160,44 +163,43 @@ def main():
         report["nb06_nll_components_checked"] = json.loads(
             (out / "nb06" / nb_name).read_text()
         )["nll_components_checked"]
-        generated = json.loads(
-            (out / "supplement/nb06-paper-build-manifest.json").read_text()
-        )
-        for rel in generated["outputs"]:
-            actual = out / "supplement" / rel
-            if rel.endswith(".md"):
-                # Preserve frozen outputs; apply declared publication-only prose,
-                # author metadata, names and navigation in a separate edition.
-                public_rel = public_document_path(ROOT, rel)
-                public = out / "public-edition" / public_rel
-                public.parent.mkdir(parents=True, exist_ok=True)
-                public.write_text(public_markdown(ROOT, rel, actual.read_text()))
-                actual = public
-            same("supplement/" + rel, actual, ROOT / public_document_path(ROOT, rel))
-        report["current_manuscript_outputs"] = 4
-        report["supplement_outputs_checked"] = len(generated["outputs"])
+        for folder, name in [
+            (paper, "paper-data-v0.5-2026-10-08.json"),
+            (loop, "paper-data-v0.3-2026-10-08.json"),
+        ]:
+            for filename in (name, "numerical-audit-nb06-v0.1-2026-10-08.json"):
+                rel = folder.relative_to(ROOT) / filename
+                same(str(rel), out / "paper-data" / rel, folder / "data" / filename)
+        same("initial looped tables", out / "loop-figures/paper-data-v0.2-2026-10-03.json", loop_reference)
         os.environ.update(
             {k: env[k] for k in ["MPLCONFIGDIR", "XDG_CACHE_HOME", "MPLBACKEND"]}
         )
         import matplotlib.image as mpimg
         import numpy as np
 
-        for f in sorted((out / "paper/figures/v0.2").glob("*.png")):
-            frozen = paper / "figures/v0.2" / f.name
-            x = mpimg.imread(f)
-            y = mpimg.imread(frozen)
-            report["rendering"].append(
-                {
-                    "figure": f.name,
-                    "pixel_equal": bool(x.shape == y.shape and np.array_equal(x, y)),
-                    "svg_generated": f.with_suffix(".svg").is_file(),
-                }
-            )
+        for folder, figure_dir in [
+            (paper, out / "paper/figures"),
+            (loop, out / "loop-figures/figures/v0.2"),
+        ]:
+            pairs = [(f, folder / "figures" / f.name) for f in sorted(figure_dir.glob("*.png"))]
+            if len(pairs) != 5:
+                raise ValueError("Expected five base figures for " + folder.name)
+            pairs.append((out / "nb06/figures/nb06-results-v0.1-2026-10-08.png",
+                          folder / "figures/figure-06-continuation.png"))
+            for actual, frozen in pairs:
+                report["rendering"].append({
+                    "figure": str(frozen.relative_to(ROOT)),
+                    "pixel_equal": bool(np.array_equal(mpimg.imread(actual), mpimg.imread(frozen))),
+                    "svg_generated": actual.with_suffix(".svg").is_file(),
+                })
         failed = (
             not all(x["passed"] for x in report["comparisons"])
             or extraction["failed_checks"] != 0
             or not report["raw_logit_nll"]["all_within_original_tolerance"]
-            or len(report["rendering"]) != 5
+            or report["nb06_nll_components_checked"] != 15420
+            or report["raw_logit_nll"]["predictions"] != 432
+            or len(report["rendering"]) != 12
+            or not all(x["svg_generated"] for x in report["rendering"])
         )
         render_diff = any(not x["pixel_equal"] for x in report["rendering"])
         report["status"] = (

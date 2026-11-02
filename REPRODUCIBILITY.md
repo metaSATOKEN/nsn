@@ -38,23 +38,22 @@ Prepare **that working copy's** root `.venv` from an explicitly chosen Python ex
 
 The output directory must be new and outside the working copy. The historical analysis dependencies were checked with Python 3.13.5; the source research environment currently uses 3.13.17. Record the actual resolved environment rather than treating interpreter selection as proof of numerical reproducibility.
 
-The reproduction entrypoint reuses the original frozen implementations and compares their outputs with the distributed references:
+The command writes its results to the new output directory and compares them to the data and figures distributed with the two papers.
 
-| Stage | Operation |
+| Output | Comparison |
 | --- | --- |
-| Earlier evidence extraction | Recomputes stored-value comparisons, window-bootstrap summaries, timing summaries and catalogue; 1,730 retained consistency checks (the previous 1,732 included two historical-document hashes) |
-| NB05 numerical audit | Recomputes 432 target NLLs from 48 stored FP32 logit arrays; also extracts inherited AC08/VF01 diagnostic summaries |
-| Base integrated manuscript | Generates Japanese v0.7, English v0.6, data v0.4 and five figure pairs from the fixed templates/data |
-| NB06 continuation | Reaggregates all 15,420 saved NLL-component records and the prespecified quality, time and memory summaries |
-| Current supplement | Uses frozen baselines and the fixed patch specification to generate both current language versions of both papers, the two S1 indexes, current data and figure 6 |
+| Evidence extraction | Recompute stored-value comparisons, window-bootstrap summaries and timing summaries against 1,730 recorded checks. |
+| NB05 numerical audit | Recalculate 432 target NLLs from 48 saved logit arrays and check the recorded tolerance. |
+| Initial tables and figures | Regenerate the initial measurements and five figures for each paper. |
+| NB06 continuation | Reaggregate all 15,420 saved loss components. Rebuild both sets of paper data, the paper-level audits and Figure 6. |
 
-Numeric outputs must match the frozen references. The comparison makes exactly two declared bookkeeping adjustments: omit the two removed manuscript-hash checks and their source-manifest entries, and reduce the recorded check count by two. It does not drop or relax any scientific check. Public manuscript editions differ from the frozen generators in declared publication metadata, author funding/conflict declarations, current filenames and local navigation; all replacements are listed in metadata/source-layout.json. The integrated editions are named NSN-2026-10-29-JA.md and NSN-2026-10-29-EN.md (v1.0). They are written under `public-edition/` and compared byte-for-byte with the current distributed editions; the original generator outputs remain available separately. Historical environment metadata is compared separately. PNG pixel equality is reported; rendering differences across environments are distinguished from numerical failures. The supplement's copied figure 6 must match exactly. The current GPU run is never repeated by this command.
+`reproduction-report.json` distinguishes byte or numerical equality from PNG pixel equality. The Markdown files in [papers](papers/README.md) are the text to cite. For the original manuscript-generation workflow, use the [fixed v1.0 source and its instructions](https://github.com/metaSATOKEN/nsn/blob/integrated-v1.0/REPRODUCIBILITY.md) with the same evidence ZIPs.
 
-`reproduction-report.json` records actual successes, mismatches or errors. [Publication validation](metadata/publication-validation.json) states which checks were executed during this preparation; distributing a command does not imply that all scientific checks were newly rerun.
+The latest [CPU verification](metadata/publication-validation.json) records the table comparisons and per-figure results.
 
 ## Resolve original source identifiers
 
-Run `.venv/bin/python -B tools/source_layout.py` to check all 182 relocated source and scientific-evidence files against their original hashes. For example:
+Run `.venv/bin/python -B tools/source_layout.py` to check the mapped source and scientific-evidence files against their original hashes. For example:
 
 ```sh
 .venv/bin/python -B tools/source_layout.py --resolve modeq/results/phase18_ablation_vs_industry_naive.json

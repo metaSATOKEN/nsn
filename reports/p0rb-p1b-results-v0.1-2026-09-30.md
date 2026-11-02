@@ -1,6 +1,6 @@
 # P0RB–P1B結果：1・2・8周で品質保持の5%目安内
 
-2026-09-30／v0.1／Kentaro Sato。原run `loop-kv-p0rb-p1b-20260930-095916-69e9e0c0`。固定設計：[P1B v0.1](../plans/loop-kv-p1b-design-v0.1-2026-09-30.md)、[取得前カード](../throughline/prereg/loop-kv-p0rb-p1b-v0.1-2026-09-30.md)。
+2026-09-30／v0.1／Kentaro Sato。原run `loop-kv-p0rb-p1b-20260930-095916-69e9e0c0`。固定設計：P1B v0.1 (`plans/loop-kv-p1b-design-v0.1-2026-09-30.md`)、取得前カード (`throughline/prereg/loop-kv-p0rb-p1b-v0.1-2026-09-30.md`)。
 
 **96条件が全件有限で完了し、全9比較が取得前に定めた「相対PPL悪化5%以内」の探索的区間判定を満たした。主対象の8周・NSN3は平均＋0.644%、95%区間＋0.329〜＋1.042%。品質の悪化は観測されたが、固定した許容幅に収まった。** 元仮説H2（NSN4の量子化追加劣化は8周で1周より大きくなる）は平均＋0.000146 nats/tokenで、取得前の±0.005幅内だった。
 
@@ -18,7 +18,7 @@
 
 元BF16 P0未達は保持し、新しい同形状検査の通過と区別する。今回のfull／incremental差は、取得前に固定した規則どおり保存診断として扱った。
 
-[オフライン照合結果](../runs/loop-kv-p0rb-p1b-20260930-095916-69e9e0c0/offline-verification.json)では、配布コード・埋込設計・取得前カード・予定表・材料・実物環境・hash、全tokenの位置とtargetを確認した。元のlog probabilityからNLL/PPL、同じ冊・同じrのnative対応差、区間、Q1/H2を別集計して一致した。返却ZIP内のPythonは実行していない。手元モデルロード・GPU計算・外部送信は0件。
+オフライン照合結果 (`runs/loop-kv-p0rb-p1b-20260930-095916-69e9e0c0/offline-verification.json`)では、配布コード・埋込設計・取得前カード・予定表・材料・実物環境・hash、全tokenの位置とtargetを確認した。元のlog probabilityからNLL/PPL、同じ冊・同じrのnative対応差、区間、Q1/H2を別集計して一致した。返却ZIP内のPythonは実行していない。手元モデルロード・GPU計算・外部送信は0件。
 
 ## 2. 品質保持Q1：平均だけでなく区間・冊別でも確認
 
@@ -36,7 +36,7 @@
 
 主対象の8周・NSN3は8/8冊で悪化方向、最大＋1.899%。8周・NSN4も比較別区間の両端が正で、局所的な悪化の観測と5%以内の品質保持は両立する。1周・NSN3の平均負値については区間が0をまたぎ、品質改善の実証にはしない。
 
-![P1Bの品質保持と周回差](figures/p1b-quality-and-loop-contrast.png)
+!P1Bの品質保持と周回差 (`reports/figures/p1b-quality-and-loop-contrast.png`)
 
 図：左は同じ周回のnativeとの比較。右は元H2の冊別差の差と平均。区間は同じ8冊の復元抽出10,000回・seed2026093002による名目95%区間。0との差と5%許容幅を分けて読む。色付き帯はH2の事前識別幅±0.005で、有意差判定の境界ではない。
 
@@ -70,22 +70,16 @@ P1Bのノルム要約10,560件と介入前後2,112件、P0RB長経路の1,320件
 
 実cacheは浮動小数のまま。各rで精度条件によらず同じ実cache量（1周191.8125 MiB、2周383.625 MiB、8周1534.5 MiB）だった。8周・NSN3の理論packed量は約718.523 MiBだが、今回それだけのVRAMで動かした結果ではない。実パック・速度の主張は後続の実装試験に分ける。
 
-## 5. 今回で閉じる範囲と次の推奨
+## 5. 結果の解釈と測定範囲
 
 P1Bは予定どおり閉じる。P1Aと合わせて160軌道を測定したが、独立材料は同じ8冊。P1Aの4周成績を今回のQ1/H2の推定へ混ぜていない。単一モデル、固定1024-token抜粋、各条件1実行の範囲で、量子化の小さな品質損失を観測・照合できる測定経路が整った。
 
-**次の推奨は、P1の到達点をチェックポイントにまとめたうえで、元企画P3を小さく始めること。まず「Kだけ／Vだけ／両方を量子化すると、どこに損失が現れるか」の比較を設計する。** 同じcodec・材料・native対照のまま介入箇所を分け、保持できた理由を推測する前に、どの情報に誤差を入れたかと出力の損失を対応づける。
-
-具体的な第一候補は、今回局所的な損失を観測できたr8・NSN3・PREFIX_ONLYに固定し、native／Kのみ／Vのみ／K+Vを比較する小案。全8周をまとめたK/V切分けなので、これだけで周回別の重要性や固定メモリ予算での最良配分は分からない。K/V間では量子化する値数も変わるため、配分法の公平な性能競争とは分ける。新nativeとK+Vを取り直すか、反復を何回置くかも次設計で固定する。今回は新実験の実装・実行には進んでいない。
-
-保留候補は、未使用材料・反復による再現確認（小さな差を主張する前）、長文脈やONLINEの拡張（運用範囲を広げる時）、P2のlatent摂動（KV局所介入との対応が必要になった時）、LAB型clipping（振幅増大や数値異常が現れた時）、実packed cache（VRAMや速度を評価する時）。小さな損失を大きくするための周回追加はしない。
-
 ## 6. 証拠への入口
 
-- [原ZIP](../runs/loop-kv-p0rb-p1b-20260930-095916-69e9e0c0/original.zip)：SHA-256 `0b5c4774f29caec1ed1e28765e1967904969c8adef09ffe761ff4c14e4ed98e6`。
-- [展開された原成績](../runs/loop-kv-p0rb-p1b-20260930-095916-69e9e0c0/artifacts/summary.json)。書換えなし。
-- [オフライン再計算・照合](../runs/loop-kv-p0rb-p1b-20260930-095916-69e9e0c0/offline-verification.json)：各冊・全9比較・Q1/H2・容量計算を収録。
-- [照合器](../scripts/verify_loop_kv_p0rb_p1b.py)：返却Pythonを実行せず、保存値を再計算。
-- [図の生成コード](../throughline/audits/loop-kv-p0rb-p1b-results-v0.1-2026-09-30/plot_p1b_results.py)／[SVG](figures/p1b-quality-and-loop-contrast.svg)。
+- 原ZIP (`runs/loop-kv-p0rb-p1b-20260930-095916-69e9e0c0/original.zip`)：SHA-256 `0b5c4774f29caec1ed1e28765e1967904969c8adef09ffe761ff4c14e4ed98e6`。
+- 展開された原成績 (`runs/loop-kv-p0rb-p1b-20260930-095916-69e9e0c0/artifacts/summary.json`)。書換えなし。
+- オフライン再計算・照合 (`runs/loop-kv-p0rb-p1b-20260930-095916-69e9e0c0/offline-verification.json`)：各冊・全9比較・Q1/H2・容量計算を収録。
+- 照合器 (`scripts/verify_loop_kv_p0rb_p1b.py`)：返却Pythonを実行せず、保存値を再計算。
+- 図の生成コード (`throughline/audits/loop-kv-p0rb-p1b-results-v0.1-2026-09-30/plot_p1b_results.py`)／SVG (`reports/figures/p1b-quality-and-loop-contrast.svg`)。
 
 区間の再計算は同じ固定方式の照合であり、第三者による独立したモデル再実行ではない。取得時の失敗隠し・閾値変更・欠測補完・有利な比較への差替えは行っていない。

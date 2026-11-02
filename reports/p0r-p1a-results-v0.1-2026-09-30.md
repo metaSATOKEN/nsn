@@ -39,7 +39,7 @@ PPLは低いほど、この同じ評価箇所の正解tokenを高い確率で予
 
 取得前に主比較として固定したDECODE_ONLINEでは、3bitのPPLは8.510706→8.527830、4bitは8.502258、5bitは8.509313だった。**この条件では平均品質の変化が小さいところまで観測できた。** 4bitの小さな負の差だけから、量子化で品質が改善したと結論づける根拠は得られていない。
 
-![冊ごとの対応差と平均・区間](figures/p0r-p1a-delta-nll-2026-09-30.png)
+!冊ごとの対応差と平均・区間 (`reports/figures/p0r-p1a-delta-nll-2026-09-30.png`)
 
 点は8冊の各対応差、菱形は平均、横線は同じ8冊を対応のまま再標本化した百分位95%区間。10,000回・seed2026093002で再計算した。破線±0.005は取得前に定めた幅の目安で、H1はNSN3−NSN5、S1はONLINEのNSN4−nativeへ適用する。各棒へ新たな合否基準を追加した図ではない。
 
@@ -122,27 +122,17 @@ native以外の列はΔNLL。表示は小数6桁、元値はJSONへ保存した�
 
 全位置の語彙分布と全KV tensorは保存していないため、bitwise経路一致は実行時assert・比較記録・hashを検査した証拠である。独立した別集計コードによる照合と、第三者による実モデル再実行は区別する。ZIP内のコードを実行せず、手元のモデルロード・GPU実行・外部LLM送信は行っていない。
 
-## 8. 次の方針
-
-**推奨は、元計画のP1B「同じ8冊で周回1・2・8を比べる」の接続設計へ進むこと。** P1Aは完了扱いとし、4周で平均差が小さかったことを起点に、周回数によって量子化の追加劣化が変わるかを調べる。
-
-P1Bは8冊×3周回×4精度、PREFIX_ONLYの96軌道という元範囲を維持する。各周回のnativeを基準にして、モデル自体の周回差と量子化が加えた差を分ける。次のコード化前に、新規runtimeでの環境・codec・短い経路、および元smoke4冊×r1/2/8の長い経路12条件を再固定する。今回のr4ゲート合格で、長いr8経路まで確認済みとはしない。
-
-| 方針 | コストと意味／再検討条件 |
-|---|---|
-| **P1Bの準備（推奨）** | 96軌道＋新runtimeでの経路検査。元の周回仮説H2に直接答え、今回結果から問いを変えずに進める |
-| LAB型clipping比較 | 別介入の較正とGPU条件が必要。長い文脈・高周回で品質悪化や非有限が出る、またはユーザーが転移検証を選ぶ時に検討 |
-| 今回条件の反復・文書拡張 | 実行ばらつきや材料一般化を測る追加計算。微小な改善を対外主張したい時、または同条件再現の疑義が出た時に検討 |
+## 8. 結果の解釈と測定範囲
 
 PPLだけで能力全般を、8冊の短い抜粋で長文脈を認定する段階ではない。今回確定した到達点は、**同形状の装置一致を通した4周の固定比較で、全条件が数値的に完了し、平均品質変化が小さかったこと**である。
 
 ## 証拠と再集計
 
-- [原ZIP](../runs/loop-kv-p0r-p1a-20260930-090219-7f1b80ef/original.zip)、SHA-256：`05ea9b97856bcdf7f7d2e5e3be8fb8a339d54c7c1f71b767dece555300c81fbf`。
-- [実行時summary](../runs/loop-kv-p0r-p1a-20260930-090219-7f1b80ef/artifacts/summary.json)、[P0R summary](../runs/loop-kv-p0r-p1a-20260930-090219-7f1b80ef/artifacts/p0r/summary.json)。
-- [独立照合と全個別値](../runs/loop-kv-p0r-p1a-20260930-090219-7f1b80ef/offline-verification.json)、[再集計器](../scripts/verify_loop_kv_p0r_p1a.py)。
-- [設計v0.2](../plans/loop-kv-p0-p1-design-v0.2-2026-09-30.md)、[取得前カードと取得後追記](../throughline/prereg/loop-kv-p0r-p1a-v0.1-2026-09-30.md)。
-- [図のSVG](figures/p0r-p1a-delta-nll-2026-09-30.svg)。図の元値は独立照合JSONの`comparisons`。
+- 原ZIP (`runs/loop-kv-p0r-p1a-20260930-090219-7f1b80ef/original.zip`)、SHA-256：`05ea9b97856bcdf7f7d2e5e3be8fb8a339d54c7c1f71b767dece555300c81fbf`。
+- 実行時summary (`runs/loop-kv-p0r-p1a-20260930-090219-7f1b80ef/artifacts/summary.json`)、P0R summary (`runs/loop-kv-p0r-p1a-20260930-090219-7f1b80ef/artifacts/p0r/summary.json`)。
+- 独立照合と全個別値 (`runs/loop-kv-p0r-p1a-20260930-090219-7f1b80ef/offline-verification.json`)、再集計器 (`scripts/verify_loop_kv_p0r_p1a.py`)。
+- 設計v0.2 (`plans/loop-kv-p0-p1-design-v0.2-2026-09-30.md`)、取得前カードと取得後追記 (`throughline/prereg/loop-kv-p0r-p1a-v0.1-2026-09-30.md`)。
+- 図のSVG (`reports/figures/p0r-p1a-delta-nll-2026-09-30.svg`)。図の元値は独立照合JSONの`comparisons`。
 
 研究ルートでの再集計（NumPyが必要。モデル実行なし）：
 

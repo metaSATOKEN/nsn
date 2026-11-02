@@ -36,9 +36,9 @@ r8・NSN3・PREFIX_ONLY。先頭768 tokenのうち704 tokenを選択sideだけ�
 
 すべて区間上限が5%以内となり、固定規則では`WITHIN_5PCT`。品質向上を要求せず、悪化量として評価した。Kのみ／Vのみは、両側の半分の要素を圧縮する条件である。
 
-![K/V別のPPL悪化と固定対比](figures/kv01-quality-and-contrasts.png)
+!K/V別のPPL悪化と固定対比 (`reports/figures/kv01-quality-and-contrasts.png`)
 
-図：点は8冊の個別値、菱形は平均、線は探索的95%区間。右の灰色帯は平均を分類する事前幅±0.005。灰色帯と信頼区間は別の役割を持つ。[SVG](figures/kv01-quality-and-contrasts.svg)。
+図：点は8冊の個別値、菱形は平均、線は探索的95%区間。右の灰色帯は平均を分類する事前幅±0.005。灰色帯と信頼区間は別の役割を持つ。SVG (`reports/figures/kv01-quality-and-contrasts.svg`)。
 
 ## 3. 主比較D：Kの方が大きい方向、平均は事前幅内
 
@@ -99,11 +99,9 @@ norm snapshotは本比較7,680件・前後比較1,536件、nativeゲート長経
 
 K＋VのPPL平均は前回と同一だが、bootstrap区間は前回＋0.329057〜＋1.042027%、今回＋0.331467〜＋1.050548%と僅かに異なる。原因は有限10,000回の再標本化へ渡す冊順の違い（前回ID順、今回はカードの材料順）。今回の値を前回順に並べ直すと前回区間が再現した。実測値の差ではなく、今回の正式区間は固定された現在のコード順を保持する。
 
-## 7. 閉じ方と次の推奨
+## 7. 結果の解釈と測定範囲
 
 KV01は32軌道の固定範囲で閉じる。品質3比較はいずれも5%目安内、K−Vと非加算成分は双方平均が事前幅内。方向の事前予想を置かなかったカードなので、支持予想を後付けしない。
-
-**次は、未使用の8冊で同じ4条件を固定して再確認する小比較を推奨する。** 「今回PPLで見えたK側のコストが、文章を替えても現れるか」を測るためである。r8・3bitの選択は今回までの結果に基づく探索なので、次の材料・選定規則・判定・上限を取得前に固定する。p値や差が望ましい方向になるまで材料を追加する運用にはしない。
 
 周回別の重要度、K/Vの固定メモリ予算配分、長文脈／ONLINE、LAB型clipping、実packed cacheは別設計棚に残す。本結果だけでVへ優先的に圧縮予算を配る最適解を確定しない。次設計・コードの追加作成と新しい実測は今回は行っていない。
 
@@ -113,10 +111,10 @@ KV01は32軌道の固定範囲で閉じる。品質3比較はいずれも5%目�
 
 検算器の陰性対照として、hashを正しく付け直した4つの改変コピー（偽D判定、誤ったside選択、誤native参照、ゲート平均KLへの＋0.001）を作り、全件を拒否することを確認した。原ZIPは不変。丸め差の初回ログと修正前の照合器も保存した。
 
-- [元ZIP](../runs/loop-kv-kv01-20260930-110929-fe60928a/original.zip)／[展開された原記録](../runs/loop-kv-kv01-20260930-110929-fe60928a/artifacts/)
+- 元ZIP (`runs/loop-kv-kv01-20260930-110929-fe60928a/original.zip`)／[展開された原記録](../runs/loop-kv-kv01-20260930-110929-fe60928a/artifacts/)
 - [独立再集計JSON](../runs/loop-kv-kv01-20260930-110929-fe60928a/offline-verification.json)
-- [照合コード](../scripts/verify_loop_kv_kv01.py)／[図生成コード](../scripts/plot_loop_kv_kv01.py)
-- [設計](../plans/loop-kv-kv01-design-v0.1-2026-09-30.md)／[取得前カード](../throughline/prereg/loop-kv-kv01-v0.1-2026-09-30.md)
-- [監査記録](../throughline/audits/loop-kv-kv01-results-v0.1-2026-09-30/)
+- [照合コード](../scripts/verify_loop_kv_kv01.py)／図生成コード (`scripts/plot_loop_kv_kv01.py`)
+- [設計](../plans/loop-kv-kv01-design-v0.1-2026-09-30.md)／[取得前カード](../plans/prespecified/loop-kv-kv01-v0.1-2026-09-30.md)
+- 監査記録 (`throughline/audits/loop-kv-kv01-results-v0.1-2026-09-30`)
 
 全KV実体と全位置の語彙logitsは未保存であり、bitwise一致・介入範囲については実行時検査とhashの証拠を照合した範囲。今回のオフライン作業でモデルロード・重み取得・GPU実行・外部送信は行っていない。

@@ -1,7 +1,4 @@
-"""Build the integrated NSN Japanese draft from preserved extraction tables.
-No model loading. Matplotlib layout follows the loop-kv paper asset generator.
-Inputs remain read-only; --output-dir must be separate from experimental runs.
-"""
+"""Calculate the integrated tables and first five figures from saved results."""
 import argparse, ast, hashlib, json, math, shutil, re
 from pathlib import Path
 import sys
@@ -14,7 +11,6 @@ from matplotlib.patches import FancyBboxPatch
 import numpy as np
 
 DATE='2026-10-05'  # Existing observations; newly displayed INT5 rows.
-MANUSCRIPT_DATE='2026-10-05'
 TEAL='#087f8c'; ORANGE='#cf6d29'; INK='#213547'; GRAY='#64748b'
 
 def table(headers, rows):
@@ -22,8 +18,8 @@ def table(headers, rows):
     return '\n'.join(['| '+' | '.join(map(cell,headers))+' |', '| '+' | '.join('---' for _ in headers)+' |']+['| '+' | '.join(map(cell,row))+' |' for row in rows])
 def pct(x): return f'{x:+.3f}'
 def short(model): return model.replace('gemma-4-E4B','Gemma-4-E4B').replace('Qwen3-30B-A3B','Qwen3-30B').replace('Gemma4-26B-A4B-base','Gemma4-26B').replace('Granite-3.0-3b-a800m','Granite-3B')
-def main(root,out,template):
-    out.mkdir(parents=True,exist_ok=True); figs=out/'figures/v0.2';figs.mkdir(parents=True,exist_ok=True)
+def main(root,out):
+    out.mkdir(parents=True,exist_ok=True); figs=out/'figures';figs.mkdir(parents=True,exist_ok=True)
     sources=[]
     def read(rel):
         p=source_file(root,rel);raw=p.read_bytes();sources.append({'path':rel,'sha256':hashlib.sha256(raw).hexdigest()});return json.loads(raw)
@@ -116,10 +112,6 @@ def main(root,out,template):
     imports=[ast.get_source_segment(core,n) for n in tree.body if isinstance(n,(ast.Import,ast.ImportFrom))]
     fn=next(n for n in tree.body if isinstance(n,ast.FunctionDef));snippet='\n'.join(imports)+'\n\n'+ast.get_source_segment(core,fn)
     snippets['CORE_CODE']=snippet
-    text=template.read_text()
-    for key,value in snippets.items():text=text.replace('{{'+key+'}}',value)
-    assert '{{' not in text
-    (out/f'manuscript-ja-v0.7-{MANUSCRIPT_DATE}.md').write_text(text)
     plt.rcParams.update({'font.family':'DejaVu Sans','font.size':10,'axes.spines.top':False,'axes.spines.right':False,'text.color':INK,'axes.labelcolor':INK,'xtick.color':GRAY,'ytick.color':INK,'svg.fonttype':'none','svg.hashsalt':'nsn-integrated-v0.6','savefig.facecolor':'white'})
     def save(fig,name):
         fig.savefig(figs/(name+'.svg'),bbox_inches='tight',metadata={'Date':DATE});fig.savefig(figs/(name+'.png'),dpi=175,bbox_inches='tight');plt.close(fig)
@@ -193,8 +185,12 @@ def main(root,out,template):
     for i,r in enumerate(ratios):ax.text(r+.018,i,f'{r:.3f}',va='center',fontsize=10,bbox={'facecolor':'white','edgecolor':'none','pad':1})
     fig.tight_layout();save(fig,'figure-05-model-cost')
     data={'version':'0.4','date':DATE,'scope':'descriptive synthesis of existing evidence; no new model runs','source_files':sources,'norm_dispersion':t['norm_dispersion'],'kv_split_gemma':gemma,'kv_split_ouro':{k:kv[k] for k in ('conditions','comparisons','D','I','per_book','scope')},'int5_applicability':int5,'architecture_bitwidth_comparison':bitwidth_comparison,'ablation':t['legacy_ablation'],'boundaries':boundary,'adopted_conditions':prod,'long_context_gaps':long,'latency':t['legacy_latency'],'quality':t['loop_quality'],'timing':t['loop_timing'],'storage':t['loop_memory'],'bridge':t['bridge'],'summary':s,'inherited_loop_diagnostics':{k:v for k,v in lp.items() if k in ('input_validation','numerical_audit')},'generated_tables':snippets,'plot_rows':{'figure2_ablation':ablation,'figure2_boundaries':chosen,'figure3_int5':int5,'figure4_families':groups,'figure5_cost':[time_by[k] for k in order]}}
-    (out/f'paper-data-v0.4-{DATE}.json').write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
-    print(json.dumps({'output':str(out),'manuscript_bytes':len(text.encode()),'figures':5,'generated_data_tables':10,'sources':sources},ensure_ascii=False))
+    (out/'initial-tables.json').write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
+    print(json.dumps({'output':str(out),'figures':5,'generated_data_tables':10,'sources':sources},ensure_ascii=False))
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--research-root',type=Path,required=True);p.add_argument('--output-dir',type=Path,required=True);p.add_argument('--template',type=Path,default=Path(__file__).with_name('manuscript-ja-template-v0.7.md'));a=p.parse_args();main(a.research_root,a.output_dir,a.template)
+    parser = argparse.ArgumentParser(description='Recalculate integrated tables and Figures 1–5.')
+    parser.add_argument('--research-root', type=Path, required=True)
+    parser.add_argument('--output-dir', type=Path, required=True)
+    args = parser.parse_args()
+    main(args.research_root, args.output_dir)

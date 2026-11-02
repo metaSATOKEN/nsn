@@ -49,19 +49,11 @@ Ouro-1.4Bのロード、接続検査5軌道、主比較6軌道は終了してい
 
 初回コンパイル等の準備費用が混ざった可能性が高いと考えるが、コンパイル時間そのもののログはなく、冊・実行順・環境の差も分離していない。これを候補方式の定常速度として解釈するには、各長さ・圧縮境界をそろえたwarmupと順序を変えた反復が必要。準備時の速度設計の不足として、台帳§25へ相互参照する。
 
-## 5. 次の推奨
-
-現在のZIPだけで原因と参考集計を点検できたため、同じセルの全再実行を急ぐ必要はない。
-
-次は本体の変更より先に、保存scoreだけを使ったsoftmaxの小診断がよい。型・形・有限性の不備と、有限な数値差の予算超過を別々に記録する。元GPUのFP32再計算、FP64参照、同一入力での反復を用い、次版に使う誤差契約を独立に決める。今回の測定値の最大値へ閾値を合わせる操作はしない。
-
-速度は別の小比較で、全計測形状を先にコンパイル・warmupし、その完了記録を残してから反復する。QK01の部品32.7%短縮と、今回のモデル速度を混同しない。これらは次の設計候補であり、本ターンでは新しいColab実験・新閾値・候補kernel変更は行っていない。
-
 ## 証拠
 
-- [原ZIP](../loop-kv-ac01-20261001-101253-c6b9ddf2.zip)：198,573,875 bytes、SHA256 `0800543909af1011fefa89734002c622b819fb1aa0ff985083bc11eb664d33bf`。
-- [原展開物](../runs/loop-kv-ac01-20261001-101253-c6b9ddf2/)：130ファイル、129hash、配布18sourceを照合。
-- [事後診断JSON](../throughline/audits/loop-kv-ac01-results-v0.1-2026-10-01/analysis.json)／[診断器](../scripts/analyze_loop_kv_ac01_result.py)／[正常・負例検査](../throughline/audits/loop-kv-ac01-results-v0.1-2026-10-01/test-results.json)。
-- [固定設計](../plans/loop-kv-ac01-design-v0.1-2026-10-01.md)／[配布前sourceと検査](../throughline/audits/loop-kv-ac01-v0.1-2026-10-01/)。
+- 原ZIP (`loop-kv-ac01-20261001-101253-c6b9ddf2.zip`)：198,573,875 bytes、SHA256 `0800543909af1011fefa89734002c622b819fb1aa0ff985083bc11eb664d33bf`。
+- 原展開物 (`runs/loop-kv-ac01-20261001-101253-c6b9ddf2`)：130ファイル、129hash、配布18sourceを照合。
+- 事後診断JSON (`throughline/audits/loop-kv-ac01-results-v0.1-2026-10-01/analysis.json`)／診断器 (`scripts/analyze_loop_kv_ac01_result.py`)／正常・負例検査 (`throughline/audits/loop-kv-ac01-results-v0.1-2026-10-01/test-results.json`)。
+- 固定設計 (`plans/loop-kv-ac01-design-v0.1-2026-10-01.md`)／配布前sourceと検査 (`throughline/audits/loop-kv-ac01-v0.1-2026-10-01`)。
 
 診断器は配布前から保持するNumPy検証器だけを使用。返却コードの実行、ローカルモデルロード、GPU実行は0件。回帰検査6件が合格し、数値差記録へ切り替えた経路でも誤target・追加例外・誤dtype・NaN・V内積改変を拒否した。試験後に原展開物の全hash一致を再確認した。元ZIP・原判定・旧設計・旧セルは不変。

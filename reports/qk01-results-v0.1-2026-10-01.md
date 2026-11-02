@@ -41,20 +41,18 @@ ZIP内のファイル更新時刻は、日本時間18:44:12〜18:44:32相当（�
 
 「固定数値予算を満たし、主6標本で橋渡し対照より短時間」という取得前予想に沿った。短縮幅は事前予測していなかった。
 
-## 4. 今回の到達点と次の確認
+## 4. 結果の解釈と測定範囲
 
 **保存済み実Kと固定合成queryの範囲では、Kの復元と点数計算をまとめ、数値予算と即時異常検出を保ちながら部品時間を短縮できた。** QK01はこの範囲で閉じられる。
 
 ここではsoftmax・V・任意mask・GQA・全モデル・PPLを測っていない。部品の32.7%短縮をそのままモデル全体へ掛けたり、前試験の改善率へ加算したりしない。数値予算合格と文章品質の保持は別に確認する。
 
-次は既に合意した順序どおり、実モデルのqueryを採る小さな接続設計が候補となる。固定合成queryでの成立を実queryへ移し、attentionの残りを接続する際は同じ明示的attentionを使う非融合対照を置いて、backend変更と融合の効果を分ける。次設計・新コードはまだ作成していない。
-
 ## 5. 証拠と監査範囲
 
-- [原ZIP](../loop-kv-qk01-20261001-094412-5de40ae7.zip)：105,053,047 bytes、SHA256 `7d6254ada877e91e16fdb879db68fb60cbe251319622f714adc0be5907c62f40`。
-- [原展開物](../runs/loop-kv-qk01-20261001-094412-5de40ae7/)：103ファイル、原manifestの102hashを全件照合。
-- [独立監査JSON](../throughline/audits/loop-kv-qk01-results-v0.1-2026-10-01/audit.json)／[監査用スクリプト](../scripts/analyze_loop_kv_qk01.py)。
-- [固定設計](../plans/loop-kv-qk01-design-v0.1-2026-10-01.md)／[取得前カード](../throughline/prereg/loop-kv-qk01-v0.1-2026-10-01.md)。
+- 原ZIP (`loop-kv-qk01-20261001-094412-5de40ae7.zip`)：105,053,047 bytes、SHA256 `7d6254ada877e91e16fdb879db68fb60cbe251319622f714adc0be5907c62f40`。
+- 原展開物 (`runs/loop-kv-qk01-20261001-094412-5de40ae7`)：103ファイル、原manifestの102hashを全件照合。
+- 独立監査JSON (`throughline/audits/loop-kv-qk01-results-v0.1-2026-10-01/audit.json`)／監査用スクリプト (`scripts/analyze_loop_kv_qk01.py`)。
+- 固定設計 (`plans/loop-kv-qk01-design-v0.1-2026-10-01.md`)／取得前カード (`throughline/prereg/loop-kv-qk01-v0.1-2026-10-01.md`)。
 
 配布した65KBセルの固定hashから埋込14ファイルを取り出して原ZIPのソースと照合した。返却コードやpycは実行せず、配布前から保持するNumPy専用検証器で原配列を再採点した。異常拒否とGPUの入力不変は保存記録の照合であり、手元GPUでの独立再実行ではない。
 

@@ -6,7 +6,7 @@
 
 一方、非連続入力を作るテスト側に不備があり、異常拒否の1種類×3方式は検査器へ到達していない。**H2（数値）・H3（短縮）は成立、H1は未達のまま保持する。** この1種類の確認後にモデル接続へ進むのが次の推奨である。
 
-[設計](../plans/loop-kv-vf01-design-v0.1-2026-10-02.md) / [取得前カード](../throughline/prereg/loop-kv-vf01-v0.1-2026-10-02.md) / [原保存物](../runs/loop-kv-vf01-20261002-072452-1d1c10c0/) / [独立照合・詳細集計](../throughline/audits/loop-kv-vf01-results-v0.1-2026-10-02/)
+[設計](../plans/loop-kv-vf01-design-v0.1-2026-10-02.md) / [取得前カード](../plans/prespecified/loop-kv-vf01-v0.1-2026-10-02.md) / [原保存物](../runs/loop-kv-vf01-20261002-072452-1d1c10c0/) / 独立照合・詳細集計 (`throughline/audits/loop-kv-vf01-results-v0.1-2026-10-02`)
 
 ## 1. 何がそろったか
 
@@ -20,7 +20,7 @@
 
 ## 2. 速度：同じ復元計算どうしでも短縮が残った
 
-主は既知2冊×3slotの6組、各組の非ゼロ3合成query。各query・方式で5round中央値を求め、対応比を先に計算して組の代表値にし、6組を集計した。全ゼロqueryと先行3組は[詳細JSON](../throughline/audits/loop-kv-vf01-results-v0.1-2026-10-02/analysis.json)へ別に残した。以下の範囲は6組の最小〜最大でありCIではない。
+主は既知2冊×3slotの6組、各組の非ゼロ3合成query。各query・方式で5round中央値を求め、対応比を先に計算して組の代表値にし、6組を集計した。全ゼロqueryと先行3組は[詳細JSON](../data/validation/vf01/analysis.json)へ別に残した。以下の範囲は6組の最小〜最大でありCIではない。
 
 | 比較 | CUDA時間比中央値 | 時間短縮 | 比の範囲 | 短縮した組 | 同期wall短縮 |
 |---|---:|---:|---:|---:|---:|
@@ -36,7 +36,7 @@
 
 時間中央値どうしの比と、上表の対応比中央値は集計順が異なる。18.799%と28.280%は異なる基準の短縮であり、足し算しない。
 
-![VF01の部品時間と一時allocated増分](figures/vf01-component-costs.png)
+!VF01の部品時間と一時allocated増分 (`reports/figures/vf01-component-costs.png`)
 
 Vの復元計算を区画方式へ替えた段階で短縮し、同じ区画復元をattention内へ移した比較でも追加の短縮が残った。計時は共通packed入力の検査から復元・attention・出力検査までを含み、kernel起動や検査結果の回収方法も違う。純粋なメモリ帯域の寄与を分離した結果とはしていない。
 
@@ -78,14 +78,10 @@ Vの復元計算を区画方式へ替えた段階で短縮し、同じ区画復�
 
 凍結workerでは、入力をGPUへ置いた後、V tailを `transpose → contiguous → transpose` して非連続入力を作り、`not vt.is_contiguous()` をassertしていた。しかし、このfixtureのtail形状は **(1,2,1,128)**。長さ1の軸を転置して戻すと連続配置のままで、非連続化できていない。**僕が作ったテスト入力の構成不備であり、3方式の検査器による見逃しを観測した結果ではない。**
 
-このassertは前hashの代入とpipeline呼出しより前にある。ここで止まると `before=None` のまま `input_unchanged=false` が付くため、このflagは今回、入力内容の実変化を示していない。元行は変更しない。[ログ・元コード・NumPy上の配置確認](../throughline/audits/loop-kv-vf01-results-v0.1-2026-10-02/noncontiguous-fixture-audit.json)を照合した。CPUの配置確認は追加GPU試験ではない。
+このassertは前hashの代入とpipeline呼出しより前にある。ここで止まると `before=None` のまま `input_unchanged=false` が付くため、このflagは今回、入力内容の実変化を示していない。元行は変更しない。ログ・元コード・NumPy上の配置確認 (`throughline/audits/loop-kv-vf01-results-v0.1-2026-10-02/noncontiguous-fixture-audit.json`)を照合した。CPUの配置確認は追加GPU試験ではない。
 
 配布前の代役テストは `contiguous=False` を直接設定し、実際の非連続化手順を再現していなかった。この検査面の不足も誤判定標本台帳へ残した。原 `H1=false` を後から成功に書き換えない。
 
-## 6. 次の一歩
-
-次は、**非連続入力を確実に作れるようにテスト側を修正し、同じ値の正常対照と合わせた小さいGPU確認**を行うのが推奨。例えば最終軸が2倍のbufferから `[..., ::2]` を取り、元の値をcopyすれば、長さ1でも値を保って非連続にできる。新仕様ではテスト構成の失敗と検査器の拒否を別欄にする。これはまだ提案で、現行配布コードは変更していない。
-
-この確認を通した後、予定どおり実query・モデル全体のPPL／時間／メモリを測る接続設計へ進む。今回の速度比較を良い結果が出るまで積み増す必要はなく、固定範囲の結果はここで閉じる。部品の41.7%短縮をモデル全体の短縮率へ掛け算しない。
+## 6. 結果の解釈と測定範囲
 
 今回の主材料は既知2冊で、query・slot・呼出し回数は独立文章数ではない。p値・CIは算出しない。旧結果・取得前カード・実験コード・元Skill・HANDOFF・NPPは保持し、手元のモデル／GPU／新ネットワーク実行は0件。

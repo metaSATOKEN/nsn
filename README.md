@@ -30,7 +30,7 @@ Asymmetric NSN separates these two jobs:
 
 The quantizer uses the input block's statistics, with no additional quantizer training or separate calibration corpus. Bit width remains a design choice: 3 bits provide 8 levels; 5 bits provide 32.
 
-![NSN separates vector magnitude and direction, quantizes direction, then reconstructs it with the stored norm.](papers/nsn-integrated/figures/v0.2/figure-01-nsn.png)
+![NSN separates vector magnitude and direction, quantizes direction, then reconstructs it with the stored norm.](papers/nsn-integrated/figures/figure-01-nsn.png)
 
 The paper explains the equations and includes a 10-line quantize–reconstruct example. The [reference implementation](src/README.md) provides the underlying operations.
 
@@ -77,4 +77,4 @@ The integrated Markdown manuscripts are **v1.0, 29 October 2026**. They combine 
 
 Code: [Apache-2.0](LICENSE). Author-owned papers, figures, and data: [CC BY 4.0](LICENSES/CC-BY-4.0.txt). Third-party terms are retained in [LICENSES.md](LICENSES.md).
 
-The repository and Release currently require authorized access while the author reviews the upload. The [publication notes](PUBLISHING.md) list the paper files and integrated DOI status.
+The repository and evidence Release require authorized access.

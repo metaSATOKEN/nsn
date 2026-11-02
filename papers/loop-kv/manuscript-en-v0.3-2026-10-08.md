@@ -132,7 +132,7 @@ Changing the reconstruction implementation can change rounding through operation
 2. Materialize the full V array using the same tile-based reconstruction arithmetic as the fused candidate, then pass it to attention. This is **a bridge control using the same reconstruction arithmetic**, abbreviated below as the *bridge control*.
 3. Perform the same tile-based reconstruction inside attention.
 
-![Figure 1. Three paths separating reconstruction implementation from fusion](figures/v0.2/figure-01-bridge.png)
+![Figure 1. Three paths separating reconstruction implementation from fusion](figures/figure-01-bridge.png)
 
 **Figure 1.** All paths receive identical packed inputs. The bridge-versus-fused comparison concerns the complete readout paths, including validation and call structure. Direct checks of reconstructed values and outputs distinguish numerical changes introduced by the reconstruction implementation from those introduced by moving it inside attention.
 
@@ -204,7 +204,7 @@ For both models, actual GPU storage matched the specified packed representation.
 
 The compressed comparator is K fusion plus full V reconstruction for Ouro, and full K/V reconstruction plus SDPA for Nanbeige. Within each comparison, the listed values were identical across texts and replicates. The maximum over recorded phases is not a whole-process peak that includes model loading or other processes on the GPU.
 
-![Figure 2. KV storage reduction and model memory use](figures/v0.2/figure-02-memory.png)
+![Figure 2. KV storage reduction and model memory use](figures/figure-02-memory.png)
 
 **Figure 2.** Each quantity is expressed relative to its own checked uncompressed baseline, set to 100% and labeled “checked native” in the figure. Large savings in KV storage do not imply proportional reductions in the allocated maximum including prefill or in reserved memory. Rows have different denominators; bars cannot be added as components of a memory total. Blue denotes the compressed comparator in Table 4, and green denotes K/V fusion. Context length and compressed fraction differ between the models.
 
@@ -226,7 +226,7 @@ We used saved Ouro K/V from 2 previously used texts at 3 locations each, supplyi
 |Tile reconstruction → full V → attention (bridge control)|0.243244|13.9863|
 |Tile reconstruction inside attention|0.174514|0.5259|
 
-![Figure 3. Time and temporary allocation for the bridge control and fusion with identical reconstructed values](figures/v0.2/figure-03-bridge-cost.png)
+![Figure 3. Time and temporary allocation for the bridge control and fusion with identical reconstructed values](figures/figure-03-bridge-cost.png)
 
 **Figure 3.** Table 5 is displayed separately for time and allocated-memory increase. The bridge control materializes full V using the same reconstruction arithmetic as fusion; fusion performs that arithmetic inside attention. The left panel shows median time for each path; the right shows allocated-memory increase relative to before the call. These are not error bars or confidence intervals. Percentage reductions in the text aggregate paired ratios for identical inputs and should be distinguished from ratios of bar heights.
 
@@ -274,7 +274,7 @@ For Ouro's full 255-prediction window, some texts improved and others degraded. 
 
 Nanbeige degraded on all four texts over the 8 post-compression predictions, with a maximum of +4.540%. Aggregating each text once gave a relative PPL change of +1.526%. In both models, technical replicates of the same method produced identical saved logits and NLL. Repetition does not increase the number of texts or broaden the quality evaluation.
 
-![Figure 4. PPL changes by text not previously used in this study](figures/v0.2/figure-04-quality.png)
+![Figure 4. PPL changes by text not previously used in this study](figures/figure-04-quality.png)
 
 **Figure 4.** PPL change for the fused path relative to the checked uncompressed path. Negative values indicate improvement and positive values degradation. The dashed line is the prespecified 5% diagnostic threshold for degradation, not a confidence bound. Circles indicate the main evaluation window; squares for Ouro indicate the last 64 predictions. Each point represents one text; identical technical replicates are not plotted repeatedly. The horizontal scale is shared, but tokenization and evaluation lengths differ between models.
 
@@ -299,7 +299,7 @@ For Ouro, fusion was faster than full V reconstruction in all 8 text–replicate
 
 For Nanbeige, fused decoding was faster than both full reconstruction and the uncompressed path in all 12 combinations. However, initial compression for the fused path took approximately 54.8–55.3 ms by the per-text medians. Summing prefill, compression, and 8 decoding steps made fusion slower than the uncompressed path in all 12 combinations. Synchronized wall time showed the same direction.
 
-![Figure 5. Fused execution time depends on the comparator and measurement interval](figures/v0.2/figure-05-model-time.png)
+![Figure 5. Fused execution time depends on the comparator and measurement interval](figures/figure-05-model-time.png)
 
 **Figure 5.** Change in fused execution time relative to the comparator stated on each row. Negative values indicate reductions; positive values indicate increases. Ouro's points are 8 paired ratios from 4 texts × 2 replicates. Nanbeige's points are 4 per-text medians of 3 paired ratios each. Thick short lines indicate the reported medians, not confidence intervals. Horizontal scales differ between panels. Technical replicates are not independent texts; each row must be interpreted with its own comparator and timing interval.
 
@@ -336,7 +336,7 @@ An additive mean cost breakdown from saved records (a post hoc description acros
 
 Terminal KV storage fell from 69,206,016 to 24,642,816 bytes (66.000 to 23.501 MiB), a 64.392% reduction. Fused decoding peak allocated memory was also 42.089 MiB lower, but the all-phase peak remained 8,197.590 MiB during prefill for all three routes. **Continuation spreads initial cost over more steps, while compression-update costs recur.** Assessing execution benefits from storage reduction therefore includes both readout and updates.
 
-![Quality and cumulative cost in the continuation evaluation](figures/v0.3/figure-06-continuation.png)
+![Quality and cumulative cost in the continuation evaluation](figures/figure-06-continuation.png)
 
 **Figure 6. Quality and continuation cost on the same four texts.** Left: fused PPL change relative to uncompressed execution in nonoverlapping 64-prediction blocks; the dashed line is the 5% diagnostic threshold. Middle: changes in decoding time including updates and total time including initialization at the fixed 8-, 64-, 128-, and 256-step checkpoints, displayed at equally spaced horizontal positions. Right: all 12 paired total-time ratios at 256 steps and text-level medians. Points and medians describe technical replicates, not confidence intervals.
 
@@ -390,7 +390,7 @@ The author determined the research direction, authorized runs, executed experime
 4. Hooper, C., et al. *KVQuant: Towards 10 Million Context Length LLM Inference with KV Cache Quantization.* NeurIPS 2024; arXiv:2401.18079v6, 2025. [Primary text](https://arxiv.org/html/2401.18079v6).
 5. Dao, T., Fu, D. Y., Ermon, S., Rudra, A., and Ré, C. *FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness.* arXiv:2205.14135v2, 2022. [Paper](https://arxiv.org/abs/2205.14135v2).
 6. Yang, W., and Liu, S. *FlashLoop: Fast and Memory-Efficient Looped Transformers via Lazy Updates.* arXiv:2609.29812v2, 2026. [Primary text](https://arxiv.org/html/2609.29812v2).
-7. Sato, K. *Norm Separation is Necessary: A Minimalist Calibration-Free INT3 Recipe for KV Cache Quantization.* 2026. [Archived manuscript used in this study](https://doi.org/10.5281/zenodo.19724817). Public DOI stated in that manuscript: 10.5281/zenodo.19724817. Correspondence with Zenodo v1.0.0 was verified in the [publication provenance record](../nsn-integrated/publication-provenance-v0.1-2026-10-03.md).
+7. Sato, K. *Norm Separation is Necessary: A Minimalist Calibration-Free INT3 Recipe for KV Cache Quantization.* 2026. [Archived manuscript used in this study](https://doi.org/10.5281/zenodo.19724817). Public DOI stated in that manuscript: 10.5281/zenodo.19724817. Correspondence with Zenodo v1.0.0 was verified in the [publication provenance record](../../metadata/publication-provenance/README.md).
 8. Rae, J. W., Potapenko, A., Jayakumar, S. M., Hillier, C., and Lillicrap, T. P. *Compressive Transformers for Long-Range Sequence Modelling.* 2019. Materials source: [Official PG19 documentation](https://github.com/google-deepmind/pg19).
 9. Zeitoun, A., Torroba-Hennigen, L., and Kim, Y. *Hyperloop Transformers.* arXiv:2604.21254v3, 2026. [Primary text](https://arxiv.org/html/2604.21254v3).
 10. Fang, R., Chen, H.-W., and Chen, M.-S. *LoopQ: Quantization for Recursive Transformers.* arXiv:2605.16343v1, 2026. [Primary text](https://arxiv.org/html/2605.16343v1).
@@ -492,7 +492,7 @@ Failures in the auditing procedure are also retained. AC01 stopped at the softma
 |PyTorch / CUDA / Triton|2.11.0+cu128 / 12.8 / 3.6.0|
 |Transformers|Ouro 4.56.2; Nanbeige 4.45.1|
 |Material-selection seed|2026093001 (fixed tokenizer for each model)|
-|Original formal summaries and paper extraction|[S1](evidence-index-en-v0.3-2026-10-08.md), [paper data](paper-data-v0.3-2026-10-08.json)|
+|Original formal summaries and paper extraction|[S1](evidence-index-en-v0.3-2026-10-08.md), [paper data](data/paper-data-v0.3-2026-10-08.json)|
 |Figure and paper-data generation|[Python code](code/build_paper_assets_v0_2.py)|
 
 The paper code extracts and reaggregates previously verified summaries without executing a model. It checks source-file SHA256 hashes, storage formulas, aggregation counts, and the scope of numerical-check success. S1 also links to the original verifiers that recalculated results from raw logits.
@@ -501,13 +501,6 @@ The paper code extracts and reaggregates previously verified summaries without e
 
 The continuation comparison was fixed before measurement as NB06. Entry points are the [design](../../plans/loop-kv-nb06-design-v0.1-2026-10-08.md), [prespecified card](../../plans/prespecified/loop-kv-nb06-v0.1-2026-10-08.md), [input contract](../../plans/loop-kv-nb06-input-contract-v0.1-2026-10-08.json), [implementation](../../scripts/loop_kv_nb06.py), [fixed verifier](../../scripts/verify_loop_kv_nb06.py), [original results](../../runs/loop-kv-nb06-20261008-075410-5621380a/summary.json), and [input tokens](../../runs/loop-kv-nb06-20261008-075410-5621380a/materials.json).
 
-The quality, timing, and mean_additive_cost_cuda_ms fields of the [reaggregated results](../../reports/nb06-results-v0.1-2026-10-08.json) map to the quality table, cumulative-time table, and descriptive cost breakdown. The [reaggregation code](../../scripts/analyze_loop_kv_nb06_results.py) checks values against original step records. The 32 actual-query diagnostics are in books[].actual_q of the original summary; memory is in books[].memory_peak_bytes and terminal_kv_bytes. The [verification record](../../data/validation/nb06/verification-summary.json) and [paper-level NB06 numerical table](numerical-audit-nb06-v0.1-2026-10-08.json) are also retained.
+The quality, timing, and mean_additive_cost_cuda_ms fields of the [reaggregated results](../../reports/nb06-results-v0.1-2026-10-08.json) map to the quality table, cumulative-time table, and descriptive cost breakdown. The [reaggregation code](../../scripts/analyze_loop_kv_nb06_results.py) checks values against original step records. The 32 actual-query diagnostics are in books[].actual_q of the original summary; memory is in books[].memory_peak_bytes and terminal_kv_bytes. The [verification record](../../data/validation/nb06/verification-summary.json) and [paper-level NB06 numerical table](data/numerical-audit-nb06-v0.1-2026-10-08.json) are also retained.
 
-The initial tables and Figures 1–5 retain their original measurements. The extension is added in a separate section, Figure 6, and a new JSON version. The [supplement builder](../../scripts/build_nb06_paper_supplements.py) and [version-fixed manuscript changes](../../scripts/nb06_paper_supplements_v0_1.json) verify hashes of base manuscripts, saved aggregates, the original summary, and Figure 6, then regenerate both languages, the figure, and paper data in a new output directory. From the research root, run:
-
-~~~bash
-python3 scripts/build_nb06_paper_supplements.py \
-  --research-root . --output-dir /tmp/nb06-paper-regeneration
-~~~
-
-This regenerates manuscripts, tables, and figures. Rechecking raw logits and numerical diagnostics requires a working copy of the original run and the fixed verifier above. The materials are the same four texts; quality and timing are not pooled with NB05. Original ZIP SHA256: 2ef013414a6a7130bb55ddd0ff32328698b965a1f3347fa023b2400d5d2246fa. Original summary SHA256: 6da2ac29e8490ef5a36364b5637ce56d47bc00554605674a38f3ec93bd4ddc8a.
+The [reproduction guide](../../REPRODUCIBILITY.md) describes how to check the saved logits and regenerate the continuation table data and Figure 6. The materials are the same four texts; quality and timing are not pooled with NB05. Original ZIP SHA256: 2ef013414a6a7130bb55ddd0ff32328698b965a1f3347fa023b2400d5d2246fa. Original summary SHA256: 6da2ac29e8490ef5a36364b5637ce56d47bc00554605674a38f3ec93bd4ddc8a.

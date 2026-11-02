@@ -6,7 +6,7 @@
 
 ## 1. 何を測ったか
 
-[固定設計](../plans/loop-kv-nb03-design-v0.1-2026-10-02.md)のとおり、NB02の同一短文からslot 0・43の終端KVを使った。圧縮64 token＋BF16 tail72、KV8 head、Q48 head、head dimension128。各保存物へGaussian／one-hot／alternating／zeroの合成Qを与える8条件。Q head番号を6で割った整数部分が参照KV headになる。
+固定設計 (`plans/loop-kv-nb03-design-v0.1-2026-10-02.md`)のとおり、NB02の同一短文からslot 0・43の終端KVを使った。圧縮64 token＋BF16 tail72、KV8 head、Q48 head、head dimension128。各保存物へGaussian／one-hot／alternating／zeroの合成Qを与える8条件。Q head番号を6で割った整数部分が参照KV headになる。
 
 |方式|復元と読出し|
 |---|---|
@@ -57,17 +57,15 @@ allocatedの一時増分は3,962,880から265,216 bytesへ**93.307%減**。主�
 
 入力検査・復元・GQA展開・attention・同期を含む経路の時間で、TRACE、保存、CPU/GPU転送は主計時から除いた。CUDA event値もホストからの起動間隔を含み得るため、単一の演算カーネルの所要時間と同一視しない。
 
-## 4. 今回分かったことと次の範囲
+## 4. 結果の解釈と測定範囲
 
 GQA headの参照先を明示した差分で、Ouro由来の融合算術がNanbeigeの保存形式・head構成でも成立した。さらに、同じ復元算術を使うTILE_SDPAに対しても短縮が残った。従来のPyTorch復元をTritonへ置き換えただけの比較から一段進み、全量復元・head展開・attentionをまとめた経路の効果を確認できた。各処理が何%ずつ寄与したかは今回分解していない。
 
 範囲は既知文章1本の両端2 slot、合成Q4種、長さ136、RTX PRO 6000、1 queryに固定されている。反復やheadを独立な文章Nへ増やさず、p値も算出しない。**今回の比較相手は圧縮KVの全量復元経路で、非量子化モデル全体ではない。**
 
-次の推奨は、NB02と同じ短文・初期128＋後続8の実モデル小接続を設計すること。非圧縮、実packed＋全量復元SDPA、今回のGQA融合を並べ、実際のQでの局所差・経路・NLL／短区間PPLを確認し、準備後の全体時間・メモリも別に測る。全量の中間KVを保存せず代表slotの捕捉へ絞り、返却ZIPを小さく保つ。具体的な件数・容量・停止上限は次設計で固定する。今回、新設計・新コード・追加GPU実行へは進めていない。
-
 ## 5. 証拠・再集計
 
-- [返却run](../runs/loop-kv-nb03-20261002-141940-08d03c6c/)／[原ZIP](../loop-kv-nb03-20261002-141940-08d03c6c.zip)／[監査資料](../throughline/audits/loop-kv-nb03-results-v0.1-2026-10-02/)
+- 返却run (`runs/loop-kv-nb03-20261002-141940-08d03c6c`)／原ZIP (`loop-kv-nb03-20261002-141940-08d03c6c.zip`)／監査資料 (`throughline/audits/loop-kv-nb03-results-v0.1-2026-10-02`)
 - ZIP SHA256：`eb302adcc8255bf75d347cb462c526f1db1ede166214ffb90435cf1b2ea80429`。
 - 174ファイル、173hash、配布14sourceが一致。原ZIPと抽出証拠をそのまま保持した。
 - 証拠30.500 MiB、ZIP11.778 MiBで各64 MiB以内。環境準備87.203秒、worker全体7.741秒、主計時phase約0.743秒。環境準備時間は部品速度の比較に含めない。

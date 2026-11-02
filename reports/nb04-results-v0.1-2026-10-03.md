@@ -2,7 +2,7 @@
 
 **Nanbeigeの実モデルへのGQA融合接続は成立した（PASS_MODEL_CONNECTION）。** 135 forwardが完了し、配布前の独立NumPy検証器でも同じ判定を得た。融合は全量復元SDPAよりモデルdecode時間を42.534%短縮した。検査付き非圧縮比では2.245%短縮したが、最初の圧縮を含むphase合計では15.385%長かった。今回の8 decodeでは圧縮の初期費用を回収していない。
 
-[固定設計](../plans/loop-kv-nb04-design-v0.1-2026-10-02.md)／[原証拠](../runs/loop-kv-nb04-20261002-150544-da91e289/)／[独立監査](../throughline/audits/loop-kv-nb04-results-v0.1-2026-10-03/)。
+固定設計 (`plans/loop-kv-nb04-design-v0.1-2026-10-02.md`)／原証拠 (`runs/loop-kv-nb04-20261002-150544-da91e289`)／独立監査 (`throughline/audits/loop-kv-nb04-results-v0.1-2026-10-03`)。
 
 ## 1. 完了と証拠の照合
 
@@ -15,7 +15,7 @@
 - 3方式すべてのwarmup完了後に主計時。主計時前後のTriton cache 237ファイルが不変。
 - ZIP 37.832 MiB、証拠79.719 MiB、数値原配列76.524 MiB。証拠96 MiB／ZIP128 MiBの上限内。
 
-Colab側の別プロセス再計算は差0。手元では派生float5欄に最大5.55e-17の差があったが、取得前固定のrtol=atol=1e-12内。離散判定・原配列hashは一致。原summaryはそのまま保全し、差を[別ファイル](../throughline/audits/loop-kv-nb04-results-v0.1-2026-10-03/derived-float-differences.json)へ保存した。
+Colab側の別プロセス再計算は差0。手元では派生float5欄に最大5.55e-17の差があったが、取得前固定のrtol=atol=1e-12内。離散判定・原配列hashは一致。原summaryはそのまま保全し、差を別ファイル (`throughline/audits/loop-kv-nb04-results-v0.1-2026-10-03/derived-float-differences.json`)へ保存した。
 
 ## 2. 小PPL：この短文では品質の目安内
 
@@ -85,8 +85,6 @@ TORCHと融合の復元Vに残ったのは、slot 0の同じ先頭block要素 `[
 
 GPUはNVIDIA RTX PRO 6000 Blackwell Server Edition、torch 2.11.0+cu128、Triton 3.6.0、numpy 2.1.3、固定Nanbeige revision。分離環境の準備は91.552秒、重み取得開始からload完了まで26.793秒、15系列の計測区間全体は18.234秒。最後の値は証拠採取等を含む実験運転の時間で、上の性能比較値とは別。
 
-## 7. 今回の到達点と次の推奨
+## 7. 結果の解釈と測定範囲
 
 期待した実Qの数値接続と、全量復元比でのdecode短縮を確認した。PPLは今回の短文では目安内、KV実storage削減も保たれた。一方、この短さでは初期圧縮の費用が残り、非圧縮に対するphase合計の短縮には至らなかった。結果の符号にかかわらずNB04をここで閉じる。
-
-**次はNanbeigeへの転移をチェックポイントにまとめるのがよい。** Ouroから継承できた保存形式・復元・融合と、Nanbeige向けに変えたGQA対応、モデル固有の接続を整理する。その後の実測を一つ選ぶなら、実装と長さを固定した未使用文章の小比較を推奨する。長さ延長や再調整は今回の結果を受けて自動実行しない。

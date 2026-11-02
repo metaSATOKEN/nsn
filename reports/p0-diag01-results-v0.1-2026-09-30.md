@@ -74,15 +74,7 @@ BF16のNLL単独なら7/8条件が範囲内だった。ただし取得前の判�
 
 この独立照合は保存済みtoken指標・runtimeのassert結果・座標記録を対象とする。語彙全体のraw logitsとKV tensorはこのZIPに保存されていないため、それらからモデル計算を独立に再現した監査ではない。手元マシンでのモデルロード・GPU実行は行っていない。
 
-## 5. 次へどう進むか
-
-**推奨は、FP32参照の一致検査を元のsmoke 4冊×r=1/2/4/8へ広げ、測定装置の基準を確認すること。** 今回通った1冊・2周回の範囲を拡張し、公式との一致・cache座標・一括／逐次の差が、他の固定材料や8周でも基準内かを確認する。新しい小設計として先に範囲を固定する。
-
-| 次の枝 | 得られるもの／コストと限界 | 扱い |
-|---|---|---|
-| FP32参照の全smoke・全周回検査 | 16条件のモデル計算。r8と他3冊へ基準検査を広げる。FP32化に伴う時間・メモリ増は事前に上限を置く | **推奨**。今回の実時間は本検査の所要時間保証ではない |
-| BF16ゲートの位置づけを改訂 | P1の同じ逐次形状による対応比較と、一括／逐次の別形状比較を区別する設計監査が必要 | 基準検査が揃った時に再検討。観測最大値をそのまま新閾値にしない |
-| Attention等の設定をさらに探索 | 追加のGPU実行と新しい比較仮説が必要 | 今の4設定で候補がないため保留。演算箇所を絞る新しい証拠が出た場合に再検討 |
+## 5. 結果の解釈と測定範囲
 
 FP32検査が通っても、元のBF16 P0の未達を成功へ書き換えない。P1をFP32の実験へ変更する場合は、計算dtype・cache・保存量の基準が変わるため別の改訂が必要になる。BF16を維持する場合も、P1開始前にゲートの役割と条件を明示的に再固定する。
 
@@ -90,10 +82,10 @@ FP32検査が通っても、元のBF16 P0の未達を成功へ書き換えない
 
 ## 証拠と再集計
 
-- [原ZIP](../runs/loop-kv-p0-diag01-20260930-075901-48655e27/original.zip)／SHA-256：`802b3779105eb2b02614b32b1d0f23ad7ae253213a57b82bb0472acd0a09c5fa`
-- [実行時summary](../runs/loop-kv-p0-diag01-20260930-075901-48655e27/artifacts/summary.json)、[条件別原記録](../runs/loop-kv-p0-diag01-20260930-075901-48655e27/artifacts/cases.jsonl)
-- [再集計・照合JSON](../runs/loop-kv-p0-diag01-20260930-075901-48655e27/offline-verification.json)、[標準ライブラリの再集計器](../scripts/verify_loop_kv_diag01.py)
-- [取得前カード](../throughline/prereg/loop-kv-p0-diag-01-v0.1-2026-09-30.md)、[診断設計](../plans/loop-kv-p0-diag-01-design-v0.1-2026-09-30.md)、[前回の停止記録](p0-feedback-analysis-v0.1-2026-09-30.md)
+- 原ZIP (`runs/loop-kv-p0-diag01-20260930-075901-48655e27/original.zip`)／SHA-256：`802b3779105eb2b02614b32b1d0f23ad7ae253213a57b82bb0472acd0a09c5fa`
+- 実行時summary (`runs/loop-kv-p0-diag01-20260930-075901-48655e27/artifacts/summary.json`)、条件別原記録 (`runs/loop-kv-p0-diag01-20260930-075901-48655e27/artifacts/cases.jsonl`)
+- 再集計・照合JSON (`runs/loop-kv-p0-diag01-20260930-075901-48655e27/offline-verification.json`)、標準ライブラリの再集計器 (`scripts/verify_loop_kv_diag01.py`)
+- 取得前カード (`throughline/prereg/loop-kv-p0-diag-01-v0.1-2026-09-30.md`)、診断設計 (`plans/loop-kv-p0-diag-01-design-v0.1-2026-09-30.md`)、前回の停止記録 (`reports/p0-feedback-analysis-v0.1-2026-09-30.md`)
 
 研究ルートからの再集計例：
 

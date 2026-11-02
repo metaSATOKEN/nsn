@@ -33,7 +33,7 @@ PPL変化は同じ冊の非圧縮条件を基準とする。正は予測損失�
 
 12個の品質比較はすべて5%目安内。すべての品質比較で、各冊の5%超過も0/8だった。これは選んだ8冊と固定区間における探索的な品質確認であり、未使用文書やさらに長い利用への保証は別の確認対象になる。
 
-![区間別の品質と運用差](figures/lc01-quality-by-window.png)
+!区間別の品質と運用差 (`reports/figures/lc01-quality-by-window.png`)
 
 *図1：上段は非圧縮に対するPPL変化、下段はONLINE−PREFIXのNLL差。淡い点は冊別の対応差、誤差棒は比較別95%区間、下段の網掛けは事前の平均±0.005幅。ALLは他区間を含む。区間群の同時保証ではない。*
 
@@ -77,19 +77,15 @@ PPL変化は同じ冊の非圧縮条件を基準とする。正は予測損失�
 
 全KV実体と全tokenの全語彙分布は保存されていない。したがって全KVの一致は実行時検査とhashの記録を照合した範囲であり、手元でモデルを再実行した検証ではない。
 
-## 5. この実験を閉じ、次に何を確かめるか
+## 5. 結果の解釈と測定範囲
 
 LC01は固定24軌道で閉じる。到達点は**一律NSN3の継続運用で、既存8冊の2,048 tokenまで低損失を確認したこと**。品質保持と、W4に現れた局所的な追加コストの両方を記録する。
 
-次の推奨は、**未使用の8冊でも、同じ2,048 token・3条件・最後256予測の5%目安を保てるか**を小さく確認すること。これまで同じ8冊を継続して診断してきたため、まず材料を替えて今回の成立範囲を点検するのが分かりやすい。元の固定選定順から未使用書籍を選び、材料選び・欠測規則・件数を取得前に定める。現時点では提案であり、次の設計・コード・実測は未着手。
-
-W4は次回も同じ副指標として追跡し、今回大きく出た区間や冊だけを選んだ追加検証にはしない。未使用材料でも品質目安内なら、一律圧縮の転送確認を次のチェックポイントへまとめられる。新材料で不成立なら、その差を保存してからどの条件を診断するか決める。周回配分、latent伝播、LAB型clipping、実packed cacheは別の問いとして保持する。
-
 ## 証拠への入口
 
-- [固定設計](../plans/loop-kv-lc01-design-v0.1-2026-09-30.md)／[取得前カードと取得後追記](../throughline/prereg/loop-kv-lc01-v0.1-2026-09-30.md)
-- [原ZIP](../runs/loop-kv-lc01-20260930-135627-be9549b6/original.zip)／[元summary](../runs/loop-kv-lc01-20260930-135627-be9549b6/artifacts/summary.json)
-- [独立再集計](../runs/loop-kv-lc01-20260930-135627-be9549b6/offline-verification.json)／[照合スクリプト](../scripts/verify_loop_kv_lc01.py)
-- [監査記録](../throughline/audits/loop-kv-lc01-results-v0.1-2026-10-01/)／[区間図SVG](figures/lc01-quality-by-window.svg)
+- 固定設計 (`plans/loop-kv-lc01-design-v0.1-2026-09-30.md`)／取得前カードと取得後追記 (`throughline/prereg/loop-kv-lc01-v0.1-2026-09-30.md`)
+- 原ZIP (`runs/loop-kv-lc01-20260930-135627-be9549b6/original.zip`)／元summary (`runs/loop-kv-lc01-20260930-135627-be9549b6/artifacts/summary.json`)
+- 独立再集計 (`runs/loop-kv-lc01-20260930-135627-be9549b6/offline-verification.json`)／照合スクリプト (`scripts/verify_loop_kv_lc01.py`)
+- 監査記録 (`throughline/audits/loop-kv-lc01-results-v0.1-2026-10-01`)／区間図SVG (`reports/figures/lc01-quality-by-window.svg`)
 
 照合器は返却workerをimportせず、token原値から独立再計算する。原本は全検査に合格。再hashした偽主判定・W4判定隠蔽・flush重複・誤容量・誤native参照・材料prefix変更の6標本を全拒否した。原ZIPは変更していない。

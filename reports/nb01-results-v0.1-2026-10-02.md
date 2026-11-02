@@ -42,16 +42,8 @@ N1のraw KVは設計どおり保存していないため、N0/N1のcache比較�
 
 ## 証拠の照合
 
-原ZIPは元の場所に保持し、[run保存先](../runs/loop-kv-nb01-20261002-130959-b8c226de/)へ同じ内容を保存した。80ファイル、SHA256一覧79件、配布時の凍結source16件を照合。CRC・相対path・重複・symlink・容量を検査した。入力契約と取得前カードを含むcapsuleは配布版と一致する。
+原ZIPは元の場所に保持し、run保存先 (`runs/loop-kv-nb01-20261002-130959-b8c226de`)へ同じ内容を保存した。80ファイル、SHA256一覧79件、配布時の凍結source16件を照合。CRC・相対path・重複・symlink・容量を検査した。入力契約と取得前カードを含むcapsuleは配布版と一致する。
 
 返却コードは実行せず、配布前の`scripts/verify_loop_kv_nb01.py`とcontractを使用した。そのローカルsource自身も配布前のdeployment manifestに照合した。全logitからNLL、終端rawからhashと差分、396 updateの順序・shape・位置・長さを再計算し、summaryが一致した。追加で入力の固定時刻、モデルsource／weightのhash記録、ロード設定、主要packageの版を照合。監査後も返却ファイル79件のhashは不変。
 
-[監査記録](../throughline/audits/loop-kv-nb01-results-v0.1-2026-10-02/)に原ZIPのhash、独立summary、指標と検証器hashを保存。原ZIP SHA256：`f1bf862ffaca43a696d65068a9865f3d96304788381ba0921bd0f883552f908a`。
-
-## 次の推奨
-
-**同じ短文・短い長さで、KVを実際に3bitへ詰め、いったん全量復元して公式attentionへ渡す小比較**へ進むのがよい。今回動いたモデルロード・cache接続・小容量ZIPを土台としてコピーし、圧縮・復元に必要な差分を追加する。
-
-そこでは、圧縮形式と復元が参照実装に一致するか、実保存byteが減るか、非量子化に対して予測がどれだけ変わるかを分けて確認する。非量子化とのbit一致を量子化品質の成功条件にはしない。融合kernelの移植は、この圧縮接続を確認してからの段階とする。
-
-NB01は圧縮前の接続試験として閉じる。次実験の件数・比較方式・判定・上限・コードは、次の設計工程で固定する。
+監査記録 (`throughline/audits/loop-kv-nb01-results-v0.1-2026-10-02`)に原ZIPのhash、独立summary、指標と検証器hashを保存。原ZIP SHA256：`f1bf862ffaca43a696d65068a9865f3d96304788381ba0921bd0f883552f908a`。

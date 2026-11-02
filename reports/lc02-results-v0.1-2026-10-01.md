@@ -35,7 +35,7 @@ PPL変化率は各冊の対応ΔNLLを8冊で平均し、`100 × expm1(平均ΔN
 
 両方式×6区間の12比較すべてで区間上限が5%未満、冊別の5%超過も全比較0/8。全体ONLINEの変化は＋0.242%［＋0.014%, ＋0.438%］で、小さい追加損失を伴いながら品質目安に収まった。
 
-![LC02の区間別品質と運用差](figures/lc02-quality-by-window.png)
+!LC02の区間別品質と運用差 (`reports/figures/lc02-quality-by-window.png`)
 
 *図1：上段はnative比PPL変化、下段はONLINE−PREFIXのNLL差。淡い点は各冊、棒は比較別95%区間。下段の網掛けは平均±0.005の事前分類幅。ALLは他の5区間を含む。*
 
@@ -108,11 +108,9 @@ PPL変化率は各冊の対応ΔNLLを8冊で平均し、`100 × expm1(平均ΔN
 
 取得前のQ_NEW_LATE予想は支持され、LC02は固定24軌道で完了した。**同じモデル・8周・2048 token・PG19の未使用8冊でも、NSN3の継続圧縮が小さい品質損失で済むという証拠が加わった。** W4の符号の共通性と大きさの違いも、主品質判定と分けて残す。
 
-次の推奨は、追加測定へ直ちに進むより、P1A〜LC02を「確認した品質範囲／支持しなかった強い予想／未測定の実用性能」に分けたチェックポイントにまとめること。そこから実packed cacheの保存量・速度へ進むか、長さやモデルを広げるかを選ぶ。W4の機構診断は、品質保持の主結論を閉じる必須条件にはしない。次の設計・Colabコード・追加GPU実行は今回行っていない。
-
 ## 証拠への入口
 
-- [固定設計](../plans/loop-kv-lc02-design-v0.1-2026-10-01.md)／[取得前カードと結果追記](../throughline/prereg/loop-kv-lc02-v0.1-2026-10-01.md)
-- [保全した原ZIP](../runs/loop-kv-lc02-20261001-035051-ea16d62b/original.zip)／[原ログ一式](../runs/loop-kv-lc02-20261001-035051-ea16d62b/artifacts/)
-- [原値からの独立集計](../runs/loop-kv-lc02-20261001-035051-ea16d62b/offline-verification.json)／[検証コード](../scripts/verify_loop_kv_lc02.py)／[改変負例7件](../throughline/audits/loop-kv-lc02-results-v0.1-2026-10-01/negative-controls.json)
+- 固定設計 (`plans/loop-kv-lc02-design-v0.1-2026-10-01.md`)／取得前カードと結果追記 (`throughline/prereg/loop-kv-lc02-v0.1-2026-10-01.md`)
+- 保全した原ZIP (`runs/loop-kv-lc02-20261001-035051-ea16d62b/original.zip`)／原ログ一式 (`runs/loop-kv-lc02-20261001-035051-ea16d62b/artifacts`)
+- 原値からの独立集計 (`runs/loop-kv-lc02-20261001-035051-ea16d62b/offline-verification.json`)／検証コード (`scripts/verify_loop_kv_lc02.py`)／改変負例7件 (`throughline/audits/loop-kv-lc02-results-v0.1-2026-10-01/negative-controls.json`)
 - [LC01の報告](lc01-results-v0.1-2026-10-01.md)

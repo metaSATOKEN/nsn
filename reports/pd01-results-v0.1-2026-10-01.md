@@ -8,7 +8,7 @@
 
 PACKED終端のslot0／95／191からK/Vを採り、計12標本を保存した。各標本は圧縮prefix768 tokenとBF16 tail80 token。全モデル経路を終えてから、8種類の部品／複合経路を各3round測定した。各区間はwarmup5回の後に20回測り、全288区間・5,760呼出しを記録した。順序は取得前に固定した循環順である。
 
-[固定設計](../plans/loop-kv-pd01-design-v0.1-2026-10-01.md)／[取得前カード](../throughline/prereg/loop-kv-pd01-v0.1-2026-10-01.md)。取得前予想は「確認待ちを後へまとめると短くなる可能性」までで、最大コストの箇所や速度改善幅は予測していなかった。
+固定設計 (`plans/loop-kv-pd01-design-v0.1-2026-10-01.md`)／取得前カード (`throughline/prereg/loop-kv-pd01-v0.1-2026-10-01.md`)。取得前予想は「確認待ちを後へまとめると短くなる可能性」までで、最大コストの箇所や速度改善幅は予測していなかった。
 
 ## 2. 完了と照合
 
@@ -26,7 +26,7 @@ PACKED終端のslot0／95／191からK/Vを採り、計12標本を保存した�
 
 全192slotのKV一致は固定4時点（768／831／832／848）のdigestに基づく。部品8経路のbyte一致は実GPUで記録した前後ゲートの結果であり、全経路の中間出力を手元で再実行したものではない。生の保存標本は残している。
 
-再hashした別コピーで、NLL変更、遅延flagの確認数不足、集計値の書換え、モデルcacheと標本の対応不一致、計測区間の欠落の5種類を全拒否した。元runと配布コードは無変更。[検算・改変標本記録](../throughline/audits/loop-kv-pd01-results-v0.1-2026-10-01/)。
+再hashした別コピーで、NLL変更、遅延flagの確認数不足、集計値の書換え、モデルcacheと標本の対応不一致、計測区間の欠落の5種類を全拒否した。元runと配布コードは無変更。検算・改変標本記録 (`throughline/audits/loop-kv-pd01-results-v0.1-2026-10-01`)。
 
 前回PK01のFP32採点の小差は、今回のCPU FP64採点では再発しなかった。旧PK01の最終`INCONCLUSIVE`、旧BF16 full/incremental P0未達はそのまま保持する。
 
@@ -54,7 +54,7 @@ PACKED終端のslot0／95／191からK/Vを採り、計12標本を保存した�
 
 遅延経路でもGPU上の有限値検査を残し、測定対象の720flagを計測区間後に確認した。その最後の一括確認は時間計測の外側であり、表の短縮率はその区間内の差である。検査を含む実運用全体の速度改善率ではない。
 
-![PD01部品時間](figures/pd01-component-times.png)
+!PD01部品時間 (`reports/figures/pd01-component-times.png`)
 
 **部品時間は足し算しない。** 用意済み入力の反復とwarmupがあり、GPU内cache、launch間の待ち、一時buffer寿命の影響が複合経路と異なり得る。CUDA EventにもGPUが次の仕事を待つ時間が含まれ得る。この結果は、展開の整数演算・メモリ帯域・多数の演算起動のどれが時間を支配したかまでは分けていない。
 
@@ -77,24 +77,12 @@ FAKE→PACKEDの全forward/post allocatedピークは4,087.80→4,026.66 MiB（1
 
 NATIVE比PPL変化は3752で−0.0558%、31131で−0.4386%。短い既知区間の補助結果であり、量子化が一般に品質を改善する主張や旧LC系列との合算推定には使わない。
 
-## 5. 次の候補
-
-**推奨：3bit展開だけをまとめて実行する小比較。** 現実装の`unpack3`は複数のbit演算とstackでcodeを作る。まずここを単一のGPU処理にまとめ、全codeの完全一致、復元値とlogitsの一致、検査条件を保ちながら、部品と短い実モデル経路の時間を測る。浮動小数点の再正規化やattentionを変えずに、今回いちばん長かった単独部品へ手を入れられる。新kernelの実装・コンパイル・正しさ検査の費用は生じ、実際に速くなるかは未測定である。
-
-| 保留候補 | コスト・注意 | 再検討する条件 |
-|---|---|---|
-| ホスト確認の集約をモデルへ適用 | 変更は小さいが、異常を検知して停止する時点が変わる | 即時確認契約を変える必要と、その後のモデル内計測の利点を確認した場合 |
-| 復元全体／attention内積との融合 | 実装範囲が広く、丸めと一時buffer・attention経路を再検証する必要 | 展開単体の改善後も復元時間がモデル追加時間として残った場合 |
-| effective_norm前計算 | 保存形式や演算順が変わり、別の品質契約が必要 | norm側が次の主要候補となり、許容する数値差を取得前に固定できた場合 |
-
-PD01はこの固定範囲で閉じる。次実験の設計・コードはまだ作成していない。SADPの融合経路は参考になるが、今回の実3bit K/Vと同じ測定ではないため、過去の改善幅は転用しない。
-
 ## 6. 再計算と証拠
 
-- [原ZIP](../runs/loop-kv-pd01-20261001-065002-d390d0f1.zip)：SHA256 `70bcb6e8f001cfe181eff95f9dfb36e692a19c78d2c94884a77ea0a8e98792b9`
-- [原runの状態](../runs/loop-kv-pd01-20261001-065002-d390d0f1/run_status.json)／[集計](../runs/loop-kv-pd01-20261001-065002-d390d0f1/summary.json)
-- [独立再集計](../throughline/audits/loop-kv-pd01-results-v0.1-2026-10-01/offline-verification.json)／[再集計コード](../scripts/analyze_loop_kv_pd01_return.py)
-- [図のコード](../scripts/plot_loop_kv_pd01_return.py)／[改変標本の拒否](../throughline/audits/loop-kv-pd01-results-v0.1-2026-10-01/negative-control-report.json)
+- 原ZIP (`runs/loop-kv-pd01-20261001-065002-d390d0f1.zip`)：SHA256 `70bcb6e8f001cfe181eff95f9dfb36e692a19c78d2c94884a77ea0a8e98792b9`
+- 原runの状態 (`runs/loop-kv-pd01-20261001-065002-d390d0f1/run_status.json`)／集計 (`runs/loop-kv-pd01-20261001-065002-d390d0f1/summary.json`)
+- 独立再集計 (`throughline/audits/loop-kv-pd01-results-v0.1-2026-10-01/offline-verification.json`)／再集計コード (`scripts/analyze_loop_kv_pd01_return.py`)
+- 図のコード (`scripts/plot_loop_kv_pd01_return.py`)／改変標本の拒否 (`throughline/audits/loop-kv-pd01-results-v0.1-2026-10-01/negative-control-report.json`)
 
 展開runは原75ファイルのみ。派生物は監査フォルダへ分離し、原ZIP・原採点・原statusは保持した。ローカルでの追加モデルロード・GPU実測・外部取得は0件。
 

@@ -68,34 +68,18 @@
 
 この照合は保存token指標、runtimeの一致assert、cache座標を対象とする。語彙全体のraw logitsとKV tensorを保存していないため、それらからbitwise一致を独立に再実行した監査ではない。手元ではモデルをロードせず、外部LLMへの送信も行っていない。
 
-## 5. 本試験へ戻るための次案
-
-**推奨は、BF16を主条件に保ち、P0の検査の役割を整理する設計改訂。** ここでFP32の追加診断は一区切りにし、元の量子化比較へ戻るための必要条件を固定する。
+## 5. 結果の解釈と測定範囲
 
 元P1のコードは、nativeと量子化条件で同じ768-token prefill＋255回の逐次入力を行う。したがって主比較は「同じ読み方で、保存精度だけを変えた差」である。一方、今回まで停止原因となったBF16一括／逐次比較では、読み方に伴う演算形状も変わる。PyTorch公式も、浮動小数の演算順や一括・分割計算の違いによって、数学的に等価な計算がbitwise一致しない場合を説明している。これは設計を分ける一般的根拠であり、今回のBF16差の発生箇所を確定する説明ではない。[PyTorch 2.11 Numerical accuracy](https://docs.pytorch.org/docs/2.11/notes/numerical_accuracy.html#batched-computations-or-slice-computations)
-
-次の改訂では、以下を別々に定める案がよい。
-
-1. **通過必須の経路検査：** BF16で公式の逐次計算と量子化OFFの装置が一致すること。元の全smoke・全周回、境界長、codec、およびP1の入力長・採点位置に必要な検査を揃える。今回のFP32合格で未測定のBF16条件を代用しない。
-2. **保存して評価する演算形状の診断：** BF16一括／逐次のKL・NLL差・logit差を引き続き保存し、元閾値との対応も併記する。P1の差から単純に差し引かない。
-3. **量子化の主比較：** 同じ逐次計算・dtype・材料・位置・周回のnativeと量子化条件を対応させる。PPL／ΔNLLの問いと計算経路を一致させる。
-
-これは未達値を通すために閾値を広げる処理ではなく、比較対象に応じて通過条件と診断項目を分ける**次版への提案**である。ただし元の進行規則を変更する提案であることは明記し、P1の結果を得る前に設計を再固定する。今の版のBF16 P0を合格へ書き換えたり、元コードの停止条件だけを外したりはしていない。
-
-| 選択肢 | 費用・意味／扱い |
-|---|---|
-| BF16のまま検査の役割を改訂する | 設計監査と不足するBF16一致検査が必要。元の主条件と問いを保持できるため**推奨** |
-| P1もFP32へ変更する | 計算・native cacheのdtypeと保存量基準が変わる。FP32での量子化感度を別の問いとして測る場合に再検討 |
-| BF16 kernel設定探索を続ける | 追加GPU計算が必要。差の発生箇所を絞る新しい証拠が出るまで保留 |
 
 元のBF16全P0、P1長の全検査、量子化の品質、実圧縮の速度は未完了のまま。ここまでの証拠から「量子化に強い／弱い」という結論はまだ出さない。
 
 ## 証拠と再集計
 
-- [原ZIP](../runs/loop-kv-p0-fp32-01-20260930-082241-dd98083d/original.zip)／SHA-256：`6ddeba27dc4b614178b0f41393fef5860715db1e922b46f5c01186c269f8f36a`
-- [実行時summary](../runs/loop-kv-p0-fp32-01-20260930-082241-dd98083d/artifacts/summary.json)、[全16条件](../runs/loop-kv-p0-fp32-01-20260930-082241-dd98083d/artifacts/cases.jsonl)
-- [独立照合](../runs/loop-kv-p0-fp32-01-20260930-082241-dd98083d/offline-verification.json)、[再集計器](../scripts/verify_loop_kv_fp32_01.py)
-- [固定設計](../plans/loop-kv-p0-fp32-01-design-v0.1-2026-09-30.md)、[取得前カード](../throughline/prereg/loop-kv-p0-fp32-01-v0.1-2026-09-30.md)
+- 原ZIP (`runs/loop-kv-p0-fp32-01-20260930-082241-dd98083d/original.zip`)／SHA-256：`6ddeba27dc4b614178b0f41393fef5860715db1e922b46f5c01186c269f8f36a`
+- 実行時summary (`runs/loop-kv-p0-fp32-01-20260930-082241-dd98083d/artifacts/summary.json`)、全16条件 (`runs/loop-kv-p0-fp32-01-20260930-082241-dd98083d/artifacts/cases.jsonl`)
+- 独立照合 (`runs/loop-kv-p0-fp32-01-20260930-082241-dd98083d/offline-verification.json`)、再集計器 (`scripts/verify_loop_kv_fp32_01.py`)
+- 固定設計 (`plans/loop-kv-p0-fp32-01-design-v0.1-2026-09-30.md`)、取得前カード (`throughline/prereg/loop-kv-p0-fp32-01-v0.1-2026-09-30.md`)
 
 研究ルートからの再集計：
 
