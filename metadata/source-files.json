@@ -1962,27 +1962,27 @@
   },
   {
     "path": "papers/loop-kv/evidence-index-en-v0.3-2026-10-08.md",
-    "bytes": 29153,
-    "sha256": "179f4fc9567e73c0432dfd0aac59e144aa59ee04faad010bc5ec3a1f7047025b",
+    "bytes": 29158,
+    "sha256": "e2d7cef4ebe04b10fffacc096786ab2adf8b3dc74fe7f560df84a900f46329fc",
     "roles": [
       "current manuscript direct link",
       "current paper or immutable supplement input"
     ],
     "source": "papers/loop-kv/evidence-index-en-v0.3-2026-10-08.md",
-    "copy": "Reader edition of the source report or document",
+    "copy": "Publication edition and navigation update; scientific results retained",
     "location": "repository",
     "original_sha256": "aa2b37e5de17e9e5629c6e19b96fb6797f00deb99314b5b08d9e04745a290906"
   },
   {
     "path": "papers/loop-kv/evidence-index-v0.5-2026-10-08.md",
-    "bytes": 26790,
-    "sha256": "9b2350294f2dcb7f2d540c79d9ed848b88971394a81f1b93c55ac9e659055afb",
+    "bytes": 26795,
+    "sha256": "b34f3951cb8b68af07e733140cc4e71424e5bbff7c1c5915dd942cc5a4958f9b",
     "roles": [
       "current manuscript direct link",
       "current paper or immutable supplement input"
     ],
     "source": "papers/loop-kv/evidence-index-v0.5-2026-10-08.md",
-    "copy": "Reader edition of the source report or document",
+    "copy": "Publication edition and navigation update; scientific results retained",
     "location": "repository",
     "original_sha256": "c8c815b0f06f218140efab6baf9e517bfa7948bd8d3d1c722c12b89541a72b02"
   },
@@ -2125,28 +2125,28 @@
     "location": "repository"
   },
   {
-    "path": "papers/loop-kv/manuscript-en-v0.3-2026-10-08.md",
-    "bytes": 64151,
-    "sha256": "5b08842278c143f4f1279519187ee97f2abadc65312ce0ee5fe72e05de6dd238",
+    "path": "papers/loop-kv/manuscript-en-v1.0-2026-10-08.md",
+    "bytes": 64148,
+    "sha256": "c7deab70f9484e3c3990cfffe71d97a3fd9ddae34ded0000e757607c7b3a992f",
     "roles": [
       "current manuscript direct link",
       "current paper or immutable supplement input"
     ],
     "source": "papers/loop-kv/manuscript-en-v0.3-2026-10-08.md",
-    "copy": "Reader edition of the source report or document",
+    "copy": "Publication edition and navigation update; scientific results retained",
     "location": "repository",
     "original_sha256": "35562e2090dc9f72d479df59879daa71aeae19acd1a76e59a7987c22a45bbcfb"
   },
   {
-    "path": "papers/loop-kv/manuscript-ja-v0.5-2026-10-08.md",
-    "bytes": 58375,
-    "sha256": "370c3060a86f16587d137d6490d33dc426cec489d20bce163c3ba262e3902056",
+    "path": "papers/loop-kv/manuscript-ja-v1.0-2026-10-08.md",
+    "bytes": 58372,
+    "sha256": "0abaa28d463962c57dae3adfffe9af2770ec62af8488a3a1a318695d97fc7846",
     "roles": [
       "current manuscript direct link",
       "current paper or immutable supplement input"
     ],
     "source": "papers/loop-kv/manuscript-ja-v0.5-2026-10-08.md",
-    "copy": "Reader edition of the source report or document",
+    "copy": "Publication edition and navigation update; scientific results retained",
     "location": "repository",
     "original_sha256": "c2827f9604a2022b494cf448292aa358f45de80a90f6d85cea5fe0547ee31e66"
   },
@@ -2454,26 +2454,26 @@
     "location": "repository"
   },
   {
-    "path": "papers/nsn-integrated/NSN-2026-10-29-EN.md",
+    "path": "papers/nsn-integrated/NSN-2026-10-29-EN-v2.0.md",
     "bytes": 111030,
-    "sha256": "96084d9d981e686aeaeb24ece092f22c51fa50c3ccebff42adfc9647d1f4e226",
+    "sha256": "90c87d10414b654287e01b6f265f74e34c12bc334b1100591aad9407a0b3cac8",
     "roles": [
       "current paper or immutable supplement input"
     ],
     "source": "papers/nsn-integrated/manuscript-en-v0.7-2026-10-08.md",
-    "copy": "Distribution adaptation",
+    "copy": "Publication edition and navigation update; scientific results retained",
     "location": "repository",
     "original_sha256": "fe743154c1c93e10a2eb8f79e7af79fad7a24e11020f3b2e7ffaf9c3e892def0"
   },
   {
-    "path": "papers/nsn-integrated/NSN-2026-10-29-JA.md",
+    "path": "papers/nsn-integrated/NSN-2026-10-29-JA-v2.0.md",
     "bytes": 101702,
-    "sha256": "a7b38bb09b2c043c41b0cea50444f1c8c99d6011ce9efb131d6e108680563e90",
+    "sha256": "1289bacfc09e0b2fb4cf02f65940cb197b2c5545e392a0d5808635f130652af7",
     "roles": [
       "current paper or immutable supplement input"
     ],
     "source": "papers/nsn-integrated/manuscript-ja-v0.8-2026-10-08.md",
-    "copy": "Distribution adaptation",
+    "copy": "Publication edition and navigation update; scientific results retained",
     "location": "repository",
     "original_sha256": "b7cc87e9bacf58f5f66cf3bafadd03341cfe0ee7dd840fa0cd01a7071127e6fd"
   },
@@ -43316,5 +43316,49 @@
     "copy": "Distribution adaptation",
     "location": "repository",
     "original_sha256": "84e61dd71cde4b507e64ecccebce41ed65a7027cfc0266d057566efbe382e1b2"
+  },
+  {
+    "path": "papers/loop-kv/Loop-kv_NSN_EN_v1.0.pdf",
+    "bytes": 749325,
+    "sha256": "2d4d7b6f2e9b3367a1e3588c7addaf9003468d3dfa7e144f7b94dece8e6b3fe9",
+    "roles": [
+      "current English paper"
+    ],
+    "source": "papers/loop-kv/Loop-kv_NSN_EN_v1.0.tex",
+    "copy": "Typeset from current English manuscript with fixed GitHub evidence links",
+    "location": "repository"
+  },
+  {
+    "path": "papers/loop-kv/Loop-kv_NSN_EN_v1.0.tex",
+    "bytes": 82625,
+    "sha256": "106fc0dec3f44c129a5401bcf75b244ed89ff51217f8ed32f94700aa972c611d",
+    "roles": [
+      "editable PDF typesetting source"
+    ],
+    "source": "papers/loop-kv/manuscript-en-v1.0-2026-10-08.md",
+    "copy": "Typeset from current English manuscript with fixed GitHub evidence links",
+    "location": "repository"
+  },
+  {
+    "path": "papers/nsn-integrated/NSN_Integrated_EN_v2.0.pdf",
+    "bytes": 987001,
+    "sha256": "9812cfa864120014b8368ccf81e43180c1479f1d5dd6ba8e2e67f7662e9039fd",
+    "roles": [
+      "current English paper"
+    ],
+    "source": "papers/nsn-integrated/NSN_Integrated_EN_v2.0.tex",
+    "copy": "Typeset from current English manuscript with fixed GitHub evidence links",
+    "location": "repository"
+  },
+  {
+    "path": "papers/nsn-integrated/NSN_Integrated_EN_v2.0.tex",
+    "bytes": 144138,
+    "sha256": "63a1480b97c9699ec9233aa981d26140f3f3490d735d71b4d0181e56150ffa6a",
+    "roles": [
+      "editable PDF typesetting source"
+    ],
+    "source": "papers/nsn-integrated/NSN-2026-10-29-EN-v2.0.md",
+    "copy": "Typeset from current English manuscript with fixed GitHub evidence links",
+    "location": "repository"
   }
 ]

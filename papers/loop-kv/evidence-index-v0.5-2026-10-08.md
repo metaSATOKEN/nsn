@@ -1,6 +1,6 @@
 # 補足資料S1：本文から証拠への索引
 
-2026-10-08 / 日本語S1 v0.5。[日本語本文v0.5](manuscript-ja-v0.5-2026-10-08.md)に対応。初回二モデル比較の証拠を保持し、§12にNB06の継続評価を追加。
+2026-10-08 / 日本語S1 v0.5。[日本語本文v1.0](manuscript-ja-v1.0-2026-10-08.md)に対応。初回二モデル比較の証拠を保持し、§12にNB06の継続評価を追加。
 
 公開用案内更新：2026年10月29日。利用条件・著者申告・参照先を現行パッケージへ同期した。測定値と科学的な結論は元の版から変更していない。
 
@@ -97,7 +97,7 @@
 
 ## 6. 今回稿と統合稿の境界
 
-本稿は再帰型モデルでの実装・評価を詳述し、[NSN統合稿 v1.0](../nsn-integrated/NSN-2026-10-29-JA.md)は構成・適用条件・実保存量・利用費用をまとめる。既公開NSNの版照合は[版対応記録](../../metadata/publication-provenance/README.md)に保存済み。著者作成の論文・図・データはCC BY 4.0、コードはApache-2.0とし、第三者条件を保持する（[利用条件](../../LICENSES.md)）。リポジトリは[https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn)。公開範囲と別配布ZIPの提供状況は[README](../../README.ja.md)に記録する。統合稿の恒久アーカイブDOIは未割当である。
+本稿は再帰型モデルでの実装・評価を詳述し、[NSN統合稿 v2.0](../nsn-integrated/NSN-2026-10-29-JA-v2.0.md)は構成・適用条件・実保存量・利用費用をまとめる。既公開NSNの版照合は[版対応記録](../../metadata/publication-provenance/README.md)に保存済み。著者作成の論文・図・データはCC BY 4.0、コードはApache-2.0とし、第三者条件を保持する（[利用条件](../../LICENSES.md)）。リポジトリは[https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn)。公開範囲と別配布ZIPの提供状況は[README](../../README.ja.md)に記録する。統合稿の恒久アーカイブDOIは未割当である。
 
 ## 7. v0.3の短い実装と文献の照合
 

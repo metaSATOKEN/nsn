@@ -6,7 +6,7 @@ A language model stores keys and values from earlier tokens in its **KV cache**,
 
 This project develops and evaluates **asymmetric NSN**: store each vector's magnitude separately, and represent its direction with a small set of integers. The integrated study connects the method's prediction quality to its actual storage and execution costs. It identifies useful settings across model architectures, then follows the compressed representation all the way into attention.
 
-[Read the paper](papers/nsn-integrated/NSN-2026-10-29-EN.md) · [日本語 README](README.ja.md) · [日本語論文](papers/nsn-integrated/NSN-2026-10-29-JA.md) · [Code](experiments/README.md)
+[Read the paper](papers/nsn-integrated/NSN-2026-10-29-EN-v2.0.md) · [日本語 README](README.ja.md) · [日本語論文](papers/nsn-integrated/NSN-2026-10-29-JA-v2.0.md) · [Code](experiments/README.md)
 
 ## What this study adds
 
@@ -49,8 +49,8 @@ Compression saved capacity in this workload. Turning that saving into a time adv
 
 | To understand… | Start here |
 | --- | --- |
-| The method, findings, and their scope | Integrated paper: [English](papers/nsn-integrated/NSN-2026-10-29-EN.md) / [Japanese](papers/nsn-integrated/NSN-2026-10-29-JA.md) with figures and appendices · [English PDF](papers/nsn-integrated/NSNv2.0.pdf) |
-| How the looped-model caches and kernels work | [Looped-model companion paper](papers/loop-kv/README.md) · [English PDF](papers/loop-kv/Loop-kv_NSN.pdf) |
+| The method, findings, and their scope | Integrated paper: [English](papers/nsn-integrated/NSN-2026-10-29-EN-v2.0.md) / [Japanese](papers/nsn-integrated/NSN-2026-10-29-JA-v2.0.md) with figures and appendices · [English PDF](papers/nsn-integrated/NSN_Integrated_EN_v2.0.pdf) |
+| How the looped-model caches and kernels work | [Looped-model companion paper](papers/loop-kv/README.md) · [English PDF](papers/loop-kv/Loop-kv_NSN_EN_v1.0.pdf) |
 | How the experiments were implemented | [Readable Python sources and experiment index](experiments/README.md) |
 | Which measurements support a result | [Data index](data/README.md) and [evidence coverage](DATA_COVERAGE.md) |
 | The original edition or the retained library API | [Earlier edition and library guide](LEGACY.md) |

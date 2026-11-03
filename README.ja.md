@@ -6,7 +6,7 @@ LLMは、過去の情報を毎回計算し直さずに参照するため、キ�
 
 本研究で開発・評価する**非対称NSN**は、ベクトルの大きさを別に保存し、方向を少数の整数で表す方法です。統合研究では、その予測品質・実際の保存量・実行コストをつなげて調べました。モデルの構造をまたいで使える設定を探し、圧縮した表現を実際のattentionで使うところまで追っています。
 
-[日本語の統合論文](papers/nsn-integrated/NSN-2026-10-29-JA.md) · [English README](README.md) · [English paper](papers/nsn-integrated/NSN-2026-10-29-EN.md) · [実験コード](experiments/README.md)
+[日本語の統合論文](papers/nsn-integrated/NSN-2026-10-29-JA-v2.0.md) · [English README](README.md) · [English paper](papers/nsn-integrated/NSN-2026-10-29-EN-v2.0.md) · [実験コード](experiments/README.md)
 
 ## この研究で分かったこと
 
@@ -49,8 +49,8 @@ Nanbeigeの測定では、その違いが具体的に見えました。
 
 | 知りたいこと | 入口 |
 | --- | --- |
-| 手法・発見・成立する範囲 | 図と付録を含む統合論文：[日本語](papers/nsn-integrated/NSN-2026-10-29-JA.md)／[English](papers/nsn-integrated/NSN-2026-10-29-EN.md)・[英語PDF](papers/nsn-integrated/NSNv2.0.pdf) |
-| 再帰型モデルのキャッシュとカーネルの実装 | [Loopedモデルの詳細稿](papers/loop-kv/README.md)・[英語PDF](papers/loop-kv/Loop-kv_NSN.pdf) |
+| 手法・発見・成立する範囲 | 図と付録を含む統合論文：[日本語](papers/nsn-integrated/NSN-2026-10-29-JA-v2.0.md)／[English](papers/nsn-integrated/NSN-2026-10-29-EN-v2.0.md)・[英語PDF](papers/nsn-integrated/NSN_Integrated_EN_v2.0.pdf) |
+| 再帰型モデルのキャッシュとカーネルの実装 | [Loopedモデルの詳細稿](papers/loop-kv/README.md)・[英語PDF](papers/loop-kv/Loop-kv_NSN_EN_v1.0.pdf) |
 | 実験のコード | [可読Pythonと実験一覧](experiments/README.md) |
 | 結果の根拠になった測定 | [データ一覧](data/README.md)と[証拠の収録範囲](DATA_COVERAGE.md) |
 | 旧版や従来のライブラリAPI | [旧版とライブラリの案内](LEGACY.md) |

@@ -5,7 +5,7 @@
 **Kentaro Sato**  
 Independent Researcher  
 Contact: info@metaclan.jp  
-October 8, 2026 · English manuscript v0.3
+October 8, 2026 · English version v1.0
 
 Publication metadata updated October 29, 2026: licenses, author declarations and navigation are synchronized with the current package. Measured values and scientific conclusions are unchanged from the original edition.
 

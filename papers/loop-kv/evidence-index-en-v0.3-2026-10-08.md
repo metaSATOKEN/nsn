@@ -1,6 +1,6 @@
 # Supplement S1: Evidence Index
 
-October 8, 2026 / English S1 v0.3, corresponding to [English manuscript v0.3](manuscript-en-v0.3-2026-10-08.md) and [Japanese S1 v0.5](evidence-index-v0.5-2026-10-08.md). Evidence for the initial two-model comparison is retained; §12 adds the NB06 continuation evaluation.
+October 8, 2026 / English S1 v0.3, corresponding to [English manuscript v1.0](manuscript-en-v1.0-2026-10-08.md) and [Japanese S1 v0.5](evidence-index-v0.5-2026-10-08.md). Evidence for the initial two-model comparison is retained; §12 adds the NB06 continuation evaluation.
 
 Publication metadata updated October 29, 2026: licenses, author declarations and navigation are synchronized with the current package. Measured values and scientific conclusions are unchanged from the original edition.
 
@@ -99,7 +99,7 @@ Stops and fixes are described in the public reports above. Internal workflow led
 
 ## 6. Relationship to the Integrated Paper
 
-This paper details implementation and evaluation in looped models; the [integrated NSN paper v1.0](../nsn-integrated/NSN-2026-10-29-EN.md) brings together configuration, applicability, actual storage, and readout costs. The earlier public NSN version has been checked in the [publication provenance record](../../metadata/publication-provenance/README.md). Author-owned papers, figures, and data use CC BY 4.0, code uses Apache-2.0, and third-party terms are retained (see [licenses](../../LICENSES.md)). The repository is [https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn); [README](../../README.md) records its access status and the availability of companion ZIPs. A permanent archive DOI for the integrated paper has not been assigned.
+This paper details implementation and evaluation in looped models; the [integrated NSN paper v2.0](../nsn-integrated/NSN-2026-10-29-EN-v2.0.md) brings together configuration, applicability, actual storage, and readout costs. The earlier public NSN version has been checked in the [publication provenance record](../../metadata/publication-provenance/README.md). Author-owned papers, figures, and data use CC BY 4.0, code uses Apache-2.0, and third-party terms are retained (see [licenses](../../LICENSES.md)). The repository is [https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn); [README](../../README.md) records its access status and the availability of companion ZIPs. A permanent archive DOI for the integrated paper has not been assigned.
 
 ## 7. Short Implementation and Literature Checks Added in Japanese v0.3
 
