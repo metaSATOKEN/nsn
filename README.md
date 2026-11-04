@@ -32,7 +32,27 @@ The quantizer uses the input block's statistics, with no additional quantizer tr
 
 ![NSN separates vector magnitude and direction, quantizes direction, then reconstructs it with the stored norm.](papers/nsn-integrated/figures/figure-01-nsn.png)
 
-The paper explains the equations and includes a 10-line quantize–reconstruct example. The [reference implementation](src/README.md) provides the underlying operations.
+### Asymmetric NSN in 10 lines
+
+The function below shows the **3-bit quantization and reconstruction core** from the paper. Input `x` is a validated floating-point KV block with shape `[..., 64, 128]`: 64 tokens and 128 dimensions per head. It assumes finite values and metadata within the FP16 storage range, and returns reconstructed values with the same shape and dtype.
+
+```python
+import torch
+
+def nsn_int3_qdq(x):
+    a = x.float()
+    n = torch.linalg.vector_norm(a, dim=-1, keepdim=True)
+    d = a / n.clamp_min(1e-12)
+    m = d.amin(dim=-2, keepdim=True)
+    s = (d.amax(dim=-2, keepdim=True) - m) / 7
+    q = ((d - m) / torch.where(s == 0, torch.ones_like(s), s)).round().clamp(0, 7).to(torch.uint8)
+    n, m, s = (t.half().float().contiguous() for t in (n, m, s))
+    d = (m + s * q.float().contiguous()).contiguous()
+    y = n * (d / torch.linalg.vector_norm(d, dim=-1, keepdim=True).clamp_min(1e-12))
+    return torch.where(n == 0, torch.zeros_like(y), y).to(x.dtype)
+```
+
+This example quantizes and reconstructs floating-point values; bit packing, cache updates, and attention integration are implemented separately. See the [matching reference function](papers/nsn-integrated/code/nsn_int3_core.py), [method and arithmetic details](papers/nsn-integrated/NSN-2026-10-29-EN-v2.0.md#24-the-computational-core-and-implementation-differences), and [readable model-integration code](experiments/README.md).
 
 ## When does smaller storage become an execution benefit?
 
@@ -73,7 +93,7 @@ This checks file identity without running a model. [REPRODUCIBILITY.md](REPRODUC
 
 Kentaro Sato · Independent Researcher · [info@metaclan.jp](mailto:info@metaclan.jp)
 
-The integrated Markdown manuscripts are **v1.0, 29 October 2026**. They combine a reanalysis of the earlier [*Norm Separation is Necessary*](https://doi.org/10.5281/zenodo.19724817) with subsequent implementation and looped-model evaluations. [CITATION.cff](CITATION.cff) identifies this integrated edition; the earlier DOI identifies the earlier paper.
+The integrated Markdown manuscripts are **v2.0, 29 October 2026**. They combine a reanalysis of the earlier [*Norm Separation is Necessary*](https://doi.org/10.5281/zenodo.19724817) with subsequent implementation and looped-model evaluations. [CITATION.cff](CITATION.cff) identifies this integrated edition; the earlier DOI identifies the earlier paper.
 
 Code: [Apache-2.0](LICENSE). Author-owned papers, figures, and data: [CC BY 4.0](LICENSES/CC-BY-4.0.txt). Third-party terms are retained in [LICENSES.md](LICENSES.md).
 

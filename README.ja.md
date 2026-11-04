@@ -32,7 +32,27 @@ LLMは、過去の情報を毎回計算し直さずに参照するため、キ�
 
 ![NSNはベクトルの大きさと方向を分け、方向を量子化し、保存したノルムと組み合わせて復元する。](papers/nsn-integrated/figures/figure-01-nsn.png)
 
-論文には数式と、量子化・復元の核となる10行のコード例を掲載しています。[参照実装](src/README.md)から各処理も確認できます。
+### 非対称NSNの計算の核を10行で
+
+論文に掲載した、**3bit設定で量子化して復元する計算の核**です。入力`x`は検査済みの浮動小数点KVブロックで、形は`[..., 64, 128]`（64 token × ヘッド内128次元）。値が有限で、補助情報がFP16の保存範囲内にあることを前提とし、入力と同じ形・dtypeの復元値を返します。
+
+```python
+import torch
+
+def nsn_int3_qdq(x):
+    a = x.float()
+    n = torch.linalg.vector_norm(a, dim=-1, keepdim=True)
+    d = a / n.clamp_min(1e-12)
+    m = d.amin(dim=-2, keepdim=True)
+    s = (d.amax(dim=-2, keepdim=True) - m) / 7
+    q = ((d - m) / torch.where(s == 0, torch.ones_like(s), s)).round().clamp(0, 7).to(torch.uint8)
+    n, m, s = (t.half().float().contiguous() for t in (n, m, s))
+    d = (m + s * q.float().contiguous()).contiguous()
+    y = n * (d / torch.linalg.vector_norm(d, dim=-1, keepdim=True).clamp_min(1e-12))
+    return torch.where(n == 0, torch.zeros_like(y), y).to(x.dtype)
+```
+
+この例は量子化して浮動小数点へ復元する計算を示します。ビット詰め・キャッシュ更新・attentionへの接続は、それぞれの実装を参照してください。[同じ参照関数](papers/nsn-integrated/code/nsn_int3_core.py)／[方式と算術の説明（§2.4）](papers/nsn-integrated/NSN-2026-10-29-JA-v2.0.md)／[モデル接続の可読コード](experiments/README.md)。
 
 ## 小さく保存できることは、いつ実行上の利益になるか
 
@@ -73,7 +93,7 @@ Nanbeigeの測定では、その違いが具体的に見えました。
 
 Kentaro Sato · 独立研究者 · [info@metaclan.jp](mailto:info@metaclan.jp)
 
-統合稿のMarkdown版は**2026年10月29日・v1.0**です。既報[*Norm Separation is Necessary*](https://doi.org/10.5281/zenodo.19724817)の再集計に、後続の実装評価と再帰型モデルでの評価を統合しています。統合版の引用情報は[CITATION.cff](CITATION.cff)を参照してください。既報のDOIは旧論文を識別します。
+統合稿のMarkdown版は**2026年10月29日・v2.0**です。既報[*Norm Separation is Necessary*](https://doi.org/10.5281/zenodo.19724817)の再集計に、後続の実装評価と再帰型モデルでの評価を統合しています。統合版の引用情報は[CITATION.cff](CITATION.cff)を参照してください。既報のDOIは旧論文を識別します。
 
 コードは[Apache-2.0](LICENSE)、著者作成の論文・図・データは[CC BY 4.0](LICENSES/CC-BY-4.0.txt)。第三者資料の条件は[LICENSES.md](LICENSES.md)に保持しています。
 
