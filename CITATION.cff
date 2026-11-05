@@ -32,3 +32,13 @@ preferred-citation:
   doi: "10.5281/zenodo.23938878"
   year: 2026
   version: "2.0"
+
+references:
+  - type: report
+    title: "Applying NSN-Based 3-Bit KV Compression to Looped Transformers — Evaluating Actual Storage, Prediction Quality, and Fused Readout Costs"
+    authors:
+      - family-names: Sato
+        given-names: Kentaro
+    year: 2026
+    version: "1.0"
+    doi: "10.5281/zenodo.23970816"

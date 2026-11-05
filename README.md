@@ -70,7 +70,7 @@ Compression saved capacity in this workload. Turning that saving into a time adv
 | To understand… | Start here |
 | --- | --- |
 | The method, findings, and their scope | Integrated paper: [English](papers/nsn-integrated/NSN-2026-10-29-EN-v2.0.md) / [Japanese](papers/nsn-integrated/NSN-2026-10-29-JA-v2.0.md) with figures and appendices · [English PDF](papers/nsn-integrated/NSN_Integrated_EN_v2.0.pdf) |
-| How the looped-model caches and kernels work | [Looped-model companion paper](papers/loop-kv/README.md) · [English PDF](papers/loop-kv/Loop-kv_NSN_EN_v1.0.pdf) |
+| How the looped-model caches and kernels work | [Looped-model companion paper](papers/loop-kv/README.md) · [English PDF](papers/loop-kv/Loop-kv_NSN_EN_v1.0.pdf) · [DOI](https://doi.org/10.5281/zenodo.23970816) |
 | How the experiments were implemented | [Readable Python sources and experiment index](experiments/README.md) |
 | Which measurements support a result | [Data index](data/README.md) and [evidence coverage](DATA_COVERAGE.md) |
 | The original edition or the retained library API | [Earlier edition and library guide](LEGACY.md) |

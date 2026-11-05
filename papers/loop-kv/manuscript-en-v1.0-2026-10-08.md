@@ -7,6 +7,8 @@ Independent Researcher
 Contact: info@metaclan.jp  
 October 8, 2026 · English version v1.0
 
+Version DOI: [10.5281/zenodo.23970816](https://doi.org/10.5281/zenodo.23970816)
+
 Publication metadata updated October 29, 2026: licenses, author declarations and navigation are synchronized with the current package. Measured values and scientific conclusions are unchanged from the original edition.
 
 ## Abstract
@@ -378,7 +380,7 @@ Extending the same Nanbeige materials to 256 predictions retained the quality cr
 
 ## Research Resources and Author's Role
 
-Designs, original execution records, distributed code, numerical recalculations, and their correspondence to the tables are indexed in [Supplement S1](evidence-index-en-v0.3-2026-10-08.md). The release candidate contains pinned code, materials, logs, and hashes, with large saved arrays in companion ZIPs. Author-owned papers, figures, and data use CC BY 4.0, code uses Apache-2.0, and third-party materials retain their original terms (see [licenses](../../LICENSES.md)). The repository is [https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn); [README](../../README.md) records its access status and the availability of companion ZIPs. A permanent archive DOI for the integrated paper has not been assigned.
+Designs, original execution records, distributed code, numerical recalculations, and their correspondence to the tables are indexed in [Supplement S1](evidence-index-en-v0.3-2026-10-08.md). The release candidate contains pinned code, materials, logs, and hashes, with large saved arrays in companion ZIPs. Author-owned papers, figures, and data use CC BY 4.0, code uses Apache-2.0, and third-party materials retain their original terms (see [licenses](../../LICENSES.md)). The repository is [https://github.com/metaSATOKEN/nsn](https://github.com/metaSATOKEN/nsn); [README](../../README.md) records its access status and the availability of companion ZIPs. The integrated NSN paper has a separate version DOI: [10.5281/zenodo.23938878](https://doi.org/10.5281/zenodo.23938878).
 
 The author determined the research direction, authorized runs, executed experiments in Colab, and made manuscript decisions. LLM assistance was used in design, implementation, analysis, and writing. Returned results were also recalculated within the same project using an independently implemented verifier that had been preserved before the experiment package was distributed. This is a within-project verification, not replication by an independent researcher. The work used publicly available books and model weights and did not involve a study with human participants. The research was self-funded by the author and received no external funding. The author declares no competing interests.
 

@@ -70,7 +70,7 @@ Nanbeigeの測定では、その違いが具体的に見えました。
 | 知りたいこと | 入口 |
 | --- | --- |
 | 手法・発見・成立する範囲 | 図と付録を含む統合論文：[日本語](papers/nsn-integrated/NSN-2026-10-29-JA-v2.0.md)／[English](papers/nsn-integrated/NSN-2026-10-29-EN-v2.0.md)・[英語PDF](papers/nsn-integrated/NSN_Integrated_EN_v2.0.pdf) |
-| 再帰型モデルのキャッシュとカーネルの実装 | [Loopedモデルの詳細稿](papers/loop-kv/README.md)・[英語PDF](papers/loop-kv/Loop-kv_NSN_EN_v1.0.pdf) |
+| 再帰型モデルのキャッシュとカーネルの実装 | [Loopedモデルの詳細稿](papers/loop-kv/README.md)・[英語PDF](papers/loop-kv/Loop-kv_NSN_EN_v1.0.pdf) · [DOI](https://doi.org/10.5281/zenodo.23970816) |
 | 実験のコード | [可読Pythonと実験一覧](experiments/README.md) |
 | 結果の根拠になった測定 | [データ一覧](data/README.md)と[証拠の収録範囲](DATA_COVERAGE.md) |
 | 旧版や従来のライブラリAPI | [旧版とライブラリの案内](LEGACY.md) |

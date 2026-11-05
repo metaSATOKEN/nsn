@@ -13,8 +13,8 @@
     },
     {
       "path": "CITATION.cff",
-      "bytes": 1369,
-      "sha256": "9ae7d39b39a823c6d2e678b57264f5750606e0af1fb2c8127e1bd246b8be128e"
+      "bytes": 1688,
+      "sha256": "7570e50b565bafa38826a82fc8dda884ad2892cc98c9cac7097bb1415f2072f2"
     },
     {
       "path": "DATA_COVERAGE.md",
@@ -58,13 +58,13 @@
     },
     {
       "path": "README.ja.md",
-      "bytes": 10352,
-      "sha256": "4dff819fbd075e50f4387aa3b081e21a7b9fb4cf5c6388fb8f1bf6d9858e7fa1"
+      "bytes": 10402,
+      "sha256": "82959717cf3f184ab7fde3245bc45016e3ff395e797af16f533f098f8a151a99"
     },
     {
       "path": "README.md",
-      "bytes": 9391,
-      "sha256": "46dce0facdb4e45058d33b8d3485b60def91af9876ff20dc8ebbefe7a36f36cc"
+      "bytes": 9441,
+      "sha256": "b37405a68408d34917dcf837f8eb02458782b8bd82669f4835ab5010c2581101"
     },
     {
       "path": "REPRODUCIBILITY.md",
@@ -1593,18 +1593,18 @@
     },
     {
       "path": "papers/loop-kv/Loop-kv_NSN_EN_v1.0.pdf",
-      "bytes": 749325,
-      "sha256": "2d4d7b6f2e9b3367a1e3588c7addaf9003468d3dfa7e144f7b94dece8e6b3fe9"
+      "bytes": 749506,
+      "sha256": "e78dbf8e380479d928349b944dcbe0e52690e874703dcc92a66f187bdc40bbed"
     },
     {
       "path": "papers/loop-kv/Loop-kv_NSN_EN_v1.0.tex",
-      "bytes": 82625,
-      "sha256": "106fc0dec3f44c129a5401bcf75b244ed89ff51217f8ed32f94700aa972c611d"
+      "bytes": 82782,
+      "sha256": "3a5087c71d2823153c85bd80b3f6546818dfd9b32ac0ebd25b95cedffa4c1d66"
     },
     {
       "path": "papers/loop-kv/README.md",
-      "bytes": 814,
-      "sha256": "3579cbc07e390e1346f29b7fb8b306391b65492c9f20c15f90cd045422e3ce47"
+      "bytes": 990,
+      "sha256": "46fed03b86965b511d8443acc5f1db55fd12a51802d13684ee83f18a4e6e8095"
     },
     {
       "path": "papers/loop-kv/code/build_paper_assets_v0_2.py",
@@ -1708,13 +1708,13 @@
     },
     {
       "path": "papers/loop-kv/manuscript-en-v1.0-2026-10-08.md",
-      "bytes": 64148,
-      "sha256": "c7deab70f9484e3c3990cfffe71d97a3fd9ddae34ded0000e757607c7b3a992f"
+      "bytes": 64278,
+      "sha256": "90e4c872cc60c0ec211010cbfd0a343eff9fad3cc78eebeb46ca6149c4ec53c4"
     },
     {
       "path": "papers/loop-kv/manuscript-ja-v1.0-2026-10-08.md",
-      "bytes": 58372,
-      "sha256": "0abaa28d463962c57dae3adfffe9af2770ec62af8488a3a1a318695d97fc7846"
+      "bytes": 58501,
+      "sha256": "feab6770200a83d7e1c55b0956c79446052ed71f1e9bdae962ee5802ed8d10b3"
     },
     {
       "path": "papers/nsn-integrated/NSN-2026-10-29-EN-v2.0.md",
