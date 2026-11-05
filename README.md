@@ -93,7 +93,7 @@ This checks file identity without running a model. [REPRODUCIBILITY.md](REPRODUC
 
 Kentaro Sato · Independent Researcher · [info@metaclan.jp](mailto:info@metaclan.jp)
 
-The integrated Markdown manuscripts are **v2.0, 29 October 2026**. They combine a reanalysis of the earlier [*Norm Separation is Necessary*](https://doi.org/10.5281/zenodo.19724817) with subsequent implementation and looped-model evaluations. [CITATION.cff](CITATION.cff) identifies this integrated edition; the earlier DOI identifies the earlier paper.
+The integrated Markdown manuscripts are **v2.0, 29 October 2026**. They combine a reanalysis of the earlier [*Norm Separation is Necessary*](https://doi.org/10.5281/zenodo.19724817) with subsequent implementation and looped-model evaluations. The version DOI for the integrated paper is [10.5281/zenodo.23938878](https://doi.org/10.5281/zenodo.23938878). See [CITATION.cff](CITATION.cff).
 
 Code: [Apache-2.0](LICENSE). Author-owned papers, figures, and data: [CC BY 4.0](LICENSES/CC-BY-4.0.txt). Third-party terms are retained in [LICENSES.md](LICENSES.md).
 

@@ -93,7 +93,7 @@ Nanbeigeの測定では、その違いが具体的に見えました。
 
 Kentaro Sato · 独立研究者 · [info@metaclan.jp](mailto:info@metaclan.jp)
 
-統合稿のMarkdown版は**2026年10月29日・v2.0**です。既報[*Norm Separation is Necessary*](https://doi.org/10.5281/zenodo.19724817)の再集計に、後続の実装評価と再帰型モデルでの評価を統合しています。統合版の引用情報は[CITATION.cff](CITATION.cff)を参照してください。既報のDOIは旧論文を識別します。
+統合稿のMarkdown版は**2026年10月29日・v2.0**です。既報[*Norm Separation is Necessary*](https://doi.org/10.5281/zenodo.19724817)の再集計に、後続の実装評価と再帰型モデルでの評価を統合しています。統合稿v2.0の版別DOIは [10.5281/zenodo.23938878](https://doi.org/10.5281/zenodo.23938878) です。引用情報は[CITATION.cff](CITATION.cff)にあります。
 
 コードは[Apache-2.0](LICENSE)、著者作成の論文・図・データは[CC BY 4.0](LICENSES/CC-BY-4.0.txt)。第三者資料の条件は[LICENSES.md](LICENSES.md)に保持しています。
 

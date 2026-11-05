@@ -13,8 +13,8 @@
     },
     {
       "path": "CITATION.cff",
-      "bytes": 1336,
-      "sha256": "ff3d274fc634673038f4937b1760bb3acada0cf5a0c0f46d5ee7afac178804c7"
+      "bytes": 1369,
+      "sha256": "9ae7d39b39a823c6d2e678b57264f5750606e0af1fb2c8127e1bd246b8be128e"
     },
     {
       "path": "DATA_COVERAGE.md",
@@ -58,13 +58,13 @@
     },
     {
       "path": "README.ja.md",
-      "bytes": 10316,
-      "sha256": "6796a9239d51b4944d8e1f9707c961acaaa41a79d946cbe4fac84a79c7fd9ce2"
+      "bytes": 10352,
+      "sha256": "4dff819fbd075e50f4387aa3b081e21a7b9fb4cf5c6388fb8f1bf6d9858e7fa1"
     },
     {
       "path": "README.md",
-      "bytes": 9356,
-      "sha256": "2221cab86370d1bc936688e53a6d2350bdca81048676fe98550fd23d571abb38"
+      "bytes": 9391,
+      "sha256": "46dce0facdb4e45058d33b8d3485b60def91af9876ff20dc8ebbefe7a36f36cc"
     },
     {
       "path": "REPRODUCIBILITY.md",
@@ -1718,28 +1718,28 @@
     },
     {
       "path": "papers/nsn-integrated/NSN-2026-10-29-EN-v2.0.md",
-      "bytes": 111030,
-      "sha256": "90c87d10414b654287e01b6f265f74e34c12bc334b1100591aad9407a0b3cac8"
+      "bytes": 111141,
+      "sha256": "5dce2bf94653b7b3b378862fbfffaa98b985917250b02a464eda623fcf83e706"
     },
     {
       "path": "papers/nsn-integrated/NSN-2026-10-29-JA-v2.0.md",
-      "bytes": 101702,
-      "sha256": "1289bacfc09e0b2fb4cf02f65940cb197b2c5545e392a0d5808635f130652af7"
+      "bytes": 101832,
+      "sha256": "cc1926b823a99ef316b875be673da88604ffe36d5ebd1a35dcdf74d873409ffc"
     },
     {
       "path": "papers/nsn-integrated/NSN_Integrated_EN_v2.0.pdf",
-      "bytes": 987001,
-      "sha256": "9812cfa864120014b8368ccf81e43180c1479f1d5dd6ba8e2e67f7662e9039fd"
+      "bytes": 987220,
+      "sha256": "ed4e91638d484c2787e705949ad422db7b6869e45bfe6bf435693c64ae4ebcb6"
     },
     {
       "path": "papers/nsn-integrated/NSN_Integrated_EN_v2.0.tex",
-      "bytes": 144138,
-      "sha256": "63a1480b97c9699ec9233aa981d26140f3f3490d735d71b4d0181e56150ffa6a"
+      "bytes": 144275,
+      "sha256": "06da615ced09cfd83df6317cd2a3c7e1395130d5446b1de9aa930e52a2aeb5d7"
     },
     {
       "path": "papers/nsn-integrated/README.md",
-      "bytes": 727,
-      "sha256": "b67b6918c0f06f1d948c087a62b95dc21cc49f5db4a85a804c6da715c3ff69b5"
+      "bytes": 809,
+      "sha256": "7729b1fd5c8790e6c479f3e2166f4f3e300f761c4aedad788643ef9b57452637"
     },
     {
       "path": "papers/nsn-integrated/code/build_tables_and_figures.py",
