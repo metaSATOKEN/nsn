@@ -6,7 +6,7 @@ LLMは、過去の情報を毎回計算し直さずに参照するため、キ�
 
 本研究で開発・評価する**非対称NSN**は、ベクトルの大きさを別に保存し、方向を少数の整数で表す方法です。統合研究では、その予測品質・実際の保存量・実行コストをつなげて調べました。モデルの構造をまたいで使える設定を探し、圧縮した表現を実際のattentionで使うところまで追っています。
 
-[日本語の統合論文](papers/nsn-integrated/NSN-2026-10-29-JA-v2.0.md) · [English README](README.md) · [English paper](papers/nsn-integrated/NSN-2026-10-29-EN-v2.0.md) · [実験コード](experiments/README.md)
+[日本語の統合論文](papers/nsn-integrated/NSN-2026-10-29-JA-v2.0.md) · [English README](README.md) · [English paper](papers/nsn-integrated/NSN-2026-10-29-EN-v2.0.md) · [融合GPUカーネル](experiments/ac08/source/loop_kv_vf01_kernel.py) · [カーネルの読み方](#gpuカーネルを読む) · [実験一覧](experiments/README.md)
 
 ## この研究で分かったこと
 
@@ -14,7 +14,7 @@ LLMは、過去の情報を毎回計算し直さずに参照するため、キ�
 
 **2．再帰型Transformerで、実際に圧縮したキャッシュを使って予測を続けられた。** **OuroとNanbeige**へ3bitの符号をビット単位で詰めた表現を接続し、キャッシュ更新と、周回・層・ヘッドの対応を扱いました。終端のKV保存量は、**Ouroで67.68%、Nanbeigeの継続評価で64.39%減少**しました。補助情報と未圧縮の末尾を含めた実測値で、その圧縮表現を後続の予測に使っています。
 
-**3．復元した値をその場で使うと、読出し時間を短縮できた。** 二つの経路で、同じ圧縮済みV（attentionが重み付けして足し合わせる値）を、同じ算術で復元しました。比較用の経路（橋渡し対照）は、過去の全位置のVをいったん配列に書き出し、attentionがそれを読みます。融合カーネルはVを小さな区画ごとに復元し、その場で重み付き和に使うため、全長配列への書き出しと読み直しを省けます。この部品比較では、融合経路の処理時間が橋渡し対照より**28.28%短く**なりました。
+**3．復元した値をその場で使うと、読出し時間を短縮できた。** 二つの経路で、同じ圧縮済みV（attentionが重み付けして足し合わせる値）を、同じ算術で復元しました。比較用の経路（橋渡し対照）は、過去の全位置のVをいったん配列に書き出し、attentionがそれを読みます。融合カーネルはVを小さな区画ごとに復元し、その場で重み付き和に使うため、全長配列への書き出しと読み直しを省けます。この部品比較では、融合経路の処理時間が橋渡し対照より**28.28%短く**なりました。[橋渡し対照と融合経路のコード](experiments/ac08/source/loop_kv_vf01_kernel.py)を直接確認できます。[下の案内](#gpuカーネルを読む)に、読む関数をまとめています。
 
 ここでいう品質は、与えた文章を予測する性能を測る**PPLの診断基準**で、悪化5%を目安にしています。四方式の比較単位は構成全体です。複合モデルの評価は、各評価窓全体から量子化範囲を求め、attentionのK/Vへ適用したものです。別に行った実packed評価は、正解の文章を入力し続けるteacher forcingで、**各モデル4文章、Ouroは各255予測、Nanbeigeの継続評価は各256予測**を対象としました。長い自由生成や外部の量子化手法との性能順位は、今後の評価対象です。
 
@@ -52,7 +52,23 @@ def nsn_int3_qdq(x):
     return torch.where(n == 0, torch.zeros_like(y), y).to(x.dtype)
 ```
 
-この例は量子化して浮動小数点へ復元する計算を示します。ビット詰め・キャッシュ更新・attentionへの接続は、それぞれの実装を参照してください。[同じ参照関数](papers/nsn-integrated/code/nsn_int3_core.py)／[方式と算術の説明（§2.4）](papers/nsn-integrated/NSN-2026-10-29-JA-v2.0.md)／[モデル接続の可読コード](experiments/README.md)。
+この例は量子化して浮動小数点へ復元する計算を示します。ビット詰め・キャッシュ更新・attentionへの接続は、それぞれの実装を参照してください。[同じ参照関数](papers/nsn-integrated/code/nsn_int3_core.py)／[方式と算術の説明（§2.4）](papers/nsn-integrated/NSN-2026-10-29-JA-v2.0.md)／[カーネルとモデル接続の案内](#gpuカーネルを読む)。
+
+## GPUカーネルを読む
+
+**まずは、[Ouroで使用したpacked K/V融合attentionの本体](experiments/ac08/source/loop_kv_vf01_kernel.py)を開いてください。** 上の知見3に対応するV融合の比較は、`pipeline()`から読むと追いやすくなります。`TILE_MATERIALIZE`は`restore_v()`で全長V配列を書き出してからattentionを実行し、`V_FUSED`は`launch()`を通じてattention内部でVを復元して使います。Vの復元には、両方とも`read_v()`を使います。`initialize()`内の`partial()`が区画ごとのscore・softmax重み・重み付き和を計算し、[共通の`merge()`カーネル](experiments/ac08/source/loop_kv_af01_kernel.py)が区画の結果を結合します。
+
+| 確認したい処理 | ソースへの直リンクと読む関数 |
+| --- | --- |
+| Ouroのpacked 3bit K/V復元＋attention融合 | [V融合カーネル](experiments/ac08/source/loop_kv_vf01_kernel.py)：`read_v()`、`partial()`、`restore_v()`、`launch()`、`pipeline()` |
+| NanbeigeのGQA対応 | [GQAカーネル](experiments/nb06/source/loop_kv_nb06_kernel.py)：`partial()`の`kh = h // GROUP`で48 query headを8 KV headへ対応づけ、`merge()`で区画を結合。`pipeline()`が融合と全量復元＋SDPAの経路を選択 |
+| モデルの逐次処理からカーネルを呼ぶ箇所 | [Ouro接続部](experiments/ac08/source/loop_kv_ac08_attention.py)／[Nanbeige接続部](experiments/nb06/source/loop_kv_nb06_attention.py)：`install()`と`make_cache()`でattentionを接続し、逐次処理時のKV全量復元を遅延 |
+| 整数符号の保存とキャッシュ更新 | [Nanbeige codec](experiments/nb06/source/loop_kv_nb06_codec.py)：`pack3()`、`unpack3()`、`encode_group()`／[packedキャッシュ](experiments/nb06/source/loop_kv_nb06_packed.py)：`make_packed_cache()` |
+| 入力検査と数値照合 | [Ouroの検査](experiments/ac08/source/loop_kv_vf01_checks.py)／[Nanbeigeの検査](experiments/nb06/source/loop_kv_nb06_checks.py)、保存出力の検証器：[Ouro](experiments/ac08/source/verify_loop_kv_ac08.py)／[Nanbeige](experiments/nb06/source/verify_loop_kv_nb06.py) |
+
+小さな**K復元→QK scoreの部品実装**を読む場合は、[`_fused_score_kernel()`](experiments/kernels/phase_k1c_triton_fused_kernel.py)と[実験案内](experiments/kernels/README.md)を参照してください。この部品は1符号を1個の`uint8`に保存します。上のOuro／Nanbeigeのカーネルは、実際に3bitずつ詰めた符号を読み出します。
+
+ソースは結果ZIPを取得せずGitHub上で読めます。GPUで実行する際の環境と起動手順は、[Ouro](experiments/ac08/README.md)／[Nanbeige](experiments/nb06/README.md)の案内にまとめています。
 
 ## 小さく保存できることは、いつ実行上の利益になるか
 
@@ -70,6 +86,7 @@ Nanbeigeの測定では、その違いが具体的に見えました。
 | 知りたいこと | 入口 |
 | --- | --- |
 | 手法・発見・成立する範囲 | 図と付録を含む統合論文：[日本語](papers/nsn-integrated/NSN-2026-10-29-JA-v2.0.md)／[English](papers/nsn-integrated/NSN-2026-10-29-EN-v2.0.md)・[英語PDF](papers/nsn-integrated/NSN_Integrated_EN_v2.0.pdf) |
+| GPUカーネルの関数とモデルへの接続 | [カーネルの読み方](#gpuカーネルを読む)・[Ouro本体](experiments/ac08/source/loop_kv_vf01_kernel.py)・[Nanbeige GQA本体](experiments/nb06/source/loop_kv_nb06_kernel.py) |
 | 再帰型モデルのキャッシュとカーネルの実装 | [Loopedモデルの詳細稿](papers/loop-kv/README.md)・[英語PDF](papers/loop-kv/Loop-kv_NSN_EN_v1.0.pdf) · [DOI](https://doi.org/10.5281/zenodo.23970816) |
 | 実験のコード | [可読Pythonと実験一覧](experiments/README.md) |
 | 結果の根拠になった測定 | [データ一覧](data/README.md)と[証拠の収録範囲](DATA_COVERAGE.md) |

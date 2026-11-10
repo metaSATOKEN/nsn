@@ -1,5 +1,7 @@
 # Fused QK component measurements
 
+For **full packed K/V attention**, go directly to the [Ouro kernel](../ac08/source/loop_kv_vf01_kernel.py), [Nanbeige GQA kernel](../nb06/source/loop_kv_nb06_kernel.py), or [kernel reading guide](../../README.md#gpu-kernels-where-to-start). This directory contains the separate **QK-score component** study, which stores one `uint8` element per code.
+
 Production, compilation-corroboration, and fused Triton QK components. These use their original code-storage contracts.
 
 Start with [phase_k1c_triton_fused_kernel.py](phase_k1c_triton_fused_kernel.py).

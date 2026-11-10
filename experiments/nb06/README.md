@@ -2,6 +2,10 @@
 
 Start with [the experiment design](../../plans/loop-kv-nb06-design-v0.1-2026-10-08.md), then `launch-settings.json`. All 29 files in `source/` are the exact expanded contents of the previously run OneCell, checked against its embedded SHA-256 manifest. No compressed executable payload is included in this entrypoint.
 
+## Kernel entry points
+
+For implementation review, start with the [packed K/V GQA kernel](source/loop_kv_nb06_kernel.py): `pipeline()` selects a path, `read_v()` reconstructs V, `partial()` computes block results with query-to-KV-head indexing, and `merge()` combines them. The [model adapter](source/loop_kv_nb06_attention.py) connects single-token decoding; the [codec](source/loop_kv_nb06_codec.py) and [packed cache](source/loop_kv_nb06_packed.py) implement storage and updates. [Input checks](source/loop_kv_nb06_checks.py) and the [saved-output verifier](source/verify_loop_kv_nb06.py) cover validation. See the [kernel guide](../../README.md#gpu-kernels-where-to-start) for the Ouro and QK-component counterparts.
+
 ## Reading order
 
 1. `source/loop_kv_nb06_inputs.json`: frozen materials, schedule and limits.

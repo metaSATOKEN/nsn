@@ -58,13 +58,13 @@
     },
     {
       "path": "README.ja.md",
-      "bytes": 10402,
-      "sha256": "82959717cf3f184ab7fde3245bc45016e3ff395e797af16f533f098f8a151a99"
+      "bytes": 13771,
+      "sha256": "3cc66875f6bd630d046353a749e6073ae1b3cce13dc204404477a6d55943821c"
     },
     {
       "path": "README.md",
-      "bytes": 9441,
-      "sha256": "b37405a68408d34917dcf837f8eb02458782b8bd82669f4835ab5010c2581101"
+      "bytes": 12547,
+      "sha256": "a00d014990e904b85153ddc241a8733a63aa6a3ca0f3bb5060db2b55ef6dadd7"
     },
     {
       "path": "REPRODUCIBILITY.md",
@@ -838,13 +838,13 @@
     },
     {
       "path": "experiments/README.md",
-      "bytes": 1647,
-      "sha256": "d70fd96c1e9b266ffd7a4d26d8928bf0b2158a266395504c62a25d2f9285d759"
+      "bytes": 1999,
+      "sha256": "0811a6412d3ace5decd2d443c603a754b915e95e2dd7373eb7811b1f88da2f04"
     },
     {
       "path": "experiments/ac08/README.md",
-      "bytes": 2217,
-      "sha256": "79cafe7f8c9659cf74967da6c283d60061ec25b1c69b0da075cfed3c389283d1"
+      "bytes": 2904,
+      "sha256": "c47d20c719f47b03766dbcfa1f970bf1ce0fd66f3810e5a60e0d8cda5ccc1316"
     },
     {
       "path": "experiments/ac08/launch-settings.json",
@@ -1158,8 +1158,8 @@
     },
     {
       "path": "experiments/kernels/README.md",
-      "bytes": 970,
-      "sha256": "028f5f6c82b8c28c4f4dce33ebc40be771fad5785218912164aa582927e65e5f"
+      "bytes": 1322,
+      "sha256": "65408e0fd7433f059b5035fcaa7265272b89f51a0e65c22ee561c5747928b517"
     },
     {
       "path": "experiments/kernels/phase_k1_production_kernel_benchmark.py",
@@ -1353,8 +1353,8 @@
     },
     {
       "path": "experiments/nb06/README.md",
-      "bytes": 2217,
-      "sha256": "cb9484fc29ef96ed848734c269f579ae25c6116690179f7a2161cbf4cae568e7"
+      "bytes": 2939,
+      "sha256": "9492fbf4ac5f6ef09a4db2753b0356b74f685e4d72661c9fb4c4a957825282cb"
     },
     {
       "path": "experiments/nb06/launch-settings.json",

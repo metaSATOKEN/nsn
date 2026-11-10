@@ -1,5 +1,7 @@
 # Experiments in the integrated paper
 
+**Looking for the fused GPU kernels?** Open the [Ouro packed K/V kernel](ac08/source/loop_kv_vf01_kernel.py) or the [Nanbeige GQA kernel](nb06/source/loop_kv_nb06_kernel.py) directly. The [root README kernel guide](../README.md#gpu-kernels-where-to-start) maps reconstruction, attention, cache updates, and verification to source files and functions.
+
 Follow the research question you want to inspect. Earlier source files are grouped by purpose, rather than by the name of the project in which they were written.
 
 | Question | Code | Data |

@@ -2,6 +2,10 @@
 
 Start with [the experiment design](../../plans/loop-kv-ac08-design-v0.1-2026-10-02.md), then `launch-settings.json`. All 47 files in `source/` are the exact expanded contents of the previously run OneCell, checked against its embedded SHA-256 manifest. No compressed executable payload is included in this entrypoint.
 
+## Kernel entry points
+
+For implementation review, start with the [packed K/V fusion kernel](source/loop_kv_vf01_kernel.py). Read `pipeline()` to compare `TILE_MATERIALIZE` with `V_FUSED`, then `restore_v()`, `read_v()`, and `partial()`. The [shared `merge()`](source/loop_kv_af01_kernel.py) combines block results. The [model adapter](source/loop_kv_ac08_attention.py) shows where `install()` connects the kernel during single-token decoding; [input checks](source/loop_kv_vf01_checks.py) and the [saved-output verifier](source/verify_loop_kv_ac08.py) cover validation. See the [kernel guide](../../README.md#gpu-kernels-where-to-start) for the Nanbeige and QK-component counterparts.
+
 ## Reading order
 
 1. `source/loop_kv_ac08_inputs.json`: frozen materials, schedule and limits.

@@ -6,7 +6,7 @@ A language model stores keys and values from earlier tokens in its **KV cache**,
 
 This project develops and evaluates **asymmetric NSN**: store each vector's magnitude separately, and represent its direction with a small set of integers. The integrated study connects the method's prediction quality to its actual storage and execution costs. It identifies useful settings across model architectures, then follows the compressed representation all the way into attention.
 
-[Read the paper](papers/nsn-integrated/NSN-2026-10-29-EN-v2.0.md) · [日本語 README](README.ja.md) · [日本語論文](papers/nsn-integrated/NSN-2026-10-29-JA-v2.0.md) · [Code](experiments/README.md)
+[Read the paper](papers/nsn-integrated/NSN-2026-10-29-EN-v2.0.md) · [日本語 README](README.ja.md) · [日本語論文](papers/nsn-integrated/NSN-2026-10-29-JA-v2.0.md) · [Fused GPU kernel](experiments/ac08/source/loop_kv_vf01_kernel.py) · [Kernel guide](#gpu-kernels-where-to-start) · [All experiments](experiments/README.md)
 
 ## What this study adds
 
@@ -14,7 +14,7 @@ This project develops and evaluates **asymmetric NSN**: store each vector's magn
 
 **2. Working compressed caches in looped Transformers.** We connected actual bit-packed 3-bit KV to **Ouro and Nanbeige**, including cache updates and the mapping between loops, layers, and heads. Terminal KV storage fell by **67.68% in Ouro** and **64.39% in the extended Nanbeige evaluation**, counting metadata and the uncompressed tail. These are measured storage reductions from representations used for subsequent predictions.
 
-**3. Reconstructing V where attention uses it reduced readout time.** We compared two paths that use the same packed V (the values that attention combines in a weighted sum) and the same reconstruction arithmetic. The bridge control writes the reconstructed values for all past positions to an array, which attention then reads. The fused kernel reconstructs V one block at a time and uses each block directly in the weighted sum, skipping the write and subsequent read of the full-length array. In this component comparison, the fused path took **28.28% less time** than the bridge control.
+**3. Reconstructing V where attention uses it reduced readout time.** We compared two paths that use the same packed V (the values that attention combines in a weighted sum) and the same reconstruction arithmetic. The bridge control writes the reconstructed values for all past positions to an array, which attention then reads. The fused kernel reconstructs V one block at a time and uses each block directly in the weighted sum, skipping the write and subsequent read of the full-length array. In this component comparison, the fused path took **28.28% less time** than the bridge control. [Inspect the bridge and fused paths in code](experiments/ac08/source/loop_kv_vf01_kernel.py); the [kernel guide below](#gpu-kernels-where-to-start) identifies the functions to read.
 
 Quality here means the paper's **PPL diagnostic**: how well the model predicts the supplied text, with a 5% degradation threshold. The four-method result compares complete configurations. The hybrid/MoE results quantize attention K/V using ranges estimated over each full evaluation window; the separate packed-cache evaluations use teacher forcing on **4 texts per model**, with **255 predictions per text for Ouro and 256 for the Nanbeige extension**. This defines the evidence for choosing settings; long free-running generation and a ranking against external quantizers remain open questions.
 
@@ -52,7 +52,23 @@ def nsn_int3_qdq(x):
     return torch.where(n == 0, torch.zeros_like(y), y).to(x.dtype)
 ```
 
-This example quantizes and reconstructs floating-point values; bit packing, cache updates, and attention integration are implemented separately. See the [matching reference function](papers/nsn-integrated/code/nsn_int3_core.py), [method and arithmetic details](papers/nsn-integrated/NSN-2026-10-29-EN-v2.0.md#24-the-computational-core-and-implementation-differences), and [readable model-integration code](experiments/README.md).
+This example quantizes and reconstructs floating-point values; bit packing, cache updates, and attention integration are implemented separately. See the [matching reference function](papers/nsn-integrated/code/nsn_int3_core.py), [method and arithmetic details](papers/nsn-integrated/NSN-2026-10-29-EN-v2.0.md#24-the-computational-core-and-implementation-differences), and [kernel and model-integration guide below](#gpu-kernels-where-to-start).
+
+## GPU kernels: where to start
+
+**Start with the [packed K/V attention kernel used in Ouro](experiments/ac08/source/loop_kv_vf01_kernel.py).** To follow the V-fusion comparison in finding 3, read `pipeline()` first: `TILE_MATERIALIZE` calls `restore_v()` to write a full V array before attention; `V_FUSED` calls `launch()` to reconstruct and consume V inside attention. Both use `read_v()` for V reconstruction. Inside `initialize()`, `partial()` computes blockwise scores, softmax weights, and weighted values; the [shared `merge()` kernel](experiments/ac08/source/loop_kv_af01_kernel.py) combines the block results.
+
+| What to inspect | Direct source and entry points |
+| --- | --- |
+| Packed 3-bit K/V reconstruction fused with attention in Ouro | [V-fusion kernel](experiments/ac08/source/loop_kv_vf01_kernel.py): `read_v()`, `partial()`, `restore_v()`, `launch()`, `pipeline()` |
+| The Nanbeige GQA implementation | [GQA kernel](experiments/nb06/source/loop_kv_nb06_kernel.py): `partial()` maps 48 query heads to 8 KV heads with `kh = h // GROUP`; `merge()` combines the blocks; `pipeline()` selects fused or full-reconstruction SDPA paths |
+| How model decoding calls these kernels | [Ouro adapter](experiments/ac08/source/loop_kv_ac08_attention.py) and [Nanbeige adapter](experiments/nb06/source/loop_kv_nb06_attention.py): `install()` and `make_cache()` connect attention and defer full KV reconstruction during decoding |
+| How integer codes and the cache are stored and updated | [Nanbeige codec](experiments/nb06/source/loop_kv_nb06_codec.py): `pack3()`, `unpack3()`, `encode_group()`; [packed cache](experiments/nb06/source/loop_kv_nb06_packed.py): `make_packed_cache()` |
+| Input checks and numerical verification | [Ouro checks](experiments/ac08/source/loop_kv_vf01_checks.py) / [Nanbeige checks](experiments/nb06/source/loop_kv_nb06_checks.py); saved-output verifiers for [Ouro](experiments/ac08/source/verify_loop_kv_ac08.py) / [Nanbeige](experiments/nb06/source/verify_loop_kv_nb06.py) |
+
+For the smaller **K-to-QK-score component**, see [`_fused_score_kernel()`](experiments/kernels/phase_k1c_triton_fused_kernel.py) and its [experiment guide](experiments/kernels/README.md). That component stores one `uint8` element per code; the Ouro/Nanbeige kernels above read actual bit-packed 3-bit codes.
+
+All these sources can be read on GitHub without downloading result ZIPs. For GPU execution, follow the environment and launcher instructions for [Ouro](experiments/ac08/README.md) or [Nanbeige](experiments/nb06/README.md).
 
 ## When does smaller storage become an execution benefit?
 
@@ -70,6 +86,7 @@ Compression saved capacity in this workload. Turning that saving into a time adv
 | To understand… | Start here |
 | --- | --- |
 | The method, findings, and their scope | Integrated paper: [English](papers/nsn-integrated/NSN-2026-10-29-EN-v2.0.md) / [Japanese](papers/nsn-integrated/NSN-2026-10-29-JA-v2.0.md) with figures and appendices · [English PDF](papers/nsn-integrated/NSN_Integrated_EN_v2.0.pdf) |
+| The GPU kernel functions and their model connections | [Kernel guide](#gpu-kernels-where-to-start) · [Ouro kernel](experiments/ac08/source/loop_kv_vf01_kernel.py) · [Nanbeige GQA kernel](experiments/nb06/source/loop_kv_nb06_kernel.py) |
 | How the looped-model caches and kernels work | [Looped-model companion paper](papers/loop-kv/README.md) · [English PDF](papers/loop-kv/Loop-kv_NSN_EN_v1.0.pdf) · [DOI](https://doi.org/10.5281/zenodo.23970816) |
 | How the experiments were implemented | [Readable Python sources and experiment index](experiments/README.md) |
 | Which measurements support a result | [Data index](data/README.md) and [evidence coverage](DATA_COVERAGE.md) |
