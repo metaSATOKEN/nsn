@@ -113,5 +113,3 @@ Kentaro Sato · Independent Researcher · [info@metaclan.jp](mailto:info@metacla
 The integrated Markdown manuscripts are **v2.0, 29 October 2026**. They combine a reanalysis of the earlier [*Norm Separation is Necessary*](https://doi.org/10.5281/zenodo.19724817) with subsequent implementation and looped-model evaluations. The version DOI for the integrated paper is [10.5281/zenodo.23938878](https://doi.org/10.5281/zenodo.23938878). See [CITATION.cff](CITATION.cff).
 
 Code: [Apache-2.0](LICENSE). Author-owned papers, figures, and data: [CC BY 4.0](LICENSES/CC-BY-4.0.txt). Third-party terms are retained in [LICENSES.md](LICENSES.md).
-
-The repository and evidence Release require authorized access.

@@ -58,13 +58,13 @@
     },
     {
       "path": "README.ja.md",
-      "bytes": 13771,
-      "sha256": "3cc66875f6bd630d046353a749e6073ae1b3cce13dc204404477a6d55943821c"
+      "bytes": 13681,
+      "sha256": "8fb3ccd3b5da89f64eb5c0337a40e3997e354c63315f6429e1b3d46fa5423c20"
     },
     {
       "path": "README.md",
-      "bytes": 12547,
-      "sha256": "a00d014990e904b85153ddc241a8733a63aa6a3ca0f3bb5060db2b55ef6dadd7"
+      "bytes": 12483,
+      "sha256": "58139178b10152a8f414ae60107d1624a6166641d3a0bb6b6b0c120e4bd98d9d"
     },
     {
       "path": "REPRODUCIBILITY.md",
